@@ -2,6 +2,7 @@ package com.midorlo.k12.config.locale;
 
 import org.springframework.context.i18n.LocaleContext;
 import org.springframework.context.i18n.TimeZoneAwareLocaleContext;
+import org.springframework.lang.NonNull;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.util.WebUtils;
@@ -25,15 +26,17 @@ public class AngularCookieLocaleResolver extends CookieLocaleResolver {
     public static final String QUOTE = "%22";
 
     /** {@inheritDoc} */
+    @NonNull
     @Override
-    public Locale resolveLocale(HttpServletRequest request) {
+    public Locale resolveLocale(@NonNull HttpServletRequest request) {
         parseAngularCookieIfNecessary(request);
         return (Locale) request.getAttribute(LOCALE_REQUEST_ATTRIBUTE_NAME);
     }
 
     /** {@inheritDoc} */
+    @NonNull
     @Override
-    public LocaleContext resolveLocaleContext(final HttpServletRequest request) {
+    public LocaleContext resolveLocaleContext(@NonNull final HttpServletRequest request) {
         parseAngularCookieIfNecessary(request);
         return new TimeZoneAwareLocaleContext() {
             @Override
@@ -50,7 +53,7 @@ public class AngularCookieLocaleResolver extends CookieLocaleResolver {
 
     /** {@inheritDoc} */
     @Override
-    public void addCookie(HttpServletResponse response, String cookieValue) {
+    public void addCookie(@NonNull HttpServletResponse response, @NonNull String cookieValue) {
         // Mandatory cookie modification for AngularJS to support the locale switching on the server side.
         super.addCookie(response, quote(cookieValue));
     }

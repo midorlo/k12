@@ -2,6 +2,7 @@ package com.midorlo.k12.web.filter.reactive;
 
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.lang.NonNull;
 import org.springframework.security.web.server.csrf.CsrfToken;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
@@ -20,8 +21,9 @@ public class CookieCsrfFilter implements WebFilter {
     private static final String CSRF_COOKIE_NAME = "XSRF-TOKEN";
 
     /** {@inheritDoc} */
+    @NonNull
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+    public Mono<Void> filter(ServerWebExchange exchange, @NonNull WebFilterChain chain) {
         if (exchange.getRequest().getCookies().get(CSRF_COOKIE_NAME) != null) {
             return chain.filter(exchange);
         }

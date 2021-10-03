@@ -3,6 +3,7 @@ package com.midorlo.k12.config.apidoc;
 import com.fasterxml.classmate.ResolvedType;
 import com.fasterxml.classmate.TypeResolver;
 import org.springframework.data.domain.Pageable;
+import org.springframework.lang.NonNull;
 import springfox.documentation.builders.RequestParameterBuilder;
 import springfox.documentation.schema.ScalarType;
 import springfox.documentation.service.ParameterType;
@@ -65,7 +66,7 @@ public class PageableParameterBuilderPlugin implements OperationBuilderPlugin {
      * {@inheritDoc}
      */
     @Override
-    public boolean supports(DocumentationType delimiter) {
+    public boolean supports(@NonNull DocumentationType delimiter) {
         return DocumentationType.OAS_30.equals(delimiter);
     }
 
