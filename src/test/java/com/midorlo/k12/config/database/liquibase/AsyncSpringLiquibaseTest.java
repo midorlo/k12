@@ -22,7 +22,7 @@ import static com.midorlo.k12.config.application.ApplicationConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.*;
-
+@SuppressWarnings("SynchronizeOnNonFinalField")
 class AsyncSpringLiquibaseTest {
 
     private final LiquibaseException exception = new LiquibaseException("Eek");
@@ -71,6 +71,7 @@ class AsyncSpringLiquibaseTest {
         assertThat(event.getMessage()).isEqualTo(AsyncSpringLiquibase.DISABLED_MESSAGE);
         assertThat(event.getThrown()).isNull();
     }
+
 
     @Test
     void testProfileProduction() {
