@@ -55,7 +55,7 @@ public class LogbackRecorder {
      * @param clazz class whose logger as its name
      * @return the recorder for this class
      */
-    public static final LogbackRecorder forClass(Class<?> clazz) {
+    public static LogbackRecorder forClass(Class<?> clazz) {
         return forLogger(context.getLogger(clazz));
     }
 
@@ -66,7 +66,7 @@ public class LogbackRecorder {
      * @param name the name of the logger
      * @return the recorder for this class
      */
-    public static final LogbackRecorder forName(String name) {
+    public static LogbackRecorder forName(String name) {
         return forLogger(context.getLogger(name));
     }
 
@@ -77,7 +77,7 @@ public class LogbackRecorder {
      * @param logger the logger to record
      * @return the recorder for this logger
      */
-    public static final LogbackRecorder forLogger(org.slf4j.Logger logger) {
+    public static LogbackRecorder forLogger(org.slf4j.Logger logger) {
         synchronized (instances) {
             if (!(logger instanceof Logger)) {
                 throw new IllegalArgumentException(LOGBACK_EXCEPTION_MESSAGE);
