@@ -7,46 +7,71 @@
       "defaultValue": true
     },
     {
-      "name": "jhipster.cors.allowed-origins",
+      "name": "application.cors.allowed-origins",
       "type": "java.util.List<java.lang.String>",
       "description": "Set global CORS allowed origins.",
       "sourceType": "org.springframework.web.cors.CorsConfiguration"
     },
     {
-      "name": "jhipster.cors.allowed-methods",
+      "name": "application.cors.allowed-methods",
       "type": "java.util.List<java.lang.String>",
       "description": "Set global CORS allowed methods.",
       "sourceType": "org.springframework.web.cors.CorsConfiguration"
     },
     {
-      "name": "jhipster.cors.resolved-methods",
+      "name": "application.cors.resolved-methods",
       "type": "java.util.List<org.springframework.http.HttpMethod>",
       "description": "Set global CORS resolved methods.",
       "sourceType": "org.springframework.web.cors.CorsConfiguration"
     },
     {
-      "name": "jhipster.cors.allowed-headers",
+      "name": "application.cors.allowed-headers",
       "type": "java.util.List<java.lang.String>",
       "description": "Set global CORS allowed headers.",
       "sourceType": "org.springframework.web.cors.CorsConfiguration"
     },
     {
-      "name": "jhipster.cors.exposed-headers",
+      "name": "application.cors.exposed-headers",
       "type": "java.util.List<java.lang.String>",
       "description": "Set global CORS exposed methods.",
       "sourceType": "org.springframework.web.cors.CorsConfiguration"
     },
     {
-      "name": "jhipster.cors.allow-credentials",
+      "name": "application.cors.allow-credentials",
       "type": "java.lang.Boolean",
       "description": "Set global CORS allow credentials.",
       "sourceType": "org.springframework.web.cors.CorsConfiguration"
     },
     {
-      "name": "jhipster.cors.max-age",
+      "name": "application.cors.max-age",
       "type": "java.lang.Long",
       "description": "Set global CORS max age.",
       "sourceType": "org.springframework.web.cors.CorsConfiguration"
+    },
+    {
+      "name": "k12",
+      "type": "java.lang.String",
+      "description": "Application specific properties."
+    },
+    {
+      "name": "spring.sleuth.sampler.probability",
+      "type": "java.lang.String",
+      "description": "Description for spring.sleuth.sampler.probability."
+    },
+    {
+      "name": "spring.zipkin.base-url",
+      "type": "java.lang.String",
+      "description": "Description for spring.zipkin.base-url."
+    },
+    {
+      "name": "spring.zipkin.enabled",
+      "type": "java.lang.String",
+      "description": "Description for spring.zipkin.enabled."
+    },
+    {
+      "name": "spring.zipkin.locator.discovery.enabled",
+      "type": "java.lang.String",
+      "description": "Description for spring.zipkin.locator.discovery.enabled."
     }
   ]
 }

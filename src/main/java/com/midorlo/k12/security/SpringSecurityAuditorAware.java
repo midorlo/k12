@@ -1,7 +1,8 @@
 package com.midorlo.k12.security;
 
-import com.midorlo.k12.config.Constants;
 import java.util.Optional;
+
+import com.midorlo.k12.config.application.ApplicationConstants;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,6 @@ public class SpringSecurityAuditorAware implements AuditorAware<String> {
 
     @Override
     public Optional<String> getCurrentAuditor() {
-        return Optional.of(SecurityUtils.getCurrentUserLogin().orElse(Constants.SYSTEM));
+        return Optional.of(SecurityUtils.getCurrentUserLogin().orElse(ApplicationConstants.SYSTEM));
     }
 }

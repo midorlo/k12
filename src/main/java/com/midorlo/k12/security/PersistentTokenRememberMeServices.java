@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.rememberme.*;
 import org.springframework.stereotype.Service;
-import com.midorlo.k12.config.JHipsterProperties;
+import com.midorlo.k12.config.application.ApplicationProperties;
 
 /**
  * Custom implementation of Spring Security's RememberMeServices.
@@ -64,12 +64,12 @@ public class PersistentTokenRememberMeServices extends AbstractRememberMeService
     private final UserRepository userRepository;
 
     public PersistentTokenRememberMeServices(
-        JHipsterProperties jHipsterProperties,
+        ApplicationProperties applicationProperties,
         org.springframework.security.core.userdetails.UserDetailsService userDetailsService,
         PersistentTokenRepository persistentTokenRepository,
         UserRepository userRepository
     ) {
-        super(jHipsterProperties.getSecurity().getRememberMe().getKey(), userDetailsService);
+        super(applicationProperties.getSecurity().getRememberMe().getKey(), userDetailsService);
         this.persistentTokenRepository = persistentTokenRepository;
         this.userRepository = userRepository;
         upgradedTokenCache = new PersistentTokenCache<>(UPGRADED_TOKEN_VALIDITY_MILLIS);

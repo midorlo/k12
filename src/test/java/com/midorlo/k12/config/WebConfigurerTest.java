@@ -11,6 +11,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.*;
 import javax.servlet.*;
+
+import com.midorlo.k12.config.application.ApplicationConstants;
+import com.midorlo.k12.config.application.ApplicationProperties;
+import com.midorlo.k12.config.security.WebConfigurer;
 import org.h2.server.web.WebServlet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +35,7 @@ class WebConfigurerTest {
 
     private MockEnvironment env;
 
-    private JHipsterProperties props;
+    private ApplicationProperties props;
 
     @BeforeEach
     public void setup() {
@@ -40,14 +44,14 @@ class WebConfigurerTest {
         doReturn(mock(ServletRegistration.Dynamic.class)).when(servletContext).addServlet(anyString(), any(Servlet.class));
 
         env = new MockEnvironment();
-        props = new JHipsterProperties();
+        props = new ApplicationProperties();
 
         webConfigurer = new WebConfigurer(env, props);
     }
 
     @Test
     void shouldStartUpProdServletContext() throws ServletException {
-        env.setActiveProfiles(JHipsterConstants.SPRING_PROFILE_PRODUCTION);
+        env.setActiveProfiles(ApplicationConstants.SPRING_PROFILE_PRODUCTION);
 
         assertThatCode(() -> webConfigurer.onStartup(servletContext)).doesNotThrowAnyException();
         verify(servletContext, never()).addServlet(eq("H2Console"), any(WebServlet.class));
@@ -55,7 +59,7 @@ class WebConfigurerTest {
 
     @Test
     void shouldStartUpDevServletContext() throws ServletException {
-        env.setActiveProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT);
+        env.setActiveProfiles(ApplicationConstants.SPRING_PROFILE_DEVELOPMENT);
 
         assertThatCode(() -> webConfigurer.onStartup(servletContext)).doesNotThrowAnyException();
         verify(servletContext).addServlet(eq("H2Console"), any(WebServlet.class));

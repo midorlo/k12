@@ -1,6 +1,5 @@
 package com.midorlo.k12;
 
-import com.midorlo.k12.K12App;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -12,6 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@SpringBootTest(classes = K12App.class)
+@SpringBootTest(classes = Application.class)
 public @interface IntegrationTest {
 }

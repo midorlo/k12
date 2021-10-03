@@ -15,7 +15,7 @@ import net.logstash.logback.encoder.LogstashEncoder;
 import net.logstash.logback.stacktrace.ShortenedThrowableConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.midorlo.k12.config.JHipsterProperties;
+import com.midorlo.k12.config.application.ApplicationProperties;
 
 import java.net.InetSocketAddress;
 
@@ -57,10 +57,10 @@ public final class LoggingUtils {
      *
      * @param context a {@link LoggerContext} object.
      * @param customFields a {@link String} object.
-     * @param logstashProperties a {@link JHipsterProperties.Logging.Logstash} object.
+     * @param logstashProperties a {@link ApplicationProperties.Logging.Logstash} object.
      */
     public static void addLogstashTcpSocketAppender(LoggerContext context, String customFields,
-                                                    JHipsterProperties.Logging.Logstash logstashProperties) {
+                                                    ApplicationProperties.Logging.Logstash logstashProperties) {
         log.info("Initializing Logstash loggingProperties");
 
         // More documentation is available at: https://github.com/logstash/logstash-logback-encoder
@@ -80,9 +80,9 @@ public final class LoggingUtils {
      *
      * @param context a {@link LoggerContext} object.
      * @param customFields a {@link String} object.
-     * @param properties a {@link JHipsterProperties.Logging} object.
+     * @param properties a {@link ApplicationProperties.Logging} object.
      */
-    public static void addContextListener(LoggerContext context, String customFields, JHipsterProperties.Logging properties) {
+    public static void addContextListener(LoggerContext context, String customFields, ApplicationProperties.Logging properties) {
         LogbackLoggerContextListener loggerContextListener = new LogbackLoggerContextListener(properties, customFields);
         loggerContextListener.setContext(context);
         context.addListener(loggerContextListener);
@@ -157,10 +157,10 @@ public final class LoggingUtils {
      * This listener ensures that the programmatic configuration is also re-applied after reset.
      */
     private static class LogbackLoggerContextListener extends ContextAwareBase implements LoggerContextListener {
-        private final JHipsterProperties.Logging loggingProperties;
-        private final String customFields;
+        private final ApplicationProperties.Logging loggingProperties;
+        private final String                        customFields;
 
-        private LogbackLoggerContextListener(JHipsterProperties.Logging loggingProperties, String customFields) {
+        private LogbackLoggerContextListener(ApplicationProperties.Logging loggingProperties, String customFields) {
             this.loggingProperties = loggingProperties;
             this.customFields = customFields;
         }

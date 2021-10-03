@@ -1,6 +1,6 @@
 package com.midorlo.k12.service.dto;
 
-import com.midorlo.k12.config.Constants;
+import com.midorlo.k12.config.application.ApplicationConstants;
 import com.midorlo.k12.domain.Authority;
 import com.midorlo.k12.domain.User;
 import java.time.Instant;
@@ -16,7 +16,7 @@ public class AdminUserDTO {
     private Long id;
 
     @NotBlank
-    @Pattern(regexp = Constants.LOGIN_REGEX)
+    @Pattern(regexp = ApplicationConstants.LOGIN_REGEX)
     @Size(min = 1, max = 50)
     private String login;
 

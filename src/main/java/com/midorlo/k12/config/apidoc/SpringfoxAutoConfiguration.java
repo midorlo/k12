@@ -1,22 +1,3 @@
-/*
- * Copyright 2016-2021 the original author or authors from the JHipster project.
- *
- * This file is part of the JHipster project, see https://www.jhipster.tech/
- * for more information.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.midorlo.k12.config.apidoc;
 
 import org.slf4j.Logger;
@@ -43,15 +24,15 @@ import springfox.documentation.service.Server;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration;
-import com.midorlo.k12.config.JHipsterProperties;
-import com.midorlo.k12.config.apidoc.customizer.JHipsterSpringfoxCustomizer;
+import com.midorlo.k12.config.application.ApplicationProperties;
+import com.midorlo.k12.config.apidoc.customizer.ApplicationSpringfoxCustomizer;
 import com.midorlo.k12.config.apidoc.customizer.SpringfoxCustomizer;
 
 import java.nio.ByteBuffer;
 import java.util.*;
 
 import static springfox.documentation.builders.PathSelectors.regex;
-import static com.midorlo.k12.config.JHipsterConstants.SPRING_PROFILE_API_DOCS;
+import static com.midorlo.k12.config.application.ApplicationConstants.SPRING_PROFILE_API_DOCS;
 
 /**
  * Springfox OpenAPI configuration.
@@ -67,7 +48,7 @@ import static com.midorlo.k12.config.JHipsterConstants.SPRING_PROFILE_API_DOCS;
     Docket.class
 })
 @Profile(SPRING_PROFILE_API_DOCS)
-@AutoConfigureAfter(JHipsterProperties.class)
+@AutoConfigureAfter(ApplicationProperties.class)
 @Import({
     OpenApiDocumentationConfiguration.class,
     Swagger2DocumentationConfiguration.class,
@@ -83,15 +64,15 @@ public class SpringfoxAutoConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(SpringfoxAutoConfiguration.class);
 
-    private final JHipsterProperties.ApiDocs properties;
+    private final ApplicationProperties.ApiDocs properties;
 
     /**
      * <p>Constructor for SpringfoxAutoConfiguration.</p>
      *
-     * @param jHipsterProperties a {@link JHipsterProperties} object.
+     * @param applicationProperties a {@link ApplicationProperties} object.
      */
-    public SpringfoxAutoConfiguration(JHipsterProperties jHipsterProperties) {
-        this.properties = jHipsterProperties.getApiDocs();
+    public SpringfoxAutoConfiguration(ApplicationProperties applicationProperties) {
+        this.properties = applicationProperties.getApiDocs();
     }
 
     /**
@@ -124,13 +105,13 @@ public class SpringfoxAutoConfiguration {
     }
 
     /**
-     * JHipster Springfox Customizer
+     * Application Springfox Customizer
      *
-     * @return the Sringfox Customizer of JHipster
+     * @return the Sringfox Customizer of Application
      */
     @Bean
-    public JHipsterSpringfoxCustomizer jHipsterSpringfoxCustomizer() {
-        return new JHipsterSpringfoxCustomizer(properties);
+    public ApplicationSpringfoxCustomizer applicationSpringfoxCustomizer() {
+        return new ApplicationSpringfoxCustomizer(properties);
     }
 
     /**
@@ -157,7 +138,7 @@ public class SpringfoxAutoConfiguration {
 
         Docket docket = createDocket();
 
-        for (JHipsterProperties.ApiDocs.Server server : properties.getServers()) {
+        for (ApplicationProperties.ApiDocs.Server server : properties.getServers()) {
             docket.servers(new Server(server.getName(), server.getUrl(), server.getDescription(),
                 Collections.emptyList(), Collections.emptyList()));
         }

@@ -17,7 +17,7 @@
 //import org.springframework.test.web.servlet.MockMvc;
 //import org.springframework.web.bind.annotation.GetMapping;
 //
-//import static com.midorlo.k12.config.JHipsterConstants.SPRING_PROFILE_API_DOCS;
+//import static com.midorlo.k12.config.ApplicationConstants.SPRING_PROFILE_API_DOCS;
 //import static org.hamcrest.Matchers.hasItem;
 //import static org.hamcrest.Matchers.hasItems;
 //import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -30,19 +30,19 @@
 //    properties = {
 //        "spring.liquibase.enabled=false",
 //        "security.basic.enabled=false",
-//        "jhipster.api-docs.default-include-pattern=/scanned/.*",
-//        "jhipster.api-docs.host=test.jhipster.com",
-//        "jhipster.api-docs.protocols=http,https",
-//        "jhipster.api-docs.title=test title",
-//        "jhipster.api-docs.description=test description",
-//        "jhipster.api-docs.version=test version",
-//        "jhipster.api-docs.terms-of-service-url=test tos url",
-//        "jhipster.api-docs.contact-name=test contact name",
-//        "jhipster.api-docs.contact-email=test contact email",
-//        "jhipster.api-docs.contact-url=test contact url",
-//        "jhipster.api-docs.license=test license name",
-//        "jhipster.api-docs.license-url=test license url",
-//        "jhipster.api-docs.servers[0].url=test server url",
+//        "application.api-docs.default-include-pattern=/scanned/.*",
+//        "application.api-docs.host=test.application.com",
+//        "application.api-docs.protocols=http,https",
+//        "application.api-docs.title=test title",
+//        "application.api-docs.description=test description",
+//        "application.api-docs.version=test version",
+//        "application.api-docs.terms-of-service-url=test tos url",
+//        "application.api-docs.contact-name=test contact name",
+//        "application.api-docs.contact-email=test contact email",
+//        "application.api-docs.contact-url=test contact url",
+//        "application.api-docs.license=test license name",
+//        "application.api-docs.license-url=test license url",
+//        "application.api-docs.servers[0].url=test server url",
 //        "management.endpoints.web.base-path=/management",
 //        "spring.application.name=testApp"
 //
@@ -81,7 +81,7 @@
 //            .andExpect((status().isOk()))
 //            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
 //            .andExpect(jsonPath("$.paths./scanned/test").exists())
-//            .andExpect(jsonPath("$.host").value("test.jhipster.com"))
+//            .andExpect(jsonPath("$.host").value("test.application.com"))
 //            .andExpect(jsonPath("$.schemes").value(hasItems("http", "https")));
 //    }
 //
@@ -126,7 +126,7 @@
 //            .andExpect((status().isOk()))
 //            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
 //            .andExpect(jsonPath("$.paths./management/health").exists())
-//            .andExpect(jsonPath("$.host").value("test.jhipster.com"))
+//            .andExpect(jsonPath("$.host").value("test.application.com"))
 //            .andExpect(jsonPath("$.schemes").value(hasItems("http", "https")));    }
 //
 //    @SpringBootApplication(

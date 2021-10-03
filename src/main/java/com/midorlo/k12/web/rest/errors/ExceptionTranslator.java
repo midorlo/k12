@@ -29,7 +29,7 @@ import org.zalando.problem.StatusType;
 import org.zalando.problem.spring.web.advice.ProblemHandling;
 import org.zalando.problem.spring.web.advice.security.SecurityAdviceTrait;
 import org.zalando.problem.violations.ConstraintViolationProblem;
-import com.midorlo.k12.config.JHipsterConstants;
+import com.midorlo.k12.config.application.ApplicationConstants;
 import com.midorlo.k12.web.util.HeaderUtil;
 
 /**
@@ -44,7 +44,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     private static final String PATH_KEY = "path";
     private static final String VIOLATIONS_KEY = "violations";
 
-    @Value("${jhipster.clientApp.name}")
+    @Value("${application.clientApp.name}")
     private String applicationName;
 
     private final Environment env;
@@ -168,7 +168,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     public ProblemBuilder prepare(final Throwable throwable, final StatusType status, final URI type) {
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
 
-        if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_PRODUCTION)) {
+        if (activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_PRODUCTION)) {
             if (throwable instanceof HttpMessageConversionException) {
                 return Problem
                     .builder()

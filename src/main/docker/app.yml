@@ -9,7 +9,7 @@ services:
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
       - SPRING_DATASOURCE_URL=jdbc:postgresql://k12-postgresql:5432/k12
       - SPRING_LIQUIBASE_URL=jdbc:postgresql://k12-postgresql:5432/k12
-      - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
+      - APPLICATION_SLEEP=30 # gives time for other services to boot before the application
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
     ports:
@@ -17,7 +17,7 @@ services:
   k12-postgresql:
     image: postgres:13.4
     # volumes:
-    #   - ~/volumes/jhipster/k12/postgresql/:/var/lib/postgresql/data/
+    #   - ~/volumes/application/k12/postgresql/:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=k12
       - POSTGRES_PASSWORD=

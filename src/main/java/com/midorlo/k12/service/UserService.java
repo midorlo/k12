@@ -1,6 +1,6 @@
 package com.midorlo.k12.service;
 
-import com.midorlo.k12.config.Constants;
+import com.midorlo.k12.config.application.ApplicationConstants;
 import com.midorlo.k12.domain.Authority;
 import com.midorlo.k12.domain.User;
 import com.midorlo.k12.repository.AuthorityRepository;
@@ -161,7 +161,7 @@ public class UserService {
         }
         user.setImageUrl(userDTO.getImageUrl());
         if (userDTO.getLangKey() == null) {
-            user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
+            user.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE); // default language
         } else {
             user.setLangKey(userDTO.getLangKey());
         }

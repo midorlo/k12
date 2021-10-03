@@ -4,7 +4,7 @@ services:
   k12-postgresql:
     image: postgres:13.4
     # volumes:
-    #   - ~/volumes/jhipster/k12/postgresql/:/var/lib/postgresql/data/
+    #   - ~/volumes/application/k12/postgresql/:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=k12
       - POSTGRES_PASSWORD=
