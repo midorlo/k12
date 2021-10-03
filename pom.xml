@@ -49,7 +49,7 @@
         <!-- The liquibase version should match the one managed by
         https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
         <liquibase.version>4.4.3</liquibase.version>
-        <liquibase-hibernate5.version>4.4.3</liquibase-hibernate5.version>
+        <liquibase-hibernate5.version>4.3.5</liquibase-hibernate5.version>
         <h2.version>1.4.200</h2.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
         <jaxb-runtime.version>2.3.3</jaxb-runtime.version>
@@ -79,6 +79,7 @@
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <sonar-maven-plugin.version>3.9.0.2155</sonar-maven-plugin.version>
+        <spring-cloud-starter-zipkin.version>2.2.8.RELEASE</spring-cloud-starter-zipkin.version>
     </properties>
 
     <dependencyManagement>
@@ -959,6 +960,7 @@
                 <dependency>
                     <groupId>org.springframework.cloud</groupId>
                     <artifactId>spring-cloud-starter-zipkin</artifactId>
+                    <version>${spring-cloud-starter-zipkin.version}</version>
                 </dependency>
             </dependencies>
         </profile>
