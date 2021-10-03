@@ -3,7 +3,7 @@ package com.midorlo.k12.web.rest;
 import com.midorlo.k12.service.UserService;
 import com.midorlo.k12.service.dto.UserDTO;
 import java.util.*;
-import java.util.Collections;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -20,9 +20,8 @@ import com.midorlo.k12.web.util.PaginationUtil;
 @RequestMapping("/api")
 public class PublicUserResource {
 
-    private static final List<String> ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(
-        Arrays.asList("id", "login", "firstName", "lastName", "email", "activated", "langKey")
-    );
+    private static final List<String> ALLOWED_ORDERED_PROPERTIES = List.of("id", "login", "firstName", "lastName",
+                                                                           "email", "activated", "langKey");
 
     private final Logger log = LoggerFactory.getLogger(PublicUserResource.class);
 

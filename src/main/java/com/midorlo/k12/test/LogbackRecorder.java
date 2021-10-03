@@ -101,7 +101,7 @@ public class LogbackRecorder {
     private LogbackRecorder(Logger logger) {
         this.logger = logger;
         this.events = new ArrayList<>();
-        this.appender = new AppenderBase<ILoggingEvent>() {
+        this.appender = new AppenderBase<>() {
             @Override
             protected synchronized void append(ILoggingEvent event) {
                 events.add(new Event(event));

@@ -45,7 +45,7 @@ class PaginationUtilUnitTest {
         assertThat(headerData).isEqualTo(expectedData);
         List<String> xTotalCountHeaders = headers.get("X-Total-Count");
         assertThat(xTotalCountHeaders).hasSize(1);
-        assertThat((long) Long.valueOf(xTotalCountHeaders.get(0))).isEqualTo(400L);
+        assertThat((long) Long.parseLong(xTotalCountHeaders.get(0))).isEqualTo(400L);
     }
 
     @Test
@@ -64,7 +64,7 @@ class PaginationUtilUnitTest {
         assertThat(headerData).isEqualTo(expectedData);
         List<String> xTotalCountHeaders = headers.get("X-Total-Count");
         assertThat(xTotalCountHeaders).hasSize(1);
-        assertThat((long) Long.valueOf(xTotalCountHeaders.get(0))).isEqualTo(0L);
+        assertThat((long) Long.parseLong(xTotalCountHeaders.get(0))).isEqualTo(0L);
     }
 
     @Test
@@ -86,7 +86,7 @@ class PaginationUtilUnitTest {
         assertThat(headerData).isEqualTo(expectedData);
         List<String> xTotalCountHeaders = headers.get("X-Total-Count");
         assertThat(xTotalCountHeaders).hasSize(1);
-        assertThat((long) Long.valueOf(xTotalCountHeaders.get(0))).isEqualTo(400L);
+        assertThat((long) Long.parseLong(xTotalCountHeaders.get(0))).isEqualTo(400L);
 
         // Page 1
         uriBuilder.queryParam("page", "1");
@@ -104,7 +104,7 @@ class PaginationUtilUnitTest {
         assertThat(headerData).isEqualTo(expectedData);
         xTotalCountHeaders = headers.get("X-Total-Count");
         assertThat(xTotalCountHeaders).hasSize(1);
-        assertThat((long) Long.valueOf(xTotalCountHeaders.get(0))).isEqualTo(400L);
+        assertThat((long) Long.parseLong(xTotalCountHeaders.get(0))).isEqualTo(400L);
 
         // Page 6
         uriBuilder.queryParam("page", "6");
@@ -122,7 +122,7 @@ class PaginationUtilUnitTest {
         assertThat(headerData).isEqualTo(expectedData);
         xTotalCountHeaders = headers.get("X-Total-Count");
         assertThat(xTotalCountHeaders).hasSize(1);
-        assertThat((long) Long.valueOf(xTotalCountHeaders.get(0))).isEqualTo(400L);
+        assertThat((long) Long.parseLong(xTotalCountHeaders.get(0))).isEqualTo(400L);
 
         // Page 7
         uriBuilder.queryParam("page", "7");
@@ -158,6 +158,6 @@ class PaginationUtilUnitTest {
         assertThat(headerData).isEqualTo(expectedData);
         List<String> xTotalCountHeaders = headers.get("X-Total-Count");
         assertThat(xTotalCountHeaders).hasSize(1);
-        assertThat((long) Long.valueOf(xTotalCountHeaders.get(0))).isEqualTo(0L);
+        assertThat((long) Long.parseLong(xTotalCountHeaders.get(0))).isEqualTo(0L);
     }
 }

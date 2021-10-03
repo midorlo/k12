@@ -100,7 +100,7 @@ class ExceptionHandlingAsyncTaskExecutorTest {
     void testSubmitRunnableWithoutException() {
         Runnable runnable = spy(new MockRunnableWithoutException());
         Future<?> future = executor.submit(runnable);
-        Throwable caught = catchThrowable(() -> future.get());
+        Throwable caught = catchThrowable(future::get);
         assertThat(done).isEqualTo(true);
         verify(runnable).run();
         assertThat(caught).isNull();
@@ -114,7 +114,7 @@ class ExceptionHandlingAsyncTaskExecutorTest {
     void testSubmitRunnableWithException() {
         Runnable runnable = spy(new MockRunnableWithException());
         Future<?> future = executor.submit(runnable);
-        Throwable caught = catchThrowable(() -> future.get());
+        Throwable caught = catchThrowable(future::get);
         assertThat(done).isEqualTo(true);
         verify(runnable).run();
         assertThat(caught).isNull();
@@ -145,7 +145,7 @@ class ExceptionHandlingAsyncTaskExecutorTest {
     void testSubmitCallableWithException() {
         Callable<Integer> callable = spy(new MockCallableWithException());
         Future<Integer> future = executor.submit(callable);
-        Throwable caught = catchThrowable(() -> future.get());
+        Throwable caught = catchThrowable(future::get);
         assertThat(done).isEqualTo(true);
         assertThat(caught).isInstanceOf(ExecutionException.class);
         assertThat(caught.getCause()).isEqualTo(handled);

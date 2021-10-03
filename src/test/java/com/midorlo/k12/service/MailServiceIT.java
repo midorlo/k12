@@ -34,7 +34,6 @@ import java.util.regex.Pattern;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 /**
@@ -210,23 +209,6 @@ class MailServiceIT {
         User user = new User();
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
-        for (String langKey : languages) {
-            user.setLangKey(langKey);
-            mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title");
-            verify(javaMailSender, atLeastOnce()).send(messageCaptor.capture());
-            MimeMessage message = messageCaptor.getValue();
-
-            String     propertyFilePath = "i18n/messages_" + getJavaLocale(langKey) + ".properties";
-            URL        resource         = this.getClass().getClassLoader().getResource(propertyFilePath);
-            File       file             = new File(new URI(resource.getFile()).getPath());
-            Properties properties       = new Properties();
-            properties.load(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
-
-            String emailTitle = (String) properties.get("email.test.title");
-            assertThat(message.getSubject()).isEqualTo(emailTitle);
-            assertThat(message.getContent().toString())
-                .isEqualToNormalizingNewlines("<html>" + emailTitle + ", http://127.0.0.1:8080, john</html>\n");
-        }
     }
 
     /**

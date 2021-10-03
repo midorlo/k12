@@ -55,9 +55,7 @@ public class PersistentTokenCache<T> {
      */
     public void put(String key, T token) {
         purge();
-        if (map.containsKey(key)) {
-            map.remove(key);
-        }
+        map.remove(key);
         final long time = System.currentTimeMillis();
         map.put(key, new Value(token, time + expireMillis));
         latestWriteTime = time;

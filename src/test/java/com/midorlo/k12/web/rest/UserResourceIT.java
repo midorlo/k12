@@ -2,7 +2,6 @@ package com.midorlo.k12.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasItems;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -13,7 +12,6 @@ import com.midorlo.k12.domain.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.security.AuthoritiesConstants;
 import com.midorlo.k12.service.dto.AdminUserDTO;
-import com.midorlo.k12.service.dto.UserDTO;
 import com.midorlo.k12.service.mapper.UserMapper;
 import com.midorlo.k12.web.rest.vm.ManagedUserVM;
 import java.time.Instant;
