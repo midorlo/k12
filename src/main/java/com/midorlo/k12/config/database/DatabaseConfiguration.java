@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+@SuppressWarnings("ContextJavaBeanUnresolvedMethodsInspection")
 @Configuration
 @EnableJpaRepositories("com.midorlo.k12.repository")
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
