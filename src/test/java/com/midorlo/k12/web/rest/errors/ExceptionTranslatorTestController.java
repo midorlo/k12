@@ -1,15 +1,17 @@
 package com.midorlo.k12.web.rest.errors;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 @RestController
 @RequestMapping("/api/exception-translator-test")
+@SuppressWarnings("EmptyMethod")
 public class ExceptionTranslatorTestController {
 
     @GetMapping("/concurrency-failure")
@@ -19,6 +21,7 @@ public class ExceptionTranslatorTestController {
 
     @PostMapping("/method-argument")
     public void methodArgument(@Valid @RequestBody TestDTO testDTO) {}
+
 
     @GetMapping("/missing-servlet-request-part")
     public void missingServletRequestPartException(@RequestPart String part) {}
@@ -61,6 +64,5 @@ public class ExceptionTranslatorTestController {
     }
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "test response status")
-    @SuppressWarnings("serial")
     public static class TestResponseStatusException extends RuntimeException {}
 }

@@ -10,19 +10,19 @@ class PersistentTokenCacheTest {
 
     @Test
     void testConstructorThrows() {
-        Throwable caught = catchThrowable(() -> new PersistentTokenCache<String>(-1l));
+        Throwable caught = catchThrowable(() -> new PersistentTokenCache<String>(-1L));
         assertThat(caught).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void testAbsent() {
-        PersistentTokenCache<String> cache = new PersistentTokenCache<>(100l);
+        PersistentTokenCache<String> cache = new PersistentTokenCache<>(100L);
         assertThat(cache.get("key")).isNull();
     }
 
     @Test
     void testAccess() {
-        PersistentTokenCache<String> cache = new PersistentTokenCache<>(100l);
+        PersistentTokenCache<String> cache = new PersistentTokenCache<>(100L);
         cache.put("key", "val");
         assertThat(cache.size()).isEqualTo(1);
         assertThat(cache.get("key")).isEqualTo("val");
@@ -30,7 +30,7 @@ class PersistentTokenCacheTest {
 
     @Test
     void testReplace() {
-        PersistentTokenCache<String> cache = new PersistentTokenCache<>(100l);
+        PersistentTokenCache<String> cache = new PersistentTokenCache<>(100L);
         cache.put("key", "val");
         cache.put("key", "foo");
         assertThat(cache.get("key")).isEqualTo("foo");
@@ -38,10 +38,10 @@ class PersistentTokenCacheTest {
 
     @Test
     void testExpires() {
-        PersistentTokenCache<String> cache = new PersistentTokenCache<>(1l);
+        PersistentTokenCache<String> cache = new PersistentTokenCache<>(1L);
         cache.put("key", "val");
         try {
-            Thread.sleep(100l);
+            Thread.sleep(100L);
         } catch (InterruptedException x) {
             // This should not happen
             throw new Error(x);
@@ -51,10 +51,10 @@ class PersistentTokenCacheTest {
 
     @Test
     void testPurge() {
-        PersistentTokenCache<String> cache = new PersistentTokenCache<>(1l);
+        PersistentTokenCache<String> cache = new PersistentTokenCache<>(1L);
         cache.put("key", "val");
         try {
-            Thread.sleep(100l);
+            Thread.sleep(100L);
         } catch (InterruptedException x) {
             // This should not happen
             throw new Error(x);

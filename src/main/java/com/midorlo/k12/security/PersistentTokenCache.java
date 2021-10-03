@@ -24,7 +24,7 @@ public class PersistentTokenCache<T> {
      * @throws IllegalArgumentException if expireMillis is non-positive.
      */
     public PersistentTokenCache(long expireMillis) {
-        if (expireMillis <= 0l) {
+        if (expireMillis <= 0L) {
             throw new IllegalArgumentException();
         }
         this.expireMillis = expireMillis;
