@@ -16,7 +16,6 @@
 logging:
   level:
     ROOT: INFO
-    tech.jhipster: INFO
     com.midorlo.k12: INFO
 
 management:
