@@ -13,7 +13,7 @@ class RangeFilterTest {
 
     private RangeFilter<Short> filter;
 
-    private Short value = 42;
+    private final Short value = 42;
 
     @BeforeEach
     void setup() {

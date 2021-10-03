@@ -19,7 +19,7 @@ public class CachingHttpHeadersFilter implements Filter {
 
     private long cacheTimeToLive = DEFAULT_SECONDS_TO_LIVE;
 
-    private ApplicationProperties applicationProperties;
+    private final ApplicationProperties applicationProperties;
 
     /**
      * <p>Constructor for CachingHttpHeadersFilter.</p>

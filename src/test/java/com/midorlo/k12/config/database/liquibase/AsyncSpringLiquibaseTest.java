@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 
 class AsyncSpringLiquibaseTest {
 
-    private LiquibaseException exception = new LiquibaseException("Eek");
+    private final LiquibaseException exception = new LiquibaseException("Eek");
 
     private SimpleAsyncTaskExecutor executor;
     private ConfigurableEnvironment environment;

@@ -493,7 +493,7 @@ public class ApplicationProperties {
 
             private boolean useBinaryProtocol = ApplicationDefaults.Cache.Memcached.useBinaryProtocol;
 
-            private Authentication authentication = new Authentication();
+            private final Authentication authentication = new Authentication();
 
             public boolean isEnabled() {
                 return enabled;
@@ -818,7 +818,7 @@ public class ApplicationProperties {
         }
 
         public static class OAuth2 {
-            private List<String> audience = new ArrayList<>();
+            private final List<String> audience = new ArrayList<>();
 
             public List<String> getAudience() {
                 return Collections.unmodifiableList(audience);

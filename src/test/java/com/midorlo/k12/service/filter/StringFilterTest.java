@@ -13,7 +13,7 @@ class StringFilterTest {
 
     private StringFilter filter;
 
-    private String value = "foo";
+    private final String value = "foo";
 
     @BeforeEach
     void setup() {

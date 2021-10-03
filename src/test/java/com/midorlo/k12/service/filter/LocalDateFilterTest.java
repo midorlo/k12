@@ -14,7 +14,7 @@ class LocalDateFilterTest {
 
     private LocalDateFilter filter;
 
-    private LocalDate value = LocalDate.now();
+    private final LocalDate value = LocalDate.now();
 
     @BeforeEach
     void setup() {

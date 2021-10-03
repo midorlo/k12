@@ -13,7 +13,7 @@ class IntegerFilterTest {
 
     private IntegerFilter filter;
 
-    private Integer value = 42;
+    private final Integer value = 42;
 
     @BeforeEach
     void setup() {

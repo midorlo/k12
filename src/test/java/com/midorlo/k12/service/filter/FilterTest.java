@@ -13,7 +13,7 @@ class FilterTest {
 
     private Filter<Object> filter;
 
-    private Object value = new Object() {
+    private final Object value = new Object() {
         @Override
         public String toString() {
             return "{}";

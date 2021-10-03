@@ -14,7 +14,7 @@ class DurationFilterTest {
 
     private DurationFilter filter;
 
-    private Duration value = Duration.ofMinutes(5);
+    private final Duration value = Duration.ofMinutes(5);
 
     @BeforeEach
     void setup() {

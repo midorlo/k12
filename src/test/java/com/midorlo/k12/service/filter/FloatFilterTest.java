@@ -13,7 +13,7 @@ class FloatFilterTest {
 
     private FloatFilter filter;
 
-    private Float value = 42F;
+    private final Float value = 42F;
 
     @BeforeEach
     void setup() {
