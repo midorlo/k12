@@ -279,7 +279,7 @@ class LogbackRecorderTest {
 
     @Test
     void testReleaseException() {
-        Throwable caught = catchThrowable(() -> recorder.release());
+        Throwable caught = catchThrowable(recorder::release);
         assertThat(caught).isInstanceOf(IllegalStateException.class);
         assertThat(caught).hasMessage(LogbackRecorder.RELEASE_EXCEPTION_MESSAGE);
     }

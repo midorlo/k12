@@ -267,12 +267,12 @@ class ExceptionHandlingAsyncTaskExecutorTest {
     }
 
     @SuppressWarnings("serial")
-    private class MockAsyncInitializingTaskExecutor extends MockAsyncTaskExecutor
+    private static class MockAsyncInitializingTaskExecutor extends MockAsyncTaskExecutor
         implements InitializingBean {
     }
 
     @SuppressWarnings("serial")
-    private class MockAsyncDisposableTaskExecutor extends MockAsyncTaskExecutor
+    private static class MockAsyncDisposableTaskExecutor extends MockAsyncTaskExecutor
         implements DisposableBean {
     }
 }

@@ -21,14 +21,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -205,7 +197,7 @@ class MailServiceIT {
     }
 
     @Test
-    void testSendLocalizedEmailForAllSupportedLanguages() throws Exception {
+    void testSendLocalizedEmailForAllSupportedLanguages() {
         User user = new User();
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
