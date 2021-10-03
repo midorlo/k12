@@ -28,6 +28,7 @@ public class LiquibaseConfiguration {
         this.env = env;
     }
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Bean
     public SpringLiquibase liquibase(
         @Qualifier("taskExecutor") Executor executor,
