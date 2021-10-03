@@ -219,6 +219,7 @@ class AsyncSpringLiquibaseTest {
         assertThat(event1.getThrown()).isEqualTo(exception.toString());
     }
 
+    @SuppressWarnings("SameReturnValue")
     private class TestAsyncSpringLiquibase
         extends AsyncSpringLiquibase {
 

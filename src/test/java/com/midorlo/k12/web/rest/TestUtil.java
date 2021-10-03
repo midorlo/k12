@@ -43,7 +43,7 @@ public final class TestUtil {
      *
      * @param object the object to convert.
      * @return the JSON byte array.
-     * @throws IOException
+     * @throws IOException on write error.
      */
     public static byte[] convertObjectToJsonBytes(Object object) throws IOException {
         return mapper.writeValueAsBytes(object);

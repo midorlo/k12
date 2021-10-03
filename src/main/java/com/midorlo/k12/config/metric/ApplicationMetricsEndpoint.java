@@ -43,9 +43,9 @@ public class ApplicationMetricsEndpoint {
      * another Map containing metrics related to this category as Value
      */
     @ReadOperation
-    public Map<String, Map> allMetrics() {
+    public Map<String, Map<?,?>> allMetrics() {
 
-        Map<String, Map> results = new HashMap<>();
+        Map<String, Map<?,?>> results = new HashMap<>();
         // JVM stats
         results.put("jvm", this.jvmMemoryMetrics());
         // HTTP requests stats
@@ -143,17 +143,17 @@ public class ApplicationMetricsEndpoint {
         return resultsDatabase;
     }
 
-    private Map<String, Map> serviceMetrics() {
+    private Map<String, Map<?,?>> serviceMetrics() {
         Collection<String> crudOperation = Arrays.asList("GET", "POST", "PUT", "DELETE");
 
         Set<String> uris = new HashSet<>();
         Collection<Timer> timers = this.meterRegistry.find("http.server.requests").timers();
 
         timers.forEach(timer -> uris.add(timer.getId().getTag("uri")));
-        Map<String, Map> resultsHttpPerUri = new HashMap<>();
+        Map<String, Map<?,?>> resultsHttpPerUri = new HashMap<>();
 
         uris.forEach(uri -> {
-            Map<String, Map> resultsPerUri = new HashMap<>();
+            Map<String, Map<?,?>> resultsPerUri = new HashMap<>();
 
             crudOperation.forEach(operation -> {
                 Map<String, Number> resultsPerUriPerCrudOperation = new HashMap<>();
@@ -240,13 +240,13 @@ public class ApplicationMetricsEndpoint {
         return resultsJvm;
     }
 
-    private Map<String, Map> httpRequestsMetrics() {
+    private Map<String, Map<?,?>> httpRequestsMetrics() {
         Set<String> statusCode = new HashSet<>();
         Collection<Timer> timers = this.meterRegistry.find("http.server.requests").timers();
 
         timers.forEach(timer -> statusCode.add(timer.getId().getTag("status")));
 
-        Map<String, Map> resultsHttp = new HashMap<>();
+        Map<String, Map<?,?>> resultsHttp = new HashMap<>();
         Map<String, Map<String, Number>> resultsHttpPerCode = new HashMap<>();
 
         statusCode.forEach(code -> {

@@ -21,7 +21,7 @@ class ActiveProfilesInfoContributorTest {
         Info.Builder builder = new Info.Builder();
         contributor.contribute(builder);
         Info info = builder.build();
-
+        //noinspection unchecked
         assertThat((List<String>) info.get("activeProfiles")).contains("prod");
     }
 
