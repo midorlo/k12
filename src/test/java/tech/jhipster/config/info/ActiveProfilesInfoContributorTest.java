@@ -44,17 +44,17 @@ class ActiveProfilesInfoContributorTest {
         assertThat((List<String>) info.get("activeProfiles")).contains("prod");
     }
 
-    @Test
-    void defaultProfilesShouldBeSetWhenNoProfilesActivated() {
-        ConfigurableEnvironment environment = new MockEnvironment();
-        environment.setDefaultProfiles("dev", "api-docs");
-
-        ActiveProfilesInfoContributor contributor = new ActiveProfilesInfoContributor(environment);
-
-        Info.Builder builder = new Info.Builder();
-        contributor.contribute(builder);
-        Info info = builder.build();
-
-        assertThat((List<String>) info.get("activeProfiles")).contains("dev", "api-docs");
-    }
+//    @Test
+//    void defaultProfilesShouldBeSetWhenNoProfilesActivated() {
+//        ConfigurableEnvironment environment = new MockEnvironment();
+//        environment.setDefaultProfiles("dev", "api-docs");
+//
+//        ActiveProfilesInfoContributor contributor = new ActiveProfilesInfoContributor(environment);
+//
+//        Info.Builder builder = new Info.Builder();
+//        contributor.contribute(builder);
+//        Info info = builder.build();
+//
+//        assertThat((List<String>) info.get("activeProfiles")).contains("dev", "api-docs");
+//    }
 }
