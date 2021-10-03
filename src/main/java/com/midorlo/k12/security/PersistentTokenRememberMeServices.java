@@ -16,9 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.rememberme.*;
 import org.springframework.stereotype.Service;
-import tech.jhipster.config.JHipsterProperties;
-import tech.jhipster.security.PersistentTokenCache;
-import tech.jhipster.security.RandomUtil;
+import com.midorlo.k12.config.JHipsterProperties;
 
 /**
  * Custom implementation of Spring Security's RememberMeServices.

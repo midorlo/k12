@@ -2,7 +2,7 @@ package com.midorlo.k12;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import tech.jhipster.config.DefaultProfileUtil;
+import com.midorlo.k12.config.DefaultProfileUtil;
 
 /**
  * This is a helper Java class that provides an alternative to creating a {@code web.xml}.

@@ -10,8 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import tech.jhipster.config.JHipsterConstants;
-import tech.jhipster.config.h2.H2ConfigurationHelper;
+import com.midorlo.k12.config.h2.H2ConfigurationHelper;
 
 @Configuration
 @EnableJpaRepositories("com.midorlo.k12.repository")

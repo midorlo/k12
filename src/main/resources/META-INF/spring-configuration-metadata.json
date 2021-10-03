@@ -2,454 +2,454 @@
   "groups": [
     {
       "name": "jhipster",
-      "type": "tech.jhipster.config.JHipsterProperties",
-      "sourceType": "tech.jhipster.config.JHipsterProperties"
+      "type": "com.midorlo.k12.config.JHipsterProperties",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties"
     },
     {
       "name": "jhipster.api-docs",
-      "type": "tech.jhipster.config.JHipsterProperties$ApiDocs",
-      "sourceType": "tech.jhipster.config.JHipsterProperties",
+      "type": "com.midorlo.k12.config.JHipsterProperties$ApiDocs",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties",
       "sourceMethod": "getApiDocs()"
     },
     {
       "name": "jhipster.async",
-      "type": "tech.jhipster.config.JHipsterProperties$Async",
-      "sourceType": "tech.jhipster.config.JHipsterProperties",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Async",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties",
       "sourceMethod": "getAsync()"
     },
     {
       "name": "jhipster.audit-events",
-      "type": "tech.jhipster.config.JHipsterProperties$AuditEvents",
-      "sourceType": "tech.jhipster.config.JHipsterProperties",
+      "type": "com.midorlo.k12.config.JHipsterProperties$AuditEvents",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties",
       "sourceMethod": "getAuditEvents()"
     },
     {
       "name": "jhipster.cache",
-      "type": "tech.jhipster.config.JHipsterProperties$Cache",
-      "sourceType": "tech.jhipster.config.JHipsterProperties",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Cache",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties",
       "sourceMethod": "getCache()"
     },
     {
       "name": "jhipster.cache.caffeine",
-      "type": "tech.jhipster.config.JHipsterProperties$Cache$Caffeine",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Cache$Caffeine",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache",
       "sourceMethod": "getCaffeine()"
     },
     {
       "name": "jhipster.cache.ehcache",
-      "type": "tech.jhipster.config.JHipsterProperties$Cache$Ehcache",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Cache$Ehcache",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache",
       "sourceMethod": "getEhcache()"
     },
     {
       "name": "jhipster.cache.hazelcast",
-      "type": "tech.jhipster.config.JHipsterProperties$Cache$Hazelcast",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Cache$Hazelcast",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache",
       "sourceMethod": "getHazelcast()"
     },
     {
       "name": "jhipster.cache.infinispan",
-      "type": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache",
       "sourceMethod": "getInfinispan()"
     },
     {
       "name": "jhipster.cache.infinispan.distributed",
-      "type": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan$Distributed",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan$Distributed",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan",
       "sourceMethod": "getDistributed()"
     },
     {
       "name": "jhipster.cache.infinispan.local",
-      "type": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan$Local",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan$Local",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan",
       "sourceMethod": "getLocal()"
     },
     {
       "name": "jhipster.cache.infinispan.replicated",
-      "type": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan$Replicated",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan$Replicated",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan",
       "sourceMethod": "getReplicated()"
     },
     {
       "name": "jhipster.cache.memcached",
-      "type": "tech.jhipster.config.JHipsterProperties$Cache$Memcached",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Cache$Memcached",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache",
       "sourceMethod": "getMemcached()"
     },
     {
       "name": "jhipster.cache.memcached.authentication",
-      "type": "tech.jhipster.config.JHipsterProperties$Cache$Memcached$Authentication",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Memcached",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Cache$Memcached$Authentication",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Memcached",
       "sourceMethod": "getAuthentication()"
     },
     {
       "name": "jhipster.cache.redis",
-      "type": "tech.jhipster.config.JHipsterProperties$Cache$Redis",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Cache$Redis",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache",
       "sourceMethod": "getRedis()"
     },
     {
       "name": "jhipster.client-app",
-      "type": "tech.jhipster.config.JHipsterProperties$ClientApp",
-      "sourceType": "tech.jhipster.config.JHipsterProperties",
+      "type": "com.midorlo.k12.config.JHipsterProperties$ClientApp",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties",
       "sourceMethod": "getClientApp()"
     },
     {
       "name": "jhipster.database",
-      "type": "tech.jhipster.config.JHipsterProperties$Database",
-      "sourceType": "tech.jhipster.config.JHipsterProperties",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Database",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties",
       "sourceMethod": "getDatabase()"
     },
     {
       "name": "jhipster.database.couchbase",
-      "type": "tech.jhipster.config.JHipsterProperties$Database$Couchbase",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Database",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Database$Couchbase",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Database",
       "sourceMethod": "getCouchbase()"
     },
     {
       "name": "jhipster.gateway",
-      "type": "tech.jhipster.config.JHipsterProperties$Gateway",
-      "sourceType": "tech.jhipster.config.JHipsterProperties",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Gateway",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties",
       "sourceMethod": "getGateway()"
     },
     {
       "name": "jhipster.gateway.rate-limiting",
-      "type": "tech.jhipster.config.JHipsterProperties$Gateway$RateLimiting",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Gateway",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Gateway$RateLimiting",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Gateway",
       "sourceMethod": "getRateLimiting()"
     },
     {
       "name": "jhipster.http",
-      "type": "tech.jhipster.config.JHipsterProperties$Http",
-      "sourceType": "tech.jhipster.config.JHipsterProperties",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Http",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties",
       "sourceMethod": "getHttp()"
     },
     {
       "name": "jhipster.http.cache",
-      "type": "tech.jhipster.config.JHipsterProperties$Http$Cache",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Http",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Http$Cache",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Http",
       "sourceMethod": "getCache()"
     },
     {
       "name": "jhipster.logging",
-      "type": "tech.jhipster.config.JHipsterProperties$Logging",
-      "sourceType": "tech.jhipster.config.JHipsterProperties",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Logging",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties",
       "sourceMethod": "getLogging()"
     },
     {
       "name": "jhipster.logging.logstash",
-      "type": "tech.jhipster.config.JHipsterProperties$Logging$Logstash",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Logging",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Logging$Logstash",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Logging",
       "sourceMethod": "getLogstash()"
     },
     {
       "name": "jhipster.mail",
-      "type": "tech.jhipster.config.JHipsterProperties$Mail",
-      "sourceType": "tech.jhipster.config.JHipsterProperties",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Mail",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties",
       "sourceMethod": "getMail()"
     },
     {
       "name": "jhipster.registry",
-      "type": "tech.jhipster.config.JHipsterProperties$Registry",
-      "sourceType": "tech.jhipster.config.JHipsterProperties",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Registry",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties",
       "sourceMethod": "getRegistry()"
     },
     {
       "name": "jhipster.security",
-      "type": "tech.jhipster.config.JHipsterProperties$Security",
-      "sourceType": "tech.jhipster.config.JHipsterProperties",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Security",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties",
       "sourceMethod": "getSecurity()"
     },
     {
       "name": "jhipster.security.authentication",
-      "type": "tech.jhipster.config.JHipsterProperties$Security$Authentication",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Security$Authentication",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security",
       "sourceMethod": "getAuthentication()"
     },
     {
       "name": "jhipster.security.authentication.jwt",
-      "type": "tech.jhipster.config.JHipsterProperties$Security$Authentication$Jwt",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security$Authentication",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Security$Authentication$Jwt",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security$Authentication",
       "sourceMethod": "getJwt()"
     },
     {
       "name": "jhipster.security.client-authorization",
-      "type": "tech.jhipster.config.JHipsterProperties$Security$ClientAuthorization",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Security$ClientAuthorization",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security",
       "sourceMethod": "getClientAuthorization()"
     },
     {
       "name": "jhipster.security.oauth2",
-      "type": "tech.jhipster.config.JHipsterProperties$Security$OAuth2",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Security$OAuth2",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security",
       "sourceMethod": "getOauth2()"
     },
     {
       "name": "jhipster.security.remember-me",
-      "type": "tech.jhipster.config.JHipsterProperties$Security$RememberMe",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Security$RememberMe",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security",
       "sourceMethod": "getRememberMe()"
     },
     {
       "name": "jhipster.social",
-      "type": "tech.jhipster.config.JHipsterProperties$Social",
-      "sourceType": "tech.jhipster.config.JHipsterProperties",
+      "type": "com.midorlo.k12.config.JHipsterProperties$Social",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties",
       "sourceMethod": "getSocial()"
     },
     {
       "name": "management.endpoint.jhimetrics",
-      "type": "tech.jhipster.config.metric.JHipsterMetricsEndpoint",
-      "sourceType": "tech.jhipster.config.metric.JHipsterMetricsEndpoint"
+      "type": "com.midorlo.k12.config.metric.JHipsterMetricsEndpoint",
+      "sourceType": "com.midorlo.k12.config.metric.JHipsterMetricsEndpoint"
     }
   ],
   "properties": [
     {
       "name": "jhipster.api-docs.contact-email",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ApiDocs"
     },
     {
       "name": "jhipster.api-docs.contact-name",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ApiDocs"
     },
     {
       "name": "jhipster.api-docs.contact-url",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ApiDocs"
     },
     {
       "name": "jhipster.api-docs.default-include-pattern",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ApiDocs"
     },
     {
       "name": "jhipster.api-docs.description",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ApiDocs"
     },
     {
       "name": "jhipster.api-docs.host",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ApiDocs"
     },
     {
       "name": "jhipster.api-docs.license",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ApiDocs"
     },
     {
       "name": "jhipster.api-docs.license-url",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ApiDocs"
     },
     {
       "name": "jhipster.api-docs.management-include-pattern",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ApiDocs"
     },
     {
       "name": "jhipster.api-docs.protocols",
       "type": "java.lang.String[]",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ApiDocs"
     },
     {
       "name": "jhipster.api-docs.servers",
-      "type": "tech.jhipster.config.JHipsterProperties$ApiDocs$Server[]",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ApiDocs",
+      "type": "com.midorlo.k12.config.JHipsterProperties$ApiDocs$Server[]",
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ApiDocs",
       "defaultValue": []
     },
     {
       "name": "jhipster.api-docs.terms-of-service-url",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ApiDocs"
     },
     {
       "name": "jhipster.api-docs.title",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ApiDocs"
     },
     {
       "name": "jhipster.api-docs.use-default-response-messages",
       "type": "java.lang.Boolean",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ApiDocs"
     },
     {
       "name": "jhipster.api-docs.version",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ApiDocs"
     },
     {
       "name": "jhipster.async.core-pool-size",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Async"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Async"
     },
     {
       "name": "jhipster.async.max-pool-size",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Async"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Async"
     },
     {
       "name": "jhipster.async.queue-capacity",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Async"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Async"
     },
     {
       "name": "jhipster.audit-events.retention-period",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$AuditEvents"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$AuditEvents"
     },
     {
       "name": "jhipster.cache.caffeine.max-entries",
       "type": "java.lang.Long",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Caffeine"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Caffeine"
     },
     {
       "name": "jhipster.cache.caffeine.time-to-live-seconds",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Caffeine"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Caffeine"
     },
     {
       "name": "jhipster.cache.ehcache.max-entries",
       "type": "java.lang.Long",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Ehcache"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Ehcache"
     },
     {
       "name": "jhipster.cache.ehcache.time-to-live-seconds",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Ehcache"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Ehcache"
     },
     {
       "name": "jhipster.cache.hazelcast.backup-count",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Hazelcast"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Hazelcast"
     },
     {
       "name": "jhipster.cache.hazelcast.time-to-live-seconds",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Hazelcast"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Hazelcast"
     },
     {
       "name": "jhipster.cache.infinispan.config-file",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan"
     },
     {
       "name": "jhipster.cache.infinispan.distributed.instance-count",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan$Distributed"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan$Distributed"
     },
     {
       "name": "jhipster.cache.infinispan.distributed.max-entries",
       "type": "java.lang.Long",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan$Distributed"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan$Distributed"
     },
     {
       "name": "jhipster.cache.infinispan.distributed.time-to-live-seconds",
       "type": "java.lang.Long",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan$Distributed"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan$Distributed"
     },
     {
       "name": "jhipster.cache.infinispan.local.max-entries",
       "type": "java.lang.Long",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan$Local"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan$Local"
     },
     {
       "name": "jhipster.cache.infinispan.local.time-to-live-seconds",
       "type": "java.lang.Long",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan$Local"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan$Local"
     },
     {
       "name": "jhipster.cache.infinispan.replicated.max-entries",
       "type": "java.lang.Long",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan$Replicated"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan$Replicated"
     },
     {
       "name": "jhipster.cache.infinispan.replicated.time-to-live-seconds",
       "type": "java.lang.Long",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan$Replicated"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan$Replicated"
     },
     {
       "name": "jhipster.cache.infinispan.stats-enabled",
       "type": "java.lang.Boolean",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Infinispan"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Infinispan"
     },
     {
       "name": "jhipster.cache.memcached.authentication.enabled",
       "type": "java.lang.Boolean",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Memcached$Authentication"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Memcached$Authentication"
     },
     {
       "name": "jhipster.cache.memcached.authentication.password",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Memcached$Authentication"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Memcached$Authentication"
     },
     {
       "name": "jhipster.cache.memcached.authentication.username",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Memcached$Authentication"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Memcached$Authentication"
     },
     {
       "name": "jhipster.cache.memcached.enabled",
       "type": "java.lang.Boolean",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Memcached"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Memcached"
     },
     {
       "name": "jhipster.cache.memcached.expiration",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Memcached"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Memcached"
     },
     {
       "name": "jhipster.cache.memcached.servers",
       "type": "java.lang.String",
       "description": "Comma or whitespace separated list of servers' addresses.",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Memcached"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Memcached"
     },
     {
       "name": "jhipster.cache.memcached.use-binary-protocol",
       "type": "java.lang.Boolean",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Memcached"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Memcached"
     },
     {
       "name": "jhipster.cache.redis.cluster",
       "type": "java.lang.Boolean",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Redis"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Redis"
     },
     {
       "name": "jhipster.cache.redis.connection-minimum-idle-size",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Redis"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Redis"
     },
     {
       "name": "jhipster.cache.redis.connection-pool-size",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Redis"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Redis"
     },
     {
       "name": "jhipster.cache.redis.expiration",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Redis"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Redis"
     },
     {
       "name": "jhipster.cache.redis.server",
       "type": "java.lang.String[]",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Redis"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Redis"
     },
     {
       "name": "jhipster.cache.redis.subscription-connection-minimum-idle-size",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Redis"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Redis"
     },
     {
       "name": "jhipster.cache.redis.subscription-connection-pool-size",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Cache$Redis"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Cache$Redis"
     },
     {
       "name": "jhipster.client-app.name",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$ClientApp"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$ClientApp"
     },
     {
       "name": "jhipster.cors.allow-credentials",
@@ -496,150 +496,150 @@
     {
       "name": "jhipster.database.couchbase.bucket-name",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Database$Couchbase"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Database$Couchbase"
     },
     {
       "name": "jhipster.gateway.authorized-microservices-endpoints",
       "type": "java.util.Map<java.lang.String,java.util.List<java.lang.String>>",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Gateway"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Gateway"
     },
     {
       "name": "jhipster.gateway.rate-limiting.duration-in-seconds",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Gateway$RateLimiting"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Gateway$RateLimiting"
     },
     {
       "name": "jhipster.gateway.rate-limiting.enabled",
       "type": "java.lang.Boolean",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Gateway$RateLimiting"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Gateway$RateLimiting"
     },
     {
       "name": "jhipster.gateway.rate-limiting.limit",
       "type": "java.lang.Long",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Gateway$RateLimiting"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Gateway$RateLimiting"
     },
     {
       "name": "jhipster.http.cache.time-to-live-in-days",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Http$Cache"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Http$Cache"
     },
     {
       "name": "jhipster.logging.logstash.enabled",
       "type": "java.lang.Boolean",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Logging$Logstash"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Logging$Logstash"
     },
     {
       "name": "jhipster.logging.logstash.host",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Logging$Logstash"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Logging$Logstash"
     },
     {
       "name": "jhipster.logging.logstash.port",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Logging$Logstash"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Logging$Logstash"
     },
     {
       "name": "jhipster.logging.logstash.queue-size",
       "type": "java.lang.Integer",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Logging$Logstash"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Logging$Logstash"
     },
     {
       "name": "jhipster.logging.use-json-format",
       "type": "java.lang.Boolean",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Logging"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Logging"
     },
     {
       "name": "jhipster.mail.base-url",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Mail"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Mail"
     },
     {
       "name": "jhipster.mail.enabled",
       "type": "java.lang.Boolean",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Mail"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Mail"
     },
     {
       "name": "jhipster.mail.from",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Mail"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Mail"
     },
     {
       "name": "jhipster.registry.password",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Registry"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Registry"
     },
     {
       "name": "jhipster.security.authentication.jwt.base64-secret",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security$Authentication$Jwt"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security$Authentication$Jwt"
     },
     {
       "name": "jhipster.security.authentication.jwt.secret",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security$Authentication$Jwt"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security$Authentication$Jwt"
     },
     {
       "name": "jhipster.security.authentication.jwt.token-validity-in-seconds",
       "type": "java.lang.Long",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security$Authentication$Jwt"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security$Authentication$Jwt"
     },
     {
       "name": "jhipster.security.authentication.jwt.token-validity-in-seconds-for-remember-me",
       "type": "java.lang.Long",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security$Authentication$Jwt"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security$Authentication$Jwt"
     },
     {
       "name": "jhipster.security.client-authorization.access-token-uri",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security$ClientAuthorization"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security$ClientAuthorization"
     },
     {
       "name": "jhipster.security.client-authorization.client-id",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security$ClientAuthorization"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security$ClientAuthorization"
     },
     {
       "name": "jhipster.security.client-authorization.client-secret",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security$ClientAuthorization"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security$ClientAuthorization"
     },
     {
       "name": "jhipster.security.client-authorization.token-service-id",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security$ClientAuthorization"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security$ClientAuthorization"
     },
     {
       "name": "jhipster.security.content-security-policy",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security"
     },
     {
       "name": "jhipster.security.oauth2.audience",
       "type": "java.util.List<java.lang.String>",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security$OAuth2"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security$OAuth2"
     },
     {
       "name": "jhipster.security.remember-me.key",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Security$RememberMe"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Security$RememberMe"
     },
     {
       "name": "jhipster.social.redirect-after-sign-in",
       "type": "java.lang.String",
-      "sourceType": "tech.jhipster.config.JHipsterProperties$Social"
+      "sourceType": "com.midorlo.k12.config.JHipsterProperties$Social"
     },
     {
       "name": "management.endpoint.jhimetrics.cache.time-to-live",
       "type": "java.time.Duration",
       "description": "Maximum time that a response can be cached.",
-      "sourceType": "tech.jhipster.config.metric.JHipsterMetricsEndpoint",
+      "sourceType": "com.midorlo.k12.config.metric.JHipsterMetricsEndpoint",
       "defaultValue": "0ms"
     },
     {
       "name": "management.endpoint.jhimetrics.enabled",
       "type": "java.lang.Boolean",
       "description": "Whether to enable the jhimetrics endpoint.",
-      "sourceType": "tech.jhipster.config.metric.JHipsterMetricsEndpoint",
+      "sourceType": "com.midorlo.k12.config.metric.JHipsterMetricsEndpoint",
       "defaultValue": true
     },
     {

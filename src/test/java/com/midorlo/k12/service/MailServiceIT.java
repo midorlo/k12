@@ -32,7 +32,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.thymeleaf.spring5.SpringTemplateEngine;
-import tech.jhipster.config.JHipsterProperties;
+import com.midorlo.k12.config.JHipsterProperties;
 
 /**
  * Integration tests for {@link MailService}.

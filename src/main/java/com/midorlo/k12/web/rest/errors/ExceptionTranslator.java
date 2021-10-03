@@ -29,8 +29,8 @@ import org.zalando.problem.StatusType;
 import org.zalando.problem.spring.web.advice.ProblemHandling;
 import org.zalando.problem.spring.web.advice.security.SecurityAdviceTrait;
 import org.zalando.problem.violations.ConstraintViolationProblem;
-import tech.jhipster.config.JHipsterConstants;
-import tech.jhipster.web.util.HeaderUtil;
+import com.midorlo.k12.config.JHipsterConstants;
+import com.midorlo.k12.web.util.HeaderUtil;
 
 /**
  * Controller advice to translate the server side exceptions to client-friendly json structures.

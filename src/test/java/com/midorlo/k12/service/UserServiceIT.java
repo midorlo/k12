@@ -4,12 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import com.midorlo.k12.IntegrationTest;
-import com.midorlo.k12.config.Constants;
 import com.midorlo.k12.domain.PersistentToken;
 import com.midorlo.k12.domain.User;
 import com.midorlo.k12.repository.PersistentTokenRepository;
 import com.midorlo.k12.repository.UserRepository;
-import com.midorlo.k12.service.dto.AdminUserDTO;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,10 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.auditing.AuditingHandler;
 import org.springframework.data.auditing.DateTimeProvider;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
-import tech.jhipster.security.RandomUtil;
+import com.midorlo.k12.security.RandomUtil;
 
 /**
  * Integration tests for {@link UserService}.
