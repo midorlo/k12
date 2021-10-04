@@ -4,7 +4,7 @@ services:
   registry:
     image: registry:2
     ports:
-      - "5000:5000"
+      - 5000:5000
     #environment:
     # uncomment to enable basic auth
     #- REGISTRY_AUTH=htpasswd
@@ -36,4 +36,4 @@ services:
       - ENV_DOCKER_REGISTRY_PORT=5000
       #- ENV_DOCKER_REGISTRY_USE_SSL=1
     ports:
-      - "5080:80"
+      - 5080:80
