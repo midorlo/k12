@@ -7,10 +7,11 @@
   "scripts": {
     "prettier:check": "prettier --check \"{,src/**/}*.{md,json,yml,html,java}\"",
     "prettier:format": "prettier --write \"{,src/**/}*.{md,json,yml,html,java}\"",
-    "prepare": "husky install",
+    "webapp:build": "cd quasar && npm run build",
+    "webapp:prod": "cd quasar && npm run build",
+    "webapp:test": "",
     "docker:db:up": "docker-compose -f src/main/docker/postgresql.yml up -d",
     "docker:db:down": "docker-compose -f src/main/docker/postgresql.yml down -v --remove-orphans",
-    "docker:app:up": "docker-compose -f src/main/docker/app.yml up -d k-12-app",
     "docker:others:await": "",
     "predocker:others:up": "",
     "docker:others:up": "",
@@ -26,10 +27,8 @@
     "java:jar": "./mvnw -ntp verify -DskipTests --batch-mode",
     "java:war": "./mvnw -ntp verify -DskipTests --batch-mode -Pwar",
     "java:docker": "./mvnw -ntp verify -DskipTests jib:dockerBuild",
-    "java:docker:arm64": "npm run java:docker -- -Djib-maven-plugin.architecture=arm64",
-    "backend:unit:test": "./mvnw -ntp -P-webapp verify --batch-mode -Dlogging.level.ROOT=OFF -Dlogging.level.org.zalando=OFF -Dlogging.level.com.midorlo.k12=OFF -Dlogging.level.org.springframework=OFF -Dlogging.level.org.springframework.web=OFF -Dlogging.level.org.springframework.security=OFF",
+    "backend:unit:test": "./mvnw -ntp -P-webapp verify --batch-mode -Dlogging.level.ROOT=OFF -Dlogging.level.org.zalando=OFF -Dlogging.level.tech.jhipster=OFF -Dlogging.level.com.midorlo.k12=OFF -Dlogging.level.org.springframework=OFF -Dlogging.level.org.springframework.web=OFF -Dlogging.level.org.springframework.security=OFF",
     "backend:build-cache": "./mvnw dependency:go-offline",
-    "backend:debug": "./mvnw -Dspring-boot.run.jvmArguments=\"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000\"",
     "java:jar:dev": "npm run java:jar -- -Pdev,webapp",
     "java:jar:prod": "npm run java:jar -- -Pprod",
     "java:war:dev": "npm run java:war -- -Pdev,webapp",
@@ -40,23 +39,26 @@
     "ci:server:package": "npm run java:$npm_package_config_packaging:$npm_package_config_default_environment",
     "ci:e2e:package": "npm run java:$npm_package_config_packaging:$npm_package_config_default_environment -- -Pe2e -Denforcer.skip=true",
     "preci:e2e:server:start": "npm run docker:db:await --if-present && npm run docker:others:await --if-present",
-    "ci:e2e:server:start": "java -jar target/e2e.$npm_package_config_packaging --spring.profiles.active=$npm_package_config_default_environment -Dlogging.level.ROOT=OFF -Dlogging.level.org.zalando=OFF -Dlogging.level.com.midorlo.k12=OFF -Dlogging.level.org.springframework=OFF -Dlogging.level.org.springframework.web=OFF -Dlogging.level.org.springframework.security=OFF --logging.level.org.springframework.web=ERROR"
+    "ci:e2e:server:start": "java -jar target/e2e.$npm_package_config_packaging --spring.profiles.active=$npm_package_config_default_environment -Dlogging.level.ROOT=OFF -Dlogging.level.org.zalando=OFF -Dlogging.level.tech.jhipster=OFF -Dlogging.level.com.midorlo.k12=OFF -Dlogging.level.org.springframework=OFF -Dlogging.level.org.springframework.web=OFF -Dlogging.level.org.springframework.security=OFF --logging.level.org.springframework.web=ERROR",
+    "ci:frontend:build": "npm run webapp:build:$npm_package_config_default_environment",
+    "ci:frontend:test": "npm run ci:frontend:build && npm test"
   },
   "config": {
-    "backend_port": "8080",
-    "default_environment": "prod",
-    "packaging": "jar"
+    "default_environment": "prod"
   },
   "devDependencies": {
-    "generator-jhipster": "7.2.0",
-    "husky": "^7.0.0",
-    "lint-staged": "11.1.2",
-    "prettier": "2.4.0",
-    "prettier-plugin-java": "1.4.0",
-    "prettier-plugin-packagejson": "2.2.11"
+    "concurrently": "6.2.0",
+    "generator-jhipster": "7.1.0",
+    "generator-jhipster-quasar": "0.10.35",
+    "husky": "4.3.8",
+    "lint-staged": "11.0.0",
+    "prettier": "2.3.1",
+    "prettier-plugin-java": "1.2.0",
+    "prettier-plugin-packagejson": "2.2.11",
+    "wait-on": "5.3.0"
   },
   "engines": {
-    "node": ">=14.17.6"
+    "node": ">=14.17.1"
   },
   "cacheDirectories": [
     "node_modules"

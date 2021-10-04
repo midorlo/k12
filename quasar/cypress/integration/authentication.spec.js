@@ -1,0 +1,36 @@
+const username = Cypress.env('username');
+const password = Cypress.env('password');
+
+describe('Authentication', () => {
+  beforeEach(() => {
+    cy.window().then(win => {
+      win.sessionStorage.clear();
+    });
+    cy.clearLocalStorage();
+  });
+
+  it('Sign in', () => {
+    cy.intercept('POST', '/api/authenticate').as('login');
+    cy.visit('/');
+    cy.get('[data-cy=username]').clear().type(username);
+    cy.get('[data-cy=password]').clear().type(password);
+    cy.get('[data-cy=submit]').click();
+    cy.wait('@login').its('response.statusCode').should('eq', 200);
+    cy.window().then(win => {
+      expect(win.sessionStorage.getItem('jhi-authenticationToken')).to.be.not.empty;
+    });
+  });
+
+  it('Sign in remember me', () => {
+    cy.intercept('POST', '/api/authenticate').as('login');
+    cy.visit('/');
+    cy.get('[data-cy=username]').clear().type(username);
+    cy.get('[data-cy=password]').clear().type(password);
+    cy.get('[data-cy=rememberme]').click();
+    cy.get('[data-cy=submit]').click();
+    cy.wait('@login').its('response.statusCode').should('eq', 200);
+    cy.window().then(win => {
+      expect(win.localStorage.getItem('jhi-authenticationToken')).to.be.not.empty;
+    });
+  });
+});

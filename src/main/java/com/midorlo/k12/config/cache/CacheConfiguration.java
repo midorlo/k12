@@ -22,8 +22,8 @@ import java.time.Duration;
 @EnableCaching
 public class CacheConfiguration {
 
-    private GitProperties gitProperties;
-    private BuildProperties buildProperties;
+    private       GitProperties                                           gitProperties;
+    private       BuildProperties                                         buildProperties;
     private final javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration;
 
     public CacheConfiguration(ApplicationProperties applicationProperties) {
@@ -32,7 +32,8 @@ public class CacheConfiguration {
         jcacheConfiguration =
             Eh107Configuration.fromEhcacheCacheConfiguration(
                 CacheConfigurationBuilder
-                    .newCacheConfigurationBuilder(Object.class, Object.class, ResourcePoolsBuilder.heap(ehcache.getMaxEntries()))
+                    .newCacheConfigurationBuilder(Object.class, Object.class,
+                                                  ResourcePoolsBuilder.heap(ehcache.getMaxEntries()))
                     .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(ehcache.getTimeToLiveSeconds())))
                     .build()
             );
@@ -52,7 +53,7 @@ public class CacheConfiguration {
             createCache(cm, com.midorlo.k12.domain.User.class.getName());
             createCache(cm, com.midorlo.k12.domain.Authority.class.getName());
             createCache(cm, com.midorlo.k12.domain.User.class.getName() + ".authorities");
-            createCache(cm, com.midorlo.k12.domain.PersistentToken.class.getName());
+            //createCache(cm, com.midorlo.k12.domain.PersistentToken.class.getName());
             createCache(cm, com.midorlo.k12.domain.User.class.getName() + ".persistentTokens");
         };
     }

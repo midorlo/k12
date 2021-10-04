@@ -1,0 +1,574 @@
+<template>
+  <q-page v-if="metrics && threads && threadsByState">
+    <div class="q-pa-md">
+      <h5 class="q-my-md">
+        {{ $t('metrics.jvm.title') }}
+      </h5>
+      <h6 class="q-my-md">
+        {{ $t('metrics.jvm.memory.title') }}
+      </h6>
+      <div class="row items-start q-gutter-md">
+        <q-card
+          :key="key"
+          v-for="(metric, key) in metrics['jvm']"
+        >
+          <q-card-section class="text-center">
+            {{ key }}
+          </q-card-section>
+          <q-card-section class="text-center">
+            <q-circular-progress
+              show-value
+              class="text-light-blue q-ma-md"
+              :value="metric.max !== -1 ? percentMetric(metric) : 0"
+              size="50px"
+              color="light-blue"
+            >
+              {{ metric.max !== -1 ? `${Math.ceil(percentMetric(metric))}%` : '' }}
+            </q-circular-progress>
+          </q-card-section>
+          <q-card-section>
+            <q-field
+              v-for="item in Object.entries(metric)"
+              :key="item"
+              :label="item[0]"
+              readonly
+              borderless
+              stack-label
+            >
+              <template v-slot:control>
+                {{ humanStorageSize(item[1]) }}
+              </template>
+            </q-field>
+          </q-card-section>
+        </q-card>
+      </div>
+      <h6 class="q-my-md">
+        {{ $t('metrics.jvm.gc.title') }}
+      </h6>
+      <div class="row items-start q-gutter-md">
+        <q-card class="text-center">
+          <q-card-section>GC Live Data Size / GC Max Data Size</q-card-section>
+          <q-card-section>
+            <q-circular-progress
+              show-value
+              class="text-light-blue q-ma-md"
+              :value="percent(metrics.garbageCollector['jvm.gc.live.data.size'], metrics.garbageCollector['jvm.gc.max.data.size'])"
+              size="50px"
+              color="light-blue"
+            >
+              {{ Math.ceil(percent(metrics.garbageCollector['jvm.gc.live.data.size'], metrics.garbageCollector['jvm.gc.max.data.size'])) }}%
+            </q-circular-progress>
+          </q-card-section>
+          <q-card-section>
+            {{ humanStorageSize(metrics.garbageCollector['jvm.gc.live.data.size']) }} /
+            {{ humanStorageSize(metrics.garbageCollector['jvm.gc.max.data.size']) }}
+          </q-card-section>
+        </q-card>
+        <q-card class="text-center">
+          <q-card-section>GC Memory Promoted / GC Memory Allocated</q-card-section>
+          <q-card-section>
+            <q-circular-progress
+              show-value
+              class="text-light-blue q-ma-md"
+              :value="percent(metrics.garbageCollector['jvm.gc.memory.promoted'], metrics.garbageCollector['jvm.gc.memory.allocated'])"
+              size="50px"
+              color="light-blue"
+            >
+              {{
+                Math.ceil(percent(metrics.garbageCollector['jvm.gc.memory.promoted'], metrics.garbageCollector['jvm.gc.memory.allocated']))
+              }}%
+            </q-circular-progress>
+          </q-card-section>
+          <q-card-section>
+            {{ humanStorageSize(metrics.garbageCollector['jvm.gc.memory.promoted']) }} /
+            {{ humanStorageSize(metrics.garbageCollector['jvm.gc.memory.allocated']) }}
+          </q-card-section>
+        </q-card>
+        <q-card>
+          <q-card-section>
+            <div style="width: 100px">
+              <q-field
+                v-for="item in [
+                  { label: 'Classes loaded', valueField: 'classesLoaded' },
+                  { label: 'Classes unloaded', valueField: 'classesUnloaded' },
+                ]"
+                :key="item.label"
+                :label="item.label"
+                readonly
+                borderless
+                stack-label
+              >
+                <template v-slot:control>
+                  {{ metrics.garbageCollector[item.valueField] }}
+                </template>
+              </q-field>
+            </div>
+          </q-card-section>
+        </q-card>
+        <q-markup-table>
+          <thead>
+            <tr>
+              <th
+                scope="row"
+                colspan="8"
+              >GC Pause</th>
+            </tr>
+            <tr>
+              <th
+                class="text-left"
+                scope="col"
+              >Count</th>
+              <th
+                class="text-left"
+                scope="col"
+              >Mean</th>
+              <th
+                class="text-left"
+                scope="col"
+              >Min</th>
+              <th
+                class="text-left"
+                scope="col"
+              >P50</th>
+              <th
+                class="text-left"
+                scope="col"
+              >P75</th>
+              <th
+                class="text-left"
+                scope="col"
+              >P95</th>
+              <th
+                class="text-left"
+                scope="col"
+              >P99</th>
+              <th
+                class="text-left"
+                scope="col"
+              >Max</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left">{{ metrics.garbageCollector['jvm.gc.pause']['count'] }}</td>
+              <td class="text-left">{{ metrics.garbageCollector['jvm.gc.pause']['mean'] }}</td>
+              <td class="text-left">{{ metrics.garbageCollector['jvm.gc.pause']['0.0'] }}</td>
+              <td class="text-left">{{ metrics.garbageCollector['jvm.gc.pause']['0.5'] }}</td>
+              <td class="text-left">{{ metrics.garbageCollector['jvm.gc.pause']['0.75'] }}</td>
+              <td class="text-left">{{ metrics.garbageCollector['jvm.gc.pause']['0.75'] }}</td>
+              <td class="text-left">{{ metrics.garbageCollector['jvm.gc.pause']['0.99'] }}</td>
+              <td class="text-left">{{ metrics.garbageCollector['jvm.gc.pause']['max'] }}</td>
+            </tr>
+          </tbody>
+        </q-markup-table>
+      </div>
+
+      <div>
+        <h6 class="q-my-md">System</h6>
+        <div class="row items-start q-gutter-md">
+          <q-card>
+            <q-card-section>
+              <q-field
+                v-for="item in [
+                  { label: 'Uptime', valueField: 'process.uptime', transform: formatDistanceStrict },
+                  { label: 'Start Time', valueField: 'process.start.time', transform: format },
+                  { label: 'System CPU Count', valueField: 'system.cpu.count' },
+                  { label: 'System 1m Load Average', valueField: 'system.load.average.1m' },
+                  { label: 'Process File Max', valueField: 'process.files.max' },
+                  { label: 'Process File Open', valueField: 'process.files.open' },
+                ]"
+                :key="item.label"
+                :label="item.label"
+                readonly
+                borderless
+                stack-label
+              >
+                <template v-slot:control>
+                  {{
+                    item.transform ? item.transform(metrics['processMetrics'][item.valueField]) : metrics['processMetrics'][item.valueField]
+                  }}
+                </template>
+              </q-field>
+            </q-card-section>
+          </q-card>
+          <q-card class="text-center">
+            <q-card-section>Process CPU Usage</q-card-section>
+            <q-card-section>
+              <q-circular-progress
+                show-value
+                class="text-light-blue q-ma-md"
+                :value="metrics['processMetrics']['process.cpu.usage'] * 100"
+                size="50px"
+                color="light-blue"
+              >
+                {{ Math.ceil(metrics['processMetrics']['process.cpu.usage'] * 100) }}%
+              </q-circular-progress>
+            </q-card-section>
+          </q-card>
+          <q-card class="text-center">
+            <q-card-section>System CPU Usage</q-card-section>
+            <q-card-section>
+              <q-circular-progress
+                show-value
+                class="text-light-blue q-ma-md"
+                :value="metrics['processMetrics']['system.cpu.usage'] * 100"
+                size="50px"
+                color="light-blue"
+              >
+                {{ Math.ceil(metrics['processMetrics']['system.cpu.usage'] * 100) }}%
+              </q-circular-progress>
+            </q-card-section>
+          </q-card>
+        </div>
+      </div>
+      <h6 class="q-my-md">{{ $t('metrics.jvm.http.title') }}</h6>
+      <div>
+        {{ $t('metrics.jvm.http.total') }} {{ metrics['http.server.requests']['all']['count'] }}
+        <div class="row items-start q-gutter-md">
+          <q-markup-table>
+            <thead>
+              <tr>
+                <th
+                  class="text-left"
+                  scope="col"
+                >{{ $t('metrics.jvm.http.table.code') }}</th>
+                <th
+                  class="text-left"
+                  scope="col"
+                >{{ $t('metrics.jvm.http.table.count') }}</th>
+                <th
+                  class="text-left"
+                  scope="col"
+                >{{ $t('metrics.jvm.http.table.mean') }}</th>
+                <th
+                  class="text-left"
+                  scope="col"
+                >{{ $t('metrics.jvm.http.table.max') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                :key="key"
+                v-for="(item, key) in metrics['http.server.requests']['percode']"
+              >
+                <td class="text-left">{{ key }}</td>
+                <td class="text-left">{{ item.count }}</td>
+                <td class="text-left">{{ item.mean }}</td>
+                <td class="text-left">{{ item.max }}</td>
+              </tr>
+            </tbody>
+          </q-markup-table>
+        </div>
+      </div>
+      <h6 class="q-my-md">Endpoints requests (time in millisecond)</h6>
+      <div>
+        <div class="row items-start q-gutter-md">
+          <q-markup-table>
+            <thead>
+              <tr>
+                <th
+                  class="text-left"
+                  scope="col"
+                >Endpoint URL</th>
+                <th
+                  class="text-left"
+                  scope="col"
+                >Method</th>
+                <th
+                  class="text-left"
+                  scope="col"
+                >Count</th>
+                <th
+                  class="text-left"
+                  scope="col"
+                >Mean</th>
+              </tr>
+            </thead>
+            <tbody>
+              <template
+                :key="parentKey"
+                v-for="(parentItem, parentKey) in metrics.services"
+              >
+                <tr
+                  :key="method"
+                  v-for="(i, method) in parentItem"
+                >
+                  <td class="text-left">{{ parentKey }}</td>
+                  <td class="text-left">{{ method }}</td>
+                  <td class="text-left">{{ i.count }}</td>
+                  <td class="text-left">{{ i.mean }}</td>
+                </tr>
+              </template>
+            </tbody>
+          </q-markup-table>
+        </div>
+      </div>
+      <h6 class="q-my-md">Database</h6>
+      <div class="row items-start q-gutter-md">
+        <q-card>
+          <q-card-section>
+            <div>Connection Pool Usage</div>
+            <q-field
+              v-for="item in ['active', 'min', 'max', 'idle']"
+              :key="item"
+              :label="capitalize(item)"
+              readonly
+              borderless
+              stack-label
+            >
+              <template v-slot:control>
+                {{ metrics.databases[item]['value'] }}
+              </template>
+            </q-field>
+          </q-card-section>
+        </q-card>
+        <q-markup-table>
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th
+                class="text-left"
+                scope="col"
+              >Count</th>
+              <th
+                class="text-left"
+                scope="col"
+              >Mean</th>
+              <th
+                class="text-left"
+                scope="col"
+              >Min</th>
+              <th
+                class="text-left"
+                scope="col"
+              >P50</th>
+              <th
+                class="text-left"
+                scope="col"
+              >P75</th>
+              <th
+                class="text-left"
+                scope="col"
+              >P95</th>
+              <th
+                class="text-left"
+                scope="col"
+              >P99</th>
+              <th
+                class="text-left"
+                scope="col"
+              >Max</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              :key="entry"
+              v-for="entry in ['acquire', 'creation', 'usage']"
+            >
+              <th
+                class="text-left"
+                scope="row"
+              >{{ entry }}</th>
+              <td class="text-left">{{ metrics.databases[entry]['count'] }}</td>
+              <td class="text-left">{{ metrics.databases[entry]['mean'] }}</td>
+              <td class="text-left">{{ metrics.databases[entry]['0.0'] }}</td>
+              <td class="text-left">{{ metrics.databases[entry]['0.5'] }}</td>
+              <td class="text-left">{{ metrics.databases[entry]['0.75'] }}</td>
+              <td class="text-left">{{ metrics.databases[entry]['0.75'] }}</td>
+              <td class="text-left">{{ metrics.databases[entry]['0.99'] }}</td>
+              <td class="text-left">{{ metrics.databases[entry]['max'] }}</td>
+            </tr>
+          </tbody>
+        </q-markup-table>
+      </div>
+      <h6 class="q-my-md">Cache</h6>
+      <div class="row items-start q-gutter-md">
+        <q-markup-table>
+          <thead>
+            <tr>
+              <th
+                class="text-left"
+                scope="col"
+              >Cache Name</th>
+              <th
+                class="text-left"
+                scope="col"
+              >Cache Gets Miss</th>
+              <th
+                class="text-left"
+                scope="col"
+              >Cache Puts</th>
+              <th
+                class="text-left"
+                scope="col"
+              >Cache Gets Hit</th>
+              <th
+                class="text-left"
+                scope="col"
+              >Cache Removal</th>
+              <th
+                class="text-left"
+                scope="col"
+              >Cache Evictions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              :key="key"
+              v-for="(entry, key) in metrics.cache"
+            >
+              <td class="text-left">{{ key }}</td>
+              <td class="text-left">{{ metrics.cache[key]['cache.gets.miss'] }}</td>
+              <td class="text-left">{{ metrics.cache[key]['cache.puts'] }}</td>
+              <td class="text-left">{{ metrics.cache[key]['cache.gets.hit'] }}</td>
+              <td class="text-left">{{ metrics.cache[key]['cache.removals'] }}</td>
+              <td class="text-left">{{ metrics.cache[key]['cache.evictions'] }}</td>
+            </tr>
+          </tbody>
+        </q-markup-table>
+      </div>
+      <h6 class="q-my-md">{{ $t('metrics.jvm.threads.title') }}</h6>
+      <div class="row items-start q-gutter-md">
+        <q-card>
+          <q-card-section>
+            <div style="width: 100px">
+              <q-field
+                v-for="(group, key) in threadsByState"
+                :key="key"
+                :label="key"
+                readonly
+                borderless
+                stack-label
+              >
+                <template v-slot:control>
+                  {{ group.length }}
+                </template>
+              </q-field>
+            </div>
+          </q-card-section>
+        </q-card>
+        <q-table
+          :rows="threads"
+          :columns="threadColumns"
+          row-key="threadId"
+          :pagination="threadsInitialPagination"
+          hide-pagination
+          binary-state-sort
+        >
+          <template v-slot:body="props">
+            <q-tr>
+              <q-td>
+                {{ props.row.threadId }}
+              </q-td>
+              <q-td>
+                {{ props.row.threadState }}
+              </q-td>
+              <q-td>
+                {{ props.row.threadName }}
+
+                <q-btn
+                  v-if="props.row.stackTrace.length"
+                  flat
+                  label="Stacktrace"
+                  color="primary"
+                >
+                  <q-menu>
+                    <div class="row no-wrap q-pa-md">
+                      <div class="column">
+                        <div
+                          :key="trace"
+                          v-for="trace in props.row.stackTrace"
+                        >
+                          {{ trace.className }}.{{ trace.methodName }}({{ trace.fileName }}:{{ trace.lineNumber }})
+                        </div>
+                      </div>
+                    </div>
+                  </q-menu>
+                </q-btn>
+              </q-td>
+              <q-td>
+                {{ props.row.blockedTime }}
+              </q-td>
+              <q-td>
+                {{ props.row.blockedCount }}
+              </q-td>
+              <q-td>
+                {{ props.row.waitedTime }}
+              </q-td>
+              <q-td>
+                {{ props.row.waitedCount }}
+              </q-td>
+              <q-td>
+                {{ props.row.lockName }}
+              </q-td>
+            </q-tr>
+          </template>
+        </q-table>
+      </div>
+    </div>
+  </q-page>
+</template>
+
+<script>
+import { api } from 'boot/axios';
+import groupBy from 'lodash/groupBy';
+import { format as qformat } from 'quasar';
+import { defineComponent, ref } from 'vue';
+import { format, formatDistanceStrict } from '../util/format';
+
+export default defineComponent({
+  name: 'PageConfiguration',
+
+  setup() {
+    const metrics = ref();
+    const threads = ref();
+    const threadsByState = ref();
+    const { humanStorageSize, capitalize } = qformat;
+
+    const fetchMetrics = async () => {
+      metrics.value = (await api.get('/management/jhimetrics')).data;
+    };
+
+    const fetchThreadDump = async () => {
+      const response = await api.get('/management/threaddump');
+      threadsByState.value = groupBy(response.data.threads, 'threadState');
+      threads.value = response.data.threads;
+    };
+
+    fetchMetrics();
+    fetchThreadDump();
+
+    const percent = (value, total) => (value / total) * 100;
+    const percentMetric = metric => percent(metric.committed, metric.max);
+
+    const threadColumns = [
+      { name: 'threadId', align: 'left', label: 'Id', field: 'threadId', sortable: true },
+      { name: 'threadState', align: 'left', label: 'Thread State', field: 'threadState', sortable: true },
+      { name: 'threadName', align: 'left', label: 'Thread Name', field: 'threadName', sortable: true },
+      { name: 'blockedTime', align: 'left', label: 'Blocked Time', field: 'blockedTime', sortable: true },
+      { name: 'blockedCount', align: 'left', label: 'Blocked Count', field: 'blockedCount', sortable: true },
+      { name: 'waitedTime', align: 'left', label: 'Waited Time', field: 'waitedTime', sortable: true },
+      { name: 'waitedCount', align: 'left', label: 'Waited Count', field: 'waitedCount', sortable: true },
+      { name: 'lockName', align: 'left', label: 'Lock Name', field: 'lockName', sortable: true },
+    ];
+
+    const threadsInitialPagination = {
+      rowsPerPage: 0,
+    };
+
+    return {
+      metrics,
+      threads,
+      threadsByState,
+      threadColumns,
+      threadsInitialPagination,
+      format,
+      formatDistanceStrict,
+      humanStorageSize,
+      capitalize,
+      percent,
+      percentMetric,
+    };
+  },
+});
+</script>

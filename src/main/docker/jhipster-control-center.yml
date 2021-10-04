@@ -1,9 +1,9 @@
 ## How to use JHCC docker compose
-# To allow JHCC to reach Application application from a docker container note that we set the host as host.docker.internal
+# To allow JHCC to reach Application from a docker container note that we set the host as host.docker.internal
 # To reach the application from a browser, you need to add '127.0.0.1 host.docker.internal' to your hosts file.
 ### Discovery mode
 # JHCC support 3 kinds of discovery mode: Consul, Eureka and static
-# In order to use one, please set SPRING_PROFILES_ACTIVE to one (and only one) of this values: consul,eureka,static
+# In order to use one, please set SPRING_PROFILES_ACTIVE to one (and only one) of these values: consul,eureka,static
 ### Discovery properties
 # According to the discovery mode choose as Spring profile, you have to set the right properties
 # please note that current properties are set to run JHCC with default values, personalize them if needed
@@ -36,13 +36,13 @@ services:
       - /bin/sh
       - -c
       # Patch /etc/hosts to support resolving host.docker.internal to the internal IP address used by the host in all OSes
-      - echo "`ip route | grep default | cut -d ' ' -f3` host.docker.internal" | tee -a /etc/hosts > /dev/null && java -jar /application-control-center.jar
+      - echo "`ip route | grep default | cut -d ' ' -f3` host.docker.internal" | tee -a /etc/hosts > /dev/null && java -jar /jhipster-control-center.jar
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=prod,api-docs,no
       - APPLICATION_SLEEP=30 # gives time for other services to boot before the application
       - SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_K12_0_URI=http://host.docker.internal:8080
-      - LOGGING_FILE_NAME=/tmp/application-control-center.log
+      - LOGGING_FILE_NAME=/tmp/applicaton-control-center.log
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
     ports:

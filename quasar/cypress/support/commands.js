@@ -1,0 +1,11 @@
+const username = Cypress.env('username');
+const password = Cypress.env('password');
+
+Cypress.Commands.add('login', onLogin => {
+  cy.request('POST', '/api/authenticate', { username, password, rememberMe: false }).then(response => {
+    sessionStorage.setItem('jhi-authenticationToken', response.body.id_token);
+    if (onLogin) {
+      onLogin();
+    }
+  });
+});

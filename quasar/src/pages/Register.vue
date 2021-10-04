@@ -1,0 +1,101 @@
+<template>
+  <q-page class="q-pa-md flex flex-center">
+    <q-form
+      @submit="onSubmit"
+      class="responsive-width q-gutter-md"
+      greedy
+    >
+      <q-input
+        v-model="account.data.login"
+        :label="$t('global.form[\'username.label\']')"
+        lazy-rules
+        :rules="[$rules.required(), $rules.minLength(4), $rules.maxLength(100)]"
+        @keydown.enter.prevent
+      />
+      <q-input
+        v-model="account.data.email"
+        type="email"
+        :label="$t('global.form[\'email.label\']')"
+        lazy-rules
+        :rules="[$rules.required(), $rules.minLength(5), $rules.maxLength(254)]"
+        @keydown.enter.prevent
+      />
+      <q-input
+        v-model="account.data.password"
+        type="password"
+        :label="$t('global.form[\'newpassword.label\']')"
+        lazy-rules
+        :rules="[$rules.required(), $rules.minLength(4), $rules.maxLength(100)]"
+        @keydown.enter.prevent
+      />
+      <q-input
+        autocomplete="new-password"
+        v-model="account.data.password2"
+        type="password"
+        :label="$t('global.form[\'confirmpassword.label\']')"
+        lazy-rules
+        :rules="[$rules.sameAs(account.data.password)]"
+        @keydown.enter.prevent
+      />
+      <div class="flex justify-between">
+        <q-btn
+          type="submit"
+          color="primary"
+          :label="$t('register.form.button')"
+          :loading="loading"
+          :disable="loading"
+        />
+      </div>
+    </q-form>
+  </q-page>
+</template>
+
+<script>
+import { api } from 'boot/axios';
+import { useQuasar } from 'quasar';
+import { defineComponent, reactive, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+
+export default defineComponent({
+  name: 'PageRegister',
+
+  setup() {
+    const { t } = useI18n();
+    const $q = useQuasar();
+    const router = useRouter();
+
+    const account = reactive({
+      data: {
+        login: null,
+        email: null,
+        password: null,
+        password2: null,
+        langKey: 'en',
+      },
+    });
+
+    const loading = ref(false);
+
+    const onSubmit = async () => {
+      loading.value = true;
+      try {
+        await api.post('/api/register', account.data);
+        router.push('/');
+      } catch (e) {
+        $q.notify({
+          type: 'negative',
+          message: t(e.response.data.message),
+        });
+        loading.value = false;
+      }
+    };
+
+    return {
+      account,
+      onSubmit,
+      loading,
+    };
+  },
+});
+</script>

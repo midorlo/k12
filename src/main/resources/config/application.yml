@@ -35,7 +35,7 @@ management:
       liveness:
         include: livenessState
       readiness:
-        include: readinessState,db
+        include: readinessState,datasource
     mail:
       enabled: false # When using the MailService, configure an SMTP server and set this to true
   metrics:
@@ -138,6 +138,7 @@ info:
 # ===================================================================
 # Application specific properties
 # ===================================================================
+
 application:
   clientApp:
     name: 'application'
@@ -146,7 +147,7 @@ application:
   #   allowed-origins: "http://localhost:8100,http://localhost:9000"
   #   allowed-methods: "*"
   #   allowed-headers: "*"
-  #   exposed-headers: "Link,X-Total-Count,X-${application.clientApp.name}-alert,X-${application.clientApp.name}-error,X-${application.clientApp.name}-params"
+  #   exposed-headers: "Authorization,Link,X-Total-Count,X-${app.clientApp.name}-alert,X-${app.clientApp.name}-error,X-${app.clientApp.name}-params"
   #   allow-credentials: true
   #   max-age: 1800
   mail:
