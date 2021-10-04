@@ -61,19 +61,6 @@
 
         <addPrimaryKey columnNames="user_id, authority_name" tableName="users_authorities"/>
 
-        <createTable tableName="persistent_tokens">
-            <column name="series" type="varchar(20)">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="user_id" type="bigint"/>
-            <column name="token_value" type="varchar(20)">
-                <constraints nullable="false" />
-            </column>
-            <column name="token_date" type="date"/>
-            <column name="ip_address" type="varchar(39)"/>
-            <column name="user_agent" type="varchar(255)"/>
-        </createTable>
-
         <addForeignKeyConstraint baseColumnNames="authority_name"
                                  baseTableName="users_authorities"
                                  constraintName="fk_authority_name"
@@ -90,11 +77,6 @@
                                 columnDataType="varchar(60)"
                                 tableName="users"/>
 
-        <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="persistent_tokens"
-                                 constraintName="fk_user_persistent_token"
-                                 referencedColumnNames="id"
-                                 referencedTableName="users"/>
         <loadData
                   file="config/liquibase/data/users.csv"
                   separator=";"

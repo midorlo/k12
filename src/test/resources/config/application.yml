@@ -92,7 +92,14 @@ application:
     from: test@localhost
     base-url: http://127.0.0.1:8080
   security:
+    authentication:
+      jwt:
+        # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
+        base64-secret: MzJmNGU0MmNlMTA2YThkMDQ3MDkzZTNiOGQzNWU0ZmMwMmM1OTU0M2FhMzZmMGVlY2Q1MjQ3OGFkZThkOGQzYjcxZGRhODZiZDg4NjQzYjY0NThjMDkyZWFjMzY5NGM4NjI3NzRhYzkyNjBmZGRmYzliYTIzMzE1NzdkZmI3OTM=
+        # Token is valid 24 hours
+        token-validity-in-seconds: 86400
     remember-me:
       # security key (this key should be unique for your application, and kept secret)
       key: 77d315765514f0128cce3b07c64cc766fb7d4230b508b010b924392aeb8d77713690be550099aa5c95d385975003786d7fa1
 
+# application:

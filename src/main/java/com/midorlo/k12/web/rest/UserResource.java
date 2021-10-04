@@ -10,6 +10,13 @@ import com.midorlo.k12.service.dto.AdminUserDTO;
 import com.midorlo.k12.web.rest.errors.BadRequestAlertException;
 import com.midorlo.k12.web.rest.errors.EmailAlreadyUsedException;
 import com.midorlo.k12.web.rest.errors.LoginAlreadyUsedException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.*;
+import java.util.Collections;
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
+
 import com.midorlo.k12.web.util.HeaderUtil;
 import com.midorlo.k12.web.util.PaginationUtil;
 import com.midorlo.k12.web.util.ResponseUtil;
@@ -25,13 +32,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing users.
@@ -61,8 +61,21 @@ import java.util.Optional;
 @RequestMapping("/api/admin")
 public class UserResource {
 
-    private static final List<String> ALLOWED_ORDERED_PROPERTIES = List.of("id", "login", "firstName", "lastName",
-                                                                           "email", "activated", "langKey", "createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate");
+    private static final List<String> ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(
+        Arrays.asList(
+            "id",
+            "login",
+            "firstName",
+            "lastName",
+            "email",
+            "activated",
+            "langKey",
+            "createdBy",
+            "createdDate",
+            "lastModifiedBy",
+            "lastModifiedDate"
+        )
+    );
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
 

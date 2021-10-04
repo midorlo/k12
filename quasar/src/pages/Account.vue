@@ -1,0 +1,126 @@
+<template>
+  <q-page class="q-pa-md flex flex-center">
+    <q-form
+      @submit="onSubmit"
+      class="responsive-width q-gutter-y-md"
+      greedy
+    >
+
+      <q-field
+        :label="$t('userManagement.profiles')"
+        readonly
+        stack-label
+      >
+        <template v-slot:control>
+          <div class="q-gutter-md">
+            <q-badge
+              :key="authority"
+              v-for="authority in account.data.authorities"
+              color="primary"
+            >
+              {{ authority }}
+            </q-badge>
+          </div>
+        </template>
+      </q-field>
+      <q-input
+        v-model="account.data.firstName"
+        :label="$t('userManagement.firstName')"
+        lazy-rules
+        :rules="[$rules.maxLength(50)]"
+        @keydown.enter.prevent
+        data-cy="firstName"
+      />
+      <q-input
+        v-model="account.data.lastName"
+        :label="$t('userManagement.lastName')"
+        lazy-rules
+        :rules="[$rules.maxLength(50)]"
+        @keydown.enter.prevent
+        data-cy="lastName"
+      />
+      <q-input
+        v-model="account.data.email"
+        type="email"
+        :label="$t('userManagement.email')"
+        lazy-rules
+        :rules="[$rules.required(), $rules.minLength(5), $rules.maxLength(254)]"
+        @keydown.enter.prevent
+        data-cy="email"
+      />
+      <q-select
+        v-model="account.data.langKey"
+        :options="langObjects"
+        option-value="key"
+        option-label="value"
+        emit-value
+        map-options
+        :label="$t('userManagement.langKey')"
+        :rules="[$rules.required()]"
+        data-cy="langKey"
+      />
+      <div class="flex justify-between">
+        <q-btn
+          type="submit"
+          color="primary"
+          :label="$t('entity.action.save')"
+        />
+      </div>
+    </q-form>
+  </q-page>
+</template>
+
+<script>
+import { api } from 'boot/axios';
+import { loadTranslation } from 'boot/i18n';
+import { useQuasar } from 'quasar';
+import { defineComponent, reactive } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+import { langObjects } from '../constants/i18nConstants';
+
+export default defineComponent({
+  name: 'PageAccount',
+
+  setup() {
+    const $q = useQuasar();
+    const { t } = useI18n();
+    const router = useRouter();
+
+    const account = reactive({
+      data: {
+        firstName: null,
+        lastName: null,
+        email: null,
+        langKey: null,
+        authorities: [],
+      },
+    });
+
+    const fetchAccount = async () => {
+      account.data = (await api.get('/api/account')).data;
+    };
+
+    fetchAccount();
+
+    const onSubmit = async () => {
+      try {
+        await api.post('/api/account', account.data);
+        loadTranslation(account.data.langKey);
+        router.push('/');
+      } catch (e) {
+        $q.notify({
+          type: 'negative',
+          message: t(e.response.data.message),
+        });
+      }
+    };
+
+    return {
+      account,
+      langObjects,
+      onSubmit,
+    };
+  },
+});
+</script>

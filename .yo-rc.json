@@ -2,8 +2,8 @@
   "generator-jhipster": {
     "applicationType": "monolith",
     "baseName": "k12",
-    "jhipsterVersion": "7.2.0",
-    "skipClient": true,
+    "jhipsterVersion": "7.1.0",
+    "skipClient": false,
     "skipServer": false,
     "skipUserManagement": false,
     "skipCheckLengthOfIdentifier": false,
@@ -12,13 +12,23 @@
     "entitySuffix": "",
     "dtoSuffix": "DTO",
     "testFrameworks": [],
-    "blueprints": [],
-    "otherModules": [],
+    "blueprints": [
+      {
+        "name": "generator-jhipster-quasar",
+        "version": "0.10.35"
+      }
+    ],
+    "otherModules": [
+      {
+        "name": "generator-jhipster-quasar",
+        "version": "0.10.35"
+      }
+    ],
     "pages": [],
     "creationTimestamp": 1633284734442,
-    "serviceDiscoveryType": "no",
+    "serviceDiscoveryType": false,
     "reactive": false,
-    "authenticationType": "session",
+    "authenticationType": "jwt",
     "packageName": "com.midorlo.k12",
     "serverPort": "8080",
     "cacheProvider": "ehcache",
@@ -42,6 +52,8 @@
     "clientThemeVariant": "",
     "withAdminUi": true,
     "enableGradleEnterprise": false,
-    "languages": ["en", "fr"]
+    "languages": ["en", "fr"],
+    "packageFolder": "com/midorlo/k12",
+    "jwtSecretKey": "MzJmNGU0MmNlMTA2YThkMDQ3MDkzZTNiOGQzNWU0ZmMwMmM1OTU0M2FhMzZmMGVlY2Q1MjQ3OGFkZThkOGQzYjcxZGRhODZiZDg4NjQzYjY0NThjMDkyZWFjMzY5NGM4NjI3NzRhYzkyNjBmZGRmYzliYTIzMzE1NzdkZmI3OTM="
   }
 }

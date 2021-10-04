@@ -1,0 +1,74 @@
+<template>
+  <q-page class="q-pa-md flex flex-center">
+    <q-form
+      @submit="onSubmit"
+      class="responsive-width q-gutter-md"
+      greedy
+    >
+      <q-input
+        autocomplete="new-password"
+        v-model="reset.newPassword"
+        type="password"
+        :label="$t('global.form[\'newpassword.label\']')"
+        lazy-rules
+        :rules="[$rules.required(), $rules.minLength(4), $rules.maxLength(100)]"
+        @keydown.enter.prevent
+      />
+      <q-input
+        autocomplete="new-password"
+        v-model="reset.newPassword2"
+        type="password"
+        :label="$t('global.form[\'confirmpassword.label\']')"
+        lazy-rules
+        :rules="[$rules.sameAs(reset.newPassword)]"
+      />
+      <div class="flex justify-between">
+        <q-btn
+          type="submit"
+          color="primary"
+          :label="$t('reset.finish.form.button')"
+        />
+      </div>
+    </q-form>
+  </q-page>
+</template>
+
+<script>
+import { api } from 'boot/axios';
+import { useQuasar } from 'quasar';
+import { defineComponent, reactive } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
+export default defineComponent({
+  name: 'ResetPassword',
+
+  setup() {
+    const $q = useQuasar();
+    const router = useRouter();
+    const route = useRoute();
+
+    const reset = reactive({
+      key: route.query.key,
+      newPassword: null,
+      newPassword2: null,
+    });
+
+    const onSubmit = async () => {
+      try {
+        await api.post('/api/account/reset-password/finish', reset);
+        router.push('/');
+      } catch (e) {
+        $q.notify({
+          type: 'negative',
+          message: e.response.data.title,
+        });
+      }
+    };
+
+    return {
+      reset,
+      onSubmit,
+    };
+  },
+});
+</script>

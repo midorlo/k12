@@ -1,0 +1,45 @@
+import intersectionBy from 'lodash/intersectionBy';
+import { Quasar } from 'quasar';
+import { boot } from 'quasar/wrappers';
+import { createI18n } from 'vue-i18n';
+import { datefnsMapping, langObjects, quasarLangMapping } from '../constants/i18nConstants';
+
+const i18n = createI18n();
+
+export default boot(({ app }) => {
+  app.use(i18n);
+});
+
+const loadTranslation = async langKey => {
+  const response = await fetch(`/i18n/${langKey}.json?cache=${process.env.BUILD_TIME}`);
+  const data = await response.json();
+  const mapping = datefnsMapping[langKey];
+  window.__localeId__ = mapping || langKey;
+  i18n.global.locale = langKey;
+
+  const messages = JSON.parse(JSON.stringify(data).replaceAll('{{ ', '{').replaceAll(' }}', '}'));
+  i18n.global.setLocaleMessage(langKey, messages);
+
+  const quasarLang = quasarLangMapping[langKey] || langKey;
+
+  try {
+    const lang = await import(`quasar/lang/${quasarLang}`);
+    Quasar.lang.set(lang.default);
+  } catch (e) {
+    console.log(`Unavailable Quasar Language Pack: ${quasarLang}, fallback to en-US`);
+    const lang = await import('quasar/lang/en-US');
+    Quasar.lang.set(lang.default);
+  }
+};
+
+const availableLanguages = intersectionBy(
+  navigator.languages.map(lang => {
+    return { key: lang.toLowerCase() };
+  }),
+  langObjects,
+  'key'
+);
+
+loadTranslation(availableLanguages[0]?.key || langObjects[0].key);
+
+export { i18n, loadTranslation };
