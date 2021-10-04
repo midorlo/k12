@@ -36,13 +36,11 @@ public class StringFilter extends Filter<String> {
      */
     public StringFilter(final StringFilter filter) {
         super(filter);
-        this.contains       = filter.contains;
+        this.contains = filter.contains;
         this.doesNotContain = filter.doesNotContain;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public StringFilter copy() {
         return new StringFilter(this);
@@ -88,9 +86,7 @@ public class StringFilter extends Filter<String> {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -104,31 +100,27 @@ public class StringFilter extends Filter<String> {
         }
         final StringFilter that = (StringFilter) o;
         return Objects.equals(contains, that.contains) &&
-               Objects.equals(doesNotContain, that.doesNotContain);
+            Objects.equals(doesNotContain, that.doesNotContain);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), contains, doesNotContain);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return getFilterName() + " ["
-               + (getEquals() != null ? "equals=" + getEquals() + ", " : "")
-               + (getNotEquals() != null ? "notEquals=" + getNotEquals() + ", " : "")
-               + (getSpecified() != null ? "specified=" + getSpecified() + ", " : "")
-               + (getIn() != null ? "in=" + getIn() + ", " : "")
-               + (getNotIn() != null ? "notIn=" + getNotIn() + ", " : "")
-               + (getContains() != null ? "contains=" + getContains() + ", " : "")
-               + (getDoesNotContain() != null ? "doesNotContain=" + getDoesNotContain() : "")
-               + "]";
+            + (getEquals() != null ? "equals=" + getEquals() + ", " : "")
+            + (getNotEquals() != null ? "notEquals=" + getNotEquals() + ", " : "")
+            + (getSpecified() != null ? "specified=" + getSpecified() + ", " : "")
+            + (getIn() != null ? "in=" + getIn() + ", " : "")
+            + (getNotIn() != null ? "notIn=" + getNotIn() + ", " : "")
+            + (getContains() != null ? "contains=" + getContains() + ", " : "")
+            + (getDoesNotContain() != null ? "doesNotContain=" + getDoesNotContain() : "")
+            + "]";
     }
 
 }

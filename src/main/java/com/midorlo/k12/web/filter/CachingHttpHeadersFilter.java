@@ -12,16 +12,14 @@ import java.util.concurrent.TimeUnit;
  */
 public class CachingHttpHeadersFilter implements Filter {
 
-    /**
-     * Constant <code>DEFAULT_DAYS_TO_LIVE=1461</code>
-     */
-    public static final int  DEFAULT_DAYS_TO_LIVE    = 1461; // 4 years
-    /**
-     * Constant <code>DEFAULT_SECONDS_TO_LIVE=TimeUnit.DAYS.toMillis(DEFAULT_DAYS_TO_LIVE)</code>
-     */
+    /** Constant <code>DEFAULT_DAYS_TO_LIVE=1461</code> */
+    public static final int DEFAULT_DAYS_TO_LIVE = 1461; // 4 years
+    /** Constant <code>DEFAULT_SECONDS_TO_LIVE=TimeUnit.DAYS.toMillis(DEFAULT_DAYS_TO_LIVE)</code> */
     public static final long DEFAULT_SECONDS_TO_LIVE = TimeUnit.DAYS.toMillis(DEFAULT_DAYS_TO_LIVE);
-    private final ApplicationProperties applicationProperties;
+
     private long cacheTimeToLive = DEFAULT_SECONDS_TO_LIVE;
+
+    private final ApplicationProperties applicationProperties;
 
     /**
      * <p>Constructor for CachingHttpHeadersFilter.</p>
@@ -32,25 +30,19 @@ public class CachingHttpHeadersFilter implements Filter {
         this.applicationProperties = applicationProperties;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void init(FilterConfig filterConfig) {
         cacheTimeToLive = TimeUnit.DAYS.toMillis(applicationProperties.getHttp().getCache().getTimeToLiveInDays());
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void destroy() {
         // Nothing to destroy
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
         throws IOException, ServletException {

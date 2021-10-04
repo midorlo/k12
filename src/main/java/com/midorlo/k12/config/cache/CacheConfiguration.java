@@ -22,9 +22,9 @@ import java.time.Duration;
 @EnableCaching
 public class CacheConfiguration {
 
+    private GitProperties gitProperties;
+    private BuildProperties buildProperties;
     private final javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration;
-    private       GitProperties                                           gitProperties;
-    private       BuildProperties                                         buildProperties;
 
     public CacheConfiguration(ApplicationProperties applicationProperties) {
         ApplicationProperties.Cache.Ehcache ehcache = applicationProperties.getCache().getEhcache();
@@ -32,8 +32,7 @@ public class CacheConfiguration {
         jcacheConfiguration =
             Eh107Configuration.fromEhcacheCacheConfiguration(
                 CacheConfigurationBuilder
-                    .newCacheConfigurationBuilder(Object.class, Object.class,
-                                                  ResourcePoolsBuilder.heap(ehcache.getMaxEntries()))
+                    .newCacheConfigurationBuilder(Object.class, Object.class, ResourcePoolsBuilder.heap(ehcache.getMaxEntries()))
                     .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(ehcache.getTimeToLiveSeconds())))
                     .build()
             );

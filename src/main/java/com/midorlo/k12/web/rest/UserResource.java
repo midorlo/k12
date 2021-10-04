@@ -62,21 +62,23 @@ import java.util.Optional;
 public class UserResource {
 
     private static final List<String> ALLOWED_ORDERED_PROPERTIES = List.of("id", "login", "firstName", "lastName",
-                                                                           "email", "activated", "langKey",
-                                                                           "createdBy", "createdDate",
-                                                                           "lastModifiedBy", "lastModifiedDate");
+                                                                           "email", "activated", "langKey", "createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate");
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
-    private final UserService userService;
-    private final UserRepository userRepository;
-    private final MailService mailService;
+
     @Value("${application.clientApp.name}")
     private String applicationName;
 
+    private final UserService userService;
+
+    private final UserRepository userRepository;
+
+    private final MailService mailService;
+
     public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
-        this.userService    = userService;
+        this.userService = userService;
         this.userRepository = userRepository;
-        this.mailService    = mailService;
+        this.mailService = mailService;
     }
 
     /**
@@ -87,9 +89,8 @@ public class UserResource {
      * The user needs to be activated on creation.
      *
      * @param userDTO the user to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new user, or with
-     * status {@code 400 (Bad Request)} if the login or email is already in use.
-     * @throws URISyntaxException       if the Location URI syntax is incorrect.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new user, or with status {@code 400 (Bad Request)} if the login or email is already in use.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      * @throws BadRequestAlertException {@code 400 (Bad Request)} if the login or email is already in use.
      */
     @PostMapping("/users")
@@ -110,8 +111,7 @@ public class UserResource {
             return ResponseEntity
                 .created(new URI("/api/admin/users/" + newUser.getLogin()))
                 .headers(
-                    HeaderUtil.createAlert(applicationName, "A user is created with identifier " + newUser.getLogin()
-                        , newUser.getLogin())
+                    HeaderUtil.createAlert(applicationName, "A user is created with identifier " + newUser.getLogin(), newUser.getLogin())
                 )
                 .body(newUser);
         }
@@ -141,14 +141,12 @@ public class UserResource {
 
         return ResponseUtil.wrapOrNotFound(
             updatedUser,
-            HeaderUtil.createAlert(applicationName, "A user is updated with identifier " + userDTO.getLogin(),
-                                   userDTO.getLogin())
+            HeaderUtil.createAlert(applicationName, "A user is updated with identifier " + userDTO.getLogin(), userDTO.getLogin())
         );
     }
 
     /**
-     * {@code GET /admin/users} : get all users with all the details - calling this are only allowed for the
-     * administrators.
+     * {@code GET /admin/users} : get all users with all the details - calling this are only allowed for the administrators.
      *
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
@@ -161,9 +159,8 @@ public class UserResource {
             return ResponseEntity.badRequest().build();
         }
 
-        final Page<AdminUserDTO> page    = userService.getAllManagedUsers(pageable);
-        HttpHeaders              headers =
-            PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        final Page<AdminUserDTO> page = userService.getAllManagedUsers(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -175,8 +172,7 @@ public class UserResource {
      * {@code GET /admin/users/:login} : get the "login" user.
      *
      * @param login the login of the user to find.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the "login" user, or with status
-     * {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the "login" user, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/users/{login}")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")

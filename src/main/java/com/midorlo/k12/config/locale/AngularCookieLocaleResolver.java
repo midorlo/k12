@@ -22,14 +22,10 @@ import java.util.TimeZone;
  */
 public class AngularCookieLocaleResolver extends CookieLocaleResolver {
 
-    /**
-     * Constant <code>QUOTE="%22"</code>
-     */
+    /** Constant <code>QUOTE="%22"</code> */
     public static final String QUOTE = "%22";
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @NonNull
     @Override
     public Locale resolveLocale(@NonNull HttpServletRequest request) {
@@ -37,9 +33,7 @@ public class AngularCookieLocaleResolver extends CookieLocaleResolver {
         return (Locale) request.getAttribute(LOCALE_REQUEST_ATTRIBUTE_NAME);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @NonNull
     @Override
     public LocaleContext resolveLocaleContext(@NonNull final HttpServletRequest request) {
@@ -57,9 +51,7 @@ public class AngularCookieLocaleResolver extends CookieLocaleResolver {
         };
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addCookie(@NonNull HttpServletResponse response, @NonNull String cookieValue) {
         // Mandatory cookie modification for AngularJS to support the locale switching on the server side.
@@ -69,8 +61,8 @@ public class AngularCookieLocaleResolver extends CookieLocaleResolver {
     private void parseAngularCookieIfNecessary(HttpServletRequest request) {
         if (request.getAttribute(LOCALE_REQUEST_ATTRIBUTE_NAME) == null) {
             // Retrieve and parse cookie value.
-            Cookie   cookie   = WebUtils.getCookie(request, getCookieName());
-            Locale   locale   = null;
+            Cookie cookie = WebUtils.getCookie(request, getCookieName());
+            Locale locale = null;
             TimeZone timeZone = null;
             if (cookie != null) {
                 String value = cookie.getValue();
@@ -78,11 +70,11 @@ public class AngularCookieLocaleResolver extends CookieLocaleResolver {
                 // Remove the double quote
                 value = StringUtils.replace(value, QUOTE, "");
 
-                String localePart   = value;
+                String localePart = value;
                 String timeZonePart = null;
-                int    spaceIndex   = localePart.indexOf(' ');
+                int spaceIndex = localePart.indexOf(' ');
                 if (spaceIndex != -1) {
-                    localePart   = value.substring(0, spaceIndex);
+                    localePart = value.substring(0, spaceIndex);
                     timeZonePart = value.substring(spaceIndex + 1);
                 }
                 locale = !"-".equals(localePart) ? StringUtils.parseLocaleString(localePart.replace('-', '_')) : null;
@@ -91,14 +83,14 @@ public class AngularCookieLocaleResolver extends CookieLocaleResolver {
                 }
                 if (logger.isTraceEnabled()) {
                     logger.trace("Parsed cookie value [" + cookie.getValue() + "] into locale '" + locale +
-                                 "'" + (timeZone != null ? " and time zone '" + timeZone.getID() + "'" : ""));
+                        "'" + (timeZone != null ? " and time zone '" + timeZone.getID() + "'" : ""));
                 }
             }
             request.setAttribute(LOCALE_REQUEST_ATTRIBUTE_NAME,
-                                 locale != null ? locale : determineDefaultLocale(request));
+                locale != null ? locale : determineDefaultLocale(request));
 
             request.setAttribute(TIME_ZONE_REQUEST_ATTRIBUTE_NAME,
-                                 timeZone != null ? timeZone : determineDefaultTimeZone(request));
+                timeZone != null ? timeZone : determineDefaultTimeZone(request));
         }
     }
 

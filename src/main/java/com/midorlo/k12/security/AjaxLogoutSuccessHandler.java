@@ -13,9 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AjaxLogoutSuccessHandler extends AbstractAuthenticationTargetUrlRequestHandler
     implements LogoutSuccessHandler {
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
                                 Authentication authentication) {

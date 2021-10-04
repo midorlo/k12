@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class ActiveProfilesInfoContributor implements InfoContributor {
 
-    private static final String       ACTIVE_PROFILES = "activeProfiles";
-    private final        List<String> profiles;
+    private static final String ACTIVE_PROFILES = "activeProfiles";
+    private final List<String> profiles;
 
     /**
      * <p>Constructor for ActiveProfilesInfoContributor.</p>
@@ -24,9 +24,7 @@ public class ActiveProfilesInfoContributor implements InfoContributor {
         this.profiles = Arrays.asList(environment.getActiveProfiles());
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void contribute(Info.Builder builder) {
         builder.withDetail(ACTIVE_PROFILES, this.profiles);

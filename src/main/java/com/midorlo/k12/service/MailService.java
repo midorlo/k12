@@ -26,9 +26,12 @@ import java.util.Locale;
 @Service
 public class MailService {
 
-    private static final String USER = "user";
-    private static final String BASE_URL = "baseUrl";
     private final Logger log = LoggerFactory.getLogger(MailService.class);
+
+    private static final String USER = "user";
+
+    private static final String BASE_URL = "baseUrl";
+
     private final ApplicationProperties applicationProperties;
 
     private final JavaMailSender javaMailSender;
@@ -46,8 +49,8 @@ public class MailService {
     ) {
         this.applicationProperties = applicationProperties;
         this.javaMailSender        = javaMailSender;
-        this.messageSource         = messageSource;
-        this.templateEngine        = templateEngine;
+        this.messageSource = messageSource;
+        this.templateEngine = templateEngine;
     }
 
     @Async
@@ -82,7 +85,7 @@ public class MailService {
             log.debug("Email doesn't exist for user '{}'", user.getLogin());
             return;
         }
-        Locale  locale  = Locale.forLanguageTag(user.getLangKey());
+        Locale locale = Locale.forLanguageTag(user.getLangKey());
         Context context = new Context(locale);
         context.setVariable(USER, user);
         context.setVariable(BASE_URL, applicationProperties.getMail().getBaseUrl());

@@ -38,8 +38,7 @@ public class LiquibaseConfiguration {
         DataSourceProperties dataSourceProperties
     ) {
         // If you don't want Liquibase to start asynchronously, substitute by this:
-        // SpringLiquibase liquibase = SpringLiquibaseUtil.createSpringLiquibase(liquibaseDataSource.getIfAvailable()
-        // , liquibaseProperties, dataSource.getIfUnique(), dataSourceProperties);
+        // SpringLiquibase liquibase = SpringLiquibaseUtil.createSpringLiquibase(liquibaseDataSource.getIfAvailable(), liquibaseProperties, dataSource.getIfUnique(), dataSourceProperties);
         SpringLiquibase liquibase = SpringLiquibaseUtil.createAsyncSpringLiquibase(
             this.env,
             executor,

@@ -35,16 +35,17 @@ import java.util.stream.Collectors;
  * The error response follows RFC7807 - Problem Details for HTTP APIs (https://tools.ietf.org/html/rfc7807).
  */
 @ControllerAdvice
-public class ExceptionTranslator implements ProblemHandling,
-                                            SecurityAdviceTrait {
+public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait {
 
     private static final String FIELD_ERRORS_KEY = "fieldErrors";
-    private static final String MESSAGE_KEY      = "message";
-    private static final String PATH_KEY         = "path";
-    private static final String VIOLATIONS_KEY   = "violations";
-    private final Environment env;
+    private static final String MESSAGE_KEY = "message";
+    private static final String PATH_KEY = "path";
+    private static final String VIOLATIONS_KEY = "violations";
+
     @Value("${application.clientApp.name}")
     private String applicationName;
+
+    private final Environment env;
 
     public ExceptionTranslator(Environment env) {
         this.env = env;
@@ -54,8 +55,7 @@ public class ExceptionTranslator implements ProblemHandling,
      * Post-process the Problem payload to add the message key for the front-end if needed.
      */
     @Override
-    public ResponseEntity<Problem> process(@Nullable ResponseEntity<Problem> entity,
-                                           @NonNull NativeWebRequest request) {
+    public ResponseEntity<Problem> process(@Nullable ResponseEntity<Problem> entity, @NonNull NativeWebRequest request) {
         if (entity == null) {
             return null;
         }
@@ -65,7 +65,7 @@ public class ExceptionTranslator implements ProblemHandling,
         }
 
         HttpServletRequest nativeRequest = request.getNativeRequest(HttpServletRequest.class);
-        String             requestUri    = nativeRequest != null ? nativeRequest.getRequestURI() : StringUtils.EMPTY;
+        String requestUri = nativeRequest != null ? nativeRequest.getRequestURI() : StringUtils.EMPTY;
         ProblemBuilder builder = Problem
             .builder()
             .withType(Problem.DEFAULT_TYPE.equals(problem.getType()) ? ErrorConstants.DEFAULT_TYPE : problem.getType())
@@ -78,8 +78,7 @@ public class ExceptionTranslator implements ProblemHandling,
                 .with(VIOLATIONS_KEY, ((ConstraintViolationProblem) problem).getViolations())
                 .with(MESSAGE_KEY, ErrorConstants.ERR_VALIDATION);
         } else {
-            builder.withCause(((DefaultProblem) problem).getCause()).withDetail(problem.getDetail())
-                   .withInstance(problem.getInstance());
+            builder.withCause(((DefaultProblem) problem).getCause()).withDetail(problem.getDetail()).withInstance(problem.getInstance());
             problem.getParameters().forEach(builder::with);
             if (!problem.getParameters().containsKey(MESSAGE_KEY) && problem.getStatus() != null) {
                 builder.with(MESSAGE_KEY, "error.http." + problem.getStatus().getStatusCode());
@@ -89,18 +88,17 @@ public class ExceptionTranslator implements ProblemHandling,
     }
 
     @Override
-    public ResponseEntity<Problem> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                @Nonnull NativeWebRequest request) {
+    public ResponseEntity<Problem> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, @Nonnull NativeWebRequest request) {
         BindingResult result = ex.getBindingResult();
         List<FieldErrorVM> fieldErrors = result
             .getFieldErrors()
             .stream()
             .map(f ->
-                     new FieldErrorVM(
-                         f.getObjectName().replaceFirst("DTO$", ""),
-                         f.getField(),
-                         StringUtils.isNotBlank(f.getDefaultMessage()) ? f.getDefaultMessage() : f.getCode()
-                     )
+                new FieldErrorVM(
+                    f.getObjectName().replaceFirst("DTO$", ""),
+                    f.getField(),
+                    StringUtils.isNotBlank(f.getDefaultMessage()) ? f.getDefaultMessage() : f.getCode()
+                )
             )
             .collect(Collectors.toList());
 
@@ -124,8 +122,7 @@ public class ExceptionTranslator implements ProblemHandling,
         return create(
             problem,
             request,
-            HeaderUtil.createFailureAlert(applicationName, false, problem.getEntityName(), problem.getErrorKey(),
-                                          problem.getMessage())
+            HeaderUtil.createFailureAlert(applicationName, false, problem.getEntityName(), problem.getErrorKey(), problem.getMessage())
         );
     }
 
@@ -138,8 +135,7 @@ public class ExceptionTranslator implements ProblemHandling,
         return create(
             problem,
             request,
-            HeaderUtil.createFailureAlert(applicationName, false, problem.getEntityName(), problem.getErrorKey(),
-                                          problem.getMessage())
+            HeaderUtil.createFailureAlert(applicationName, false, problem.getEntityName(), problem.getErrorKey(), problem.getMessage())
         );
     }
 
@@ -152,8 +148,7 @@ public class ExceptionTranslator implements ProblemHandling,
     }
 
     @ExceptionHandler
-    public ResponseEntity<Problem> handleBadRequestAlertException(BadRequestAlertException ex,
-                                                                  NativeWebRequest request) {
+    public ResponseEntity<Problem> handleBadRequestAlertException(BadRequestAlertException ex, NativeWebRequest request) {
         return create(
             ex,
             request,
@@ -163,15 +158,12 @@ public class ExceptionTranslator implements ProblemHandling,
 
     @ExceptionHandler
     public ResponseEntity<Problem> handleConcurrencyFailure(ConcurrencyFailureException ex, NativeWebRequest request) {
-        Problem problem = Problem.builder().withStatus(Status.CONFLICT)
-                                 .with(MESSAGE_KEY, ErrorConstants.ERR_CONCURRENCY_FAILURE).build();
+        Problem problem = Problem.builder().withStatus(Status.CONFLICT).with(MESSAGE_KEY, ErrorConstants.ERR_CONCURRENCY_FAILURE).build();
         return create(ex, problem, request);
     }
 
     @Override
-    public ProblemBuilder prepare(@NonNull final Throwable throwable,
-                                  @NonNull final StatusType status,
-                                  @NonNull final URI type) {
+    public ProblemBuilder prepare(@NonNull final Throwable throwable, @NonNull final StatusType status, @NonNull final URI type) {
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
 
         if (activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_PRODUCTION)) {
@@ -183,8 +175,7 @@ public class ExceptionTranslator implements ProblemHandling,
                     .withStatus(status)
                     .withDetail("Unable to convert http message")
                     .withCause(
-                        Optional.ofNullable(throwable.getCause()).filter(cause -> isCausalChainsEnabled())
-                                .map(this::toProblem).orElse(null)
+                        Optional.ofNullable(throwable.getCause()).filter(cause -> isCausalChainsEnabled()).map(this::toProblem).orElse(null)
                     );
             }
             if (throwable instanceof DataAccessException) {
@@ -195,8 +186,7 @@ public class ExceptionTranslator implements ProblemHandling,
                     .withStatus(status)
                     .withDetail("Failure during data access")
                     .withCause(
-                        Optional.ofNullable(throwable.getCause()).filter(cause -> isCausalChainsEnabled())
-                                .map(this::toProblem).orElse(null)
+                        Optional.ofNullable(throwable.getCause()).filter(cause -> isCausalChainsEnabled()).map(this::toProblem).orElse(null)
                     );
             }
             if (containsPackageName(throwable.getMessage())) {
@@ -207,8 +197,7 @@ public class ExceptionTranslator implements ProblemHandling,
                     .withStatus(status)
                     .withDetail("Unexpected runtime exception")
                     .withCause(
-                        Optional.ofNullable(throwable.getCause()).filter(cause -> isCausalChainsEnabled())
-                                .map(this::toProblem).orElse(null)
+                        Optional.ofNullable(throwable.getCause()).filter(cause -> isCausalChainsEnabled()).map(this::toProblem).orElse(null)
                     );
             }
         }
@@ -220,8 +209,7 @@ public class ExceptionTranslator implements ProblemHandling,
             .withStatus(status)
             .withDetail(throwable.getMessage())
             .withCause(
-                Optional.ofNullable(throwable.getCause()).filter(cause -> isCausalChainsEnabled()).map(this::toProblem)
-                        .orElse(null)
+                Optional.ofNullable(throwable.getCause()).filter(cause -> isCausalChainsEnabled()).map(this::toProblem).orElse(null)
             );
     }
 

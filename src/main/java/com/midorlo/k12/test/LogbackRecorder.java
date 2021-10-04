@@ -21,62 +21,35 @@ import java.util.WeakHashMap;
  * <p>
  * {@code
  * LogbackRecorder recorder = LogbackRecorder.forClass(TestedClass.class)
- * .reset()
- * .capture(Level.WARN.name());
+ *   .reset()
+ *   .capture(Level.WARN.name());
  * // do something that logs
  * List<LogbackRecorder.Event> events = recorder.release().play();
  * // perform assertions on the events
  * }
  */
-@ConditionalOnClass({ LoggerContext.class })
+@ConditionalOnClass({LoggerContext.class})
 public class LogbackRecorder {
 
-    /**
-     * Constant <code>DEFAULT_MUTE=true</code>
-     */
-    public static final boolean DEFAULT_MUTE  = true;
-    /**
-     * Constant <code>DEFAULT_LEVEL="ALL"</code>
-     */
-    public static final String  DEFAULT_LEVEL = "ALL";
+    /** Constant <code>DEFAULT_MUTE=true</code> */
+    public static final boolean DEFAULT_MUTE = true;
+    /** Constant <code>DEFAULT_LEVEL="ALL"</code> */
+    public static final String DEFAULT_LEVEL = "ALL";
 
-    /**
-     * Constant <code>LOGBACK_EXCEPTION_MESSAGE="Expected logback"</code>
-     */
+    /** Constant <code>LOGBACK_EXCEPTION_MESSAGE="Expected logback"</code> */
     public static final String LOGBACK_EXCEPTION_MESSAGE = "Expected logback";
-    /**
-     * Constant <code>CAPTURE_EXCEPTION_MESSAGE="Already capturing"</code>
-     */
+    /** Constant <code>CAPTURE_EXCEPTION_MESSAGE="Already capturing"</code> */
     public static final String CAPTURE_EXCEPTION_MESSAGE = "Already capturing";
-    /**
-     * Constant <code>RELEASE_EXCEPTION_MESSAGE="Not currently capturing"</code>
-     */
+    /** Constant <code>RELEASE_EXCEPTION_MESSAGE="Not currently capturing"</code> */
     public static final String RELEASE_EXCEPTION_MESSAGE = "Not currently capturing";
 
     private static final LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-    private static final Object        lock    = context.getConfigurationLock();
+    private static final Object lock = context.getConfigurationLock();
 
     private static final Map<Logger, LogbackRecorder> instances = new WeakHashMap<>(32, 0.75F);
-    private final Logger                      logger;
-    private final List<Event>                 events;
-    private final AppenderBase<ILoggingEvent> appender;
-    private       boolean                     active;
-    private       boolean                     additive;
-    private       Level                       level;
-    private LogbackRecorder(Logger logger) {
-        this.logger   = logger;
-        this.events   = new ArrayList<>();
-        this.appender = new AppenderBase<>() {
-            @Override
-            protected synchronized void append(ILoggingEvent event) {
-                events.add(new Event(event));
-            }
-        };
-    }
 
     /**
-     * Create a recorder for a logback logger identified by the class name. Instances of a recorder are cached per
-     * logger.
+     * Create a recorder for a logback logger identified by the class name. Instances of a recorder are cached per logger.
      * Make sure to reset it before starting capture.
      *
      * @param clazz class whose logger as its name
@@ -118,6 +91,24 @@ public class LogbackRecorder {
         }
     }
 
+    private final Logger logger;
+    private final List<Event> events;
+    private final AppenderBase<ILoggingEvent> appender;
+    private boolean active;
+    private boolean additive;
+    private Level level;
+
+    private LogbackRecorder(Logger logger) {
+        this.logger = logger;
+        this.events = new ArrayList<>();
+        this.appender = new AppenderBase<>() {
+            @Override
+            protected synchronized void append(ILoggingEvent event) {
+                events.add(new Event(event));
+            }
+        };
+    }
+
     /**
      * Resets the logger by clearing everything that was recorded so far.
      *
@@ -139,7 +130,7 @@ public class LogbackRecorder {
             if (this.active) {
                 throw new IllegalStateException(CAPTURE_EXCEPTION_MESSAGE);
             }
-            this.active   = true;
+            this.active = true;
             this.additive = logger.isAdditive();
             this.logger.setAdditive(false);
             this.level = logger.getLevel();
@@ -183,16 +174,16 @@ public class LogbackRecorder {
      */
     public static final class Event {
 
-        private final Marker   marker;
-        private final String   level;
-        private final String   message;
+        private final Marker marker;
+        private final String level;
+        private final String message;
         private final Object[] arguments;
-        private final String   thrown;
+        private final String thrown;
 
         Event(ILoggingEvent event) {
-            this.marker    = event.getMarker();
-            this.level     = event.getLevel().toString();
-            this.message   = event.getMessage();
+            this.marker = event.getMarker();
+            this.level = event.getLevel().toString();
+            this.message = event.getMessage();
             this.arguments = event.getArgumentArray();
             final IThrowableProxy proxy = event.getThrowableProxy();
             this.thrown = proxy == null ? null : proxy.getClassName() + ": " + proxy.getMessage();

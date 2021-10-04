@@ -13,8 +13,7 @@ import java.util.Map;
  * Properties specific to Application.
  *
  * <p> Properties are configured in the application.yml file. </p>
- * <p> This class also load properties in the Spring Environment from the git.properties and META-INF/build-info
- * .properties
+ * <p> This class also load properties in the Spring Environment from the git.properties and META-INF/build-info.properties
  * files if they are found in the classpath.</p>
  */
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
@@ -361,11 +360,15 @@ public class ApplicationProperties {
 
         public static class Infinispan {
 
-            private final Local local = new Local();
-            private final Distributed distributed = new Distributed();
-            private final Replicated replicated = new Replicated();
             private String configFile = ApplicationDefaults.Cache.Infinispan.configFile;
+
             private boolean statsEnabled = ApplicationDefaults.Cache.Infinispan.statsEnabled;
+
+            private final Local local = new Local();
+
+            private final Distributed distributed = new Distributed();
+
+            private final Replicated replicated = new Replicated();
 
             public String getConfigFile() {
                 return configFile;
@@ -479,14 +482,18 @@ public class ApplicationProperties {
 
         public static class Memcached {
 
-            private final Authentication authentication = new Authentication();
             private boolean enabled = ApplicationDefaults.Cache.Memcached.enabled;
+
             /**
              * Comma or whitespace separated list of servers' addresses.
              */
             private String servers = ApplicationDefaults.Cache.Memcached.servers;
+
             private int expiration = ApplicationDefaults.Cache.Memcached.expiration;
+
             private boolean useBinaryProtocol = ApplicationDefaults.Cache.Memcached.useBinaryProtocol;
+
+            private final Authentication authentication = new Authentication();
 
             public boolean isEnabled() {
                 return enabled;
@@ -527,8 +534,8 @@ public class ApplicationProperties {
             public static class Authentication {
 
                 private boolean enabled = ApplicationDefaults.Cache.Memcached.Authentication.enabled;
-                private String  username;
-                private String  password;
+                private String username;
+                private String password;
 
                 public boolean isEnabled() {
                     return enabled;
@@ -560,16 +567,13 @@ public class ApplicationProperties {
         }
 
         public static class Redis {
-            private String[] server                                = ApplicationDefaults.Cache.Redis.server;
-            private int      expiration                            = ApplicationDefaults.Cache.Redis.expiration;
-            private boolean  cluster                               = ApplicationDefaults.Cache.Redis.cluster;
-            private int      connectionPoolSize                    = ApplicationDefaults.Cache.Redis.connectionPoolSize;
-            private int      connectionMinimumIdleSize             =
-                ApplicationDefaults.Cache.Redis.connectionMinimumIdleSize;
-            private int      subscriptionConnectionPoolSize        =
-                ApplicationDefaults.Cache.Redis.subscriptionConnectionPoolSize;
-            private int      subscriptionConnectionMinimumIdleSize =
-                ApplicationDefaults.Cache.Redis.subscriptionConnectionMinimumIdleSize;
+            private String[] server = ApplicationDefaults.Cache.Redis.server;
+            private int expiration = ApplicationDefaults.Cache.Redis.expiration;
+            private boolean cluster = ApplicationDefaults.Cache.Redis.cluster;
+            private int connectionPoolSize = ApplicationDefaults.Cache.Redis.connectionPoolSize;
+            private int connectionMinimumIdleSize = ApplicationDefaults.Cache.Redis.connectionMinimumIdleSize;
+            private int subscriptionConnectionPoolSize = ApplicationDefaults.Cache.Redis.subscriptionConnectionPoolSize;
+            private int subscriptionConnectionMinimumIdleSize = ApplicationDefaults.Cache.Redis.subscriptionConnectionMinimumIdleSize;
 
             public String[] getServer() {
                 return server;
@@ -668,11 +672,15 @@ public class ApplicationProperties {
 
     public static class Security {
 
-        private final ClientAuthorization clientAuthorization = new ClientAuthorization();
-        private final Authentication authentication = new Authentication();
-        private final RememberMe rememberMe = new RememberMe();
-        private final OAuth2 oauth2 = new OAuth2();
         private String contentSecurityPolicy = ApplicationDefaults.Security.contentSecurityPolicy;
+
+        private final ClientAuthorization clientAuthorization = new ClientAuthorization();
+
+        private final Authentication authentication = new Authentication();
+
+        private final RememberMe rememberMe = new RememberMe();
+
+        private final OAuth2 oauth2 = new OAuth2();
 
         public ClientAuthorization getClientAuthorization() {
             return clientAuthorization;
@@ -1007,8 +1015,9 @@ public class ApplicationProperties {
 
     public static class Logging {
 
-        private final Logstash logstash = new Logstash();
         private boolean useJsonFormat = ApplicationDefaults.Logging.useJsonFormat;
+
+        private final Logstash logstash = new Logstash();
 
         public boolean isUseJsonFormat() {
             return useJsonFormat;
@@ -1082,12 +1091,13 @@ public class ApplicationProperties {
     public static class Gateway {
 
         private final RateLimiting rateLimiting = new RateLimiting();
-        private Map<String, List<String>> authorizedMicroservicesEndpoints = ApplicationDefaults.Gateway
-            .authorizedMicroservicesEndpoints;
 
         public RateLimiting getRateLimiting() {
             return rateLimiting;
         }
+
+        private Map<String, List<String>> authorizedMicroservicesEndpoints = ApplicationDefaults.Gateway
+            .authorizedMicroservicesEndpoints;
 
         public Map<String, List<String>> getAuthorizedMicroservicesEndpoints() {
             return authorizedMicroservicesEndpoints;

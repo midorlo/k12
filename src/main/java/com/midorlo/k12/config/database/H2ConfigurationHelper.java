@@ -34,11 +34,10 @@ public class H2ConfigurationHelper {
      */
     public static Object createServer(String port) throws SQLException {
         try {
-            ClassLoader loader       = Thread.currentThread().getContextClassLoader();
-            Class<?>    serverClass  = Class.forName("org.h2.tools.Server", true, loader);
-            Method      createServer = serverClass.getMethod("createTcpServer", String[].class);
-            return createServer.invoke(null, new Object[]{ new String[]{ "-tcp", "-tcpAllowOthers", "-tcpPort",
-                                                                         port } });
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            Class<?> serverClass = Class.forName("org.h2.tools.Server", true, loader);
+            Method createServer = serverClass.getMethod("createTcpServer", String[].class);
+            return createServer.invoke(null, new Object[]{new String[]{"-tcp", "-tcpAllowOthers", "-tcpPort", port}});
 
         } catch (ClassNotFoundException | LinkageError e) {
             throw new RuntimeException("Failed to load and initialize org.h2.tools.Server", e);
@@ -76,16 +75,15 @@ public class H2ConfigurationHelper {
         try {
             // We don't want to include H2 when we are packaging for the "prod" profile and won't
             // actually need it, so we have to load / invoke things at runtime through reflection.
-            ClassLoader loader          = Thread.currentThread().getContextClassLoader();
-            Class<?>    serverClass     = Class.forName("org.h2.tools.Server", true, loader);
-            Method      createWebServer = serverClass.getMethod("createWebServer", String[].class);
-            Method      start           = serverClass.getMethod("start");
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            Class<?> serverClass = Class.forName("org.h2.tools.Server", true, loader);
+            Method createWebServer = serverClass.getMethod("createWebServer", String[].class);
+            Method start = serverClass.getMethod("start");
 
-            Object server = createWebServer.invoke(null, new Object[]{ new String[]{ "-properties",
-                                                                                     propertiesLocation } });
+            Object server = createWebServer.invoke(null, new Object[]{new String[]{"-properties", propertiesLocation}});
             start.invoke(server);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to start h2 webserver console", e);
+        } catch (Exception  e) {
+          throw new RuntimeException("Failed to start h2 webserver console", e);
         }
     }
 
@@ -98,9 +96,9 @@ public class H2ConfigurationHelper {
         try {
             // We don't want to include H2 when we are packaging for the "prod" profile and won't
             // actually need it, so we have to load / invoke things at runtime through reflection.
-            ClassLoader loader       = Thread.currentThread().getContextClassLoader();
-            Class<?>    servletClass = Class.forName("org.h2.server.web.WebServlet", true, loader);
-            Servlet     servlet      = (Servlet) servletClass.getDeclaredConstructor().newInstance();
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            Class<?> servletClass = Class.forName("org.h2.server.web.WebServlet", true, loader);
+            Servlet servlet = (Servlet) servletClass.getDeclaredConstructor().newInstance();
 
             ServletRegistration.Dynamic h2ConsoleServlet = servletContext.addServlet("H2Console", servlet);
             h2ConsoleServlet.addMapping("/h2-console/*");

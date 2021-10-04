@@ -46,9 +46,8 @@ public class PublicUserResource {
             return ResponseEntity.badRequest().build();
         }
 
-        final Page<UserDTO> page    = userService.getAllPublicUsers(pageable);
-        HttpHeaders         headers =
-            PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        final Page<UserDTO> page = userService.getAllPublicUsers(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -58,7 +57,6 @@ public class PublicUserResource {
 
     /**
      * Gets a list of all roles.
-     *
      * @return a string list of all roles.
      */
     @GetMapping("/authorities")
