@@ -88,6 +88,8 @@ public class MailService {
         Context context = new Context(locale);
         context.setVariable(USER, user);
         context.setVariable(BASE_URL, applicationProperties.getMail().getBaseUrl());
+        System.out.println(templateName);
+        System.out.println(titleKey);
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
         sendEmail(user.getEmail(), subject, content, false, true);
