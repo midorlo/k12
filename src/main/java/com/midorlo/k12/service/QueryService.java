@@ -1,10 +1,10 @@
 package com.midorlo.k12.service;
 
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.transaction.annotation.Transactional;
 import com.midorlo.k12.service.filter.Filter;
 import com.midorlo.k12.service.filter.RangeFilter;
 import com.midorlo.k12.service.filter.StringFilter;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.Expression;
@@ -237,7 +237,7 @@ public abstract class QueryService<ENTITY> {
             return equalsSpecification(functionToEntity.andThen(entityToColumn), filter.getEquals());
         } else if (filter.getSpecified() != null) {
             // Interestingly, 'functionToEntity' doesn't work, we need the longer lambda formula
-            return byFieldSpecified(root -> functionToEntity.apply(root), filter.getSpecified());
+            return byFieldSpecified(functionToEntity::apply, filter.getSpecified());
         }
         return null;
     }
@@ -307,7 +307,7 @@ public abstract class QueryService<ENTITY> {
         Specification<ENTITY> result = Specification.where(null);
         if (filter.getSpecified() != null) {
             // Interestingly, 'functionToEntity' doesn't work, we need the longer lambda formula
-            result = result.and(byFieldSpecified(root -> functionToEntity.apply(root), filter.getSpecified()));
+            result = result.and(byFieldSpecified(functionToEntity::apply, filter.getSpecified()));
         }
         if (filter.getNotEquals() != null) {
             result = result.and(notEqualsSpecification(fused, filter.getNotEquals()));

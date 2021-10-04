@@ -11,6 +11,7 @@ import reactor.core.publisher.Mono;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+@SuppressWarnings("UastIncorrectHttpHeaderInspection")
 class ResponseUtilTest {
 
     private static final String HEADER_NAME = "X-Test";

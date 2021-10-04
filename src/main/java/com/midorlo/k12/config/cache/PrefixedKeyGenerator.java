@@ -5,6 +5,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.boot.info.GitProperties;
 import org.springframework.cache.interceptor.KeyGenerator;
+import org.springframework.lang.NonNull;
 
 import java.lang.reflect.Method;
 import java.time.Instant;
@@ -68,8 +69,9 @@ public class PrefixedKeyGenerator implements KeyGenerator {
 
 
     /** {@inheritDoc} */
+    @NonNull
     @Override
-    public Object generate(Object target, Method method, Object... params) {
+    public Object generate(@NonNull Object target, Method method, @NonNull Object... params) {
         return new PrefixedSimpleKey(prefix, method.getName(), params);
     }
 }

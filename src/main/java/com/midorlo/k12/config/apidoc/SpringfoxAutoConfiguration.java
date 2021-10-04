@@ -1,5 +1,8 @@
 package com.midorlo.k12.config.apidoc;
 
+import com.midorlo.k12.config.apidoc.customizer.ApplicationSpringfoxCustomizer;
+import com.midorlo.k12.config.apidoc.customizer.SpringfoxCustomizer;
+import com.midorlo.k12.config.application.ApplicationProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
@@ -24,15 +27,12 @@ import springfox.documentation.service.Server;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration;
-import com.midorlo.k12.config.application.ApplicationProperties;
-import com.midorlo.k12.config.apidoc.customizer.ApplicationSpringfoxCustomizer;
-import com.midorlo.k12.config.apidoc.customizer.SpringfoxCustomizer;
 
 import java.nio.ByteBuffer;
 import java.util.*;
 
-import static springfox.documentation.builders.PathSelectors.regex;
 import static com.midorlo.k12.config.application.ApplicationConstants.SPRING_PROFILE_API_DOCS;
+import static springfox.documentation.builders.PathSelectors.regex;
 
 /**
  * Springfox OpenAPI configuration.

@@ -19,7 +19,7 @@ class CookieCsrfFilterTest {
     private static final String CSRF_COOKIE_NAME = "XSRF-TOKEN";
     private static final String TEST_URL = "http://domain1.com/test.html";
 
-    private CookieCsrfFilter filter = new CookieCsrfFilter();
+    private final CookieCsrfFilter filter = new CookieCsrfFilter();
 
     @Test
     void cookieSetInResponse() {

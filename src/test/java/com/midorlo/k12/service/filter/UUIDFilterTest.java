@@ -14,7 +14,7 @@ class UUIDFilterTest {
 
     private UUIDFilter filter;
 
-    private UUID value = UUID.fromString("dbc36987-d354-4ddf-9b53-38ca19b5a409");
+    private final UUID value = UUID.fromString("dbc36987-d354-4ddf-9b53-38ca19b5a409");
 
     @BeforeEach
     void setup() {

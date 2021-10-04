@@ -72,6 +72,26 @@
       "name": "spring.zipkin.locator.discovery.enabled",
       "type": "java.lang.String",
       "description": "Description for spring.zipkin.locator.discovery.enabled."
+    },
+    {
+      "name": "spring.output.ansi.console-available",
+      "type": "java.lang.String",
+      "description": "Description for spring.output.ansi.console-available."
+    },
+    {
+      "name": "management.health.group.readiness.include",
+      "type": "java.lang.String",
+      "description": "Description for management.health.group.readiness.include."
+    },
+    {
+      "name": "management.health.group.liveness.include",
+      "type": "java.lang.String",
+      "description": "Description for management.health.group.liveness.include."
+    },
+    {
+      "name": "spring.cloud",
+      "type": "java.lang.String",
+      "description": "Description for spring.cloud."
     }
   ]
 }

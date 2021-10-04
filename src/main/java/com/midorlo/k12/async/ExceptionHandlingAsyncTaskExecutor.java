@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.task.AsyncTaskExecutor;
+import org.springframework.lang.NonNull;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
@@ -32,13 +33,13 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor,
 
     /** {@inheritDoc} */
     @Override
-    public void execute(Runnable task) {
+    public void execute(@NonNull Runnable task) {
         executor.execute(createWrappedRunnable(task));
     }
 
     /** {@inheritDoc} */
     @Override
-    public void execute(Runnable task, long startTimeout) {
+    public void execute(@NonNull Runnable task, long startTimeout) {
         executor.execute(createWrappedRunnable(task), startTimeout);
     }
 
@@ -73,14 +74,16 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor,
     }
 
     /** {@inheritDoc} */
+    @NonNull
     @Override
-    public Future<?> submit(Runnable task) {
+    public Future<?> submit(@NonNull Runnable task) {
         return executor.submit(createWrappedRunnable(task));
     }
 
     /** {@inheritDoc} */
+    @NonNull
     @Override
-    public <T> Future<T> submit(Callable<T> task) {
+    public <T> Future<T> submit(@NonNull Callable<T> task) {
         return executor.submit(createCallable(task));
     }
 

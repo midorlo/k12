@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings("UastIncorrectHttpHeaderInspection")
 class HeaderUtilTest {
 
     @Test

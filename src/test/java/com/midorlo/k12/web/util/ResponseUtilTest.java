@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
+@SuppressWarnings("UastIncorrectHttpHeaderInspection")
 class ResponseUtilTest {
 
     private static final String HEADER_NAME = "X-Test";

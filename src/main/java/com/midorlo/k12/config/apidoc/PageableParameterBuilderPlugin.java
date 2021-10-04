@@ -3,6 +3,7 @@ package com.midorlo.k12.config.apidoc;
 import com.fasterxml.classmate.ResolvedType;
 import com.fasterxml.classmate.TypeResolver;
 import org.springframework.data.domain.Pageable;
+import org.springframework.lang.NonNull;
 import springfox.documentation.builders.RequestParameterBuilder;
 import springfox.documentation.schema.ScalarType;
 import springfox.documentation.service.ParameterType;
@@ -18,24 +19,37 @@ import java.util.List;
 /**
  * The Springfox Plugin to resolve {@link Pageable} parameter into plain fields.
  */
+@SuppressWarnings("SameReturnValue")
 public class PageableParameterBuilderPlugin implements OperationBuilderPlugin {
 
-    /** Constant <code>DEFAULT_PAGE_NAME="page"</code> */
+    /**
+     * Constant <code>DEFAULT_PAGE_NAME="page"</code>
+     */
     public static final String DEFAULT_PAGE_NAME = "page";
-    /** Constant <code>PAGE_DESCRIPTION="Page number of the requested page"</code> */
-    public static final String PAGE_DESCRIPTION = "Page number of the requested page";
+    /**
+     * Constant <code>PAGE_DESCRIPTION="Page number of the requested page"</code>
+     */
+    public static final String PAGE_DESCRIPTION  = "Page number of the requested page";
 
-    /** Constant <code>DEFAULT_SIZE_NAME="size"</code> */
+    /**
+     * Constant <code>DEFAULT_SIZE_NAME="size"</code>
+     */
     public static final String DEFAULT_SIZE_NAME = "size";
-    /** Constant <code>SIZE_DESCRIPTION="Size of a page"</code> */
-    public static final String SIZE_DESCRIPTION = "Size of a page";
+    /**
+     * Constant <code>SIZE_DESCRIPTION="Size of a page"</code>
+     */
+    public static final String SIZE_DESCRIPTION  = "Size of a page";
 
-    /** Constant <code>DEFAULT_SORT_NAME="sort"</code> */
+    /**
+     * Constant <code>DEFAULT_SORT_NAME="sort"</code>
+     */
     public static final String DEFAULT_SORT_NAME = "sort";
-    /** Constant <code>SORT_DESCRIPTION="Sorting criteria in the format: propert"{trunked}</code> */
-    public static final String SORT_DESCRIPTION = "Sorting criteria in the format: property(,asc|desc). "
-        + "Default sort order is ascending. "
-        + "Multiple sort criteria are supported.";
+    /**
+     * Constant <code>SORT_DESCRIPTION="Sorting criteria in the format: propert"{trunked}</code>
+     */
+    public static final String SORT_DESCRIPTION  = "Sorting criteria in the format: property(,asc|desc). "
+                                                   + "Default sort order is ascending. "
+                                                   + "Multiple sort criteria are supported.";
 
     private final ResolvedType pageableType;
 
@@ -48,13 +62,17 @@ public class PageableParameterBuilderPlugin implements OperationBuilderPlugin {
         this.pageableType = resolver.resolve(Pageable.class);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean supports(DocumentationType delimiter) {
+    public boolean supports(@NonNull DocumentationType delimiter) {
         return DocumentationType.OAS_30.equals(delimiter);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void apply(OperationContext context) {
         List<RequestParameter> parameters = new ArrayList<>();
@@ -87,6 +105,7 @@ public class PageableParameterBuilderPlugin implements OperationBuilderPlugin {
      *
      * @return The size parameter name
      */
+
     protected String getSizeName() {
         return DEFAULT_SIZE_NAME;
     }

@@ -1,9 +1,8 @@
 package com.midorlo.k12.config.security;
 
-import javax.servlet.*;
-
 import com.midorlo.k12.config.application.ApplicationConstants;
 import com.midorlo.k12.config.application.ApplicationProperties;
+import com.midorlo.k12.config.database.H2ConfigurationHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
@@ -15,7 +14,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import com.midorlo.k12.config.database.H2ConfigurationHelper;
+
+import javax.servlet.ServletContext;
 
 /**
  * Configuration of web application with Servlet 3.0 APIs.
@@ -35,7 +35,7 @@ public class WebConfigurer implements ServletContextInitializer {
     }
 
     @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
+    public void onStartup(ServletContext servletContext) {
         if (env.getActiveProfiles().length != 0) {
             log.info("Web application configuration, using profiles: {}", (Object[]) env.getActiveProfiles());
         }

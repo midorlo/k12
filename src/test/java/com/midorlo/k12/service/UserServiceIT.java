@@ -53,6 +53,7 @@ class UserServiceIT {
     @Autowired
     private UserService userService;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private AuditingHandler auditingHandler;
 

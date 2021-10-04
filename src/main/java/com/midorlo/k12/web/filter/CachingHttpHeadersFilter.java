@@ -19,7 +19,7 @@ public class CachingHttpHeadersFilter implements Filter {
 
     private long cacheTimeToLive = DEFAULT_SECONDS_TO_LIVE;
 
-    private ApplicationProperties applicationProperties;
+    private final ApplicationProperties applicationProperties;
 
     /**
      * <p>Constructor for CachingHttpHeadersFilter.</p>
@@ -32,7 +32,7 @@ public class CachingHttpHeadersFilter implements Filter {
 
     /** {@inheritDoc} */
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         cacheTimeToLive = TimeUnit.DAYS.toMillis(applicationProperties.getHttp().getCache().getTimeToLiveInDays());
     }
 

@@ -1,22 +1,27 @@
 package com.midorlo.k12.security;
 
+import com.midorlo.k12.config.application.ApplicationProperties;
 import com.midorlo.k12.domain.PersistentToken;
 import com.midorlo.k12.repository.PersistentTokenRepository;
 import com.midorlo.k12.repository.UserRepository;
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.rememberme.*;
+import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.CookieTheftException;
+import org.springframework.security.web.authentication.rememberme.InvalidCookieException;
+import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationException;
 import org.springframework.stereotype.Service;
-import com.midorlo.k12.config.application.ApplicationProperties;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * Custom implementation of Spring Security's RememberMeServices.
@@ -55,7 +60,7 @@ public class PersistentTokenRememberMeServices extends AbstractRememberMeService
 
     private static final int TOKEN_VALIDITY_SECONDS = 60 * 60 * 24 * TOKEN_VALIDITY_DAYS;
 
-    private static final long UPGRADED_TOKEN_VALIDITY_MILLIS = 5000l;
+    private static final long UPGRADED_TOKEN_VALIDITY_MILLIS = 5000L;
 
     private final PersistentTokenCache<UpgradedRememberMeToken> upgradedTokenCache;
 
@@ -173,7 +178,7 @@ public class PersistentTokenRememberMeServices extends AbstractRememberMeService
         String presentedSeries = cookieTokens[0];
         String presentedToken = cookieTokens[1];
         Optional<PersistentToken> optionalToken = persistentTokenRepository.findById(presentedSeries);
-        if (!optionalToken.isPresent()) {
+        if (optionalToken.isEmpty()) {
             // No series match, so we can't authenticate using this cookie
             throw new RememberMeAuthenticationException("No persistent token found for series id: " + presentedSeries);
         }

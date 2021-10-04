@@ -13,8 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CachingHttpHeadersFilterTest {
 
-    private long ttl = TimeUnit.DAYS.toMillis(2);
-    private CachingHttpHeadersFilter filter = new CachingHttpHeadersFilter(ttl);
+    private final long                     ttl    = TimeUnit.DAYS.toMillis(2);
+    private final CachingHttpHeadersFilter filter = new CachingHttpHeadersFilter(ttl);
 
     @Test
     void cacheHeadersSetWhenPathMatches() {

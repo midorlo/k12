@@ -13,7 +13,7 @@ class BooleanFilterTest {
 
     private BooleanFilter filter;
 
-    private Boolean value = true;
+    private final Boolean value = true;
 
     @BeforeEach
     void setup() {

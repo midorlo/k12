@@ -24,7 +24,7 @@ class LogbackRecorderTest {
 
     private final Exception exception = new RuntimeException("Eek");
 
-    private LogbackRecorder recorder = LogbackRecorder.forLogger(log);
+    private final LogbackRecorder recorder = LogbackRecorder.forLogger(log);
 
     @BeforeEach
     void setup() {
@@ -263,9 +263,7 @@ class LogbackRecorderTest {
 
     @Test
     void testLogbackException() {
-        Throwable caught = catchThrowable(() -> {
-            LogbackRecorder.forLogger(mock(Logger.class));
-        });
+        Throwable caught = catchThrowable(() -> LogbackRecorder.forLogger(mock(Logger.class)));
         assertThat(caught).isInstanceOf(IllegalArgumentException.class);
         assertThat(caught).hasMessage(LogbackRecorder.LOGBACK_EXCEPTION_MESSAGE);
     }
@@ -281,7 +279,7 @@ class LogbackRecorderTest {
 
     @Test
     void testReleaseException() {
-        Throwable caught = catchThrowable(() -> recorder.release());
+        Throwable caught = catchThrowable(recorder::release);
         assertThat(caught).isInstanceOf(IllegalStateException.class);
         assertThat(caught).hasMessage(LogbackRecorder.RELEASE_EXCEPTION_MESSAGE);
     }

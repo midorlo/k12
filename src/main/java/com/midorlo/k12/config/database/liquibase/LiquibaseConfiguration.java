@@ -1,8 +1,5 @@
 package com.midorlo.k12.config.database.liquibase;
 
-import java.util.concurrent.Executor;
-import javax.sql.DataSource;
-
 import com.midorlo.k12.config.application.ApplicationConstants;
 import liquibase.integration.spring.SpringLiquibase;
 import org.slf4j.Logger;
@@ -17,6 +14,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 
+import javax.sql.DataSource;
+import java.util.concurrent.Executor;
+
 @Configuration
 public class LiquibaseConfiguration {
 
@@ -28,6 +28,7 @@ public class LiquibaseConfiguration {
         this.env = env;
     }
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Bean
     public SpringLiquibase liquibase(
         @Qualifier("taskExecutor") Executor executor,

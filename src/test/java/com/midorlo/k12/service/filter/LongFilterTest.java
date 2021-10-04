@@ -13,7 +13,7 @@ class LongFilterTest {
 
     private LongFilter filter;
 
-    private Long value = 42L;
+    private final Long value = 42L;
 
     @BeforeEach
     void setup() {

@@ -14,7 +14,7 @@ class BigDecimalFilterTest {
 
     private BigDecimalFilter filter;
 
-    private BigDecimal value = new BigDecimal(42L);
+    private final BigDecimal value = new BigDecimal(42L);
 
     @BeforeEach
     void setup() {

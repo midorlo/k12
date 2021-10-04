@@ -14,7 +14,7 @@ class ZonedDateTimeFilterTest {
 
     private ZonedDateTimeFilter filter;
 
-    private ZonedDateTime value = ZonedDateTime.now();
+    private final ZonedDateTime value = ZonedDateTime.now();
 
     @BeforeEach
     void setup() {

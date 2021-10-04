@@ -1,7 +1,5 @@
 package com.midorlo.k12.config.database;
 
-import java.sql.SQLException;
-
 import com.midorlo.k12.config.application.ApplicationConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +11,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.sql.SQLException;
+
+@SuppressWarnings("ContextJavaBeanUnresolvedMethodsInspection")
 @Configuration
 @EnableJpaRepositories("com.midorlo.k12.repository")
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")

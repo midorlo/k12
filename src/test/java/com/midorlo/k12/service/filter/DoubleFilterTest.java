@@ -13,7 +13,7 @@ class DoubleFilterTest {
 
     private DoubleFilter filter;
 
-    private Double value = 42D;
+    private final Double value = 42D;
 
     @BeforeEach
     void setup() {

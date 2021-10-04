@@ -2,9 +2,10 @@ package com.midorlo.k12.repository;
 
 import com.midorlo.k12.domain.PersistentToken;
 import com.midorlo.k12.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.time.LocalDate;
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Spring Data JPA repository for the {@link PersistentToken} entity.

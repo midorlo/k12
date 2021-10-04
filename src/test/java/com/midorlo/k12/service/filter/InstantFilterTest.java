@@ -14,7 +14,7 @@ class InstantFilterTest {
 
     private InstantFilter filter;
 
-    private Instant value = Instant.now();
+    private final Instant value = Instant.now();
 
     @BeforeEach
     void setup() {

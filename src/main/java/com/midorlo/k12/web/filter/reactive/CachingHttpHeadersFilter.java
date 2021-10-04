@@ -1,6 +1,7 @@
 package com.midorlo.k12.web.filter.reactive;
 
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.lang.NonNull;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatcher;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 import org.springframework.web.server.ServerWebExchange;
@@ -25,8 +26,9 @@ public class CachingHttpHeadersFilter implements WebFilter {
     }
 
     /** {@inheritDoc} */
+    @NonNull
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+    public Mono<Void> filter(@NonNull ServerWebExchange exchange, @NonNull WebFilterChain chain) {
         return ServerWebExchangeMatchers.pathMatchers("/i18n/**", "/content/**", "/app/**")
             .matches(exchange)
             .filter(ServerWebExchangeMatcher.MatchResult::isMatch)
