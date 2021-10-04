@@ -28,7 +28,7 @@ public interface ResponseUtil {
      *
      * @param <X>           type of the response
      * @param maybeResponse response to return if present
-     * @param headers        headers to be added to the response
+     * @param headers       headers to be added to the response
      * @return response containing {@code maybeResponse} if present or {@link HttpStatus#NOT_FOUND}
      */
     static <X> Mono<ResponseEntity<X>> wrapOrNotFound(Mono<X> maybeResponse, HttpHeaders headers) {

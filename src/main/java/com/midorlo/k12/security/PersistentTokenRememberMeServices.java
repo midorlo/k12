@@ -44,7 +44,8 @@ import java.util.Optional;
  * <ul>
  * <li><a href="http://jaspan.com/improved_persistent_login_cookie_best_practice">Improved Persistent Login Cookie
  * Best Practice</a></li>
- * <li><a href="https://github.com/blog/1661-modeling-your-app-s-user-session">GitHub's "Modeling your App's User Session"</a></li>
+ * <li>ref="https://github.com/blog/1661-modeling-your-app-s-user-session">GitHub's "Modeling your App's User Session"</a>
+ * </li>
  * </ul>
  * <p>
  * The main algorithm comes from Spring Security's {@code PersistentTokenBasedRememberMeServices}, but this class
@@ -53,15 +54,11 @@ import java.util.Optional;
 @Service
 public class PersistentTokenRememberMeServices extends AbstractRememberMeServices {
 
-    private final Logger log = LoggerFactory.getLogger(PersistentTokenRememberMeServices.class);
-
     // Token is valid for one month
     private static final int TOKEN_VALIDITY_DAYS = 31;
-
     private static final int TOKEN_VALIDITY_SECONDS = 60 * 60 * 24 * TOKEN_VALIDITY_DAYS;
-
     private static final long UPGRADED_TOKEN_VALIDITY_MILLIS = 5000L;
-
+    private final Logger log = LoggerFactory.getLogger(PersistentTokenRememberMeServices.class);
     private final PersistentTokenCache<UpgradedRememberMeToken> upgradedTokenCache;
 
     private final PersistentTokenRepository persistentTokenRepository;
@@ -76,14 +73,16 @@ public class PersistentTokenRememberMeServices extends AbstractRememberMeService
     ) {
         super(applicationProperties.getSecurity().getRememberMe().getKey(), userDetailsService);
         this.persistentTokenRepository = persistentTokenRepository;
-        this.userRepository = userRepository;
-        upgradedTokenCache = new PersistentTokenCache<>(UPGRADED_TOKEN_VALIDITY_MILLIS);
+        this.userRepository            = userRepository;
+        upgradedTokenCache             = new PersistentTokenCache<>(UPGRADED_TOKEN_VALIDITY_MILLIS);
     }
 
     @Override
-    protected UserDetails processAutoLoginCookie(String[] cookieTokens, HttpServletRequest request, HttpServletResponse response) {
+    protected UserDetails processAutoLoginCookie(String[] cookieTokens,
+                                                 HttpServletRequest request,
+                                                 HttpServletResponse response) {
         synchronized (this) { // prevent 2 authentication requests from the same user in parallel
-            String login = null;
+            String                  login         = null;
             UpgradedRememberMeToken upgradedToken = upgradedTokenCache.get(cookieTokens[0]);
             if (upgradedToken != null) {
                 login = upgradedToken.getUserLoginIfValid(cookieTokens);
@@ -114,7 +113,9 @@ public class PersistentTokenRememberMeServices extends AbstractRememberMeService
     }
 
     @Override
-    protected void onLoginSuccess(HttpServletRequest request, HttpServletResponse response, Authentication successfulAuthentication) {
+    protected void onLoginSuccess(HttpServletRequest request,
+                                  HttpServletResponse response,
+                                  Authentication successfulAuthentication) {
         String login = successfulAuthentication.getName();
 
         log.debug("Creating new persistent login for user {}", login);
@@ -145,8 +146,8 @@ public class PersistentTokenRememberMeServices extends AbstractRememberMeService
      * The standard Spring Security implementations are too basic: they invalidate all tokens for the
      * current user, so when he logs out from one browser, all his other sessions are destroyed.
      *
-     * @param request the request.
-     * @param response the response.
+     * @param request        the request.
+     * @param response       the response.
      * @param authentication the authentication.
      */
     @Override
@@ -154,8 +155,8 @@ public class PersistentTokenRememberMeServices extends AbstractRememberMeService
         String rememberMeCookie = extractRememberMeCookie(request);
         if (rememberMeCookie != null && rememberMeCookie.length() != 0) {
             try {
-                String[] cookieTokens = decodeCookie(rememberMeCookie);
-                PersistentToken token = getPersistentToken(cookieTokens);
+                String[]        cookieTokens = decodeCookie(rememberMeCookie);
+                PersistentToken token        = getPersistentToken(cookieTokens);
                 persistentTokenRepository.deleteById(token.getSeries());
             } catch (InvalidCookieException ice) {
                 log.info("Invalid cookie, no persistent token could be deleted", ice);
@@ -175,9 +176,9 @@ public class PersistentTokenRememberMeServices extends AbstractRememberMeService
                 "Cookie token did not contain " + 2 + " tokens, but contained '" + Arrays.asList(cookieTokens) + "'"
             );
         }
-        String presentedSeries = cookieTokens[0];
-        String presentedToken = cookieTokens[1];
-        Optional<PersistentToken> optionalToken = persistentTokenRepository.findById(presentedSeries);
+        String                    presentedSeries = cookieTokens[0];
+        String                    presentedToken  = cookieTokens[1];
+        Optional<PersistentToken> optionalToken   = persistentTokenRepository.findById(presentedSeries);
         if (optionalToken.isEmpty()) {
             // No series match, so we can't authenticate using this cookie
             throw new RememberMeAuthenticationException("No persistent token found for series id: " + presentedSeries);
@@ -188,7 +189,8 @@ public class PersistentTokenRememberMeServices extends AbstractRememberMeService
         if (!presentedToken.equals(token.getTokenValue())) {
             // Token doesn't match series value. Delete this session and throw an exception.
             persistentTokenRepository.deleteById(token.getSeries());
-            throw new CookieTheftException("Invalid remember-me token (Series/token) mismatch. Implies previous " + "cookie theft attack.");
+            throw new CookieTheftException("Invalid remember-me token (Series/token) mismatch. Implies previous " +
+                                           "cookie theft attack.");
         }
         if (token.getTokenDate().plusDays(TOKEN_VALIDITY_DAYS).isBefore(LocalDate.now())) {
             persistentTokenRepository.deleteById(token.getSeries());
@@ -198,7 +200,7 @@ public class PersistentTokenRememberMeServices extends AbstractRememberMeService
     }
 
     private void addCookie(PersistentToken token, HttpServletRequest request, HttpServletResponse response) {
-        setCookie(new String[] { token.getSeries(), token.getTokenValue() }, TOKEN_VALIDITY_SECONDS, request, response);
+        setCookie(new String[]{ token.getSeries(), token.getTokenValue() }, TOKEN_VALIDITY_SECONDS, request, response);
     }
 
     private static class UpgradedRememberMeToken implements Serializable {
@@ -211,7 +213,7 @@ public class PersistentTokenRememberMeServices extends AbstractRememberMeService
 
         UpgradedRememberMeToken(String[] upgradedToken, String userLogin) {
             this.upgradedToken = upgradedToken;
-            this.userLogin = userLogin;
+            this.userLogin     = userLogin;
         }
 
         String getUserLoginIfValid(String[] currentToken) {

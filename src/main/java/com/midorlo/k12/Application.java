@@ -32,33 +32,6 @@ public class Application {
     }
 
     /**
-     * Initializes k12.
-     * <p>
-     * Spring profiles can be configured with a program argument --spring.profiles.active=your-active-profile
-     * <p>
-     */
-    @PostConstruct
-    public void initApplication() {
-        Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
-        if (
-            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_DEVELOPMENT) &&
-            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_PRODUCTION)
-        ) {
-            log.error(
-                "You have misconfigured your application! It should not run " + "with both the 'dev' and 'prod' profiles at the same time."
-            );
-        }
-        if (
-            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_DEVELOPMENT) &&
-            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_CLOUD)
-        ) {
-            log.error(
-                "You have misconfigured your application! It should not " + "run with both the 'dev' and 'cloud' profiles at the same time."
-            );
-        }
-    }
-
-    /**
      * Main method, used to run the application.
      *
      * @param args the command line arguments.
@@ -71,7 +44,8 @@ public class Application {
     }
 
     private static void logApplicationStartup(Environment env) {
-        String protocol = Optional.ofNullable(env.getProperty("server.ssl.key-store")).map(key -> "https").orElse("http");
+        String protocol   = Optional.ofNullable(env.getProperty("server.ssl.key-store")).map(key -> "https")
+                                    .orElse("http");
         String serverPort = env.getProperty("server.port");
         String contextPath = Optional
             .ofNullable(env.getProperty("server.servlet.context-path"))
@@ -99,5 +73,34 @@ public class Application {
             contextPath,
             env.getActiveProfiles().length == 0 ? env.getDefaultProfiles() : env.getActiveProfiles()
         );
+    }
+
+    /**
+     * Initializes k12.
+     * <p>
+     * Spring profiles can be configured with a program argument --spring.profiles.active=your-active-profile
+     * <p>
+     */
+    @PostConstruct
+    public void initApplication() {
+        Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
+        if (
+            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_DEVELOPMENT) &&
+            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_PRODUCTION)
+        ) {
+            log.error(
+                "You have misconfigured your application! It should not run " + "with both the 'dev' and 'prod' " +
+                "profiles at the same time."
+            );
+        }
+        if (
+            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_DEVELOPMENT) &&
+            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_CLOUD)
+        ) {
+            log.error(
+                "You have misconfigured your application! It should not " + "run with both the 'dev' and 'cloud' " +
+                "profiles at the same time."
+            );
+        }
     }
 }

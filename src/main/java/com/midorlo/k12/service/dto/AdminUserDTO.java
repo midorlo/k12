@@ -57,19 +57,19 @@ public class AdminUserDTO {
     }
 
     public AdminUserDTO(User user) {
-        this.id = user.getId();
-        this.login = user.getLogin();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.email = user.getEmail();
-        this.activated = user.isActivated();
-        this.imageUrl = user.getImageUrl();
-        this.langKey = user.getLangKey();
-        this.createdBy = user.getCreatedBy();
-        this.createdDate = user.getCreatedDate();
-        this.lastModifiedBy = user.getLastModifiedBy();
+        this.id               = user.getId();
+        this.login            = user.getLogin();
+        this.firstName        = user.getFirstName();
+        this.lastName         = user.getLastName();
+        this.email            = user.getEmail();
+        this.activated        = user.isActivated();
+        this.imageUrl         = user.getImageUrl();
+        this.langKey          = user.getLangKey();
+        this.createdBy        = user.getCreatedBy();
+        this.createdDate      = user.getCreatedDate();
+        this.lastModifiedBy   = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
-        this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
+        this.authorities      = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
     }
 
     public Long getId() {
@@ -180,18 +180,18 @@ public class AdminUserDTO {
     @Override
     public String toString() {
         return "AdminUserDTO{" +
-            "login='" + login + '\'' +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", email='" + email + '\'' +
-            ", imageUrl='" + imageUrl + '\'' +
-            ", activated=" + activated +
-            ", langKey='" + langKey + '\'' +
-            ", createdBy=" + createdBy +
-            ", createdDate=" + createdDate +
-            ", lastModifiedBy='" + lastModifiedBy + '\'' +
-            ", lastModifiedDate=" + lastModifiedDate +
-            ", authorities=" + authorities +
-            "}";
+               "login='" + login + '\'' +
+               ", firstName='" + firstName + '\'' +
+               ", lastName='" + lastName + '\'' +
+               ", email='" + email + '\'' +
+               ", imageUrl='" + imageUrl + '\'' +
+               ", activated=" + activated +
+               ", langKey='" + langKey + '\'' +
+               ", createdBy=" + createdBy +
+               ", createdDate=" + createdDate +
+               ", lastModifiedBy='" + lastModifiedBy + '\'' +
+               ", lastModifiedDate=" + lastModifiedDate +
+               ", authorities=" + authorities +
+               "}";
     }
 }

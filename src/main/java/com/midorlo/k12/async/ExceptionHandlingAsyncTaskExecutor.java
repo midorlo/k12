@@ -14,7 +14,8 @@ import java.util.concurrent.Future;
  * <p>ExceptionHandlingAsyncTaskExecutor class.</p>
  */
 public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor,
-    InitializingBean, DisposableBean {
+                                                           InitializingBean,
+                                                           DisposableBean {
 
     static final String EXCEPTION_MESSAGE = "Caught async exception";
 
@@ -31,13 +32,17 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor,
         this.executor = executor;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void execute(@NonNull Runnable task) {
         executor.execute(createWrappedRunnable(task));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void execute(@NonNull Runnable task, long startTimeout) {
         executor.execute(createWrappedRunnable(task), startTimeout);
@@ -73,21 +78,27 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor,
         log.error(EXCEPTION_MESSAGE, e);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @Override
     public Future<?> submit(@NonNull Runnable task) {
         return executor.submit(createWrappedRunnable(task));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @Override
     public <T> Future<T> submit(@NonNull Callable<T> task) {
         return executor.submit(createCallable(task));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void destroy() throws Exception {
         if (executor instanceof DisposableBean) {
@@ -96,7 +107,9 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor,
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void afterPropertiesSet() throws Exception {
         if (executor instanceof InitializingBean) {

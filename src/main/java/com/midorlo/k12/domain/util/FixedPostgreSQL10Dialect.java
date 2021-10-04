@@ -20,7 +20,9 @@ public class FixedPostgreSQL10Dialect extends PostgreSQL10Dialect {
         registerColumnType(Types.BLOB, "bytea");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SqlTypeDescriptor remapSqlTypeDescriptor(SqlTypeDescriptor sqlTypeDescriptor) {
         if (sqlTypeDescriptor.getSqlType() == Types.BLOB) {

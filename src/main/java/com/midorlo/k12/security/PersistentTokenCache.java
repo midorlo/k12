@@ -15,7 +15,7 @@ public class PersistentTokenCache<T> {
     private final long expireMillis;
 
     private final Map<String, Value> map;
-    private long latestWriteTime;
+    private       long               latestWriteTime;
 
     /**
      * Construct a new TokenCache.
@@ -29,7 +29,7 @@ public class PersistentTokenCache<T> {
         }
         this.expireMillis = expireMillis;
 
-        map = new LinkedHashMap<>(64, 0.75f);
+        map             = new LinkedHashMap<>(64, 0.75f);
         latestWriteTime = System.currentTimeMillis();
     }
 
@@ -41,8 +41,8 @@ public class PersistentTokenCache<T> {
      */
     public T get(String key) {
         purge();
-        final Value val = map.get(key);
-        final long time = System.currentTimeMillis();
+        final Value val  = map.get(key);
+        final long  time = System.currentTimeMillis();
         return val != null && time < val.expire ? val.token : null;
     }
 
@@ -96,11 +96,11 @@ public class PersistentTokenCache<T> {
 
     private class Value {
 
-        private final T token;
+        private final T    token;
         private final long expire;
 
         Value(T token, long expire) {
-            this.token = token;
+            this.token  = token;
             this.expire = expire;
         }
     }

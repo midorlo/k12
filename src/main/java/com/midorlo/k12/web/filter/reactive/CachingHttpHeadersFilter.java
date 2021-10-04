@@ -25,21 +25,25 @@ public class CachingHttpHeadersFilter implements WebFilter {
         this.cacheTimeToLive = cacheTimeToLive;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @Override
     public Mono<Void> filter(@NonNull ServerWebExchange exchange, @NonNull WebFilterChain chain) {
         return ServerWebExchangeMatchers.pathMatchers("/i18n/**", "/content/**", "/app/**")
-            .matches(exchange)
-            .filter(ServerWebExchangeMatcher.MatchResult::isMatch)
-            .doOnNext(matchResult -> {
-                ServerHttpResponse response = exchange.getResponse();
-                response.getHeaders().setCacheControl("max-age=" + cacheTimeToLive + ", public");
-                response.getHeaders().setPragma("cache");
-                response.getHeaders().setExpires(cacheTimeToLive + System.currentTimeMillis());
+                                        .matches(exchange)
+                                        .filter(ServerWebExchangeMatcher.MatchResult::isMatch)
+                                        .doOnNext(matchResult -> {
+                                            ServerHttpResponse response = exchange.getResponse();
+                                            response.getHeaders()
+                                                    .setCacheControl("max-age=" + cacheTimeToLive + ", public");
+                                            response.getHeaders().setPragma("cache");
+                                            response.getHeaders()
+                                                    .setExpires(cacheTimeToLive + System.currentTimeMillis());
 
-            })
-            .then(Mono.defer(() -> chain.filter(exchange)));
+                                        })
+                                        .then(Mono.defer(() -> chain.filter(exchange)));
     }
 }
 

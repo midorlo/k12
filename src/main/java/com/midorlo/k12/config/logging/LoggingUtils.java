@@ -26,16 +26,16 @@ public final class LoggingUtils {
 
     private static final Logger log = LoggerFactory.getLogger(LoggingUtils.class);
 
-    private static final String CONSOLE_APPENDER_NAME = "CONSOLE";
+    private static final String CONSOLE_APPENDER_NAME        = "CONSOLE";
     private static final String ASYNC_LOGSTASH_APPENDER_NAME = "ASYNC_LOGSTASH";
 
-    private LoggingUtils () {
+    private LoggingUtils() {
     }
 
     /**
      * <p>addJsonConsoleAppender.</p>
      *
-     * @param context a {@link LoggerContext} object.
+     * @param context      a {@link LoggerContext} object.
      * @param customFields a {@link String} object.
      */
     public static void addJsonConsoleAppender(LoggerContext context, String customFields) {
@@ -55,8 +55,8 @@ public final class LoggingUtils {
     /**
      * <p>addLogstashTcpSocketAppender.</p>
      *
-     * @param context a {@link LoggerContext} object.
-     * @param customFields a {@link String} object.
+     * @param context            a {@link LoggerContext} object.
+     * @param customFields       a {@link String} object.
      * @param logstashProperties a {@link ApplicationProperties.Logging.Logstash} object.
      */
     public static void addLogstashTcpSocketAppender(LoggerContext context, String customFields,
@@ -65,7 +65,8 @@ public final class LoggingUtils {
 
         // More documentation is available at: https://github.com/logstash/logstash-logback-encoder
         LogstashTcpSocketAppender logstashAppender = new LogstashTcpSocketAppender();
-        logstashAppender.addDestinations(new InetSocketAddress(logstashProperties.getHost(), logstashProperties.getPort()));
+        logstashAppender.addDestinations(new InetSocketAddress(logstashProperties.getHost(),
+                                                               logstashProperties.getPort()));
         logstashAppender.setContext(context);
         logstashAppender.setEncoder(logstashEncoder(customFields));
         logstashAppender.setName(ASYNC_LOGSTASH_APPENDER_NAME);
@@ -78,11 +79,13 @@ public final class LoggingUtils {
     /**
      * <p>addContextListener.</p>
      *
-     * @param context a {@link LoggerContext} object.
+     * @param context      a {@link LoggerContext} object.
      * @param customFields a {@link String} object.
-     * @param properties a {@link ApplicationProperties.Logging} object.
+     * @param properties   a {@link ApplicationProperties.Logging} object.
      */
-    public static void addContextListener(LoggerContext context, String customFields, ApplicationProperties.Logging properties) {
+    public static void addContextListener(LoggerContext context,
+                                          String customFields,
+                                          ApplicationProperties.Logging properties) {
         LogbackLoggerContextListener loggerContextListener = new LogbackLoggerContextListener(properties, customFields);
         loggerContextListener.setContext(context);
         context.addListener(loggerContextListener);
@@ -121,7 +124,8 @@ public final class LoggingUtils {
     }
 
     private static GlobalCustomFieldsJsonProvider<ILoggingEvent> customFieldsJsonProvider(String customFields) {
-        final GlobalCustomFieldsJsonProvider<ILoggingEvent> customFieldsJsonProvider = new GlobalCustomFieldsJsonProvider<>();
+        final GlobalCustomFieldsJsonProvider<ILoggingEvent> customFieldsJsonProvider =
+            new GlobalCustomFieldsJsonProvider<>();
         customFieldsJsonProvider.setCustomFields(customFields);
         return customFieldsJsonProvider;
     }
@@ -145,7 +149,8 @@ public final class LoggingUtils {
     }
 
     private static LoggingEventFormattedTimestampJsonProvider timestampJsonProvider() {
-        final LoggingEventFormattedTimestampJsonProvider timestampJsonProvider = new LoggingEventFormattedTimestampJsonProvider();
+        final LoggingEventFormattedTimestampJsonProvider timestampJsonProvider =
+            new LoggingEventFormattedTimestampJsonProvider();
         timestampJsonProvider.setTimeZone("UTC");
         timestampJsonProvider.setFieldName("timestamp");
         return timestampJsonProvider;
@@ -162,7 +167,7 @@ public final class LoggingUtils {
 
         private LogbackLoggerContextListener(ApplicationProperties.Logging loggingProperties, String customFields) {
             this.loggingProperties = loggingProperties;
-            this.customFields = customFields;
+            this.customFields      = customFields;
         }
 
         @Override

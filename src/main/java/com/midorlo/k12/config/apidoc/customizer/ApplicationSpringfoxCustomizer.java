@@ -21,16 +21,15 @@ import static springfox.documentation.builders.PathSelectors.regex;
 /**
  * A Springfox customizer to setup {@link Docket} with Application settings.
  */
-public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer, Ordered {
+public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer,
+                                                       Ordered {
 
     /**
      * The default order for the customizer.
      */
     public static final int DEFAULT_ORDER = 0;
-
-    private int order = DEFAULT_ORDER;
-
     private final ApplicationProperties.ApiDocs properties;
+    private int order = DEFAULT_ORDER;
 
     /**
      * <p>Constructor for ApplicationSpringfoxCustomizer.</p>
@@ -41,7 +40,9 @@ public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer, Orde
         this.properties = properties;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void customize(Docket docket) {
         Contact contact = new Contact(
@@ -63,21 +64,29 @@ public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer, Orde
 
         for (ApplicationProperties.ApiDocs.Server server : properties.getServers()) {
             docket.servers(new Server(server.getName(), server.getUrl(), server.getDescription(),
-                Collections.emptyList(), Collections.emptyList()));
+                                      Collections.emptyList(), Collections.emptyList()));
         }
 
         docket.host(properties.getHost())
-            .protocols(new HashSet<>(Arrays.asList(properties.getProtocols())))
-            .apiInfo(apiInfo)
-            .useDefaultResponseMessages(properties.isUseDefaultResponseMessages())
-            .forCodeGeneration(true)
-            .directModelSubstitute(ByteBuffer.class, String.class)
-            .genericModelSubstitutes(ResponseEntity.class)
-            .ignoredParameterTypes(Pageable.class)
-            .ignoredParameterTypes(ServerHttpRequest.class)
-            .select()
-            .paths(regex(properties.getDefaultIncludePattern()))
-            .build();
+              .protocols(new HashSet<>(Arrays.asList(properties.getProtocols())))
+              .apiInfo(apiInfo)
+              .useDefaultResponseMessages(properties.isUseDefaultResponseMessages())
+              .forCodeGeneration(true)
+              .directModelSubstitute(ByteBuffer.class, String.class)
+              .genericModelSubstitutes(ResponseEntity.class)
+              .ignoredParameterTypes(Pageable.class)
+              .ignoredParameterTypes(ServerHttpRequest.class)
+              .select()
+              .paths(regex(properties.getDefaultIncludePattern()))
+              .build();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getOrder() {
+        return order;
     }
 
     /**
@@ -87,11 +96,5 @@ public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer, Orde
      */
     public void setOrder(int order) {
         this.order = order;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public int getOrder() {
-        return order;
     }
 }

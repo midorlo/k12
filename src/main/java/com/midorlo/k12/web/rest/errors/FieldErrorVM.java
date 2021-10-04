@@ -14,8 +14,8 @@ public class FieldErrorVM implements Serializable {
 
     public FieldErrorVM(String dto, String field, String message) {
         this.objectName = dto;
-        this.field = field;
-        this.message = message;
+        this.field      = field;
+        this.message    = message;
     }
 
     public String getObjectName() {

@@ -12,10 +12,14 @@ import java.io.IOException;
  */
 public class AjaxAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-    /** Constant <code>UNAUTHORIZED_MESSAGE="Authentication failed"</code> */
+    /**
+     * Constant <code>UNAUTHORIZED_MESSAGE="Authentication failed"</code>
+     */
     public static final String UNAUTHORIZED_MESSAGE = "Authentication failed";
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {

@@ -20,7 +20,9 @@ public class CookieCsrfFilter implements WebFilter {
 
     private static final String CSRF_COOKIE_NAME = "XSRF-TOKEN";
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, @NonNull WebFilterChain chain) {
@@ -28,18 +30,20 @@ public class CookieCsrfFilter implements WebFilter {
             return chain.filter(exchange);
         }
         return Mono.just(exchange)
-            .publishOn(Schedulers.boundedElastic())
-            .flatMap(it -> it.getAttributeOrDefault(CsrfToken.class.getName(), Mono.<CsrfToken>empty()))
-            .doOnNext(token -> {
-                ResponseCookie cookie = ResponseCookie.from(CSRF_COOKIE_NAME, token.getToken())
-                    .maxAge(-1)
-                    .httpOnly(false)
-                    .path(getRequestContext(exchange.getRequest()))
-                    .secure(Optional.ofNullable(exchange.getRequest().getSslInfo()).isPresent())
-                    .build();
-                exchange.getResponse().getCookies().add(CSRF_COOKIE_NAME, cookie);
-            })
-            .then(Mono.defer(() -> chain.filter(exchange)));
+                   .publishOn(Schedulers.boundedElastic())
+                   .flatMap(it -> it.getAttributeOrDefault(CsrfToken.class.getName(), Mono.<CsrfToken>empty()))
+                   .doOnNext(token -> {
+                       ResponseCookie cookie = ResponseCookie.from(CSRF_COOKIE_NAME, token.getToken())
+                                                             .maxAge(-1)
+                                                             .httpOnly(false)
+                                                             .path(getRequestContext(exchange.getRequest()))
+                                                             .secure(Optional.ofNullable(exchange.getRequest()
+                                                                                                 .getSslInfo())
+                                                                             .isPresent())
+                                                             .build();
+                       exchange.getResponse().getCookies().add(CSRF_COOKIE_NAME, cookie);
+                   })
+                   .then(Mono.defer(() -> chain.filter(exchange)));
     }
 
     private String getRequestContext(ServerHttpRequest request) {

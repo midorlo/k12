@@ -37,7 +37,7 @@ public final class JSR310DateConverters {
         @Override
         public LocalDate convert(@NonNull Date source) {
             return source == null ? null : ZonedDateTime.ofInstant(source.toInstant(), ZoneId.systemDefault())
-                .toLocalDate();
+                                                        .toLocalDate();
         }
     }
 
