@@ -10,11 +10,9 @@ import com.midorlo.k12.service.dto.AdminUserDTO;
 import com.midorlo.k12.web.rest.errors.BadRequestAlertException;
 import com.midorlo.k12.web.rest.errors.EmailAlreadyUsedException;
 import com.midorlo.k12.web.rest.errors.LoginAlreadyUsedException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
-import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
+import com.midorlo.k12.web.util.HeaderUtil;
+import com.midorlo.k12.web.util.PaginationUtil;
+import com.midorlo.k12.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,9 +25,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import com.midorlo.k12.web.util.HeaderUtil;
-import com.midorlo.k12.web.util.PaginationUtil;
-import com.midorlo.k12.web.util.ResponseUtil;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing users.

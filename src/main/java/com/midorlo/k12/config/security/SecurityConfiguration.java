@@ -1,7 +1,10 @@
 package com.midorlo.k12.config.security;
 
 import com.midorlo.k12.config.application.ApplicationProperties;
-import com.midorlo.k12.security.*;
+import com.midorlo.k12.security.AjaxAuthenticationFailureHandler;
+import com.midorlo.k12.security.AjaxAuthenticationSuccessHandler;
+import com.midorlo.k12.security.AjaxLogoutSuccessHandler;
+import com.midorlo.k12.security.AuthoritiesConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;

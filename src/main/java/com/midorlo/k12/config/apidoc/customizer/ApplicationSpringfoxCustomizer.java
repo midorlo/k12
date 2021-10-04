@@ -1,5 +1,6 @@
 package com.midorlo.k12.config.apidoc.customizer;
 
+import com.midorlo.k12.config.application.ApplicationProperties;
 import org.springframework.core.Ordered;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +9,6 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.Server;
 import springfox.documentation.spring.web.plugins.Docket;
-import com.midorlo.k12.config.application.ApplicationProperties;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;

@@ -9,19 +9,23 @@ import com.midorlo.k12.service.MailService;
 import com.midorlo.k12.service.UserService;
 import com.midorlo.k12.service.dto.AdminUserDTO;
 import com.midorlo.k12.service.dto.PasswordChangeDTO;
-import com.midorlo.k12.web.rest.errors.*;
+import com.midorlo.k12.web.rest.errors.EmailAlreadyUsedException;
+import com.midorlo.k12.web.rest.errors.InvalidPasswordException;
+import com.midorlo.k12.web.rest.errors.LoginAlreadyUsedException;
 import com.midorlo.k12.web.rest.vm.KeyAndPasswordVM;
 import com.midorlo.k12.web.rest.vm.ManagedUserVM;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing the current user's account.

@@ -7,14 +7,10 @@ import com.midorlo.k12.repository.AuthorityRepository;
 import com.midorlo.k12.repository.PersistentTokenRepository;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.security.AuthoritiesConstants;
+import com.midorlo.k12.security.RandomUtil;
 import com.midorlo.k12.security.SecurityUtils;
 import com.midorlo.k12.service.dto.AdminUserDTO;
 import com.midorlo.k12.service.dto.UserDTO;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -24,7 +20,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.midorlo.k12.security.RandomUtil;
+
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Service class for managing users.
