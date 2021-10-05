@@ -159,3 +159,5 @@ Desktop.ini
 /.nyc_output/
 /.jpb/
 /.run/
+/src/main/webapp/dist/
+/src/main/webapp/.quasar/
