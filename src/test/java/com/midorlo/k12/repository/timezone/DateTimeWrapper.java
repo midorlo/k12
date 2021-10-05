@@ -1,12 +1,13 @@
 package com.midorlo.k12.repository.timezone;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.*;
 import java.util.Objects;
-import javax.persistence.*;
 
 @Entity
 @Table(name = "date_time_wrapper")
+@SuppressWarnings("JpaDataSourceORMInspection")
 public class DateTimeWrapper implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -111,7 +112,8 @@ public class DateTimeWrapper implements Serializable {
         }
 
         DateTimeWrapper dateTimeWrapper = (DateTimeWrapper) o;
-        return !(dateTimeWrapper.getId() == null || getId() == null) && Objects.equals(getId(), dateTimeWrapper.getId());
+        return !(dateTimeWrapper.getId() == null || getId() == null) && Objects.equals(getId(),
+                                                                                       dateTimeWrapper.getId());
     }
 
     @Override
@@ -123,11 +125,11 @@ public class DateTimeWrapper implements Serializable {
     @Override
     public String toString() {
         return "TimeZoneTest{" +
-            "id=" + id +
-            ", instant=" + instant +
-            ", localDateTime=" + localDateTime +
-            ", offsetDateTime=" + offsetDateTime +
-            ", zonedDateTime=" + zonedDateTime +
-            '}';
+               "id=" + id +
+               ", instant=" + instant +
+               ", localDateTime=" + localDateTime +
+               ", offsetDateTime=" + offsetDateTime +
+               ", zonedDateTime=" + zonedDateTime +
+               '}';
     }
 }

@@ -41,6 +41,7 @@ import static org.mockito.Mockito.*;
 @IntegrationTest
 class MailServiceIT {
 
+    @SuppressWarnings("MismatchedReadAndWriteOfArray")
     private static final String[] languages        = {
     };
     private static final Pattern  PATTERN_LOCALE_3 = Pattern.compile("([a-z]{2})-([a-zA-Z]{4})-([a-z]{2})");
@@ -144,8 +145,8 @@ class MailServiceIT {
         assertThat(message.getFrom()[0]).hasToString(applicationProperties.getMail().getFrom());
         assertThat(message.getContent()
                           .toString()
-                       .replace("<!--suppress ALL -->", "")
-                       .trim()
+                          .replace("<!--suppress ALL -->", "")
+                          .trim()
         ).isEqualToNormalizingNewlines("<html>test title, http://127.0.0.1:8080, john</html>\n".trim());
         assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
     }
@@ -210,16 +211,17 @@ class MailServiceIT {
         User user = new User();
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
+        //noinspection RedundantOperationOnEmptyContainer
         for (String langKey : languages) {
             user.setLangKey(langKey);
             mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title");
             verify(javaMailSender, atLeastOnce()).send(messageCaptor.capture());
             MimeMessage message = messageCaptor.getValue();
 
-            String propertyFilePath = "i18n/messages_" + getJavaLocale(langKey) + ".properties";
-            URL resource = this.getClass().getClassLoader().getResource(propertyFilePath);
-            File file = new File(new URI(resource.getFile()).getPath());
-            Properties properties = new Properties();
+            String     propertyFilePath = "i18n/messages_" + getJavaLocale(langKey) + ".properties";
+            URL        resource         = this.getClass().getClassLoader().getResource(propertyFilePath);
+            File       file             = new File(new URI(resource.getFile()).getPath());
+            Properties properties       = new Properties();
             properties.load(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
 
             String emailTitle = (String) properties.get("email.test.title");
