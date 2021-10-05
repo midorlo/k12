@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class ClientForwardController {
 
+    public static final String FWD_ROOT = "forward:/spa/index.html";
+    public static final String FWD_PATH = "forward:/";
+
     @GetMapping(value = "/")
     public String forwardRoot() {
-        //noinspection SpringMVCViewInspection
-        return "forward:/spa/index.html";
+        return FWD_ROOT;
     }
 
     /**
@@ -23,6 +25,6 @@ public class ClientForwardController {
     @GetMapping(value = "/**/{path:[^.]*}")
     public String forward(@PathVariable String path) {
         log.info("path: {}", path);
-        return "forward:/";
+        return FWD_PATH;
     }
 }
