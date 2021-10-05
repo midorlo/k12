@@ -17,6 +17,7 @@
 
     <script type="text/javascript">
       const AlwaysEnableTryItOutPlugin = function (system) {
+        // noinspection JSUnresolvedFunction
         const OperationContainer = system.getComponents('OperationContainer');
         return {
           components: {
@@ -31,14 +32,14 @@
         };
       };
       window.onload = function () {
-        var urls = [];
+        const urls = [];
         axios.get('/swagger-resources').then(function (response) {
           response.data.forEach(function (resource) {
             urls.push({ name: resource.name, url: resource.location });
           });
 
           urls.sort(function (a, b) {
-            var x = a.name.toLowerCase(),
+            const x = a.name.toLowerCase(),
               y = b.name.toLowerCase();
             if (x.includes('(default)')) return -1;
             if (y.includes('(default)')) return 1;
@@ -48,7 +49,7 @@
           });
 
           // Build a system
-          var ui = SwaggerUIBundle({
+          const ui = SwaggerUIBundle({
             urls: urls,
             dom_id: '#swagger-ui',
             deepLinking: true,
@@ -58,7 +59,7 @@
             presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
             plugins: [SwaggerUIBundle.plugins.DownloadUrl, AlwaysEnableTryItOutPlugin],
             requestInterceptor: function (req) {
-              var authToken = localStorage.getItem('app-authenticationToken') || sessionStorage.getItem('app-authenticationToken');
+              const authToken = localStorage.getItem('app-authenticationToken') || sessionStorage.getItem('app-authenticationToken');
               if (authToken) {
                 req.headers['Authorization'] = 'Bearer ' + authToken;
               }

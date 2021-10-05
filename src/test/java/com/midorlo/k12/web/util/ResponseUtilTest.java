@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SuppressWarnings("UastIncorrectHttpHeaderInspection")
 class ResponseUtilTest {
@@ -38,11 +37,6 @@ class ResponseUtilTest {
     }
 
     @Test
-    void testOptionalNoWithoutHeaders() {
-        assertThatExceptionOfType(ResponseStatusException.class).isThrownBy(() -> ResponseUtil.wrapOrNotFound(Optional.empty()));
-    }
-
-    @Test
     void testOptionalYesWithHeaders() {
         ResponseEntity<Integer> response =
             ResponseUtil.wrapOrNotFound(Optional.of(42)
@@ -56,10 +50,4 @@ class ResponseUtilTest {
         assertThat(strings).hasSize(1);
         assertThat(strings.get(0)).isEqualTo(HEADER_VALUE);
     }
-
-    @Test
-    void testOptionalNoWithHeaders() {
-        assertThatExceptionOfType(ResponseStatusException.class).isThrownBy(() -> ResponseUtil.wrapOrNotFound(Optional.empty(), headers));
-    }
-
 }

@@ -1,3 +1,5 @@
+// noinspection JSUnresolvedFunction
+
 describe('Users', () => {
   beforeEach(() => {
     cy.window().then(win => {
@@ -39,12 +41,12 @@ describe('Users', () => {
 
     cy.intercept('/api/admin/users?page=0&size=10&sort=login,asc', {
       fixture: 'usersPage1Size10.json',
-      headers: { 'x-total-count': '15' },
+      headers: {'x-total-count': '15'},
     }).as('usersPage1Size10');
 
     cy.intercept('/api/admin/users?page=1&size=10&sort=login,asc', {
       fixture: 'usersPage2Size10.json',
-      headers: { 'x-total-count': '15' },
+      headers: {'x-total-count': '15'},
     }).as('usersPage2Size10');
 
     cy.visit('/users');

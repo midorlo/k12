@@ -1,3 +1,5 @@
+// noinspection JSCheckFunctionSignatures
+
 import intersectionBy from 'lodash/intersectionBy';
 import { Quasar } from 'quasar';
 import { boot } from 'quasar/wrappers';

@@ -3,6 +3,7 @@ package com.midorlo.k12.web.util;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.server.ResponseStatusException;
 
 /**
@@ -31,7 +32,7 @@ public interface ResponseUtil {
      * @param header        headers to be added to the response
      * @return response containing {@code maybeResponse} if present
      */
-    static <X> ResponseEntity<X> wrapOrNotFound(X response, HttpHeaders header) {
+    static <X> ResponseEntity<X> wrapOrNotFound(@NonNull X response, HttpHeaders header) {
         return ResponseEntity.ok().headers(header).body(response);
     }
 }

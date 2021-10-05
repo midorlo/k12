@@ -22,13 +22,16 @@ class ApplicationPropertiesTest {
     @Test
     void testComplete() throws Exception {
         // Slightly pedantic; this checks if there are tests for each of the properties.
-        Set<String> set = new LinkedHashSet<>(64, 1F);
-        reflect(properties, set, "test");
-        for (String name : set) {
+        Set<String> collectedData = new LinkedHashSet<>(64, 1F);
+        reflect(properties, collectedData, "test");
+        for (String name : collectedData) {
             assertThat(this.getClass().getDeclaredMethod(name)).isNotNull();
         }
     }
 
+    /**
+     * Invokes all getters reflectively, collecting their values.
+     */
     private void reflect(Object obj, Set<String> dst, String prefix) throws Exception {
         Class<?> src = obj.getClass();
         for (Method method : src.getDeclaredMethods()) {
@@ -85,54 +88,6 @@ class ApplicationPropertiesTest {
     }
 
     @Test
-    void testDatabaseCouchbaseBucketName() {
-        ApplicationProperties.Database.Couchbase obj = properties.getDatabase().getCouchbase();
-        assertThat(obj.getBucketName()).isEqualTo(null);
-        obj.setBucketName("bucketName");
-        assertThat(obj.getBucketName()).isEqualTo("bucketName");
-    }
-
-    @Test
-    void testCacheHazelcastTimeToLiveSeconds() {
-        ApplicationProperties.Cache.Hazelcast obj = properties.getCache().getHazelcast();
-        int                                   val = ApplicationDefaults.Cache.Hazelcast.timeToLiveSeconds;
-        assertThat(obj.getTimeToLiveSeconds()).isEqualTo(val);
-        val++;
-        obj.setTimeToLiveSeconds(val);
-        assertThat(obj.getTimeToLiveSeconds()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheHazelcastBackupCount() {
-        ApplicationProperties.Cache.Hazelcast obj = properties.getCache().getHazelcast();
-        int                                   val = ApplicationDefaults.Cache.Hazelcast.backupCount;
-        assertThat(obj.getBackupCount()).isEqualTo(val);
-        val++;
-        obj.setBackupCount(val);
-        assertThat(obj.getBackupCount()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheCaffeineTimeToLiveSeconds() {
-        ApplicationProperties.Cache.Caffeine obj = properties.getCache().getCaffeine();
-        int                                  val = ApplicationDefaults.Cache.Caffeine.timeToLiveSeconds;
-        assertThat(obj.getTimeToLiveSeconds()).isEqualTo(val);
-        val++;
-        obj.setTimeToLiveSeconds(val);
-        assertThat(obj.getTimeToLiveSeconds()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheCaffeineMaxEntries() {
-        ApplicationProperties.Cache.Caffeine obj = properties.getCache().getCaffeine();
-        long                                 val = ApplicationDefaults.Cache.Caffeine.maxEntries;
-        assertThat(obj.getMaxEntries()).isEqualTo(val);
-        val++;
-        obj.setMaxEntries(val);
-        assertThat(obj.getMaxEntries()).isEqualTo(val);
-    }
-
-    @Test
     void testCacheEhcacheTimeToLiveSeconds() {
         ApplicationProperties.Cache.Ehcache obj = properties.getCache().getEhcache();
         int                                 val = ApplicationDefaults.Cache.Ehcache.timeToLiveSeconds;
@@ -150,168 +105,6 @@ class ApplicationPropertiesTest {
         val++;
         obj.setMaxEntries(val);
         assertThat(obj.getMaxEntries()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheInfinispanConfigFile() {
-        ApplicationProperties.Cache.Infinispan obj = properties.getCache().getInfinispan();
-        String                                 val = ApplicationDefaults.Cache.Infinispan.configFile;
-        assertThat(obj.getConfigFile()).isEqualTo(val);
-        val = "1" + val;
-        obj.setConfigFile(val);
-        assertThat(obj.getConfigFile()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheInfinispanStatsEnabled() {
-        ApplicationProperties.Cache.Infinispan obj = properties.getCache().getInfinispan();
-        boolean                                val = ApplicationDefaults.Cache.Infinispan.statsEnabled;
-        assertThat(obj.isStatsEnabled()).isEqualTo(val);
-        val = !val;
-        obj.setStatsEnabled(val);
-        assertThat(obj.isStatsEnabled()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheInfinispanLocalTimeToLiveSeconds() {
-        ApplicationProperties.Cache.Infinispan.Local obj = properties.getCache().getInfinispan().getLocal();
-        long                                         val = ApplicationDefaults.Cache.Infinispan.Local.timeToLiveSeconds;
-        assertThat(obj.getTimeToLiveSeconds()).isEqualTo(val);
-        val++;
-        obj.setTimeToLiveSeconds(val);
-        assertThat(obj.getTimeToLiveSeconds()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheInfinispanLocalMaxEntries() {
-        ApplicationProperties.Cache.Infinispan.Local obj = properties.getCache().getInfinispan().getLocal();
-        long                                         val = ApplicationDefaults.Cache.Infinispan.Local.maxEntries;
-        assertThat(obj.getMaxEntries()).isEqualTo(val);
-        val++;
-        obj.setMaxEntries(val);
-        assertThat(obj.getMaxEntries()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheInfinispanDistributedTimeToLiveSeconds() {
-        ApplicationProperties.Cache.Infinispan.Distributed obj = properties.getCache().getInfinispan().getDistributed();
-        long val =
-            ApplicationDefaults.Cache.Infinispan.Distributed.timeToLiveSeconds;
-        assertThat(obj.getTimeToLiveSeconds()).isEqualTo(val);
-        val++;
-        obj.setTimeToLiveSeconds(val);
-        assertThat(obj.getTimeToLiveSeconds()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheInfinispanDistributedMaxEntries() {
-        ApplicationProperties.Cache.Infinispan.Distributed obj = properties.getCache().getInfinispan().getDistributed();
-        long val =
-            ApplicationDefaults.Cache.Infinispan.Distributed.maxEntries;
-        assertThat(obj.getMaxEntries()).isEqualTo(val);
-        val++;
-        obj.setMaxEntries(val);
-        assertThat(obj.getMaxEntries()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheInfinispanDistributedInstanceCount() {
-        ApplicationProperties.Cache.Infinispan.Distributed obj = properties.getCache().getInfinispan().getDistributed();
-        int val =
-            ApplicationDefaults.Cache.Infinispan.Distributed.instanceCount;
-        assertThat(obj.getInstanceCount()).isEqualTo(val);
-        val++;
-        obj.setInstanceCount(val);
-        assertThat(obj.getInstanceCount()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheInfinispanReplicatedTimeToLiveSeconds() {
-        ApplicationProperties.Cache.Infinispan.Replicated obj = properties.getCache().getInfinispan().getReplicated();
-        long val =
-            ApplicationDefaults.Cache.Infinispan.Replicated.timeToLiveSeconds;
-        assertThat(obj.getTimeToLiveSeconds()).isEqualTo(val);
-        val++;
-        obj.setTimeToLiveSeconds(val);
-        assertThat(obj.getTimeToLiveSeconds()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheInfinispanReplicatedMaxEntries() {
-        ApplicationProperties.Cache.Infinispan.Replicated obj = properties.getCache().getInfinispan().getReplicated();
-        long val =
-            ApplicationDefaults.Cache.Infinispan.Replicated.maxEntries;
-        assertThat(obj.getMaxEntries()).isEqualTo(val);
-        val++;
-        obj.setMaxEntries(val);
-        assertThat(obj.getMaxEntries()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheMemcachedEnabled() {
-        ApplicationProperties.Cache.Memcached obj = properties.getCache().getMemcached();
-        boolean                               val = ApplicationDefaults.Cache.Memcached.enabled;
-        assertThat(obj.isEnabled()).isEqualTo(val);
-        obj.setEnabled(true);
-        assertThat(obj.isEnabled()).isEqualTo(true);
-    }
-
-    @Test
-    void testCacheMemcachedServers() {
-        ApplicationProperties.Cache.Memcached obj = properties.getCache().getMemcached();
-        String                                val = ApplicationDefaults.Cache.Memcached.servers;
-        assertThat(obj.getServers()).isEqualTo(val);
-        val = "myserver:1337";
-        obj.setServers(val);
-        assertThat(obj.getServers()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheMemcachedExpiration() {
-        ApplicationProperties.Cache.Memcached obj = properties.getCache().getMemcached();
-        int                                   val = ApplicationDefaults.Cache.Memcached.expiration;
-        assertThat(obj.getExpiration()).isEqualTo(val);
-        val++;
-        obj.setExpiration(val);
-        assertThat(obj.getExpiration()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheMemcachedUseBinaryProtocol() {
-        ApplicationProperties.Cache.Memcached obj = properties.getCache().getMemcached();
-        boolean                               val = ApplicationDefaults.Cache.Memcached.useBinaryProtocol;
-        assertThat(obj.isUseBinaryProtocol()).isEqualTo(val);
-        obj.setUseBinaryProtocol(false);
-        assertThat(obj.isUseBinaryProtocol()).isEqualTo(false);
-    }
-
-    @Test
-    void testCacheMemcachedAuthenticationEnabled() {
-        ApplicationProperties.Cache.Memcached.Authentication obj = properties.getCache().getMemcached()
-                                                                             .getAuthentication();
-        boolean val =
-            ApplicationDefaults.Cache.Memcached.Authentication.enabled;
-        assertThat(obj.isEnabled()).isEqualTo(val);
-        obj.setEnabled(false);
-        assertThat(obj.isEnabled()).isEqualTo(false);
-    }
-
-    @Test
-    void testCacheMemcachedAuthenticationPassword() {
-        ApplicationProperties.Cache.Memcached.Authentication obj = properties.getCache().getMemcached()
-                                                                             .getAuthentication();
-        assertThat(obj.getPassword()).isEqualTo(null);
-        obj.setPassword("MEMCACHEPASSWORD");
-        assertThat(obj.getPassword()).isEqualTo("MEMCACHEPASSWORD");
-    }
-
-    @Test
-    void testCacheMemcachedAuthenticationUsername() {
-        ApplicationProperties.Cache.Memcached.Authentication obj = properties.getCache().getMemcached()
-                                                                             .getAuthentication();
-        assertThat(obj.getUsername()).isEqualTo(null);
-        obj.setUsername("MEMCACHEUSER");
-        assertThat(obj.getUsername()).isEqualTo("MEMCACHEUSER");
     }
 
     @Test
