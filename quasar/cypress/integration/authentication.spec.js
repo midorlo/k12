@@ -17,7 +17,7 @@ describe('Authentication', () => {
     cy.get('[data-cy=submit]').click();
     cy.wait('@login').its('response.statusCode').should('eq', 200);
     cy.window().then(win => {
-      expect(win.sessionStorage.getItem('jhi-authenticationToken')).to.be.not.empty;
+      expect(win.sessionStorage.getItem('app-authenticationToken')).to.be.not.empty;
     });
   });
 
@@ -30,7 +30,7 @@ describe('Authentication', () => {
     cy.get('[data-cy=submit]').click();
     cy.wait('@login').its('response.statusCode').should('eq', 200);
     cy.window().then(win => {
-      expect(win.localStorage.getItem('jhi-authenticationToken')).to.be.not.empty;
+      expect(win.localStorage.getItem('app-authenticationToken')).to.be.not.empty;
     });
   });
 });

@@ -4,7 +4,7 @@ import { LocalStorage, SessionStorage } from 'quasar';
 
 export const beforeEachAuth = async (to, from, next, store) => {
   try {
-    const idToken = LocalStorage.getItem('jhi-authenticationToken') || SessionStorage.getItem('jhi-authenticationToken');
+    const idToken = LocalStorage.getItem('app-authenticationToken') || SessionStorage.getItem('app-authenticationToken');
     if (idToken && !store.getters['auth/isAuthenticated']) {
       api.defaults.headers.common.Authorization = `Bearer ${idToken}`;
       const accountResponse = await api.get('/api/account');
@@ -28,7 +28,7 @@ export const beforeEachAuth = async (to, from, next, store) => {
 export const authLogin = async (store, router, route, credentials) => {
   const authenticateResponse = await api.post('/api/authenticate', credentials);
   const storage = credentials.rememberMe ? localStorage : sessionStorage;
-  storage.setItem('jhi-authenticationToken', authenticateResponse.data.id_token);
+  storage.setItem('app-authenticationToken', authenticateResponse.data.id_token);
   api.defaults.headers.common.Authorization = `Bearer ${authenticateResponse.data.id_token}`;
   const accountResponse = await api.get('/api/account');
   store.dispatch('auth/login', accountResponse.data);

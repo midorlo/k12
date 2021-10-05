@@ -526,7 +526,7 @@ export default defineComponent({
     const { humanStorageSize, capitalize } = qformat;
 
     const fetchMetrics = async () => {
-      metrics.value = (await api.get('/management/jhimetrics')).data;
+      metrics.value = (await api.get('/management/appmetrics')).data;
     };
 
     const fetchThreadDump = async () => {

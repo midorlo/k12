@@ -112,7 +112,7 @@ describe('Users', () => {
         method: 'POST',
         url: '/api/admin/users',
         auth: {
-          bearer: `${sessionStorage['jhi-authenticationToken']}`,
+          bearer: `${sessionStorage['app-authenticationToken']}`,
         },
         body: {
           login: `myLogin${timestamp}`,
