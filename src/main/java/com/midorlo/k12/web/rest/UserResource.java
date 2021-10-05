@@ -10,12 +10,6 @@ import com.midorlo.k12.service.dto.AdminUserDTO;
 import com.midorlo.k12.web.rest.errors.BadRequestAlertException;
 import com.midorlo.k12.web.rest.errors.EmailAlreadyUsedException;
 import com.midorlo.k12.web.rest.errors.LoginAlreadyUsedException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
-import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
-
 import com.midorlo.k12.web.util.HeaderUtil;
 import com.midorlo.k12.web.util.PaginationUtil;
 import com.midorlo.k12.web.util.ResponseUtil;
@@ -30,7 +24,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing users.
@@ -60,21 +62,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/api/admin")
 public class UserResource {
 
-    private static final List<String> ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(
-        Arrays.asList(
-            "id",
-            "login",
-            "firstName",
-            "lastName",
-            "email",
-            "activated",
-            "langKey",
-            "createdBy",
-            "createdDate",
-            "lastModifiedBy",
-            "lastModifiedDate"
-        )
-    );
+    private static final List<String> ALLOWED_ORDERED_PROPERTIES = List.of("id", "login", "firstName", "lastName",
+                                                                           "email", "activated", "langKey",
+                                                                           "createdBy", "createdDate",
+                                                                           "lastModifiedBy", "lastModifiedDate");
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
@@ -88,21 +79,22 @@ public class UserResource {
     private final MailService mailService;
 
     public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
-        this.userService = userService;
+        this.userService    = userService;
         this.userRepository = userRepository;
-        this.mailService = mailService;
+        this.mailService    = mailService;
     }
 
     /**
      * {@code POST  /admin/users}  : Creates a new user.
      * <p>
-     * Creates a new user if the login and email are not already used, and sends an
+     * Creates a new user if the login and email are not already used, and sends a
      * mail with an activation link.
      * The user needs to be activated on creation.
      *
      * @param userDTO the user to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new user, or with status {@code 400 (Bad Request)} if the login or email is already in use.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new user, or with
+     * status {@code 400 (Bad Request)} if the login or email is already in use.
+     * @throws URISyntaxException       if the Location URI syntax is incorrect.
      * @throws BadRequestAlertException {@code 400 (Bad Request)} if the login or email is already in use.
      */
     @PostMapping("/users")
@@ -123,7 +115,8 @@ public class UserResource {
             return ResponseEntity
                 .created(new URI("/api/admin/users/" + newUser.getLogin()))
                 .headers(
-                    HeaderUtil.createAlert(applicationName, "A user is created with identifier " + newUser.getLogin(), newUser.getLogin())
+                    HeaderUtil.createAlert(applicationName, "A user is created with identifier " + newUser.getLogin()
+                        , newUser.getLogin())
                 )
                 .body(newUser);
         }
@@ -150,15 +143,19 @@ public class UserResource {
             throw new LoginAlreadyUsedException();
         }
         Optional<AdminUserDTO> updatedUser = userService.updateUser(userDTO);
+        AdminUserDTO adminUserDTO =
+            updatedUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return ResponseUtil.wrapOrNotFound(
-            updatedUser,
-            HeaderUtil.createAlert(applicationName, "A user is updated with identifier " + userDTO.getLogin(), userDTO.getLogin())
+            adminUserDTO,
+            HeaderUtil.createAlert(applicationName, "A user is updated with identifier " + userDTO.getLogin(),
+                                   userDTO.getLogin())
         );
     }
 
     /**
-     * {@code GET /admin/users} : get all users with all the details - calling this are only allowed for the administrators.
+     * {@code GET /admin/users} : get all users with all the details - calling this are only allowed for the
+     * administrators.
      *
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
@@ -172,7 +169,8 @@ public class UserResource {
         }
 
         final Page<AdminUserDTO> page = userService.getAllManagedUsers(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        HttpHeaders headers =
+            PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -184,13 +182,16 @@ public class UserResource {
      * {@code GET /admin/users/:login} : get the "login" user.
      *
      * @param login the login of the user to find.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the "login" user, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the "login" user, or with status
+     * {@code 404 (Not Found)}.
      */
     @GetMapping("/users/{login}")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<AdminUserDTO> getUser(@PathVariable @Pattern(regexp = ApplicationConstants.LOGIN_REGEX) String login) {
         log.debug("REST request to get User : {}", login);
-        return ResponseUtil.wrapOrNotFound(userService.getUserWithAuthoritiesByLogin(login).map(AdminUserDTO::new));
+        AdminUserDTO adminUserDTO = userService.getUserWithAuthoritiesByLogin(login).map(AdminUserDTO::new)
+                                               .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(adminUserDTO);
     }
 
     /**
