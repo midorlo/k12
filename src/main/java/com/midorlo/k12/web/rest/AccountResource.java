@@ -7,7 +7,6 @@ import com.midorlo.k12.service.MailService;
 import com.midorlo.k12.service.UserService;
 import com.midorlo.k12.service.dto.AdminUserDTO;
 import com.midorlo.k12.service.dto.PasswordChangeDTO;
-import com.midorlo.k12.service.dto.UserDTO;
 import com.midorlo.k12.web.rest.errors.*;
 import com.midorlo.k12.web.rest.vm.KeyAndPasswordVM;
 import com.midorlo.k12.web.rest.vm.ManagedUserVM;
