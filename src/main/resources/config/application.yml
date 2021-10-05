@@ -64,6 +64,9 @@ management:
             enabled: true
 
 spring:
+  liquibase:
+    database-change-log-lock-table: liquibase_changelog
+    liquibase-schema: liquibase
   application:
     name: application
   profiles:

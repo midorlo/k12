@@ -1,15 +1,12 @@
-# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
 version: '3.8'
 services:
   k12-postgresql:
     image: postgres:13.4
-    # volumes:
-    #   - ~/volumes/application/k12/postgresql/:/var/lib/postgresql/data/
+    volumes:
+      - ~/volumes/application/k12/postgresql/:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=k12
       - POSTGRES_PASSWORD=
       - POSTGRES_HOST_AUTH_METHOD=trust
-    # If you want to expose these ports outside your dev PC,
-    # remove the "127.0.0.1:" prefix
     ports:
       - "127.0.0.1:5432:5432"

@@ -38,6 +38,9 @@
         <profile.api-docs/>
         <profile.tls/>
 
+        <sonar.organization>midorlo</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
         <!-- Dependency versions -->
         <jhipster-dependencies.version>7.2.0</jhipster-dependencies.version>
         <!-- The spring-boot version should match the one managed by
