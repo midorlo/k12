@@ -1,8 +1,8 @@
 <style scoped>
 iframe {
   background-color: transparent;
-  border: 0px none transparent;
-  padding: 0px;
+  border: 0 none transparent;
+  padding: 0;
   overflow: hidden;
 }
 </style>
