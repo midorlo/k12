@@ -45,6 +45,7 @@ class PaginationUtilUnitTest {
         assertThat(headerData).isEqualTo(expectedData);
         List<String> xTotalCountHeaders = headers.get("X-Total-Count");
         assertThat(xTotalCountHeaders).hasSize(1);
+        assert xTotalCountHeaders != null;
         assertThat(Long.parseLong(xTotalCountHeaders.get(0))).isEqualTo(400L);
     }
 
@@ -64,6 +65,7 @@ class PaginationUtilUnitTest {
         assertThat(headerData).isEqualTo(expectedData);
         List<String> xTotalCountHeaders = headers.get("X-Total-Count");
         assertThat(xTotalCountHeaders).hasSize(1);
+        assert xTotalCountHeaders != null;
         assertThat(Long.parseLong(xTotalCountHeaders.get(0))).isEqualTo(0L);
     }
 
@@ -86,6 +88,7 @@ class PaginationUtilUnitTest {
         assertThat(headerData).isEqualTo(expectedData);
         List<String> xTotalCountHeaders = headers.get("X-Total-Count");
         assertThat(xTotalCountHeaders).hasSize(1);
+        assert xTotalCountHeaders != null;
         assertThat(Long.parseLong(xTotalCountHeaders.get(0))).isEqualTo(400L);
 
         // Page 1
@@ -104,6 +107,7 @@ class PaginationUtilUnitTest {
         assertThat(headerData).isEqualTo(expectedData);
         xTotalCountHeaders = headers.get("X-Total-Count");
         assertThat(xTotalCountHeaders).hasSize(1);
+        assert xTotalCountHeaders != null;
         assertThat(Long.parseLong(xTotalCountHeaders.get(0))).isEqualTo(400L);
 
         // Page 6
@@ -122,6 +126,7 @@ class PaginationUtilUnitTest {
         assertThat(headerData).isEqualTo(expectedData);
         xTotalCountHeaders = headers.get("X-Total-Count");
         assertThat(xTotalCountHeaders).hasSize(1);
+        assert xTotalCountHeaders != null;
         assertThat(Long.parseLong(xTotalCountHeaders.get(0))).isEqualTo(400L);
 
         // Page 7
@@ -158,6 +163,7 @@ class PaginationUtilUnitTest {
         assertThat(headerData).isEqualTo(expectedData);
         List<String> xTotalCountHeaders = headers.get("X-Total-Count");
         assertThat(xTotalCountHeaders).hasSize(1);
+        assert xTotalCountHeaders != null;
         assertThat(Long.parseLong(xTotalCountHeaders.get(0))).isEqualTo(0L);
     }
 }

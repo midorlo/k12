@@ -373,7 +373,7 @@ class AccountResourceIT {
         assertThat(userDup).isPresent();
         assertThat(userDup.get().getAuthorities())
             .hasSize(1)
-            .containsExactly(authorityRepository.findById(AuthoritiesConstants.USER).get());
+            .containsExactly(authorityRepository.findById(AuthoritiesConstants.USER).orElse(null));
     }
 
     @Test
@@ -392,6 +392,7 @@ class AccountResourceIT {
         restAccountMockMvc.perform(get("/api/activate?key={activationKey}", activationKey)).andExpect(status().isOk());
 
         user = userRepository.findOneByLogin(user.getLogin()).orElse(null);
+        assertThat(user != null).isTrue();
         assertThat(user.isActivated()).isTrue();
     }
 
@@ -427,6 +428,7 @@ class AccountResourceIT {
             .andExpect(status().isOk());
 
         User updatedUser = userRepository.findOneWithAuthoritiesByLogin(user.getLogin()).orElse(null);
+        assertThat(updatedUser != null).isTrue();
         assertThat(updatedUser.getFirstName()).isEqualTo(userDTO.getFirstName());
         assertThat(updatedUser.getLastName()).isEqualTo(userDTO.getLastName());
         assertThat(updatedUser.getEmail()).isEqualTo(userDTO.getEmail());
@@ -500,6 +502,7 @@ class AccountResourceIT {
             .andExpect(status().isBadRequest());
 
         User updatedUser = userRepository.findOneByLogin("save-existing-email").orElse(null);
+        assertThat(updatedUser != null).isTrue();
         assertThat(updatedUser.getEmail()).isEqualTo("save-existing-email@example.com");
     }
 
@@ -529,6 +532,7 @@ class AccountResourceIT {
             .andExpect(status().isOk());
 
         User updatedUser = userRepository.findOneByLogin("save-existing-email-and-login").orElse(null);
+        assertThat(updatedUser != null).isTrue();
         assertThat(updatedUser.getEmail()).isEqualTo("save-existing-email-and-login@example.com");
     }
 
@@ -552,6 +556,7 @@ class AccountResourceIT {
             .andExpect(status().isBadRequest());
 
         User updatedUser = userRepository.findOneByLogin("change-password-wrong-existing-password").orElse(null);
+        assertThat(updatedUser != null).isTrue();
         assertThat(passwordEncoder.matches("new password", updatedUser.getPassword())).isFalse();
         assertThat(passwordEncoder.matches(currentPassword, updatedUser.getPassword())).isTrue();
     }
@@ -576,6 +581,7 @@ class AccountResourceIT {
             .andExpect(status().isOk());
 
         User updatedUser = userRepository.findOneByLogin("change-password").orElse(null);
+        assertThat(updatedUser != null).isTrue();
         assertThat(passwordEncoder.matches("new password", updatedUser.getPassword())).isTrue();
     }
 
@@ -601,6 +607,7 @@ class AccountResourceIT {
             .andExpect(status().isBadRequest());
 
         User updatedUser = userRepository.findOneByLogin("change-password-too-small").orElse(null);
+        assertThat(updatedUser != null).isTrue();
         assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
     }
 
@@ -626,6 +633,7 @@ class AccountResourceIT {
             .andExpect(status().isBadRequest());
 
         User updatedUser = userRepository.findOneByLogin("change-password-too-long").orElse(null);
+        assertThat(updatedUser != null).isTrue();
         assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
     }
 
@@ -649,6 +657,7 @@ class AccountResourceIT {
             .andExpect(status().isBadRequest());
 
         User updatedUser = userRepository.findOneByLogin("change-password-empty").orElse(null);
+        assertThat(updatedUser != null).isTrue();
         assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
     }
 
@@ -713,6 +722,7 @@ class AccountResourceIT {
             .andExpect(status().isOk());
 
         User updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);
+        assertThat(updatedUser != null).isTrue();
         assertThat(passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPassword())).isTrue();
     }
 
@@ -740,6 +750,7 @@ class AccountResourceIT {
             .andExpect(status().isBadRequest());
 
         User updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);
+        assertThat(updatedUser != null).isTrue();
         assertThat(passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPassword())).isFalse();
     }
 

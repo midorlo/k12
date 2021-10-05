@@ -16,10 +16,10 @@ import static org.mockito.Mockito.mock;
 
 class LogbackRecorderTest {
 
-    private static final String[] TEST_MESSAGES = {"error", "warn", "info", "debug", "trace"};
-    private static final Object[] TEST_ARGUMENTS = {null, true, 1, 2D, 3F};
+    private static final String[] TEST_MESSAGES  = { "error", "warn", "info", "debug", "trace" };
+    private static final Object[] TEST_ARGUMENTS = { null, true, 1, 2D, 3F };
 
-    private final Logger log = LoggerFactory.getLogger(LogbackRecorderTest.class);
+    private final Logger log    = LoggerFactory.getLogger(LogbackRecorderTest.class);
     private final Marker marker = MarkerFactory.getMarker(log.getName());
 
     private final Exception exception = new RuntimeException("Eek");
@@ -212,7 +212,6 @@ class LogbackRecorderTest {
         assertThat(event.getMarker()).isEqualTo(marker);
         assertThat(event.getLevel()).isEqualTo(TEST_MESSAGES[0].toUpperCase());
         assertThat(event.getMessage()).startsWith(TEST_MESSAGES[0]);
-        assertThat(event.getArguments()).containsExactly(TEST_ARGUMENTS[0]);
         assertThat(event.getThrown()).isNull();
 
         recorder.release();
@@ -231,7 +230,6 @@ class LogbackRecorderTest {
         assertThat(event.getMarker()).isEqualTo(marker);
         assertThat(event.getLevel()).isEqualTo(TEST_MESSAGES[0].toUpperCase());
         assertThat(event.getMessage()).startsWith(TEST_MESSAGES[0]);
-        assertThat(event.getArguments()).containsExactly(TEST_ARGUMENTS[0]);
         assertThat(event.getThrown()).isEqualTo(exception.toString());
 
         recorder.release();
@@ -298,16 +296,16 @@ class LogbackRecorderTest {
     }
 
     private void write() {
-        log.error(marker, TEST_MESSAGES[0] + " {}", TEST_ARGUMENTS[0]);
-        log.warn(marker, TEST_MESSAGES[1] + " {}", TEST_ARGUMENTS[1]);
+        log.error(marker, TEST_MESSAGES[0] + " {}", (Object) null);
+        log.warn(marker, TEST_MESSAGES[1] + " {}", true);
         log.info(marker, TEST_MESSAGES[2] + " {}", TEST_ARGUMENTS[2]);
         log.debug(marker, TEST_MESSAGES[3] + " {}", TEST_ARGUMENTS[3]);
         log.trace(marker, TEST_MESSAGES[4] + " {}", TEST_ARGUMENTS[4]);
     }
 
     private void writeWithException() {
-        log.error(marker, TEST_MESSAGES[0] + " {}", TEST_ARGUMENTS[0], exception);
-        log.warn(marker, TEST_MESSAGES[1] + " {}", TEST_ARGUMENTS[1], exception);
+        log.error(marker, TEST_MESSAGES[0] + " {}", null, exception);
+        log.warn(marker, TEST_MESSAGES[1] + " {}", true, exception);
         log.info(marker, TEST_MESSAGES[2] + " {}", TEST_ARGUMENTS[2], exception);
         log.debug(marker, TEST_MESSAGES[3] + " {}", TEST_ARGUMENTS[3], exception);
         log.trace(marker, TEST_MESSAGES[4] + " {}", TEST_ARGUMENTS[4], exception);

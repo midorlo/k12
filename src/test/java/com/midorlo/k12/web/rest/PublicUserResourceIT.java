@@ -1,5 +1,6 @@
 package com.midorlo.k12.web.rest;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -46,8 +48,12 @@ class PublicUserResourceIT {
 
     @BeforeEach
     public void setup() {
-        cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).clear();
-        cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).clear();
+        Cache cache1 = cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE);
+        Cache cache2 = cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE);
+        assertThat(cache1).isNotNull();
+        assertThat(cache2).isNotNull();
+        cache1.clear();
+        cache2.clear();
     }
 
     @BeforeEach

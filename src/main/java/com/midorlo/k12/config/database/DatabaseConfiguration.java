@@ -43,7 +43,11 @@ public class DatabaseConfiguration {
     }
 
     private String getValidPortForH2() {
-        int port = Integer.parseInt(env.getProperty("server.port"));
+        String property = env.getProperty("server.port");
+        if (property == null) {
+            throw new RuntimeException("Expected property server.port to be present!");
+        }
+        int port = Integer.parseInt(property);
         if (port < 10000) {
             port = 10000 + port;
         } else {

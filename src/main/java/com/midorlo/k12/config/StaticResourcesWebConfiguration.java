@@ -7,6 +7,7 @@ import com.midorlo.k12.config.application.ApplicationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.CacheControl;
+import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -37,7 +38,7 @@ public class StaticResourcesWebConfiguration implements WebMvcConfigurer {
     }
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    public void addResourceHandlers(@NonNull ResourceHandlerRegistry registry) {
         ResourceHandlerRegistration resourceHandlerRegistration = appendResourceHandler(registry);
         initializeResourceHandler(resourceHandlerRegistration);
     }

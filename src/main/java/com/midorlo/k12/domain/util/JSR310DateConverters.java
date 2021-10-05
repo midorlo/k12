@@ -23,7 +23,7 @@ public final class JSR310DateConverters {
 
         @Override
         public Date convert(@NonNull LocalDate source) {
-            return source == null ? null : Date.from(source.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            return Date.from(source.atStartOfDay(ZoneId.systemDefault()).toInstant());
         }
     }
 
@@ -36,8 +36,8 @@ public final class JSR310DateConverters {
 
         @Override
         public LocalDate convert(@NonNull Date source) {
-            return source == null ? null : ZonedDateTime.ofInstant(source.toInstant(), ZoneId.systemDefault())
-                .toLocalDate();
+            return ZonedDateTime.ofInstant(source.toInstant(), ZoneId.systemDefault())
+                                            .toLocalDate();
         }
     }
 
@@ -50,7 +50,7 @@ public final class JSR310DateConverters {
 
         @Override
         public Date convert(@NonNull ZonedDateTime source) {
-            return source == null ? null : Date.from(source.toInstant());
+            return Date.from(source.toInstant());
         }
     }
 
@@ -63,7 +63,7 @@ public final class JSR310DateConverters {
 
         @Override
         public ZonedDateTime convert(@NonNull Date source) {
-            return source == null ? null : ZonedDateTime.ofInstant(source.toInstant(), ZoneId.systemDefault());
+            return ZonedDateTime.ofInstant(source.toInstant(), ZoneId.systemDefault());
         }
     }
 
@@ -76,7 +76,7 @@ public final class JSR310DateConverters {
 
         @Override
         public Date convert(@NonNull LocalDateTime source) {
-            return source == null ? null : Date.from(source.atZone(ZoneId.systemDefault()).toInstant());
+            return Date.from(source.atZone(ZoneId.systemDefault()).toInstant());
         }
     }
 
@@ -89,7 +89,7 @@ public final class JSR310DateConverters {
 
         @Override
         public LocalDateTime convert(@NonNull Date source) {
-            return source == null ? null : LocalDateTime.ofInstant(source.toInstant(), ZoneId.systemDefault());
+            return LocalDateTime.ofInstant(source.toInstant(), ZoneId.systemDefault());
         }
     }
 
@@ -102,7 +102,7 @@ public final class JSR310DateConverters {
 
         @Override
         public Long convert(@NonNull Duration source) {
-            return source == null ? null : source.toNanos();
+            return source.toNanos();
         }
     }
 
@@ -115,7 +115,7 @@ public final class JSR310DateConverters {
 
         @Override
         public Duration convert(@NonNull Long source) {
-            return source == null ? null : Duration.ofNanos(source);
+            return Duration.ofNanos(source);
         }
     }
 }

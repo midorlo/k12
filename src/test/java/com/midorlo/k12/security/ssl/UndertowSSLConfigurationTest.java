@@ -24,6 +24,7 @@ class UndertowSSLConfigurationTest {
         undertowServletWebServerFactory.getBuilderCustomizers().forEach(c -> c.customize(builder));
         OptionMap.Builder serverOptions = (OptionMap.Builder) ReflectionTestUtils.getField(builder, "socketOptions");
         assertThat(undertowServletWebServerFactory).isNotNull();
+        assert serverOptions != null;
         assertThat(serverOptions.getMap().get(UndertowOptions.SSL_USER_CIPHER_SUITES_ORDER)).isTrue();
     }
 

@@ -149,7 +149,7 @@ public class AccountResource {
     }
 
     /**
-     * {@code POST   /account/reset-password/init} : Send an email to reset the password of the user.
+     * {@code POST   /account/reset-password/init} : Email reset the password of the user.
      *
      * @param mail the mail of the user.
      */
@@ -166,7 +166,7 @@ public class AccountResource {
     }
 
     /**
-     * {@code POST   /account/reset-password/finish} : Finish to reset the password of the user.
+     * {@code POST   /account/reset-password/finish} : Finish resetting the password of the user.
      *
      * @param keyAndPassword the generated key and the new password.
      * @throws InvalidPasswordException {@code 400 (Bad Request)} if the password is incorrect.

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PageUtilTest {
 
@@ -52,11 +51,5 @@ class PageUtilTest {
         assertThat(page.getSize()).isEqualTo(PAGE_SIZE);
         assertThat(page.getTotalElements()).isEqualTo(TOTAL_ELEMENTS_OF_40);
         assertThat(page.getTotalPages()).isEqualTo(TOTAL_PAGES_OF_2);
-    }
-
-    @Test
-    void generatePageFromListShouldThrowIllegalArgumentExceptionIfListNull() {
-        assertThatThrownBy(() -> PageUtil.createPageFromList(null, PageRequest.of(0, PAGE_SIZE)))
-            .isInstanceOf(IllegalArgumentException.class);
     }
 }
