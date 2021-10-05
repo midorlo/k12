@@ -5,7 +5,7 @@
 //import org.springframework.data.jpa.domain.Specification;
 //
 ///**
-// * This class is just a compile - test.
+// * This class is just a compile-test.
 // */
 //public class ChildEntityQueryService extends QueryService<ChildEntity> {
 //

@@ -80,7 +80,7 @@ public abstract class QueryService<ENTITY> {
      * and null/non-null conditions are supported.
      *
      * @param filter            the individual attribute filter coming from the frontend.
-     * @param metaclassFunction lambda, which based on a Root&lt;ENTITY&gt; returns Expression - basicaly picks a column
+     * @param metaclassFunction lambda, which based on a Root&lt;ENTITY&gt; returns Expression - basically picks a column
      * @return a Specification
      */
     protected Specification<ENTITY> buildSpecification(StringFilter filter, Function<Root<ENTITY>, Expression<String>> metaclassFunction) {
@@ -124,7 +124,7 @@ public abstract class QueryService<ENTITY> {
      *
      * @param <X>               The type of the attribute which is filtered.
      * @param filter            the individual attribute filter coming from the frontend.
-     * @param metaclassFunction lambda, which based on a Root&lt;ENTITY&gt; returns Expression - basicaly picks a column
+     * @param metaclassFunction lambda, which based on a Root&lt;ENTITY&gt; returns Expression - basically picks a column
      * @return a Specification
      */
     protected <X extends Comparable<? super X>> Specification<ENTITY> buildSpecification(RangeFilter<X> filter,
@@ -169,8 +169,7 @@ public abstract class QueryService<ENTITY> {
      * Employee_.project, Project_.name);
      * </pre>
      *
-     * @param filter     the filter object which contains a value, which needs to match or a flag if nullness is
-     *                   checked.
+     * @param filter     the filter object which contains a value, which needs to match or a flag if null is checked.
      * @param reference  the attribute of the static metamodel for the referring entity.
      * @param valueField the attribute of the static metamodel of the referred entity, where the equality should be
      *                   checked.
@@ -187,9 +186,9 @@ public abstract class QueryService<ENTITY> {
     /**
      * Helper function to return a specification for filtering on one-to-many or many-to-many reference. Usage:
      * <pre>
-     *   Specification&lt;Employee&gt; specByEmployeeId = buildReferringEntitySpecification(criteria.getEmployeId(),
+     *   Specification&lt;Employee&gt; specByEmployeeId = buildReferringEntitySpecification(criteria.getEmployeeId(),
      * Project_.employees, Employee_.id);
-     *   Specification&lt;Employee&gt; specByEmployeeName = buildReferringEntitySpecification(criteria.getEmployeName(),
+     *   Specification&lt;Employee&gt; specByEmployeeName = buildReferringEntitySpecification(criteria.getEmployeeName(),
      * Project_.project, Project_.name);
      * </pre>
      *
@@ -211,7 +210,7 @@ public abstract class QueryService<ENTITY> {
     /**
      * Helper function to return a specification for filtering on one-to-many or many-to-many reference.Usage:<pre>
      *   Specification&lt;Employee&gt; specByEmployeeId = buildReferringEntitySpecification(
-     *          criteria.getEmployeId(),
+     *          criteria.getEmployeeId(),
      *          root -&gt; root.get(Project_.company).join(Company_.employees),
      *          entity -&gt; entity.get(Employee_.id));
      *   Specification&lt;Employee&gt; specByProjectName = buildReferringEntitySpecification(
@@ -222,7 +221,7 @@ public abstract class QueryService<ENTITY> {
      *
      * @param filter           the filter object which contains a value, which needs to match or a flag if emptiness is
      *                         checked.
-     * @param functionToEntity the function, which joins he current entity to the entity set, on which the filtering is applied.
+     * @param functionToEntity the function, which joins he is current entity to the entity set, on which the filtering is applied.
      * @param entityToColumn   the function, which of the static metamodel of the referred entity, where the equality should be
      *                         checked.
      * @param <OTHER>          The type of the referenced entity.
@@ -247,9 +246,9 @@ public abstract class QueryService<ENTITY> {
      * than, greater than and less-than-or-equal-to and greater-than-or-equal-to and null/non-null conditions are
      * supported. Usage:
      * <pre>
-     *   Specification&lt;Employee&gt; specByEmployeeId = buildReferringEntitySpecification(criteria.getEmployeId(),
+     *   Specification&lt;Employee&gt; specByEmployeeId = buildReferringEntitySpecification(criteria.getEmployeeId(),
      * Project_.employees, Employee_.id);
-     *   Specification&lt;Employee&gt; specByEmployeeName = buildReferringEntitySpecification(criteria.getEmployeName(),
+     *   Specification&lt;Employee&gt; specByEmployeeName = buildReferringEntitySpecification(criteria.getEmployeeName(),
      * Project_.project, Project_.name);
      * </pre>
      *
@@ -274,7 +273,7 @@ public abstract class QueryService<ENTITY> {
      * supported. Usage:
      * <pre><code>
      *   Specification&lt;Employee&gt; specByEmployeeId = buildReferringEntitySpecification(
-     *          criteria.getEmployeId(),
+     *          criteria.getEmployeeId(),
      *          root -&gt; root.get(Project_.company).join(Company_.employees),
      *          entity -&gt; entity.get(Employee_.id));
      *   Specification&lt;Employee&gt; specByProjectName = buildReferringEntitySpecification(
@@ -287,7 +286,7 @@ public abstract class QueryService<ENTITY> {
      * @param <X>              The type of the attribute which is filtered.
      * @param filter           the filter object which contains a value, which needs to match or a flag if emptiness is
      *                         checked.
-     * @param functionToEntity the function, which joins he current entity to the entity set, on which the filtering is applied.
+     * @param functionToEntity the function, which joins he is current entity to the entity set, on which the filtering is applied.
      * @param entityToColumn   the function, which of the static metamodel of the referred entity, where the equality should be
      *                         checked.
      * @param <OTHER>          The type of the referenced entity.

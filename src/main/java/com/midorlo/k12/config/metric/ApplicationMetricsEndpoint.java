@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * <p>ApplicationMetricsEndpoint class.</p>
  */
-@WebEndpoint(id = "appmetrics")
+@WebEndpoint(id = "metrics")
 public class ApplicationMetricsEndpoint {
 
     private final MeterRegistry meterRegistry;

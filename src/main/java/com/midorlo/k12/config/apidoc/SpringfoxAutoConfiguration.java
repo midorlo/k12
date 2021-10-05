@@ -96,7 +96,7 @@ public class SpringfoxAutoConfiguration {
         springfoxCustomizers.forEach(customizer -> customizer.customize(docket));
 
         // Add all AlternateTypeRules if available in spring bean factory.
-        // Also you can add your rules in a customizer bean above.
+        // Also, you can add your rules in a customizer bean above.
         Optional.ofNullable(alternateTypeRules.getIfAvailable()).ifPresent(docket::alternateTypeRules);
 
         watch.stop();

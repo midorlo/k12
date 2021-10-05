@@ -198,7 +198,7 @@
       "sourceMethod": "getSocial()"
     },
     {
-      "name": "management.endpoint.appmetrics",
+      "name": "management.endpoint.metrics",
       "type": "com.midorlo.k12.config.metric.ApplicationMetricsEndpoint",
       "sourceType": "com.midorlo.k12.config.metric.ApplicationMetricsEndpoint"
     }
@@ -629,16 +629,16 @@
       "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Social"
     },
     {
-      "name": "management.endpoint.appmetrics.cache.time-to-live",
+      "name": "management.endpoint.metrics.cache.time-to-live",
       "type": "java.time.Duration",
       "description": "Maximum time that a response can be cached.",
       "sourceType": "com.midorlo.k12.config.metric.ApplicationMetricsEndpoint",
       "defaultValue": "0ms"
     },
     {
-      "name": "management.endpoint.appmetrics.enabled",
+      "name": "management.endpoint.metrics.enabled",
       "type": "java.lang.Boolean",
-      "description": "Whether to enable the appmetrics endpoint.",
+      "description": "Whether to enable the metrics endpoint.",
       "sourceType": "com.midorlo.k12.config.metric.ApplicationMetricsEndpoint",
       "defaultValue": true
     },

@@ -105,7 +105,7 @@ public final class TestUtil {
     }
 
     /**
-     * A matcher that tests that the examined number represents the same value - it can be Long, Double, etc - as the reference BigDecimal.
+     * A matcher that tests that the examined number represents the same value - it can be Long, Double, etc. - as the reference BigDecimal.
      */
     public static class NumberMatcher extends TypeSafeMatcher<Number> {
 
@@ -187,7 +187,7 @@ public final class TestUtil {
     }
 
     /**
-     * Makes a an executes a query to the EntityManager finding all stored objects.
+     * Makes and executes a query to the EntityManager finding all stored objects.
      * @param <T> The type of objects to be searched
      * @param em The instance of the EntityManager
      * @param clss The class type to be searched

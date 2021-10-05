@@ -3,7 +3,7 @@ package com.midorlo.k12.service.filter;
 import java.util.Objects;
 
 /**
- * Filter class for Comparable types, where less than / greater than / etc relations could be interpreted. It can be
+ * Filter class for Comparable types, where less than / greater than / etc. relations could be interpreted. It can be
  * added to a criteria class as a member, to support the following query parameters:
  * <pre>
  *      fieldName.equals=42

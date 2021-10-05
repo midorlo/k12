@@ -45,7 +45,7 @@ public class PageableParameterBuilderPlugin implements OperationBuilderPlugin {
      */
     public static final String DEFAULT_SORT_NAME = "sort";
     /**
-     * Constant <code>SORT_DESCRIPTION="Sorting criteria in the format: propert"{trunked}</code>
+     * Constant <code>SORT_DESCRIPTION="Sorting criteria in the format: property"{trunked}</code>
      */
     public static final String SORT_DESCRIPTION  = "Sorting criteria in the format: property(,asc|desc). "
                                                    + "Default sort order is ascending. "

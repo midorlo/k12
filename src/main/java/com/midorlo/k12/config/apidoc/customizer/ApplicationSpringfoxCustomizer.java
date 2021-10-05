@@ -19,7 +19,7 @@ import java.util.HashSet;
 import static springfox.documentation.builders.PathSelectors.regex;
 
 /**
- * A Springfox customizer to setup {@link Docket} with Application settings.
+ * A Springfox customizer to set up {@link Docket} with Application settings.
  */
 public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer, Ordered {
 
@@ -83,7 +83,7 @@ public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer, Orde
     /**
      * <p>Setter for the field <code>order</code>.</p>
      *
-     * @param order a int.
+     * @param order an int.
      */
     public void setOrder(int order) {
         this.order = order;

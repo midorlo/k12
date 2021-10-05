@@ -18,14 +18,14 @@ management:
       base-path: /management
       exposure:
         include:
-          ['configprops', 'env', 'health', 'info', 'appmetrics', 'logfile', 'loggers', 'prometheus', 'threaddump', 'caches', 'liquibase']
+          ['configprops', 'env', 'health', 'info', 'metrics', 'logfile', 'loggers', 'prometheus', 'threaddump', 'caches', 'liquibase']
   endpoint:
     health:
       show-details: when_authorized
       roles: 'ROLE_ADMIN'
       probes:
         enabled: true
-    appmetrics:
+    metrics:
       enabled: true
   info:
     git:
@@ -145,7 +145,7 @@ info:
 application:
   clientApp:
     name: 'application'
-  # By default CORS is disabled. Uncomment to enable.
+  # By default, CORS is disabled. Uncomment to enable.
   # cors:
   #   allowed-origins: "http://localhost:8100,http://localhost:9000"
   #   allowed-methods: "*"
