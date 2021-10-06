@@ -5,9 +5,12 @@
       <q-item>
         <div class="text-blue-grey-10 text-h6 text-weight-light">{{ slogan }}</div>
       </q-item>
+
       <q-space/>
       <q-btn flat @click="toggleSettings" icon="settings" v-bind:style="{ color: primaryColor}"/>
     </q-toolbar>
+
+
     <q-tabs class="text-secondary text-white text-weight-bolder text-h6"
             align="left"
             v-model="currentTab"
@@ -15,10 +18,20 @@
             no-caps
             v-bind:style="theme"
     >
-      <q-route-tab to="/news/list" name="news" label="News" tabindex="0"/>
-      <q-route-tab to="/urls" name="links" label="Links"/>
-      <q-route-tab to="/files" name="files" label="Files"/>
-
+      <!--suppress RequiredAttributes -->
+      <q-btn-dropdown v-for="menu in menus"
+                      :key="menu.id"
+                      :tabindex="menu.id"
+                      auto-close
+                      stretch
+                      flat
+                      :label="menu['defaultTitle']">
+        <q-item v-for="menuItem in menu.menuItems"
+                :key="menuItem.id"
+                :to="menuItem.to">
+          <q-item-section>{{ menuItem.i18nKey }}</q-item-section>
+        </q-item>
+      </q-btn-dropdown>
       <q-space></q-space>
       <q-btn
         flat
@@ -28,13 +41,13 @@
       />
       <q-route-tab to="/login" label="Login" v-show="!principal"/>
     </q-tabs>
-
   </q-header>
 </template>
 
 <script>
 import {inject} from "vue";
 import {LocalStorage, useQuasar} from "quasar";
+import {api} from "boot/axios";
 
 export default {
   name: "AppHeader",
@@ -68,14 +81,19 @@ export default {
   },
   data() {
     return {
+      menus: [],
       slogan: 'On Time...',
       currentTab: 1
     }
   },
   mounted() {
     this.startAnimation()
+    this.fetchMenus()
   },
   methods: {
+    fetchMenus() {
+      api.get('/api/webapp/menus').then(r => this.menus = r.data)
+    },
     startAnimation() {
       for (let i = 0; i < 3; i++) {
         let wave = document.createElement('div')

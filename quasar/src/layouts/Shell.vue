@@ -1,7 +1,10 @@
 <template>
   <q-layout view="hHr lpR lFr">
+
     <app-header/>
+
     <div class='animationScene' v-show="enableBackgroundAnimation"/>
+
     <q-page-container v-show="showContentPane">
       <router-view/>
     </q-page-container>
@@ -18,16 +21,18 @@
 import {inject} from 'vue'
 import AppSettingsWidget from "./components/AppSettingsWidget";
 import AppHeader from "./components/AppHeader";
+import {api} from "boot/axios";
 
 export default {
-  setup() {
+  setup: function () {
+
     const primaryColor = inject('primaryColor')
     const enableBackgroundAnimation = inject('enableBackgroundAnimation')
     const showSettingsBar = inject('showSettingsBar')
     return {
       primaryColor,
       showSettingsBar,
-      enableBackgroundAnimation
+      enableBackgroundAnimation,
     }
   },
   computed: {
@@ -37,6 +42,7 @@ export default {
   },
   data() {
     return {
+      menus: [],
       settings: {
         show: false
       },
@@ -56,8 +62,12 @@ export default {
   },
   mounted() {
     this.startAnimation()
+    this.fetchMenus()
   },
   methods: {
+    fetchMenus() {
+      api.get('/api/webapp/menus').then(r => this.menus = r.data)
+    },
     startAnimation() {
       for (let i = 0; i < 3; i++) {
         let wave = document.createElement('div')
