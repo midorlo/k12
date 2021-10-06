@@ -1,9 +1,65 @@
 // app global css in SCSS form
 .responsive-width {
+  //noinspection SassScssResolvedByNameOnly
   @media (max-width: $breakpoint-xs-max) {
     width: 300px;
   }
+  //noinspection SassScssResolvedByNameOnly
   @media (min-width: $breakpoint-sm-min) {
     width: 500px;
   }
+}
+//app global css in SCSS form
+* {
+  font-family: "Segoe UI", SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.content-card {
+  //display: inline-block;
+  //box-shadow: 0 7px 16px #d7e0ea;
+  //border-radius: 6px;
+  border-top: 5px solid #eab056;
+  //padding: 1rem;
+  //margin-bottom: 3rem;
+}
+
+.lined-card {
+  display: inline-block;
+  border-top: 5px solid #488dc4;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.accent-card {
+  display: inline-block;
+  box-shadow: 0 7px 16px #d7e0ea;
+  border-radius: 6px;
+  width: 50%;
+  border-top: 5px solid #488dc4;
+  padding: 1rem;
+  margin-bottom: 3rem;
+}
+
+.top-line {
+  border-top: 5px solid #488dc4;
+}
+
+.top-line-thin {
+  border-top: 0.5px solid #488dc4;
+}
+
+.component-title {
+  text-shadow: 2px 2px 16px #d7e0ea;
+  font-size: 2.125rem;
+  line-height: 2.5rem;
+  letter-spacing: 0.00735em;
+  font-weight: 100;
+}
+
+.section-title {
+  text-shadow: 1px 1px 1px #d7e0ea;
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.00735em;
+  font-weight: 100;
 }
