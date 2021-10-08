@@ -1,4 +1,4 @@
-package com.midorlo.k12.security.ssl;
+package com.midorlo.k12.config.security.ssl;
 
 import io.undertow.Undertow;
 import io.undertow.UndertowOptions;
