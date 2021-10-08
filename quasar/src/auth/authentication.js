@@ -26,7 +26,7 @@ export const beforeEachAuth = async (to, from, next, store) => {
 };
 
 export const authLogin = async (store, router, route, credentials) => {
-  const authenticateResponse = await api.post('/api/authenticate', credentials);
+  const authenticateResponse = await api.post('/api/identity/authenticate', credentials);
   const storage = credentials.rememberMe ? localStorage : sessionStorage;
   storage.setItem('app-authenticationToken', authenticateResponse.data.id_token);
   api.defaults.headers.common.Authorization = `Bearer ${authenticateResponse.data.id_token}`;
