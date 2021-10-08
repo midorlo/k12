@@ -1,4 +1,4 @@
-package com.midorlo.k12.beans.webapp;
+package com.midorlo.k12.beans;
 
 import com.midorlo.k12.domain.webapp.Menu;
 import com.midorlo.k12.domain.webapp.MenuItem;
@@ -12,13 +12,13 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class InstallMenus implements CommandLineRunner {
+public class InstallMenusAndMenuItems implements CommandLineRunner {
 
     private final MenuRepository     menuRepository;
     private final MenuItemRepository menuItemRepository;
 
-    public InstallMenus(MenuRepository menuRepository,
-                        MenuItemRepository menuItemRepository) {
+    public InstallMenusAndMenuItems(MenuRepository menuRepository,
+                                    MenuItemRepository menuItemRepository) {
         this.menuRepository     = menuRepository;
         this.menuItemRepository = menuItemRepository;
     }
