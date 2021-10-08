@@ -1,4 +1,4 @@
-package com.midorlo.k12.web.rest.errors;
+package com.midorlo.k12.web.errors;
 
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.http.HttpStatus;

@@ -3,7 +3,7 @@ package com.midorlo.k12.service;
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.config.application.ApplicationConstants;
 import com.midorlo.k12.config.application.ApplicationProperties;
-import com.midorlo.k12.domain.User;
+import com.midorlo.k12.domain.security.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
