@@ -1,6 +1,8 @@
 package com.midorlo.k12.config.cache;
 
 import com.midorlo.k12.config.application.ApplicationProperties;
+import com.midorlo.k12.domain.security.Authority;
+import com.midorlo.k12.domain.security.User;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;
@@ -50,11 +52,11 @@ public class CacheConfiguration {
         return cm -> {
             createCache(cm, com.midorlo.k12.repository.UserRepository.USERS_BY_LOGIN_CACHE);
             createCache(cm, com.midorlo.k12.repository.UserRepository.USERS_BY_EMAIL_CACHE);
-            createCache(cm, com.midorlo.k12.domain.User.class.getName());
-            createCache(cm, com.midorlo.k12.domain.Authority.class.getName());
-            createCache(cm, com.midorlo.k12.domain.User.class.getName() + ".authorities");
+            createCache(cm, User.class.getName());
+            createCache(cm, Authority.class.getName());
+            createCache(cm, User.class.getName() + ".authorities");
             //createCache(cm, com.midorlo.k12.domain.PersistentToken.class.getName());
-            createCache(cm, com.midorlo.k12.domain.User.class.getName() + ".persistentTokens");
+            createCache(cm, User.class.getName() + ".persistentTokens");
         };
     }
 
