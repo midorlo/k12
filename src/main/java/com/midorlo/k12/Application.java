@@ -3,13 +3,16 @@ package com.midorlo.k12;
 import com.midorlo.k12.config.application.ApplicationConstants;
 import com.midorlo.k12.config.application.ApplicationProperties;
 import com.midorlo.k12.config.util.DefaultProfileUtil;
+import com.midorlo.k12.domain.webapp.Menu;
+import com.midorlo.k12.repository.webapp.MenuRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
@@ -17,10 +20,11 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootApplication
-@EnableConfigurationProperties({ LiquibaseProperties.class, ApplicationProperties.class })
+@EnableConfigurationProperties({ ApplicationProperties.class })
 public class Application {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
@@ -39,22 +43,19 @@ public class Application {
      */
     @PostConstruct
     public void initApplication() {
+
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
-        if (
-            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_DEVELOPMENT) &&
-            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_PRODUCTION)
-        ) {
-            log.error(
-                "You have misconfigured your application! It should not run " + "with both the 'dev' and 'prod' profiles at the same time."
-            );
+
+        if (activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_DEVELOPMENT)
+            && activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_PRODUCTION)) {
+
+            log.error("You have misconfigured your application! It should not run " + "with both the 'dev' and 'prod'" +
+                      " profiles at the same time.");
         }
-        if (
-            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_DEVELOPMENT) &&
-            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_CLOUD)
-        ) {
-            log.error(
-                "You have misconfigured your application! It should not " + "run with both the 'dev' and 'cloud' profiles at the same time."
-            );
+        if (activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_DEVELOPMENT) &&
+            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_CLOUD)) {
+            log.error("You have misconfigured your application! It should not " + "run with both the 'dev' and " +
+                      "'cloud' profiles at the same time.");
         }
     }
 
@@ -71,7 +72,8 @@ public class Application {
     }
 
     private static void logApplicationStartup(Environment env) {
-        String protocol = Optional.ofNullable(env.getProperty("server.ssl.key-store")).map(key -> "https").orElse("http");
+        String protocol = Optional.ofNullable(env.getProperty("server.ssl.key-store")).map(key -> "https")
+                                  .orElse("http");
         String serverPort = env.getProperty("server.port");
         String contextPath = Optional
             .ofNullable(env.getProperty("server.servlet.context-path"))

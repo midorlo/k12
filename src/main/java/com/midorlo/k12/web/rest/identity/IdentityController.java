@@ -1,14 +1,18 @@
-package com.midorlo.k12.web.rest;
+package com.midorlo.k12.web.rest.identity;
 
-import com.midorlo.k12.domain.User;
+import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.security.SecurityUtils;
+import com.midorlo.k12.security.jwt.JWTFilter;
+import com.midorlo.k12.security.jwt.TokenProvider;
 import com.midorlo.k12.service.MailService;
 import com.midorlo.k12.service.UserService;
 import com.midorlo.k12.service.dto.AdminUserDTO;
 import com.midorlo.k12.service.dto.PasswordChangeDTO;
-import com.midorlo.k12.web.rest.errors.*;
+import com.midorlo.k12.web.errors.*;
+import com.midorlo.k12.web.rest.vm.JsonWebTokenModel;
 import com.midorlo.k12.web.rest.vm.KeyAndPasswordVM;
+import com.midorlo.k12.web.rest.vm.LoginVM;
 import com.midorlo.k12.web.rest.vm.ManagedUserVM;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
@@ -16,15 +20,21 @@ import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * REST controller for managing the current user's account.
  */
 @RestController
-@RequestMapping("/api")
-public class AccountResource {
+@RequestMapping("/api/identity")
+public class IdentityController {
 
     private static class AccountResourceException extends RuntimeException {
 
@@ -33,18 +43,28 @@ public class AccountResource {
         }
     }
 
-    private final Logger log = LoggerFactory.getLogger(AccountResource.class);
+    private final Logger log = LoggerFactory.getLogger(IdentityController.class);
 
     private final UserRepository userRepository;
+
+    private final TokenProvider tokenProvider;
+
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     private final UserService userService;
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
-        this.userRepository = userRepository;
-        this.userService = userService;
-        this.mailService = mailService;
+    public IdentityController(UserRepository userRepository,
+                              TokenProvider tokenProvider,
+                              AuthenticationManagerBuilder authenticationManagerBuilder,
+                              UserService userService,
+                              MailService mailService) {
+        this.userRepository               = userRepository;
+        this.tokenProvider                = tokenProvider;
+        this.authenticationManagerBuilder = authenticationManagerBuilder;
+        this.userService                  = userService;
+        this.mailService                  = mailService;
     }
 
     /**
@@ -85,7 +105,7 @@ public class AccountResource {
      * @param request the HTTP request.
      * @return the login if the user is authenticated.
      */
-    @GetMapping("/authenticate")
+    @GetMapping("/authenticate/check")
     public String isAuthenticated(HttpServletRequest request) {
         log.debug("REST request to check if the current user is authenticated");
         return request.getRemoteUser();
@@ -191,4 +211,20 @@ public class AccountResource {
             password.length() > ManagedUserVM.PASSWORD_MAX_LENGTH
         );
     }
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<JsonWebTokenModel> authenticate(@Valid @RequestBody LoginVM loginVM) {
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+            loginVM.getUsername(),
+            loginVM.getPassword()
+        );
+
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String      jwt         = tokenProvider.createToken(authentication, loginVM.isRememberMe());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        return new ResponseEntity<>(new JsonWebTokenModel(jwt), httpHeaders, HttpStatus.OK);
+    }
+
 }

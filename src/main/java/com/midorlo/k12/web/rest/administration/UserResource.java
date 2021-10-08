@@ -1,15 +1,15 @@
-package com.midorlo.k12.web.rest;
+package com.midorlo.k12.web.rest.administration;
 
 import com.midorlo.k12.config.application.ApplicationConstants;
-import com.midorlo.k12.domain.User;
+import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.security.AuthoritiesConstants;
 import com.midorlo.k12.service.MailService;
 import com.midorlo.k12.service.UserService;
 import com.midorlo.k12.service.dto.AdminUserDTO;
-import com.midorlo.k12.web.rest.errors.BadRequestAlertException;
-import com.midorlo.k12.web.rest.errors.EmailAlreadyUsedException;
-import com.midorlo.k12.web.rest.errors.LoginAlreadyUsedException;
+import com.midorlo.k12.web.errors.BadRequestAlertException;
+import com.midorlo.k12.web.errors.EmailAlreadyUsedException;
+import com.midorlo.k12.web.errors.LoginAlreadyUsedException;
 import com.midorlo.k12.web.util.HeaderUtil;
 import com.midorlo.k12.web.util.PaginationUtil;
 import com.midorlo.k12.web.util.ResponseUtil;

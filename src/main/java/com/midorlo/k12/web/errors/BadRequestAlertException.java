@@ -1,4 +1,4 @@
-package com.midorlo.k12.web.rest.errors;
+package com.midorlo.k12.web.errors;
 
 import org.zalando.problem.AbstractThrowableProblem;
 import org.zalando.problem.Status;

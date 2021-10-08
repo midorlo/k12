@@ -1,4 +1,4 @@
-package com.midorlo.k12.domain;
+package com.midorlo.k12.domain.util;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedBy;
@@ -47,31 +47,35 @@ public abstract class AbstractAuditingEntity implements Serializable {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public AbstractAuditingEntity setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+        return this;
     }
 
     public Instant getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Instant createdDate) {
+    public AbstractAuditingEntity setCreatedDate(Instant createdDate) {
         this.createdDate = createdDate;
+        return this;
     }
 
     public String getLastModifiedBy() {
         return lastModifiedBy;
     }
 
-    public void setLastModifiedBy(String lastModifiedBy) {
+    public AbstractAuditingEntity setLastModifiedBy(String lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
+        return this;
     }
 
     public Instant getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(Instant lastModifiedDate) {
+    public AbstractAuditingEntity setLastModifiedDate(Instant lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+        return this;
     }
 }

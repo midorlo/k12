@@ -1,4 +1,4 @@
-package com.midorlo.k12.web.rest.errors;
+package com.midorlo.k12.web.errors;
 
 import com.midorlo.k12.config.application.ApplicationConstants;
 import com.midorlo.k12.web.util.HeaderUtil;

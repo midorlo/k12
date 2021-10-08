@@ -1,7 +1,7 @@
 package com.midorlo.k12.service;
 
 import com.midorlo.k12.config.application.ApplicationProperties;
-import com.midorlo.k12.domain.User;
+import com.midorlo.k12.domain.security.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
