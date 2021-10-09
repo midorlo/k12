@@ -1,6 +1,6 @@
 package com.midorlo.k12.beans;
 
-import com.midorlo.k12.domain.security.User;
+import com.midorlo.k12.domain.User;
 import com.midorlo.k12.repository.AuthorityRepository;
 import com.midorlo.k12.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -45,10 +45,6 @@ public class InstallUsersAndAuthorities implements CommandLineRunner {
                                                              .setLangKey("de")
                                                              .setFirstName("-")
                                                              .setLastName("-")
-                                                             .setCreatedBy("admin")
-                                                             .setCreatedDate(Instant.now())
-                                                             .setLastModifiedDate(Instant.now())
-                                                             .setLastModifiedBy("admin")
                                                ,
                                                    new User()
                                                        .setActivated(true)
@@ -58,10 +54,6 @@ public class InstallUsersAndAuthorities implements CommandLineRunner {
                                                        .setLangKey("de")
                                                        .setFirstName("-")
                                                        .setLastName("-")
-                                                       .setCreatedBy("admin")
-                                                       .setCreatedDate(Instant.now())
-                                                       .setLastModifiedDate(Instant.now())
-                                                       .setLastModifiedBy("admin")
                                            )
                                        )));
     }

@@ -1,8 +1,8 @@
 package com.midorlo.k12.config.cache;
 
 import com.midorlo.k12.config.application.ApplicationProperties;
-import com.midorlo.k12.domain.security.Authority;
-import com.midorlo.k12.domain.security.User;
+import com.midorlo.k12.domain.Authority;
+import com.midorlo.k12.domain.User;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;
