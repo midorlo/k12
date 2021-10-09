@@ -7,12 +7,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.midorlo.k12.IntegrationTest;
-import com.midorlo.k12.domain.security.User;
+import com.midorlo.k12.domain.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.security.AuthoritiesConstants;
 import javax.persistence.EntityManager;
-
-import com.midorlo.k12.web.rest.administration.UserResource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

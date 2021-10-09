@@ -1,23 +1,20 @@
 package com.midorlo.k12.web.rest;
 
-import static com.midorlo.k12.web.rest.IdentityControllerIT.TEST_USER_LOGIN;
+import static com.midorlo.k12.web.rest.AccountResourceIT.TEST_USER_LOGIN;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.config.application.ApplicationConstants;
-import com.midorlo.k12.domain.security.User;
+import com.midorlo.k12.domain.User;
 import com.midorlo.k12.repository.AuthorityRepository;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.security.AuthoritiesConstants;
 import com.midorlo.k12.service.UserService;
 import com.midorlo.k12.service.dto.AdminUserDTO;
 import com.midorlo.k12.service.dto.PasswordChangeDTO;
-import com.midorlo.k12.web.rest.identity.IdentityController;
 import com.midorlo.k12.web.rest.vm.KeyAndPasswordVM;
-import com.midorlo.k12.web.rest.vm.LoginVM;
 import com.midorlo.k12.web.rest.vm.ManagedUserVM;
 import java.time.Instant;
 import java.util.*;
@@ -32,12 +29,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Integration tests for the {@link IdentityController} REST controller.
+ * Integration tests for the {@link AccountResource} REST controller.
  */
 @AutoConfigureMockMvc
 @WithMockUser(value = TEST_USER_LOGIN)
 @IntegrationTest
-class IdentityControllerIT {
+class AccountResourceIT {
 
     static final String TEST_USER_LOGIN = "test";
 
@@ -56,67 +53,6 @@ class IdentityControllerIT {
     @Autowired
     private MockMvc restAccountMockMvc;
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Test
-    @Transactional
-    void testAuthorize() throws Exception {
-        User user = new User();
-        user.setLogin("user-jwt-controller");
-        user.setEmail("user-jwt-controller@example.com");
-        user.setActivated(true);
-        user.setPassword(passwordEncoder.encode("test"));
-
-        userRepository.saveAndFlush(user);
-
-        LoginVM login = new LoginVM();
-        login.setUsername("user-jwt-controller");
-        login.setPassword("test");
-        mockMvc
-            .perform(post("/api/authenticate").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(login)))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.id_token").isString())
-            .andExpect(jsonPath("$.id_token").isNotEmpty())
-            .andExpect(header().string("Authorization", not(nullValue())))
-            .andExpect(header().string("Authorization", not(is(emptyString()))));
-    }
-
-    @Test
-    @Transactional
-    void testAuthorizeWithRememberMe() throws Exception {
-        User user = new User();
-        user.setLogin("user-jwt-controller-remember-me");
-        user.setEmail("user-jwt-controller-remember-me@example.com");
-        user.setActivated(true);
-        user.setPassword(passwordEncoder.encode("test"));
-
-        userRepository.saveAndFlush(user);
-
-        LoginVM login = new LoginVM();
-        login.setUsername("user-jwt-controller-remember-me");
-        login.setPassword("test");
-        login.setRememberMe(true);
-        mockMvc
-            .perform(post("/api/authenticate").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(login)))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.id_token").isString())
-            .andExpect(jsonPath("$.id_token").isNotEmpty())
-            .andExpect(header().string("Authorization", not(nullValue())))
-            .andExpect(header().string("Authorization", not(is(emptyString()))));
-    }
-
-    @Test
-    void testAuthorizeFails() throws Exception {
-        LoginVM login = new LoginVM();
-        login.setUsername("wrong-user");
-        login.setPassword("wrong password");
-        mockMvc
-            .perform(post("/api/authenticate").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(login)))
-            .andExpect(status().isUnauthorized())
-            .andExpect(jsonPath("$.id_token").doesNotExist())
-            .andExpect(header().doesNotExist("Authorization"));
-    }
     @Test
     @WithUnauthenticatedMockUser
     void testNonAuthenticatedUser() throws Exception {
