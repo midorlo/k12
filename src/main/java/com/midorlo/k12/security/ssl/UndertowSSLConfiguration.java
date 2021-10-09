@@ -1,4 +1,4 @@
-package com.midorlo.k12.config.security.ssl;
+package com.midorlo.k12.security.ssl;
 
 import io.undertow.UndertowOptions;
 import org.slf4j.Logger;
