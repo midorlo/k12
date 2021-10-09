@@ -1,4 +1,4 @@
-package com.midorlo.k12.web.errors;
+package com.midorlo.k12.web.rest.errors;
 
 public class EmailAlreadyUsedException extends BadRequestAlertException {
 

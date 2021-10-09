@@ -1,6 +1,6 @@
 package com.midorlo.k12.repository;
 
-import com.midorlo.k12.domain.security.User;
+import com.midorlo.k12.domain.User;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

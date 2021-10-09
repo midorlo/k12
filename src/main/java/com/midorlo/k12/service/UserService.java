@@ -1,8 +1,8 @@
 package com.midorlo.k12.service;
 
 import com.midorlo.k12.config.application.ApplicationConstants;
-import com.midorlo.k12.domain.security.Authority;
-import com.midorlo.k12.domain.security.User;
+import com.midorlo.k12.domain.Authority;
+import com.midorlo.k12.domain.User;
 import com.midorlo.k12.repository.AuthorityRepository;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.security.AuthoritiesConstants;

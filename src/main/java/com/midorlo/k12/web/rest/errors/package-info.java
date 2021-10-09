@@ -3,4 +3,4 @@
  *
  * More information on https://github.com/zalando/problem-spring-web
  */
-package com.midorlo.k12.web.errors;
+package com.midorlo.k12.web.rest.errors;

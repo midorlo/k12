@@ -1,6 +1,6 @@
 package com.midorlo.k12.security;
 
-import com.midorlo.k12.domain.security.User;
+import com.midorlo.k12.domain.User;
 import com.midorlo.k12.repository.UserRepository;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
