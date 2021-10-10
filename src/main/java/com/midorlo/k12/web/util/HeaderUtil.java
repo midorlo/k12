@@ -1,11 +1,10 @@
 package com.midorlo.k12.web.util;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
-
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Utility class for HTTP headers creation.
@@ -14,8 +13,7 @@ public final class HeaderUtil {
 
     private static final Logger log = LoggerFactory.getLogger(HeaderUtil.class);
 
-    private HeaderUtil() {
-    }
+    private HeaderUtil() {}
 
     /**
      * <p>createAlert.</p>
@@ -41,9 +39,15 @@ public final class HeaderUtil {
      * @param param a {@link String} object.
      * @return a {@link HttpHeaders} object.
      */
-    public static HttpHeaders createEntityCreationAlert(String applicationName, boolean enableTranslation, String entityName, String param) {
-        String message = enableTranslation ? applicationName + "." + entityName + ".created"
-                                           : "A new " + entityName + " is created with identifier " + param;
+    public static HttpHeaders createEntityCreationAlert(
+        String applicationName,
+        boolean enableTranslation,
+        String entityName,
+        String param
+    ) {
+        String message = enableTranslation
+            ? applicationName + "." + entityName + ".created"
+            : "A new " + entityName + " is created with identifier " + param;
         return createAlert(applicationName, message, param);
     }
 
@@ -57,8 +61,9 @@ public final class HeaderUtil {
      * @return a {@link HttpHeaders} object.
      */
     public static HttpHeaders createEntityUpdateAlert(String applicationName, boolean enableTranslation, String entityName, String param) {
-        String message = enableTranslation ? applicationName + "." + entityName + ".updated"
-                                           : "A " + entityName + " is updated with identifier " + param;
+        String message = enableTranslation
+            ? applicationName + "." + entityName + ".updated"
+            : "A " + entityName + " is updated with identifier " + param;
         return createAlert(applicationName, message, param);
     }
 
@@ -71,9 +76,15 @@ public final class HeaderUtil {
      * @param param a {@link String} object.
      * @return a {@link HttpHeaders} object.
      */
-    public static HttpHeaders createEntityDeletionAlert(String applicationName, boolean enableTranslation, String entityName, String param) {
-        String message = enableTranslation ? applicationName + "." + entityName + ".deleted"
-                                           : "A " + entityName + " is deleted with identifier " + param;
+    public static HttpHeaders createEntityDeletionAlert(
+        String applicationName,
+        boolean enableTranslation,
+        String entityName,
+        String param
+    ) {
+        String message = enableTranslation
+            ? applicationName + "." + entityName + ".deleted"
+            : "A " + entityName + " is deleted with identifier " + param;
         return createAlert(applicationName, message, param);
     }
 
@@ -87,7 +98,13 @@ public final class HeaderUtil {
      * @param defaultMessage a {@link String} object.
      * @return a {@link HttpHeaders} object.
      */
-    public static HttpHeaders createFailureAlert(String applicationName, boolean enableTranslation, String entityName, String errorKey, String defaultMessage) {
+    public static HttpHeaders createFailureAlert(
+        String applicationName,
+        boolean enableTranslation,
+        String entityName,
+        String errorKey,
+        String defaultMessage
+    ) {
         log.error("Entity processing failed, {}", defaultMessage);
 
         String message = enableTranslation ? "error." + errorKey : defaultMessage;

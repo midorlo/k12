@@ -1,10 +1,9 @@
 package com.midorlo.k12.config.util;
 
 import com.midorlo.k12.config.application.ApplicationConstants;
-import org.springframework.boot.SpringApplication;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.boot.SpringApplication;
 
 /**
  * Utility class to load a Spring profile to be used as default
@@ -15,8 +14,7 @@ public final class DefaultProfileUtil {
 
     private static final String SPRING_PROFILE_DEFAULT = "spring.profiles.default";
 
-    private DefaultProfileUtil() {
-    }
+    private DefaultProfileUtil() {}
 
     /**
      * Set a default to use when no profile is configured.

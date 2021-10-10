@@ -1,9 +1,8 @@
 package com.midorlo.k12.config;
 
-import java.util.concurrent.TimeUnit;
-
 import com.midorlo.k12.config.application.ApplicationConstants;
 import com.midorlo.k12.config.application.ApplicationProperties;
+import java.util.concurrent.TimeUnit;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.CacheControl;

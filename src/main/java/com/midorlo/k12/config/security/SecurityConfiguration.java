@@ -39,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     ) {
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
-        this.problemSupport        = problemSupport;
+        this.problemSupport = problemSupport;
         this.applicationProperties = applicationProperties;
     }
 

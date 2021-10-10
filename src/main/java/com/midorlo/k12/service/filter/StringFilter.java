@@ -26,8 +26,7 @@ public class StringFilter extends Filter<String> {
     /**
      * <p>Constructor for StringFilter.</p>
      */
-    public StringFilter() {
-    }
+    public StringFilter() {}
 
     /**
      * <p>Constructor for StringFilter.</p>
@@ -99,8 +98,7 @@ public class StringFilter extends Filter<String> {
             return false;
         }
         final StringFilter that = (StringFilter) o;
-        return Objects.equals(contains, that.contains) &&
-            Objects.equals(doesNotContain, that.doesNotContain);
+        return Objects.equals(contains, that.contains) && Objects.equals(doesNotContain, that.doesNotContain);
     }
 
     /** {@inheritDoc} */
@@ -112,15 +110,17 @@ public class StringFilter extends Filter<String> {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return getFilterName() + " ["
-            + (getEquals() != null ? "equals=" + getEquals() + ", " : "")
-            + (getNotEquals() != null ? "notEquals=" + getNotEquals() + ", " : "")
-            + (getSpecified() != null ? "specified=" + getSpecified() + ", " : "")
-            + (getIn() != null ? "in=" + getIn() + ", " : "")
-            + (getNotIn() != null ? "notIn=" + getNotIn() + ", " : "")
-            + (getContains() != null ? "contains=" + getContains() + ", " : "")
-            + (getDoesNotContain() != null ? "doesNotContain=" + getDoesNotContain() : "")
-            + "]";
+        return (
+            getFilterName() +
+            " [" +
+            (getEquals() != null ? "equals=" + getEquals() + ", " : "") +
+            (getNotEquals() != null ? "notEquals=" + getNotEquals() + ", " : "") +
+            (getSpecified() != null ? "specified=" + getSpecified() + ", " : "") +
+            (getIn() != null ? "in=" + getIn() + ", " : "") +
+            (getNotIn() != null ? "notIn=" + getNotIn() + ", " : "") +
+            (getContains() != null ? "contains=" + getContains() + ", " : "") +
+            (getDoesNotContain() != null ? "doesNotContain=" + getDoesNotContain() : "") +
+            "]"
+        );
     }
-
 }

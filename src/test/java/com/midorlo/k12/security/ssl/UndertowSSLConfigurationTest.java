@@ -1,13 +1,13 @@
 package com.midorlo.k12.security.ssl;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import io.undertow.Undertow;
 import io.undertow.UndertowOptions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.xnio.OptionMap;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class UndertowSSLConfigurationTest {
 
@@ -27,5 +27,4 @@ class UndertowSSLConfigurationTest {
         assert serverOptions != null;
         assertThat(serverOptions.getMap().get(UndertowOptions.SSL_USER_CIPHER_SUITES_ORDER)).isTrue();
     }
-
 }

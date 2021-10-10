@@ -10,7 +10,6 @@ import org.springframework.web.server.ResponseStatusException;
  * Utility class for ResponseEntity creation.
  */
 public interface ResponseUtil {
-
     /**
      * Wrap the optional into a {@link ResponseEntity} with an {@link HttpStatus#OK} status, or if it's empty, it
      * returns a {@link ResponseEntity} with {@link HttpStatus#NOT_FOUND}.

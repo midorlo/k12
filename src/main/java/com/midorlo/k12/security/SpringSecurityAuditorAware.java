@@ -1,11 +1,10 @@
 package com.midorlo.k12.security;
 
 import com.midorlo.k12.config.application.ApplicationConstants;
+import java.util.Optional;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 /**
  * Implementation of {@link AuditorAware} based on Spring Security.

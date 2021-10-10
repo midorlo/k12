@@ -14,8 +14,7 @@ public class DurationFilter extends RangeFilter<Duration> {
     /**
      * <p>Constructor for DurationFilter.</p>
      */
-    public DurationFilter() {
-    }
+    public DurationFilter() {}
 
     /**
      * <p>Constructor for DurationFilter.</p>
@@ -34,5 +33,4 @@ public class DurationFilter extends RangeFilter<Duration> {
     public DurationFilter copy() {
         return new DurationFilter(this);
     }
-
 }

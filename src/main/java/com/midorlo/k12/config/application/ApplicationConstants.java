@@ -33,6 +33,6 @@ public interface ApplicationConstants {
     String SPRING_PROFILE_K8S = "k8s";
     // Regex for acceptable logins
     String LOGIN_REGEX = "^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$";
-    String SYSTEM           = "system";
+    String SYSTEM = "system";
     String DEFAULT_LANGUAGE = "de";
 }

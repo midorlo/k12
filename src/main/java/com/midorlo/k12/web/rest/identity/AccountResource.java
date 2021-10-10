@@ -16,6 +16,9 @@ import com.midorlo.k12.web.rest.errors.LoginAlreadyUsedException;
 import com.midorlo.k12.web.rest.vm.KeyAndPasswordVM;
 import com.midorlo.k12.web.rest.vm.LoginVM;
 import com.midorlo.k12.web.rest.vm.ManagedUserVM;
+import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,10 +31,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.Optional;
-
 /**
  * REST controller for managing the current user's account.
  */
@@ -39,12 +38,12 @@ import java.util.Optional;
 @RequestMapping("/api/identity")
 public class AccountResource {
 
-    private final TokenProvider                tokenProvider;
+    private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final Logger                       log = LoggerFactory.getLogger(AccountResource.class);
-    private final UserRepository               userRepository;
-    private final UserService                  userService;
-    private final MailService                  mailService;
+    private final Logger log = LoggerFactory.getLogger(AccountResource.class);
+    private final UserRepository userRepository;
+    private final UserService userService;
+    private final MailService mailService;
 
     private static class AccountResourceException extends RuntimeException {
 
@@ -53,16 +52,18 @@ public class AccountResource {
         }
     }
 
-    public AccountResource(TokenProvider tokenProvider,
-                           AuthenticationManagerBuilder authenticationManagerBuilder,
-                           UserRepository userRepository,
-                           UserService userService,
-                           MailService mailService) {
-        this.tokenProvider                = tokenProvider;
+    public AccountResource(
+        TokenProvider tokenProvider,
+        AuthenticationManagerBuilder authenticationManagerBuilder,
+        UserRepository userRepository,
+        UserService userService,
+        MailService mailService
+    ) {
+        this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.userRepository               = userRepository;
-        this.userService                  = userService;
-        this.mailService                  = mailService;
+        this.userRepository = userRepository;
+        this.userService = userService;
+        this.mailService = mailService;
     }
 
     /**
@@ -195,8 +196,7 @@ public class AccountResource {
         if (isPasswordLengthInvalid(keyAndPassword.getNewPassword())) {
             throw new InvalidPasswordException();
         }
-        Optional<User> user = userService.completePasswordReset(keyAndPassword.getNewPassword(),
-                                                                keyAndPassword.getKey());
+        Optional<User> user = userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
 
         if (user.isEmpty()) {
             throw new AccountResourceException("No user was found for this reset key");
@@ -212,7 +212,7 @@ public class AccountResource {
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String      jwt         = tokenProvider.createToken(authentication, loginVM.isRememberMe());
+        String jwt = tokenProvider.createToken(authentication, loginVM.isRememberMe());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
         return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);

@@ -1,6 +1,13 @@
 package com.midorlo.k12.domain.util;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.midorlo.k12.test.LogbackRecorder;
+import java.sql.Types;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.type.descriptor.sql.BinaryTypeDescriptor;
 import org.hibernate.type.descriptor.sql.BlobTypeDescriptor;
@@ -9,14 +16,6 @@ import org.hibernate.type.descriptor.sql.SqlTypeDescriptor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.sql.Types;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class FixedPostgreSQL95DialectTest {
 
@@ -31,15 +30,14 @@ class FixedPostgreSQL95DialectTest {
         recorders.add(LogbackRecorder.forName("org.jboss.logging").reset().capture("ALL"));
         recorders.add(LogbackRecorder.forClass(Dialect.class).reset().capture("ALL"));
 
-        dialect = new FixedPostgreSQL95Dialect() {
-
-            @Override
-            protected void registerColumnType(int code, String name) {
-                registered.put(code, name);
-                super.registerColumnType(code, name);
-            }
-
-        };
+        dialect =
+            new FixedPostgreSQL95Dialect() {
+                @Override
+                protected void registerColumnType(int code, String name) {
+                    registered.put(code, name);
+                    super.registerColumnType(code, name);
+                }
+            };
     }
 
     @AfterEach

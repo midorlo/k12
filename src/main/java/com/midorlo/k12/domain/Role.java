@@ -25,8 +25,8 @@ public class Role implements Serializable {
     private Long id;
 
     @NotNull
-//    @Min(value = 6)
-//    @Max(value = 50)
+    //    @Min(value = 6)
+    //    @Max(value = 50)
     @Column(name = "i_18_n", nullable = false, unique = true)
     private String i18n;
 

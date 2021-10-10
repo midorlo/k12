@@ -93,7 +93,6 @@ public class PersistentTokenCache<T> {
         }
     }
 
-
     private class Value {
 
         private final T token;
@@ -104,5 +103,4 @@ public class PersistentTokenCache<T> {
             this.expire = expire;
         }
     }
-
 }

@@ -1,6 +1,8 @@
 package com.midorlo.k12.config.database.liquibase;
 
 import com.midorlo.k12.config.application.ApplicationConstants;
+import java.util.concurrent.Executor;
+import javax.sql.DataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +15,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
-
-import javax.sql.DataSource;
-import java.util.concurrent.Executor;
 
 @Configuration
 public class LiquibaseConfiguration {
@@ -49,7 +48,7 @@ public class LiquibaseConfiguration {
             dataSourceProperties
         );
         liquibase.setDatabaseChangeLogLockTable("liquibase_locks");
-//        liquibase.setLiquibaseSchema("liquibase");
+        //        liquibase.setLiquibaseSchema("liquibase");
         liquibase.setDatabaseChangeLogTable("liquibase_changelogs");
         liquibase.setChangeLog("classpath:config/liquibase/master.xml");
         liquibase.setContexts(liquibaseProperties.getContexts());

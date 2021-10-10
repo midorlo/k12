@@ -12,8 +12,7 @@ public class IntegerFilter extends RangeFilter<Integer> {
     /**
      * <p>Constructor for IntegerFilter.</p>
      */
-    public IntegerFilter() {
-    }
+    public IntegerFilter() {}
 
     /**
      * <p>Constructor for IntegerFilter.</p>
@@ -32,5 +31,4 @@ public class IntegerFilter extends RangeFilter<Integer> {
     public IntegerFilter copy() {
         return new IntegerFilter(this);
     }
-
 }

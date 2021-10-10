@@ -1,17 +1,15 @@
 package com.midorlo.k12.web.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Utility class for creating a Page object.
  */
 public interface PageUtil {
-
     /**
      * Create a {@link Page} from a {@link List} of objects
      *

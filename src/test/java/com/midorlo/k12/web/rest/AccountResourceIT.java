@@ -80,33 +80,33 @@ class AccountResourceIT {
             .andExpect(content().string(TEST_USER_LOGIN));
     }
 
-//    @Test
-//    void testGetExistingAccount() throws Exception {
-//        Set<String> authorities = new HashSet<>();
-//        authorities.add(AuthoritiesConstants.ADMIN);
-//
-//        AdminUserDTO user = new AdminUserDTO();
-//        user.setLogin(TEST_USER_LOGIN);
-//        user.setFirstName("john");
-//        user.setLastName("doe");
-//        user.setEmail("john.doe@domain.tld");
-//        user.setImageUrl("http://placehold.it/50x50");
-//        user.setLangKey("en");
-//        user.setAuthorities(authorities);
-//        userService.createUser(user);
-//
-//        restAccountMockMvc
-//            .perform(get("/api/identity/account").accept(MediaType.APPLICATION_JSON))
-//            .andExpect(status().isOk())
-//            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-//            .andExpect(jsonPath("$.login").value(TEST_USER_LOGIN))
-//            .andExpect(jsonPath("$.firstName").value("john"))
-//            .andExpect(jsonPath("$.lastName").value("doe"))
-//            .andExpect(jsonPath("$.email").value("john.doe@domain.tld"))
-//            .andExpect(jsonPath("$.imageUrl").value("http://placehold.it/50x50"))
-//            .andExpect(jsonPath("$.langKey").value("en"))
-//            .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN));
-//    }
+    //    @Test
+    //    void testGetExistingAccount() throws Exception {
+    //        Set<String> authorities = new HashSet<>();
+    //        authorities.add(AuthoritiesConstants.ADMIN);
+    //
+    //        AdminUserDTO user = new AdminUserDTO();
+    //        user.setLogin(TEST_USER_LOGIN);
+    //        user.setFirstName("john");
+    //        user.setLastName("doe");
+    //        user.setEmail("john.doe@domain.tld");
+    //        user.setImageUrl("http://placehold.it/50x50");
+    //        user.setLangKey("en");
+    //        user.setAuthorities(authorities);
+    //        userService.createUser(user);
+    //
+    //        restAccountMockMvc
+    //            .perform(get("/api/identity/account").accept(MediaType.APPLICATION_JSON))
+    //            .andExpect(status().isOk())
+    //            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+    //            .andExpect(jsonPath("$.login").value(TEST_USER_LOGIN))
+    //            .andExpect(jsonPath("$.firstName").value("john"))
+    //            .andExpect(jsonPath("$.lastName").value("doe"))
+    //            .andExpect(jsonPath("$.email").value("john.doe@domain.tld"))
+    //            .andExpect(jsonPath("$.imageUrl").value("http://placehold.it/50x50"))
+    //            .andExpect(jsonPath("$.langKey").value("en"))
+    //            .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN));
+    //    }
 
     @Test
     void testGetUnknownAccount() throws Exception {
@@ -130,7 +130,9 @@ class AccountResourceIT {
         assertThat(userRepository.findOneByLogin("test-register-valid")).isEmpty();
 
         restAccountMockMvc
-            .perform(post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(validUser)))
+            .perform(
+                post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(validUser))
+            )
             .andExpect(status().isCreated());
 
         assertThat(userRepository.findOneByLogin("test-register-valid")).isPresent();
@@ -151,7 +153,11 @@ class AccountResourceIT {
         invalidUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         restAccountMockMvc
-            .perform(post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
+            .perform(
+                post("/api/identity/register")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(invalidUser))
+            )
             .andExpect(status().isBadRequest());
 
         Optional<User> user = userRepository.findOneByEmailIgnoreCase("funky@example.com");
@@ -173,7 +179,11 @@ class AccountResourceIT {
         invalidUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         restAccountMockMvc
-            .perform(post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
+            .perform(
+                post("/api/identity/register")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(invalidUser))
+            )
             .andExpect(status().isBadRequest());
 
         Optional<User> user = userRepository.findOneByLogin("bob");
@@ -195,7 +205,11 @@ class AccountResourceIT {
         invalidUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         restAccountMockMvc
-            .perform(post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
+            .perform(
+                post("/api/identity/register")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(invalidUser))
+            )
             .andExpect(status().isBadRequest());
 
         Optional<User> user = userRepository.findOneByLogin("bob");
@@ -217,7 +231,11 @@ class AccountResourceIT {
         invalidUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         restAccountMockMvc
-            .perform(post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
+            .perform(
+                post("/api/identity/register")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(invalidUser))
+            )
             .andExpect(status().isBadRequest());
 
         Optional<User> user = userRepository.findOneByLogin("bob");
@@ -255,12 +273,18 @@ class AccountResourceIT {
 
         // First user
         restAccountMockMvc
-            .perform(post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(firstUser)))
+            .perform(
+                post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(firstUser))
+            )
             .andExpect(status().isCreated());
 
         // Second (non activated) user
         restAccountMockMvc
-            .perform(post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(secondUser)))
+            .perform(
+                post("/api/identity/register")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(secondUser))
+            )
             .andExpect(status().isCreated());
 
         Optional<User> testUser = userRepository.findOneByEmailIgnoreCase("alice2@example.com");
@@ -270,7 +294,11 @@ class AccountResourceIT {
 
         // Second (already activated) user
         restAccountMockMvc
-            .perform(post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(secondUser)))
+            .perform(
+                post("/api/identity/register")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(secondUser))
+            )
             .andExpect(status().is4xxClientError());
     }
 
@@ -290,7 +318,9 @@ class AccountResourceIT {
 
         // Register first user
         restAccountMockMvc
-            .perform(post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(firstUser)))
+            .perform(
+                post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(firstUser))
+            )
             .andExpect(status().isCreated());
 
         Optional<User> testUser1 = userRepository.findOneByLogin("test-register-duplicate-email");
@@ -309,7 +339,11 @@ class AccountResourceIT {
 
         // Register second (non activated) user
         restAccountMockMvc
-            .perform(post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(secondUser)))
+            .perform(
+                post("/api/identity/register")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(secondUser))
+            )
             .andExpect(status().isCreated());
 
         Optional<User> testUser2 = userRepository.findOneByLogin("test-register-duplicate-email");
@@ -348,34 +382,38 @@ class AccountResourceIT {
 
         // Register 4th (already activated) user
         restAccountMockMvc
-            .perform(post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(secondUser)))
+            .perform(
+                post("/api/identity/register")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(secondUser))
+            )
             .andExpect(status().is4xxClientError());
     }
 
-//    @Test
-//    @Transactional
-//    void testRegisterAdminIsIgnored() throws Exception {
-//        ManagedUserVM validUser = new ManagedUserVM();
-//        validUser.setLogin("badguy");
-//        validUser.setPassword("password");
-//        validUser.setFirstName("Bad");
-//        validUser.setLastName("Guy");
-//        validUser.setEmail("badguy@example.com");
-//        validUser.setActivated(true);
-//        validUser.setImageUrl("http://placehold.it/50x50");
-//        validUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-//        validUser.setAuthorities(Collections.singleton(AuthoritiesConstants.ADMIN));
-//
-//        restAccountMockMvc
-//            .perform(post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(validUser)))
-//            .andExpect(status().isCreated());
-//
-//        Optional<User> userDup = userRepository.findOneWithAuthoritiesByLogin("badguy");
-//        assertThat(userDup).isPresent();
-//        assertThat(userDup.get().getAuthorities())
-//            .hasSize(1)
-//            .containsExactly(authorityRepository.findById(AuthoritiesConstants.USER).orElse(null));
-//    }
+    //    @Test
+    //    @Transactional
+    //    void testRegisterAdminIsIgnored() throws Exception {
+    //        ManagedUserVM validUser = new ManagedUserVM();
+    //        validUser.setLogin("badguy");
+    //        validUser.setPassword("password");
+    //        validUser.setFirstName("Bad");
+    //        validUser.setLastName("Guy");
+    //        validUser.setEmail("badguy@example.com");
+    //        validUser.setActivated(true);
+    //        validUser.setImageUrl("http://placehold.it/50x50");
+    //        validUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
+    //        validUser.setAuthorities(Collections.singleton(AuthoritiesConstants.ADMIN));
+    //
+    //        restAccountMockMvc
+    //            .perform(post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(validUser)))
+    //            .andExpect(status().isCreated());
+    //
+    //        Optional<User> userDup = userRepository.findOneWithAuthoritiesByLogin("badguy");
+    //        assertThat(userDup).isPresent();
+    //        assertThat(userDup.get().getAuthorities())
+    //            .hasSize(1)
+    //            .containsExactly(authorityRepository.findById(AuthoritiesConstants.USER).orElse(null));
+    //    }
 
     @Test
     @Transactional
@@ -425,7 +463,9 @@ class AccountResourceIT {
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.ADMIN));
 
         restAccountMockMvc
-            .perform(post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO)))
+            .perform(
+                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO))
+            )
             .andExpect(status().isOk());
 
         User updatedUser = userRepository.findOneWithAuthoritiesByLogin(user.getLogin()).orElse(null);
@@ -463,7 +503,9 @@ class AccountResourceIT {
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.ADMIN));
 
         restAccountMockMvc
-            .perform(post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO)))
+            .perform(
+                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO))
+            )
             .andExpect(status().isBadRequest());
 
         assertThat(userRepository.findOneByEmailIgnoreCase("invalid email")).isNotPresent();
@@ -499,7 +541,9 @@ class AccountResourceIT {
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.ADMIN));
 
         restAccountMockMvc
-            .perform(post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO)))
+            .perform(
+                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO))
+            )
             .andExpect(status().isBadRequest());
 
         User updatedUser = userRepository.findOneByLogin("save-existing-email").orElse(null);
@@ -529,7 +573,9 @@ class AccountResourceIT {
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.ADMIN));
 
         restAccountMockMvc
-            .perform(post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO)))
+            .perform(
+                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO))
+            )
             .andExpect(status().isOk());
 
         User updatedUser = userRepository.findOneByLogin("save-existing-email-and-login").orElse(null);

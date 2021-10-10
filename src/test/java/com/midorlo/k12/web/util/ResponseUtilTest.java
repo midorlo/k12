@@ -1,5 +1,9 @@
 package com.midorlo.k12.web.util;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -7,15 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 @SuppressWarnings("UastIncorrectHttpHeaderInspection")
 class ResponseUtilTest {
 
-    private static final String HEADER_NAME  = "X-Test";
+    private static final String HEADER_NAME = "X-Test";
     private static final String HEADER_VALUE = "FooBar";
 
     private HttpHeaders headers;
@@ -28,9 +27,9 @@ class ResponseUtilTest {
 
     @Test
     void testOptionalYesWithoutHeaders() {
-        ResponseEntity<Integer> response =
-            ResponseUtil.wrapOrNotFound(Optional.of(42)
-                                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
+        ResponseEntity<Integer> response = ResponseUtil.wrapOrNotFound(
+            Optional.of(42).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND))
+        );
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isEqualTo(42);
         assertThat(response.getHeaders()).isEmpty();
@@ -38,10 +37,10 @@ class ResponseUtilTest {
 
     @Test
     void testOptionalYesWithHeaders() {
-        ResponseEntity<Integer> response =
-            ResponseUtil.wrapOrNotFound(Optional.of(42)
-                                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND))
-                , headers);
+        ResponseEntity<Integer> response = ResponseUtil.wrapOrNotFound(
+            Optional.of(42).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)),
+            headers
+        );
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isEqualTo(42);
         assertThat(response.getHeaders()).hasSize(1);

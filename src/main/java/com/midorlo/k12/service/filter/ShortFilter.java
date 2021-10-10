@@ -12,8 +12,7 @@ public class ShortFilter extends RangeFilter<Short> {
     /**
      * <p>Constructor for ShortFilter.</p>
      */
-    public ShortFilter() {
-    }
+    public ShortFilter() {}
 
     /**
      * <p>Constructor for ShortFilter.</p>
@@ -32,5 +31,4 @@ public class ShortFilter extends RangeFilter<Short> {
     public ShortFilter copy() {
         return new ShortFilter(this);
     }
-
 }

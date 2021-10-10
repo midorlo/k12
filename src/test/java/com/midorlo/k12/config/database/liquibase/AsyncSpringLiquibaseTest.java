@@ -1,7 +1,16 @@
 package com.midorlo.k12.config.database.liquibase;
 
+import static com.midorlo.k12.config.application.ApplicationConstants.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.mockito.Mockito.*;
+
 import com.midorlo.k12.test.LogbackRecorder;
 import com.midorlo.k12.test.LogbackRecorder.Event;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import javax.sql.DataSource;
 import liquibase.Liquibase;
 import liquibase.exception.LiquibaseException;
 import org.junit.jupiter.api.AfterEach;
@@ -13,15 +22,6 @@ import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.mock.env.MockEnvironment;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
-
-import static com.midorlo.k12.config.application.ApplicationConstants.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.mockito.Mockito.*;
 @SuppressWarnings("SynchronizeOnNonFinalField")
 class AsyncSpringLiquibaseTest {
 
@@ -53,10 +53,13 @@ class AsyncSpringLiquibaseTest {
 
         Throwable caught;
         synchronized (executor) {
-            caught = catchThrowable(() -> {
-                config.afterPropertiesSet();
-                executor.wait(100);
-            });
+            caught =
+                catchThrowable(
+                    () -> {
+                        config.afterPropertiesSet();
+                        executor.wait(100);
+                    }
+                );
             assertThat(caught).isNull();
         }
 
@@ -72,17 +75,19 @@ class AsyncSpringLiquibaseTest {
         assertThat(event.getThrown()).isNull();
     }
 
-
     @Test
     void testProfileProduction() {
         environment.setActiveProfiles(SPRING_PROFILE_PRODUCTION);
 
         Throwable caught;
         synchronized (executor) {
-            caught = catchThrowable(() -> {
-                config.afterPropertiesSet();
-                executor.wait(100);
-            });
+            caught =
+                catchThrowable(
+                    () -> {
+                        config.afterPropertiesSet();
+                        executor.wait(100);
+                    }
+                );
             assertThat(caught).isNull();
         }
 
@@ -107,10 +112,13 @@ class AsyncSpringLiquibaseTest {
 
         Throwable caught;
         synchronized (executor) {
-            caught = catchThrowable(() -> {
-                config.afterPropertiesSet();
-                executor.wait(100);
-            });
+            caught =
+                catchThrowable(
+                    () -> {
+                        config.afterPropertiesSet();
+                        executor.wait(100);
+                    }
+                );
             assertThat(caught).isNull();
         }
 
@@ -135,10 +143,13 @@ class AsyncSpringLiquibaseTest {
 
         Throwable caught;
         synchronized (executor) {
-            caught = catchThrowable(() -> {
-                config.afterPropertiesSet();
-                executor.wait(100);
-            });
+            caught =
+                catchThrowable(
+                    () -> {
+                        config.afterPropertiesSet();
+                        executor.wait(100);
+                    }
+                );
             assertThat(caught).isNull();
         }
 
@@ -164,10 +175,13 @@ class AsyncSpringLiquibaseTest {
         Throwable caught;
 
         synchronized (executor) {
-            caught = catchThrowable(() -> {
-                config.afterPropertiesSet();
-                executor.wait(config.getSleep() + 100L);
-            });
+            caught =
+                catchThrowable(
+                    () -> {
+                        config.afterPropertiesSet();
+                        executor.wait(config.getSleep() + 100L);
+                    }
+                );
             assertThat(caught).isNull();
         }
 
@@ -198,10 +212,13 @@ class AsyncSpringLiquibaseTest {
         assertThat(caught).isNull();
 
         synchronized (executor) {
-            caught = catchThrowable(() -> {
-                config.afterPropertiesSet();
-                executor.wait(100);
-            });
+            caught =
+                catchThrowable(
+                    () -> {
+                        config.afterPropertiesSet();
+                        executor.wait(100);
+                    }
+                );
             assertThat(caught).isNull();
         }
 
@@ -221,8 +238,7 @@ class AsyncSpringLiquibaseTest {
     }
 
     @SuppressWarnings("SameReturnValue")
-    private class TestAsyncSpringLiquibase
-        extends AsyncSpringLiquibase {
+    private class TestAsyncSpringLiquibase extends AsyncSpringLiquibase {
 
         public TestAsyncSpringLiquibase(TaskExecutor executor, Environment environment) {
             super(executor, environment);

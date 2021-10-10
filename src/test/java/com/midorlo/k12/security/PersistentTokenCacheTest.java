@@ -1,10 +1,10 @@
 package com.midorlo.k12.security;
 
-import com.midorlo.k12.security.PersistentTokenCache;
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+
+import com.midorlo.k12.security.PersistentTokenCache;
+import org.junit.jupiter.api.Test;
 
 class PersistentTokenCacheTest {
 
@@ -63,5 +63,4 @@ class PersistentTokenCacheTest {
         cache.purge();
         assertThat(cache.size()).isEqualTo(0);
     }
-
 }

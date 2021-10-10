@@ -13,7 +13,7 @@
 
 spring:
   # Uncomment the following line to enable tests against production database type rather than H2, using Testcontainers
-    #active: testcontainers
+  #active: testcontainers
   application:
     name: k12
   datasource:
@@ -101,5 +101,4 @@ application:
     remember-me:
       # security key (this key should be unique for your application, and kept secret)
       key: 77d315765514f0128cce3b07c64cc766fb7d4230b508b010b924392aeb8d77713690be550099aa5c95d385975003786d7fa1
-
 # application:

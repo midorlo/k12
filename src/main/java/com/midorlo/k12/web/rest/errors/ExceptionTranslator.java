@@ -2,6 +2,15 @@ package com.midorlo.k12.web.rest.errors;
 
 import com.midorlo.k12.config.application.ApplicationConstants;
 import com.midorlo.k12.web.util.HeaderUtil;
+import java.net.URI;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -19,16 +28,6 @@ import org.zalando.problem.*;
 import org.zalando.problem.spring.web.advice.ProblemHandling;
 import org.zalando.problem.spring.web.advice.security.SecurityAdviceTrait;
 import org.zalando.problem.violations.ConstraintViolationProblem;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.servlet.http.HttpServletRequest;
-import java.net.URI;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Controller advice to translate the server side exceptions to client-friendly json structures.
@@ -93,12 +92,13 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
         List<FieldErrorVM> fieldErrors = result
             .getFieldErrors()
             .stream()
-            .map(f ->
-                new FieldErrorVM(
-                    f.getObjectName().replaceFirst("DTO$", ""),
-                    f.getField(),
-                    StringUtils.isNotBlank(f.getDefaultMessage()) ? f.getDefaultMessage() : f.getCode()
-                )
+            .map(
+                f ->
+                    new FieldErrorVM(
+                        f.getObjectName().replaceFirst("DTO$", ""),
+                        f.getField(),
+                        StringUtils.isNotBlank(f.getDefaultMessage()) ? f.getDefaultMessage() : f.getCode()
+                    )
             )
             .collect(Collectors.toList());
 

@@ -2,16 +2,15 @@ package com.midorlo.k12.config.security;
 
 import static java.net.URLDecoder.decode;
 
+import com.midorlo.k12.config.application.ApplicationConstants;
+import com.midorlo.k12.config.application.ApplicationProperties;
+import com.midorlo.k12.config.database.H2ConfigurationHelper;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.Objects;
 import javax.servlet.*;
-
-import com.midorlo.k12.config.application.ApplicationConstants;
-import com.midorlo.k12.config.application.ApplicationProperties;
-import com.midorlo.k12.config.database.H2ConfigurationHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.server.*;
@@ -39,7 +38,7 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
     private final ApplicationProperties applicationProperties;
 
     public WebConfigurer(Environment env, ApplicationProperties applicationProperties) {
-        this.env                   = env;
+        this.env = env;
         this.applicationProperties = applicationProperties;
     }
 
@@ -82,8 +81,11 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
     private String resolvePathPrefix() {
         String fullExecutablePath;
         try {
-            fullExecutablePath = decode(Objects.requireNonNull(Objects.requireNonNull(this.getClass().getResource("")))
-                                               .getPath(), StandardCharsets.UTF_8.name());
+            fullExecutablePath =
+                decode(
+                    Objects.requireNonNull(Objects.requireNonNull(this.getClass().getResource(""))).getPath(),
+                    StandardCharsets.UTF_8.name()
+                );
         } catch (UnsupportedEncodingException e) {
             /* try without decoding if this ever happens */
             fullExecutablePath = Objects.requireNonNull(Objects.requireNonNull(this.getClass().getResource(""))).getPath();

@@ -5,21 +5,20 @@ import com.midorlo.k12.repository.ClearanceRepository;
 import com.midorlo.k12.web.rest.errors.BadRequestAlertException;
 import com.midorlo.k12.web.util.HeaderUtil;
 import com.midorlo.k12.web.util.ResponseUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * REST controller for managing {@link com.midorlo.k12.domain.Clearance}.
@@ -51,8 +50,7 @@ public class ClearanceResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/clearances")
-    public ResponseEntity<Clearance> createClearance(@Valid @RequestBody Clearance clearance) throws
-                                                                                              URISyntaxException {
+    public ResponseEntity<Clearance> createClearance(@Valid @RequestBody Clearance clearance) throws URISyntaxException {
         log.debug("REST request to save Clearance : {}", clearance);
         if (clearance.getId() != null) {
             throw new BadRequestAlertException("A new clearance cannot already have an ID", ENTITY_NAME, "idexists");
@@ -60,8 +58,7 @@ public class ClearanceResource {
         Clearance result = clearanceRepository.save(clearance);
         return ResponseEntity
             .created(new URI("/api/clearances/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId()
-                                                                                                     .toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -94,8 +91,7 @@ public class ClearanceResource {
         Clearance result = clearanceRepository.save(clearance);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, clearance.getId()
-                                                                                                      .toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, clearance.getId().toString()))
             .body(result);
     }
 

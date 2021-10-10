@@ -7,7 +7,6 @@ import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.domain.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.security.RandomUtil;
-
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

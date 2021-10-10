@@ -1,7 +1,6 @@
 package com.midorlo.k12.web.rest.vm;
 
 import com.midorlo.k12.service.dto.AdminUserDTO;
-
 import javax.validation.constraints.Size;
 
 /**

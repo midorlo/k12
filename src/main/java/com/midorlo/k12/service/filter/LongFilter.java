@@ -12,8 +12,7 @@ public class LongFilter extends RangeFilter<Long> {
     /**
      * <p>Constructor for LongFilter.</p>
      */
-    public LongFilter() {
-    }
+    public LongFilter() {}
 
     /**
      * <p>Constructor for LongFilter.</p>
@@ -32,5 +31,4 @@ public class LongFilter extends RangeFilter<Long> {
     public LongFilter copy() {
         return new LongFilter(this);
     }
-
 }

@@ -1,9 +1,9 @@
 package com.midorlo.k12.web.util;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("UastIncorrectHttpHeaderInspection")
 class HeaderUtilTest {

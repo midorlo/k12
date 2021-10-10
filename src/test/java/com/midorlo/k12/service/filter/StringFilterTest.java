@@ -1,13 +1,12 @@
 package com.midorlo.k12.service.filter;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class StringFilterTest {
 
@@ -176,6 +175,17 @@ class StringFilterTest {
         filter.setContains(value);
         filter.setDoesNotContain(value);
         String str = value;
-        assertThat(filter.toString()).isEqualTo("StringFilter [equals=" + str + ", notEquals=" + str + ", specified=true, in=[], notIn=[], contains=" + str + ", doesNotContain=" + str + "]");
+        assertThat(filter.toString())
+            .isEqualTo(
+                "StringFilter [equals=" +
+                str +
+                ", notEquals=" +
+                str +
+                ", specified=true, in=[], notIn=[], contains=" +
+                str +
+                ", doesNotContain=" +
+                str +
+                "]"
+            );
     }
 }

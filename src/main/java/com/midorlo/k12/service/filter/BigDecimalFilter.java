@@ -14,8 +14,7 @@ public class BigDecimalFilter extends RangeFilter<BigDecimal> {
     /**
      * <p>Constructor for BigDecimalFilter.</p>
      */
-    public BigDecimalFilter() {
-    }
+    public BigDecimalFilter() {}
 
     /**
      * <p>Constructor for BigDecimalFilter.</p>
@@ -34,5 +33,4 @@ public class BigDecimalFilter extends RangeFilter<BigDecimal> {
     public BigDecimalFilter copy() {
         return new BigDecimalFilter(this);
     }
-
 }

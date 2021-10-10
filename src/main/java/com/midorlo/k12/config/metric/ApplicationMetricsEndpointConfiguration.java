@@ -26,7 +26,7 @@ public class ApplicationMetricsEndpointConfiguration {
      * @return a {@link ApplicationMetricsEndpoint} object.
      */
     @Bean
-    @ConditionalOnBean({MeterRegistry.class})
+    @ConditionalOnBean({ MeterRegistry.class })
     @ConditionalOnMissingBean
     @ConditionalOnAvailableEndpoint
     public ApplicationMetricsEndpoint applicationMetricsEndpoint(MeterRegistry meterRegistry) {

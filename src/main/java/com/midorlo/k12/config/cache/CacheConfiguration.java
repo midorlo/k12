@@ -3,6 +3,7 @@ package com.midorlo.k12.config.cache;
 import com.midorlo.k12.config.application.ApplicationProperties;
 import com.midorlo.k12.domain.Authority;
 import com.midorlo.k12.domain.User;
+import java.time.Duration;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;
@@ -18,14 +19,12 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.time.Duration;
-
 @Configuration
 @EnableCaching
 public class CacheConfiguration {
 
-    private       GitProperties                                           gitProperties;
-    private       BuildProperties                                         buildProperties;
+    private GitProperties gitProperties;
+    private BuildProperties buildProperties;
     private final javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration;
 
     public CacheConfiguration(ApplicationProperties applicationProperties) {
@@ -34,8 +33,7 @@ public class CacheConfiguration {
         jcacheConfiguration =
             Eh107Configuration.fromEhcacheCacheConfiguration(
                 CacheConfigurationBuilder
-                    .newCacheConfigurationBuilder(Object.class, Object.class,
-                                                  ResourcePoolsBuilder.heap(ehcache.getMaxEntries()))
+                    .newCacheConfigurationBuilder(Object.class, Object.class, ResourcePoolsBuilder.heap(ehcache.getMaxEntries()))
                     .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(ehcache.getTimeToLiveSeconds())))
                     .build()
             );

@@ -4,10 +4,9 @@ import static com.midorlo.k12.config.StaticResourcesWebConfiguration.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-import java.util.concurrent.TimeUnit;
-
 import com.midorlo.k12.config.application.ApplicationDefaults;
 import com.midorlo.k12.config.application.ApplicationProperties;
+import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.CacheControl;

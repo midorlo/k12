@@ -8,7 +8,6 @@ import springfox.documentation.spring.web.plugins.Docket;
  */
 @FunctionalInterface
 public interface SpringfoxCustomizer {
-
     /**
      * Customize the Springfox Docket.
      *

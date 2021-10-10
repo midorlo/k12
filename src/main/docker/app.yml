@@ -10,4 +10,4 @@ services:
       - SPRING_LIQUIBASE_URL=jdbc:postgresql://k12-postgresql:5432/k12
       - APPLICATION_SLEEP=30 # gives time for other services to boot before the application
     ports:
-      - "127.0.0.1:8080:8080"
+      - '127.0.0.1:8080:8080'

@@ -8,13 +8,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.File;
-import java.util.*;
-import javax.servlet.*;
-
 import com.midorlo.k12.config.application.ApplicationConstants;
 import com.midorlo.k12.config.application.ApplicationProperties;
 import com.midorlo.k12.config.security.WebConfigurer;
+import java.io.File;
+import java.util.*;
+import javax.servlet.*;
 import org.h2.server.web.WebServlet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

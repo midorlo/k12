@@ -1,10 +1,9 @@
 package com.midorlo.k12.service.filter;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
-
 import java.time.ZonedDateTime;
 import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 /**
  * Filter class for {@link ZonedDateTime} type attributes.
@@ -18,8 +17,7 @@ public class ZonedDateTimeFilter extends RangeFilter<ZonedDateTime> {
     /**
      * <p>Constructor for ZonedDateTimeFilter.</p>
      */
-    public ZonedDateTimeFilter() {
-    }
+    public ZonedDateTimeFilter() {}
 
     /**
      * <p>Constructor for ZonedDateTimeFilter.</p>
@@ -99,5 +97,4 @@ public class ZonedDateTimeFilter extends RangeFilter<ZonedDateTime> {
         super.setLessThanOrEqual(equals);
         return this;
     }
-
 }

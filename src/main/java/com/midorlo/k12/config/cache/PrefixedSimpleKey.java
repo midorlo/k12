@@ -1,10 +1,9 @@
 package com.midorlo.k12.config.cache;
 
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
-
 import java.io.Serializable;
 import java.util.Arrays;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 /**
  * <p>PrefixedSimpleKey class.</p>
@@ -38,10 +37,15 @@ public class PrefixedSimpleKey implements Serializable {
     /** {@inheritDoc} */
     @Override
     public boolean equals(Object other) {
-        return (this == other ||
-            (other instanceof PrefixedSimpleKey && this.prefix.equals(((PrefixedSimpleKey) other).prefix) &&
+        return (
+            this == other ||
+            (
+                other instanceof PrefixedSimpleKey &&
+                this.prefix.equals(((PrefixedSimpleKey) other).prefix) &&
                 this.methodName.equals(((PrefixedSimpleKey) other).methodName) &&
-                Arrays.deepEquals(this.params, ((PrefixedSimpleKey) other).params)));
+                Arrays.deepEquals(this.params, ((PrefixedSimpleKey) other).params)
+            )
+        );
     }
 
     /** {@inheritDoc} */
@@ -53,6 +57,14 @@ public class PrefixedSimpleKey implements Serializable {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return this.prefix + " " + getClass().getSimpleName() + this.methodName + " [" + StringUtils.arrayToCommaDelimitedString(this.params) + "]";
+        return (
+            this.prefix +
+            " " +
+            getClass().getSimpleName() +
+            this.methodName +
+            " [" +
+            StringUtils.arrayToCommaDelimitedString(this.params) +
+            "]"
+        );
     }
 }

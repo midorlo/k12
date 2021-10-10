@@ -1,11 +1,10 @@
 package com.midorlo.k12.config.info;
 
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.boot.actuate.info.Info;
 import org.springframework.boot.actuate.info.InfoContributor;
 import org.springframework.core.env.ConfigurableEnvironment;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * An {@link InfoContributor} that exposes the list of active spring profiles.

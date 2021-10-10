@@ -1,14 +1,13 @@
 package com.midorlo.k12.service.filter;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class DurationFilterTest {
 
@@ -205,6 +204,21 @@ class DurationFilterTest {
         filter.setGreaterThanOrEqual(value);
         filter.setLessThanOrEqual(value);
         String str = value.toString();
-        assertThat(filter.toString()).isEqualTo("DurationFilter [equals=" + str + ", notEquals=" + str + ", specified=true, in=[], notIn=[], greaterThan=" + str + ", lessThan=" + str + ", greaterThanOrEqual=" + str + ", lessThanOrEqual=" + str + "]");
+        assertThat(filter.toString())
+            .isEqualTo(
+                "DurationFilter [equals=" +
+                str +
+                ", notEquals=" +
+                str +
+                ", specified=true, in=[], notIn=[], greaterThan=" +
+                str +
+                ", lessThan=" +
+                str +
+                ", greaterThanOrEqual=" +
+                str +
+                ", lessThanOrEqual=" +
+                str +
+                "]"
+            );
     }
 }

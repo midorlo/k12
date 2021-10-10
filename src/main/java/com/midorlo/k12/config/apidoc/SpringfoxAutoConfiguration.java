@@ -1,8 +1,13 @@
 package com.midorlo.k12.config.apidoc;
 
+import static com.midorlo.k12.config.application.ApplicationConstants.SPRING_PROFILE_API_DOCS;
+import static springfox.documentation.builders.PathSelectors.regex;
+
 import com.midorlo.k12.config.apidoc.customizer.ApplicationSpringfoxCustomizer;
 import com.midorlo.k12.config.apidoc.customizer.SpringfoxCustomizer;
 import com.midorlo.k12.config.application.ApplicationProperties;
+import java.nio.ByteBuffer;
+import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
@@ -28,12 +33,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration;
 
-import java.nio.ByteBuffer;
-import java.util.*;
-
-import static com.midorlo.k12.config.application.ApplicationConstants.SPRING_PROFILE_API_DOCS;
-import static springfox.documentation.builders.PathSelectors.regex;
-
 /**
  * Springfox OpenAPI configuration.
  * <p>
@@ -42,18 +41,10 @@ import static springfox.documentation.builders.PathSelectors.regex;
  */
 @Configuration
 @ConditionalOnWebApplication
-@ConditionalOnClass({
-    ApiInfo.class,
-    BeanValidatorPluginsConfiguration.class,
-    Docket.class
-})
+@ConditionalOnClass({ ApiInfo.class, BeanValidatorPluginsConfiguration.class, Docket.class })
 @Profile(SPRING_PROFILE_API_DOCS)
 @AutoConfigureAfter(ApplicationProperties.class)
-@Import({
-    OpenApiDocumentationConfiguration.class,
-    Swagger2DocumentationConfiguration.class,
-    BeanValidatorPluginsConfiguration.class
-})
+@Import({ OpenApiDocumentationConfiguration.class, Swagger2DocumentationConfiguration.class, BeanValidatorPluginsConfiguration.class })
 public class SpringfoxAutoConfiguration {
 
     static final String STARTING_MESSAGE = "Starting OpenAPI docs";
@@ -84,8 +75,10 @@ public class SpringfoxAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean(name = "openAPISpringfoxApiDocket")
-    public Docket openAPISpringfoxApiDocket(List<SpringfoxCustomizer> springfoxCustomizers,
-                                            ObjectProvider<AlternateTypeRule[]> alternateTypeRules) {
+    public Docket openAPISpringfoxApiDocket(
+        List<SpringfoxCustomizer> springfoxCustomizers,
+        ObjectProvider<AlternateTypeRule[]> alternateTypeRules
+    ) {
         log.debug(STARTING_MESSAGE);
         StopWatch watch = new StopWatch();
         watch.start();
@@ -124,7 +117,6 @@ public class SpringfoxAutoConfiguration {
     @ConditionalOnClass(name = "org.springframework.boot.actuate.autoconfigure.web.server.ManagementServerProperties")
     @ConditionalOnMissingBean(name = "openAPISpringfoxManagementDocket")
     public Docket openAPISpringfoxManagementDocket(@Value("${spring.application.name:application}") String appName) {
-
         ApiInfo apiInfo = new ApiInfo(
             StringUtils.capitalize(appName) + " " + MANAGEMENT_TITLE_SUFFIX,
             MANAGEMENT_DESCRIPTION,
@@ -139,29 +131,28 @@ public class SpringfoxAutoConfiguration {
         Docket docket = createDocket();
 
         for (ApplicationProperties.ApiDocs.Server server : properties.getServers()) {
-            docket.servers(new Server(server.getName(), server.getUrl(), server.getDescription(),
-                Collections.emptyList(), Collections.emptyList()));
+            docket.servers(
+                new Server(server.getName(), server.getUrl(), server.getDescription(), Collections.emptyList(), Collections.emptyList())
+            );
         }
 
-        docket = docket
-            .apiInfo(apiInfo)
-            .useDefaultResponseMessages(properties.isUseDefaultResponseMessages())
-            .groupName(MANAGEMENT_GROUP_NAME)
-            .host(properties.getHost())
-            .protocols(new HashSet<>(Arrays.asList(properties.getProtocols())))
-            .forCodeGeneration(true)
-            .directModelSubstitute(ByteBuffer.class, String.class)
-            .genericModelSubstitutes(ResponseEntity.class);
+        docket =
+            docket
+                .apiInfo(apiInfo)
+                .useDefaultResponseMessages(properties.isUseDefaultResponseMessages())
+                .groupName(MANAGEMENT_GROUP_NAME)
+                .host(properties.getHost())
+                .protocols(new HashSet<>(Arrays.asList(properties.getProtocols())))
+                .forCodeGeneration(true)
+                .directModelSubstitute(ByteBuffer.class, String.class)
+                .genericModelSubstitutes(ResponseEntity.class);
 
         // ignore Pageable parameter only if the class is present
         if (ClassUtils.isPresent("org.springframework.data.domain.Pageable", SpringfoxAutoConfiguration.class.getClassLoader())) {
             docket = docket.ignoredParameterTypes(org.springframework.data.domain.Pageable.class);
         }
 
-        return docket
-            .select()
-            .paths(regex(properties.getManagementIncludePattern()))
-            .build();
+        return docket.select().paths(regex(properties.getManagementIncludePattern())).build();
     }
 
     /**
@@ -172,5 +163,4 @@ public class SpringfoxAutoConfiguration {
     protected Docket createDocket() {
         return new Docket(DocumentationType.OAS_30);
     }
-
 }

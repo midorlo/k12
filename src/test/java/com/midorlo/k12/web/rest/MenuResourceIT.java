@@ -41,8 +41,8 @@ class MenuResourceIT {
     private static final String ENTITY_API_URL = "/api/menus";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
-    private static final Random     random = new Random();
-    private static final AtomicLong count  = new AtomicLong(random.nextInt() + (2L * Integer.MAX_VALUE));
+    private static final Random random = new Random();
+    private static final AtomicLong count = new AtomicLong(random.nextInt() + (2L * Integer.MAX_VALUE));
 
     @Autowired
     private MenuRepository menuRepository;
@@ -201,16 +201,16 @@ class MenuResourceIT {
             .andExpect(jsonPath("$.enabled").value(DEFAULT_ENABLED));
     }
 
-//    @Test
-//    @Transactional
-//    void getNonExistingMenu() throws Exception {
-//         Get the menu
-//        restMenuMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE))
-//            .andExpect(status().is(
-//
-//            ))
-//                       .andExpect(status().isNotFound());
-//    }
+    //    @Test
+    //    @Transactional
+    //    void getNonExistingMenu() throws Exception {
+    //         Get the menu
+    //        restMenuMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE))
+    //            .andExpect(status().is(
+    //
+    //            ))
+    //                       .andExpect(status().isNotFound());
+    //    }
 
     @Test
     @Transactional

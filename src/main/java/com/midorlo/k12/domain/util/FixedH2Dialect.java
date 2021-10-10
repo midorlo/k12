@@ -1,8 +1,7 @@
 package com.midorlo.k12.domain.util;
 
-import org.hibernate.dialect.H2Dialect;
-
 import java.sql.Types;
+import org.hibernate.dialect.H2Dialect;
 
 /**
  * <p>FixedH2Dialect class.</p>

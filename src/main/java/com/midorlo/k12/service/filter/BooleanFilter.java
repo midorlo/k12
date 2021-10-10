@@ -19,8 +19,7 @@ public class BooleanFilter extends Filter<Boolean> {
     /**
      * <p>Constructor for BooleanFilter.</p>
      */
-    public BooleanFilter() {
-    }
+    public BooleanFilter() {}
 
     /**
      * <p>Constructor for BooleanFilter.</p>
@@ -36,5 +35,4 @@ public class BooleanFilter extends Filter<Boolean> {
     public BooleanFilter copy() {
         return new BooleanFilter(this);
     }
-
 }

@@ -1,13 +1,12 @@
 package com.midorlo.k12.config.application;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.web.cors.CorsConfiguration;
-
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import javax.validation.constraints.NotNull;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.web.cors.CorsConfiguration;
 
 /**
  * Properties specific to Application.
@@ -375,11 +374,10 @@ public class ApplicationProperties {
 
                 private String base64Secret = ApplicationDefaults.Security.Authentication.Jwt.base64Secret;
 
-                private long tokenValidityInSeconds = ApplicationDefaults.Security.Authentication.Jwt
-                    .tokenValidityInSeconds;
+                private long tokenValidityInSeconds = ApplicationDefaults.Security.Authentication.Jwt.tokenValidityInSeconds;
 
-                private long tokenValidityInSecondsForRememberMe = ApplicationDefaults.Security.Authentication.Jwt
-                    .tokenValidityInSecondsForRememberMe;
+                private long tokenValidityInSecondsForRememberMe =
+                    ApplicationDefaults.Security.Authentication.Jwt.tokenValidityInSecondsForRememberMe;
 
                 public String getSecret() {
                     return secret;
@@ -430,6 +428,7 @@ public class ApplicationProperties {
         }
 
         public static class OAuth2 {
+
             private final List<String> audience = new ArrayList<>();
 
             public List<String> getAudience() {
@@ -595,6 +594,7 @@ public class ApplicationProperties {
         }
 
         public static class Server {
+
             private String name;
             private String url;
             private String description;
@@ -708,8 +708,7 @@ public class ApplicationProperties {
             return rateLimiting;
         }
 
-        private Map<String, List<String>> authorizedMicroservicesEndpoints = ApplicationDefaults.Gateway
-            .authorizedMicroservicesEndpoints;
+        private Map<String, List<String>> authorizedMicroservicesEndpoints = ApplicationDefaults.Gateway.authorizedMicroservicesEndpoints;
 
         public Map<String, List<String>> getAuthorizedMicroservicesEndpoints() {
             return authorizedMicroservicesEndpoints;
@@ -780,6 +779,7 @@ public class ApplicationProperties {
     }
 
     public static class AuditEvents {
+
         private int retentionPeriod = ApplicationDefaults.AuditEvents.retentionPeriod;
 
         public int getRetentionPeriod() {

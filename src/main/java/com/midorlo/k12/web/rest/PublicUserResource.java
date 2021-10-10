@@ -3,6 +3,7 @@ package com.midorlo.k12.web.rest;
 import com.midorlo.k12.service.UserService;
 import com.midorlo.k12.service.dto.UserDTO;
 import com.midorlo.k12.web.util.PaginationUtil;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -16,14 +17,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api")
 public class PublicUserResource {
 
-    private static final List<String> ALLOWED_ORDERED_PROPERTIES = List.of("id", "login", "firstName", "lastName",
-                                                                           "email", "activated", "langKey");
+    private static final List<String> ALLOWED_ORDERED_PROPERTIES = List.of(
+        "id",
+        "login",
+        "firstName",
+        "lastName",
+        "email",
+        "activated",
+        "langKey"
+    );
 
     private final Logger log = LoggerFactory.getLogger(PublicUserResource.class);
 

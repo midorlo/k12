@@ -42,8 +42,8 @@ class RoleResourceIT {
     private static final String ENTITY_API_URL = "/api/roles";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
-    private static final Random     random = new Random();
-    private static final AtomicLong count  = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+    private static final Random random = new Random();
+    private static final AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
     @Autowired
     private RoleRepository roleRepository;
@@ -183,12 +183,12 @@ class RoleResourceIT {
             .andExpect(jsonPath("$.i18n").value(DEFAULT_I_18_N));
     }
 
-//    @Test
-//    @Transactional
-//    void getNonExistingRole() throws Exception {
-//        // Get the role
-//        restRoleMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
-//    }
+    //    @Test
+    //    @Transactional
+    //    void getNonExistingRole() throws Exception {
+    //        // Get the role
+    //        restRoleMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
+    //    }
 
     @Test
     @Transactional

@@ -35,8 +35,8 @@ class ClearanceResourceIT {
     private static final String ENTITY_API_URL = "/api/clearances";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
-    private static final Random     random = new Random();
-    private static final AtomicLong count  = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+    private static final Random random = new Random();
+    private static final AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
     @Autowired
     private ClearanceRepository clearanceRepository;
@@ -155,12 +155,12 @@ class ClearanceResourceIT {
             .andExpect(jsonPath("$.i18n").value(DEFAULT_I_18_N));
     }
 
-//    @Test
-//    @Transactional
-//    void getNonExistingClearance() throws Exception {
-//        // Get the clearance
-//        restClearanceMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
-//    }
+    //    @Test
+    //    @Transactional
+    //    void getNonExistingClearance() throws Exception {
+    //        // Get the clearance
+    //        restClearanceMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
+    //    }
 
     @Test
     @Transactional

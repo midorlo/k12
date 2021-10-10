@@ -10,9 +10,10 @@ import org.springframework.context.annotation.PropertySources;
  */
 @EnableConfigurationProperties(ApplicationProperties.class)
 // Load some properties into the environment from files to make them available for interpolation in application.yaml.
-@PropertySources({
-    @PropertySource(value = "classpath:git.properties", ignoreResourceNotFound = true),
-    @PropertySource(value = "classpath:META-INF/build-info.properties", ignoreResourceNotFound = true)
-})
-public class ApplicationConfiguration {
-}
+@PropertySources(
+    {
+        @PropertySource(value = "classpath:git.properties", ignoreResourceNotFound = true),
+        @PropertySource(value = "classpath:META-INF/build-info.properties", ignoreResourceNotFound = true),
+    }
+)
+public class ApplicationConfiguration {}

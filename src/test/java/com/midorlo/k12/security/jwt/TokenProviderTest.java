@@ -29,7 +29,7 @@ class TokenProviderTest {
     @BeforeEach
     public void setup() {
         ApplicationProperties applicationProperties = new ApplicationProperties();
-        String                base64Secret       = "fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8";
+        String base64Secret = "fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8";
         applicationProperties.getSecurity().getAuthentication().getJwt().setBase64Secret(base64Secret);
         tokenProvider = new TokenProvider(applicationProperties);
         key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(base64Secret));
