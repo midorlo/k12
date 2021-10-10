@@ -88,11 +88,11 @@
 </template>
 
 <script>
-import { useQuasar } from 'quasar';
-import { computed, defineComponent, reactive, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useStore } from 'vuex';
-import { authLogin } from '../auth/authentication';
+import {useQuasar} from 'quasar';
+import {computed, defineComponent, reactive, ref} from 'vue';
+import {useRoute, useRouter} from 'vue-router';
+import {useStore} from 'vuex';
+import {authLogin} from '../auth/authentication';
 
 export default defineComponent({
   name: 'PageIndex',

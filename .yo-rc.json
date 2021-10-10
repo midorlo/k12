@@ -54,6 +54,8 @@
     "enableGradleEnterprise": false,
     "languages": ["en", "fr"],
     "packageFolder": "com/midorlo/k12",
-    "jwtSecretKey": "MzJmNGU0MmNlMTA2YThkMDQ3MDkzZTNiOGQzNWU0ZmMwMmM1OTU0M2FhMzZmMGVlY2Q1MjQ3OGFkZThkOGQzYjcxZGRhODZiZDg4NjQzYjY0NThjMDkyZWFjMzY5NGM4NjI3NzRhYzkyNjBmZGRmYzliYTIzMzE1NzdkZmI3OTM="
+    "jwtSecretKey": "MzJmNGU0MmNlMTA2YThkMDQ3MDkzZTNiOGQzNWU0ZmMwMmM1OTU0M2FhMzZmMGVlY2Q1MjQ3OGFkZThkOGQzYjcxZGRhODZiZDg4NjQzYjY0NThjMDkyZWFjMzY5NGM4NjI3NzRhYzkyNjBmZGRmYzliYTIzMzE1NzdkZmI3OTM=",
+    "entities": ["Menu", "MenuItem", "Clearance", "Role"],
+    "lastLiquibaseTimestamp": 1633813633000
   }
 }

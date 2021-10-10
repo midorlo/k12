@@ -1,30 +1,50 @@
-package com.midorlo.k12.web.rest;
+package com.midorlo.k12.web.rest.identity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.midorlo.k12.domain.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.security.SecurityUtils;
+import com.midorlo.k12.security.jwt.JWTFilter;
+import com.midorlo.k12.security.jwt.TokenProvider;
 import com.midorlo.k12.service.MailService;
 import com.midorlo.k12.service.UserService;
 import com.midorlo.k12.service.dto.AdminUserDTO;
 import com.midorlo.k12.service.dto.PasswordChangeDTO;
-import com.midorlo.k12.web.rest.errors.*;
+import com.midorlo.k12.web.rest.errors.EmailAlreadyUsedException;
+import com.midorlo.k12.web.rest.errors.InvalidPasswordException;
+import com.midorlo.k12.web.rest.errors.LoginAlreadyUsedException;
 import com.midorlo.k12.web.rest.vm.KeyAndPasswordVM;
+import com.midorlo.k12.web.rest.vm.LoginVM;
 import com.midorlo.k12.web.rest.vm.ManagedUserVM;
-import java.util.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.Optional;
 
 /**
  * REST controller for managing the current user's account.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/identity")
 public class AccountResource {
+
+    private final TokenProvider                tokenProvider;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final Logger                       log = LoggerFactory.getLogger(AccountResource.class);
+    private final UserRepository               userRepository;
+    private final UserService                  userService;
+    private final MailService                  mailService;
 
     private static class AccountResourceException extends RuntimeException {
 
@@ -33,25 +53,23 @@ public class AccountResource {
         }
     }
 
-    private final Logger log = LoggerFactory.getLogger(AccountResource.class);
-
-    private final UserRepository userRepository;
-
-    private final UserService userService;
-
-    private final MailService mailService;
-
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
-        this.userRepository = userRepository;
-        this.userService = userService;
-        this.mailService = mailService;
+    public AccountResource(TokenProvider tokenProvider,
+                           AuthenticationManagerBuilder authenticationManagerBuilder,
+                           UserRepository userRepository,
+                           UserService userService,
+                           MailService mailService) {
+        this.tokenProvider                = tokenProvider;
+        this.authenticationManagerBuilder = authenticationManagerBuilder;
+        this.userRepository               = userRepository;
+        this.userService                  = userService;
+        this.mailService                  = mailService;
     }
 
     /**
      * {@code POST  /register} : register the user.
      *
      * @param managedUserVM the managed user View Model.
-     * @throws InvalidPasswordException {@code 400 (Bad Request)} if the password is incorrect.
+     * @throws InvalidPasswordException  {@code 400 (Bad Request)} if the password is incorrect.
      * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
      * @throws LoginAlreadyUsedException {@code 400 (Bad Request)} if the login is already used.
      */
@@ -110,7 +128,7 @@ public class AccountResource {
      *
      * @param userDTO the current user information.
      * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
-     * @throws RuntimeException {@code 500 (Internal Server Error)} if the user login wasn't found.
+     * @throws RuntimeException          {@code 500 (Internal Server Error)} if the user login wasn't found.
      */
     @PostMapping("/account")
     public void saveAccount(@Valid @RequestBody AdminUserDTO userDTO) {
@@ -170,17 +188,54 @@ public class AccountResource {
      *
      * @param keyAndPassword the generated key and the new password.
      * @throws InvalidPasswordException {@code 400 (Bad Request)} if the password is incorrect.
-     * @throws RuntimeException {@code 500 (Internal Server Error)} if the password could not be reset.
+     * @throws RuntimeException         {@code 500 (Internal Server Error)} if the password could not be reset.
      */
     @PostMapping(path = "/account/reset-password/finish")
     public void finishPasswordReset(@RequestBody KeyAndPasswordVM keyAndPassword) {
         if (isPasswordLengthInvalid(keyAndPassword.getNewPassword())) {
             throw new InvalidPasswordException();
         }
-        Optional<User> user = userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
+        Optional<User> user = userService.completePasswordReset(keyAndPassword.getNewPassword(),
+                                                                keyAndPassword.getKey());
 
         if (user.isEmpty()) {
             throw new AccountResourceException("No user was found for this reset key");
+        }
+    }
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+            loginVM.getUsername(),
+            loginVM.getPassword()
+        );
+
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String      jwt         = tokenProvider.createToken(authentication, loginVM.isRememberMe());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+    }
+
+    /**
+     * Object to return as body in JWT Authentication.
+     */
+    static class JWTToken {
+
+        private String idToken;
+
+        JWTToken(String idToken) {
+            this.idToken = idToken;
+        }
+
+        @JsonProperty("id_token")
+        String getIdToken() {
+            return idToken;
+        }
+
+        void setIdToken(String idToken) {
+            this.idToken = idToken;
         }
     }
 
