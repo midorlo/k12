@@ -54,7 +54,7 @@ public class Role implements Serializable {
         return this;
     }
 
-    public String geti18n() {
+    public String getI18n() {
         return this.i18n;
     }
 
@@ -116,7 +116,7 @@ public class Role implements Serializable {
     public String toString() {
         return "Role{" +
             "id=" + getId() +
-            ", i18n='" + geti18n() + "'" +
+            ", i18n='" + getI18n() + "'" +
             "}";
     }
 }

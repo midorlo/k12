@@ -8,25 +8,21 @@
       <q-input
         v-model="menuItem.data.i18n"
         :label="$t('k12App.menuItem.i18n')"
-        :rules="[$rules.required(), $rules.minValue(6), $rules.maxValue(50)]"
         @keydown.enter.prevent
       />
       <q-input
         v-model="menuItem.data.icon"
         :label="$t('k12App.menuItem.icon')"
-        :rules="[$rules.required(), $rules.minValue(6), $rules.maxValue(50)]"
         @keydown.enter.prevent
       />
       <q-input
         v-model="menuItem.data.target"
         :label="$t('k12App.menuItem.target')"
-        :rules="[$rules.required(), $rules.minValue(6), $rules.maxValue(50)]"
         @keydown.enter.prevent
       />
       <q-checkbox
         v-model="menuItem.data.enabled"
         :label="$t('k12App.menuItem.enabled')"
-        :rules="[$rules.required()]"
       />
       <q-select
         v-model="menuItem.data.requiredClearance"
@@ -85,7 +81,7 @@ export default defineComponent({
 
     (async function fetchMenuItem() {
       if (route.params.id) {
-        menuItem.data = (await api.get(`/api/menu-items/${route.params.id}`)).data;
+        menuItem.data = (await api.get(`/api/webapp/menu-items/${route.params.id}`)).data;
       }
     })();
 
@@ -96,7 +92,7 @@ export default defineComponent({
 
     const menus = ref([]);
     (async function fetchMenus() {
-      menus.value = (await api.get(`/api/menus`)).data;
+      menus.value = (await api.get(`/api/webapp/menus`)).data;
     })();
 
     const onSubmit = async () => {
@@ -104,7 +100,7 @@ export default defineComponent({
       try {
         await api({
           method: menuItem.data.id ? 'put' : 'post',
-          url: `/api/menu-items/${menuItem.data.id ? menuItem.data.id : ''}`,
+          url: `/api/webapp/menu-items/${menuItem.data.id ? menuItem.data.id : ''}`,
           data: menuItem.data,
         });
         router.back();

@@ -1,6 +1,7 @@
 <template>
   <div class="q-pa-md">
     <q-table
+      dense
       :title="$t('k12App.menuItem.home.title')"
       :rows="rows"
       :columns="columns"
@@ -17,6 +18,7 @@
           custom
         >
           <q-btn
+            flat
             color="primary"
             :label="$t('k12App.menuItem.home.createLabel')"
             @click="navigate"
@@ -56,6 +58,7 @@
               custom
             >
               <q-btn
+                flat
                 icon="visibility"
                 @click="navigate"
               />
@@ -66,11 +69,13 @@
               custom
             >
               <q-btn
+                flat
                 icon="edit"
                 @click="navigate"
               />
             </router-link>
             <q-btn
+              flat
               icon="delete_forever"
               @click="deleteMenuItem(props.row.id)"
             />
@@ -126,7 +131,7 @@ export default defineComponent({
       loading.value = true;
 
       try {
-        const response = await api.get('/api/menu-items', {
+        const response = await api.get('/api/webapp/menu-items', {
           params: {
             page: page - 1,
             size: rowsPerPage === 0 ? pagination.value.rowsNumber : rowsPerPage,
@@ -161,7 +166,7 @@ export default defineComponent({
           message: t('k12App.menuItem.delete.question', { id: id }),
           cancel: true,
         }).onOk(() => {
-          api.delete(`/api/menu-items/${id}`).then(() => {
+          api.delete(`/api/webapp/menu-items/${id}`).then(() => {
             onRequest({ pagination: pagination.value });
           });
         });

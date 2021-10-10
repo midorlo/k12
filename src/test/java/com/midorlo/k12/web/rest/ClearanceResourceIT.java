@@ -87,7 +87,7 @@ class ClearanceResourceIT {
         List<Clearance> clearanceList = clearanceRepository.findAll();
         assertThat(clearanceList).hasSize(databaseSizeBeforeCreate + 1);
         Clearance testClearance = clearanceList.get(clearanceList.size() - 1);
-        assertThat(testClearance.geti18n()).isEqualTo(DEFAULT_I_18_N);
+        assertThat(testClearance.getI18n()).isEqualTo(DEFAULT_I_18_N);
     }
 
     @Test
@@ -188,7 +188,7 @@ class ClearanceResourceIT {
         List<Clearance> clearanceList = clearanceRepository.findAll();
         assertThat(clearanceList).hasSize(databaseSizeBeforeUpdate);
         Clearance testClearance = clearanceList.get(clearanceList.size() - 1);
-        assertThat(testClearance.geti18n()).isEqualTo(UPDATED_I_18_N);
+        assertThat(testClearance.getI18n()).isEqualTo(UPDATED_I_18_N);
     }
 
     @Test
@@ -273,7 +273,7 @@ class ClearanceResourceIT {
         List<Clearance> clearanceList = clearanceRepository.findAll();
         assertThat(clearanceList).hasSize(databaseSizeBeforeUpdate);
         Clearance testClearance = clearanceList.get(clearanceList.size() - 1);
-        assertThat(testClearance.geti18n()).isEqualTo(UPDATED_I_18_N);
+        assertThat(testClearance.getI18n()).isEqualTo(UPDATED_I_18_N);
     }
 
     @Test
@@ -302,7 +302,7 @@ class ClearanceResourceIT {
         List<Clearance> clearanceList = clearanceRepository.findAll();
         assertThat(clearanceList).hasSize(databaseSizeBeforeUpdate);
         Clearance testClearance = clearanceList.get(clearanceList.size() - 1);
-        assertThat(testClearance.geti18n()).isEqualTo(UPDATED_I_18_N);
+        assertThat(testClearance.getI18n()).isEqualTo(UPDATED_I_18_N);
     }
 
     @Test

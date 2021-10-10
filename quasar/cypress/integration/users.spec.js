@@ -12,7 +12,7 @@ describe('Users', () => {
   it('Modify my account', () => {
     cy.login();
 
-    cy.intercept('POST', '/api/account').as('modify-account');
+    cy.intercept('POST', '/api/identity/account').as('modify-account');
     cy.visit('/account');
     cy.get('[data-cy=firstName]').clear().type('myFirstName');
     cy.get('[data-cy=lastName]').clear().type('myLastName');

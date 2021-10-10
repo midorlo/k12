@@ -78,13 +78,13 @@ export default defineComponent({
 
     (async function fetchMenu() {
       if (route.params.id) {
-        menu.data = (await api.get(`/api/menus/${route.params.id}`)).data;
+        menu.data = (await api.get(`/api/webapp/menus/${route.params.id}`)).data;
       }
     })();
 
     const menus = ref([]);
     (async function fetchMenus() {
-      menus.value = (await api.get(`/api/menus`)).data;
+      menus.value = (await api.get(`/api/webapp/menus`)).data;
     })();
 
     const clearances = ref([]);
@@ -97,7 +97,7 @@ export default defineComponent({
       try {
         await api({
           method: menu.data.id ? 'put' : 'post',
-          url: `/api/menus/${menu.data.id ? menu.data.id : ''}`,
+          url: `/api/webapp/menus/${menu.data.id ? menu.data.id : ''}`,
           data: menu.data,
         });
         router.back();

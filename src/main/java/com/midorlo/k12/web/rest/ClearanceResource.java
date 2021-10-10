@@ -127,8 +127,8 @@ public class ClearanceResource {
             .findById(clearance.getId())
             .map(
                 existingClearance -> {
-                    if (clearance.geti18n() != null) {
-                        existingClearance.seti18n(clearance.geti18n());
+                    if (clearance.getI18n() != null) {
+                        existingClearance.seti18n(clearance.getI18n());
                     }
 
                     return existingClearance;

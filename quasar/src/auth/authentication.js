@@ -7,7 +7,7 @@ export const beforeEachAuth = async (to, from, next, store) => {
     const idToken = LocalStorage.getItem('app-authenticationToken') || SessionStorage.getItem('app-authenticationToken');
     if (idToken && !store.getters['auth/isAuthenticated']) {
       api.defaults.headers.common.Authorization = `Bearer ${idToken}`;
-      const accountResponse = await api.get('/api/account');
+      const accountResponse = await api.get('/api/identity/account');
       store.dispatch('auth/login', accountResponse.data);
       loadTranslation(accountResponse.data.langKey);
       next();
@@ -30,7 +30,7 @@ export const authLogin = async (store, router, route, credentials) => {
   const storage = credentials.rememberMe ? localStorage : sessionStorage;
   storage.setItem('app-authenticationToken', authenticateResponse.data.id_token);
   api.defaults.headers.common.Authorization = `Bearer ${authenticateResponse.data.id_token}`;
-  const accountResponse = await api.get('/api/account');
+  const accountResponse = await api.get('/api/identity/account');
   store.dispatch('auth/login', accountResponse.data);
   const langKey = accountResponse.data.langKey;
   loadTranslation(langKey);

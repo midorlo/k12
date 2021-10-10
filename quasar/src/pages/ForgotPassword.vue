@@ -40,7 +40,7 @@ export default defineComponent({
     });
 
     const onSubmit = async () => {
-      await api.post('/api/account/reset-password/init', forgot.email, {
+      await api.post('/api/identity/account/reset-password/init', forgot.email, {
         headers: { 'content-type': 'text/plain' },
       });
       router.push('/');

@@ -100,7 +100,7 @@ export default defineComponent({
 
     (async function fetchMenuItem() {
       if (route.params.id) {
-        menuItem.data = (await api.get(`/api/menu-items/${route.params.id}`)).data;
+        menuItem.data = (await api.get(`/api/webapp/menu-items/${route.params.id}`)).data;
       }
     })();
 

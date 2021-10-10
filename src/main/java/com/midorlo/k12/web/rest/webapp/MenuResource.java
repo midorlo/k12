@@ -1,4 +1,4 @@
-package com.midorlo.k12.web.rest;
+package com.midorlo.k12.web.rest.webapp;
 
 import com.midorlo.k12.domain.Menu;
 import com.midorlo.k12.repository.MenuRepository;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  * REST controller for managing {@link com.midorlo.k12.domain.Menu}.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/webapp")
 @Transactional
 public class MenuResource {
 
@@ -56,7 +56,7 @@ public class MenuResource {
         }
         Menu result = menuRepository.save(menu);
         return ResponseEntity
-            .created(new URI("/api/menus/" + result.getId()))
+            .created(new URI("/api/webapp/menus/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
@@ -122,8 +122,8 @@ public class MenuResource {
             .findById(menu.getId())
             .map(
                 existingMenu -> {
-                    if (menu.geti18n() != null) {
-                        existingMenu.seti18n(menu.geti18n());
+                    if (menu.getI18n() != null) {
+                        existingMenu.setI18n(menu.getI18n());
                     }
                     if (menu.getIcon() != null) {
                         existingMenu.setIcon(menu.getIcon());

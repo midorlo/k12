@@ -122,7 +122,7 @@ export default defineComponent({
       loading.value = true;
 
       try {
-        const response = await api.get('/api/menus', {
+        const response = await api.get('/api/webapp/menus', {
           params: {
             page: page - 1,
             size: rowsPerPage === 0 ? pagination.value.rowsNumber : rowsPerPage,
@@ -157,7 +157,7 @@ export default defineComponent({
           message: t('k12App.menu.delete.question', { id: id }),
           cancel: true,
         }).onOk(() => {
-          api.delete(`/api/menus/${id}`).then(() => {
+          api.delete(`/api/webapp/menus/${id}`).then(() => {
             onRequest({ pagination: pagination.value });
           });
         });

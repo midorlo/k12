@@ -98,14 +98,14 @@ export default defineComponent({
     });
 
     const fetchAccount = async () => {
-      account.data = (await api.get('/api/account')).data;
+      account.data = (await api.get('/api/identity/account')).data;
     };
 
     fetchAccount();
 
     const onSubmit = async () => {
       try {
-        await api.post('/api/account', account.data);
+        await api.post('/api/identity/account', account.data);
         loadTranslation(account.data.langKey);
         router.push('/');
       } catch (e) {
