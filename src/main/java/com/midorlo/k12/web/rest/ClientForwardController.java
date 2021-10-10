@@ -3,9 +3,8 @@ package com.midorlo.k12.web.rest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
-@SuppressWarnings("SameReturnValue")
+@SuppressWarnings({ "SameReturnValue", "MVCPathVariableInspection" })
 @Slf4j
 @Controller
 public class ClientForwardController {
@@ -24,8 +23,7 @@ public class ClientForwardController {
      * @return forward to client {@code index.html}.
      */
     @GetMapping(value = "/**/{path:[^.]*}")
-    public String forward(@PathVariable String path) {
-        log.info("path: {}", path);
+    public String forward() {
         return FWD_PATH;
     }
 }

@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
+
+import com.midorlo.k12.web.rest.webapp.MenuItemResource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +98,7 @@ class MenuItemResourceIT {
         List<MenuItem> menuItemList = menuItemRepository.findAll();
         assertThat(menuItemList).hasSize(databaseSizeBeforeCreate + 1);
         MenuItem testMenuItem = menuItemList.get(menuItemList.size() - 1);
-        assertThat(testMenuItem.geti18n()).isEqualTo(DEFAULT_I_18_N);
+        assertThat(testMenuItem.getI18n()).isEqualTo(DEFAULT_I_18_N);
         assertThat(testMenuItem.getIcon()).isEqualTo(DEFAULT_ICON);
         assertThat(testMenuItem.getTarget()).isEqualTo(DEFAULT_TARGET);
         assertThat(testMenuItem.getEnabled()).isEqualTo(DEFAULT_ENABLED);
@@ -125,7 +127,7 @@ class MenuItemResourceIT {
     void checki18nIsRequired() throws Exception {
         int databaseSizeBeforeTest = menuItemRepository.findAll().size();
         // set the field null
-        menuItem.seti18n(null);
+        menuItem.setI18n(null);
 
         // Create the MenuItem, which fails.
 
@@ -258,7 +260,7 @@ class MenuItemResourceIT {
         List<MenuItem> menuItemList = menuItemRepository.findAll();
         assertThat(menuItemList).hasSize(databaseSizeBeforeUpdate);
         MenuItem testMenuItem = menuItemList.get(menuItemList.size() - 1);
-        assertThat(testMenuItem.geti18n()).isEqualTo(UPDATED_I_18_N);
+        assertThat(testMenuItem.getI18n()).isEqualTo(UPDATED_I_18_N);
         assertThat(testMenuItem.getIcon()).isEqualTo(UPDATED_ICON);
         assertThat(testMenuItem.getTarget()).isEqualTo(UPDATED_TARGET);
         assertThat(testMenuItem.getEnabled()).isEqualTo(UPDATED_ENABLED);
@@ -346,7 +348,7 @@ class MenuItemResourceIT {
         List<MenuItem> menuItemList = menuItemRepository.findAll();
         assertThat(menuItemList).hasSize(databaseSizeBeforeUpdate);
         MenuItem testMenuItem = menuItemList.get(menuItemList.size() - 1);
-        assertThat(testMenuItem.geti18n()).isEqualTo(UPDATED_I_18_N);
+        assertThat(testMenuItem.getI18n()).isEqualTo(UPDATED_I_18_N);
         assertThat(testMenuItem.getIcon()).isEqualTo(DEFAULT_ICON);
         assertThat(testMenuItem.getTarget()).isEqualTo(DEFAULT_TARGET);
         assertThat(testMenuItem.getEnabled()).isEqualTo(DEFAULT_ENABLED);
@@ -378,7 +380,7 @@ class MenuItemResourceIT {
         List<MenuItem> menuItemList = menuItemRepository.findAll();
         assertThat(menuItemList).hasSize(databaseSizeBeforeUpdate);
         MenuItem testMenuItem = menuItemList.get(menuItemList.size() - 1);
-        assertThat(testMenuItem.geti18n()).isEqualTo(UPDATED_I_18_N);
+        assertThat(testMenuItem.getI18n()).isEqualTo(UPDATED_I_18_N);
         assertThat(testMenuItem.getIcon()).isEqualTo(UPDATED_ICON);
         assertThat(testMenuItem.getTarget()).isEqualTo(UPDATED_TARGET);
         assertThat(testMenuItem.getEnabled()).isEqualTo(UPDATED_ENABLED);

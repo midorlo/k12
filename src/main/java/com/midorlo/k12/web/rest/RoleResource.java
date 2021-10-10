@@ -122,8 +122,8 @@ public class RoleResource {
             .findById(role.getId())
             .map(
                 existingRole -> {
-                    if (role.geti18n() != null) {
-                        existingRole.seti18n(role.geti18n());
+                    if (role.getI18n() != null) {
+                        existingRole.seti18n(role.getI18n());
                     }
 
                     return existingRole;

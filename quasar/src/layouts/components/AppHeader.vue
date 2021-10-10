@@ -25,11 +25,13 @@
                       auto-close
                       stretch
                       flat
-                      :label="menu['defaultTitle']">
-        <q-item v-for="menuItem in menu.menuItems"
+                      :label="menu['i18n']">
+        <q-item v-for="menuItem in menu.childItems"
                 :key="menuItem.id"
-                :to="menuItem.to">
-          <q-item-section>{{ menuItem.i18nKey }}</q-item-section>
+                :to="menuItem.target">
+          <q-item-section>
+            {{ menuItem.i18n }}
+          </q-item-section>
         </q-item>
       </q-btn-dropdown>
       <q-space></q-space>

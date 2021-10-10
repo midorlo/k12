@@ -97,7 +97,7 @@ class RoleResourceIT {
         List<Role> roleList = roleRepository.findAll();
         assertThat(roleList).hasSize(databaseSizeBeforeCreate + 1);
         Role testRole = roleList.get(roleList.size() - 1);
-        assertThat(testRole.geti18n()).isEqualTo(DEFAULT_I_18_N);
+        assertThat(testRole.getI18n()).isEqualTo(DEFAULT_I_18_N);
     }
 
     @Test
@@ -216,7 +216,7 @@ class RoleResourceIT {
         List<Role> roleList = roleRepository.findAll();
         assertThat(roleList).hasSize(databaseSizeBeforeUpdate);
         Role testRole = roleList.get(roleList.size() - 1);
-        assertThat(testRole.geti18n()).isEqualTo(UPDATED_I_18_N);
+        assertThat(testRole.getI18n()).isEqualTo(UPDATED_I_18_N);
     }
 
     @Test
@@ -299,7 +299,7 @@ class RoleResourceIT {
         List<Role> roleList = roleRepository.findAll();
         assertThat(roleList).hasSize(databaseSizeBeforeUpdate);
         Role testRole = roleList.get(roleList.size() - 1);
-        assertThat(testRole.geti18n()).isEqualTo(DEFAULT_I_18_N);
+        assertThat(testRole.getI18n()).isEqualTo(DEFAULT_I_18_N);
     }
 
     @Test
@@ -328,7 +328,7 @@ class RoleResourceIT {
         List<Role> roleList = roleRepository.findAll();
         assertThat(roleList).hasSize(databaseSizeBeforeUpdate);
         Role testRole = roleList.get(roleList.size() - 1);
-        assertThat(testRole.geti18n()).isEqualTo(UPDATED_I_18_N);
+        assertThat(testRole.getI18n()).isEqualTo(UPDATED_I_18_N);
     }
 
     @Test

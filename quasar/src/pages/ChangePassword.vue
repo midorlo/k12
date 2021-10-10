@@ -72,7 +72,7 @@ export default defineComponent({
 
     const onSubmit = async () => {
       try {
-        await api.post('/api/account/change-password', passwords);
+        await api.post('/api/identity/account/change-password', passwords);
         router.push('/');
       } catch (e) {
         $q.notify({

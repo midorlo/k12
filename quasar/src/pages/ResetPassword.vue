@@ -55,7 +55,7 @@ export default defineComponent({
 
     const onSubmit = async () => {
       try {
-        await api.post('/api/account/reset-password/finish', reset);
+        await api.post('/api/identity/account/reset-password/finish', reset);
         router.push('/');
       } catch (e) {
         $q.notify({

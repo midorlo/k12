@@ -1,4 +1,4 @@
-package com.midorlo.k12.web.rest;
+package com.midorlo.k12.web.rest.webapp;
 
 import com.midorlo.k12.domain.MenuItem;
 import com.midorlo.k12.repository.MenuItemRepository;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  * REST controller for managing {@link com.midorlo.k12.domain.MenuItem}.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/webapp")
 @Transactional
 public class MenuItemResource {
 
@@ -125,8 +125,8 @@ public class MenuItemResource {
             .findById(menuItem.getId())
             .map(
                 existingMenuItem -> {
-                    if (menuItem.geti18n() != null) {
-                        existingMenuItem.seti18n(menuItem.geti18n());
+                    if (menuItem.getI18n() != null) {
+                        existingMenuItem.setI18n(menuItem.getI18n());
                     }
                     if (menuItem.getIcon() != null) {
                         existingMenuItem.setIcon(menuItem.getIcon());
