@@ -26,6 +26,7 @@ public class LiquibaseConfiguration {
 
     public LiquibaseConfiguration(Environment env) {
         this.env = env;
+        System.setProperty("liquibase.databaseChangeLogLockTableName", "liquibase_changelog_files");
     }
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -47,12 +48,13 @@ public class LiquibaseConfiguration {
             dataSource.getIfUnique(),
             dataSourceProperties
         );
+        liquibase.setDatabaseChangeLogLockTable("liquibase_locks");
+        liquibase.setLiquibaseSchema("liquibase");
+        liquibase.setDatabaseChangeLogTable("liquibase_changelogs");
         liquibase.setChangeLog("classpath:config/liquibase/master.xml");
         liquibase.setContexts(liquibaseProperties.getContexts());
         liquibase.setDefaultSchema(liquibaseProperties.getDefaultSchema());
-        liquibase.setLiquibaseSchema(liquibaseProperties.getLiquibaseSchema());
         liquibase.setLiquibaseTablespace(liquibaseProperties.getLiquibaseTablespace());
-        liquibase.setDatabaseChangeLogLockTable(liquibaseProperties.getDatabaseChangeLogLockTable());
         liquibase.setDatabaseChangeLogTable(liquibaseProperties.getDatabaseChangeLogTable());
         liquibase.setDropFirst(liquibaseProperties.isDropFirst());
         liquibase.setLabels(liquibaseProperties.getLabels());
