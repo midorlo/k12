@@ -49,7 +49,7 @@ public class LiquibaseConfiguration {
             dataSourceProperties
         );
         liquibase.setDatabaseChangeLogLockTable("liquibase_locks");
-        liquibase.setLiquibaseSchema("liquibase");
+//        liquibase.setLiquibaseSchema("liquibase");
         liquibase.setDatabaseChangeLogTable("liquibase_changelogs");
         liquibase.setChangeLog("classpath:config/liquibase/master.xml");
         liquibase.setContexts(liquibaseProperties.getContexts());
