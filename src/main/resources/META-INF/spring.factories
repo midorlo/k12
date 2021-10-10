@@ -1,6 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.midorlo.k12.config.apidoc.SpringfoxAutoConfiguration,\
-  com.midorlo.k12.config.ApplicationConfiguration,\
-  com.midorlo.k12.config.info.ApplicationContributorConfiguration,\
-  com.midorlo.k12.config.metric.ApplicationMetricsEndpointConfiguration,\
-  com.midorlo.k12.security.ssl.UndertowSSLConfiguration
