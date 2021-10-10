@@ -1,0 +1,41 @@
+
+#font: Consolas
+#fontSize: 18
+#spacing: 110
+#padding: 10
+#arrowSize: 1
+#bendSize: 0.3
+#gutter: 5
+#edgeMargin: 0
+#edges: hard
+#lineWidth: 1
+#title: Model
+
+
+entity Menu(menus) {
+	i18n String unique required min(6) max(50),
+    icon String required min(6) max(50),
+    enabled Boolean required
+}
+entity MenuItem(menu_items) {
+	i18n String unique required min(6) max(50),
+    icon String required min(6) max(50),
+    target String required min(6) max(50),
+    enabled Boolean required
+}
+entity Clearance(clearances) {
+	i18n String unique required min(6) max(50),
+}
+entity Role(roles) {
+	i18n String unique required min(6) max(50),
+}
+
+relationship ManyToOne {
+	Menu{parent} to Menu{childMenus}
+    Menu{requiredClearance} to Clearance
+    MenuItem{requiredClearance} to Clearance
+    MenuItem{parent} to Menu{childItems}   
+}
+relationship ManyToMany {
+	Role{clearances} to	Clearance{roles}
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity MenuItem.
+    -->
+    <changeSet id="20211009210711-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="required_clearance_id"
+                                 baseTableName="menu_items"
+                                 constraintName="fk_menu_items__required_clearance_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="clearances"/>
+
+        <addForeignKeyConstraint baseColumnNames="parent_id"
+                                 baseTableName="menu_items"
+                                 constraintName="fk_menu_items__parent_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="menus"/>
+    </changeSet>
+</databaseChangeLog>

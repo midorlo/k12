@@ -3,4 +3,8 @@
  * DO NOT EDIT.
  *
  **/
-export const entityRoutes = [...[]];
+import { menuRoutes } from './entities/menuRoutes';
+import { menuItemRoutes } from './entities/menuItemRoutes';
+import { clearanceRoutes } from './entities/clearanceRoutes';
+import { roleRoutes } from './entities/roleRoutes';
+export const entityRoutes = [...menuRoutes, ...menuItemRoutes, ...clearanceRoutes, ...roleRoutes, ...[]];

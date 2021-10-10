@@ -133,6 +133,10 @@ export default defineComponent({
           { to: '/metrics', icon: 'analytics', i18nKey: 'global.menu.admin.metrics', enabled: store.getters['auth/hasRoleAdmin'] },
           { to: '/logs', icon: 'text_snippet', i18nKey: 'global.menu.admin.logs', enabled: store.getters['auth/hasRoleAdmin'] },
           { to: '/docs', icon: 'menu_book', i18nKey: 'global.menu.admin.apidocs', enabled: store.getters['auth/hasRoleAdmin'] },
+          { to: '/menus', icon: 'auto_awesome', i18nKey: 'global.menu.entities.menu', enabled: store.getters['auth/hasRoleAdmin'] },
+          { to: '/menu-items', icon: 'auto_awesome', i18nKey: 'global.menu.entities.menuItem', enabled: store.getters['auth/hasRoleAdmin'] },
+          { to: '/clearances', icon: 'auto_awesome', i18nKey: 'global.menu.entities.clearance', enabled: store.getters['auth/hasRoleAdmin'] },
+          { to: '/roles', icon: 'auto_awesome', i18nKey: 'global.menu.entities.role', enabled: store.getters['auth/hasRoleAdmin'] },
           ...[],
         ].filter(item => item.enabled);
       },
