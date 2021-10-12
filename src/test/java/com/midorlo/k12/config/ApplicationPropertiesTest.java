@@ -2,8 +2,6 @@ package com.midorlo.k12.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.midorlo.k12.config.application.ApplicationDefaults;
-import com.midorlo.k12.config.application.ApplicationProperties;
 import java.lang.reflect.Method;
 import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,16 +14,6 @@ class ApplicationPropertiesTest {
     @BeforeEach
     void setup() {
         properties = new ApplicationProperties();
-    }
-
-    @Test
-    void testComplete() throws Exception {
-        // Slightly pedantic; this checks if there are tests for each of the properties.
-        Set<String> collectedData = new LinkedHashSet<>(64, 1F);
-        reflect(properties, collectedData, "test");
-        for (String name : collectedData) {
-            assertThat(this.getClass().getDeclaredMethod(name)).isNotNull();
-        }
     }
 
     /**
@@ -44,96 +32,6 @@ class ApplicationPropertiesTest {
                 dst.add(prefix + name.substring(3));
             }
         }
-    }
-
-    @Test
-    void testAsyncCorePoolSize() {
-        ApplicationProperties.Async obj = properties.getAsync();
-        int val = ApplicationDefaults.Async.corePoolSize;
-        assertThat(obj.getCorePoolSize()).isEqualTo(val);
-        val++;
-        obj.setCorePoolSize(val);
-        assertThat(obj.getCorePoolSize()).isEqualTo(val);
-    }
-
-    @Test
-    void testAsyncMaxPoolSize() {
-        ApplicationProperties.Async obj = properties.getAsync();
-        int val = ApplicationDefaults.Async.maxPoolSize;
-        assertThat(obj.getMaxPoolSize()).isEqualTo(val);
-        val++;
-        obj.setMaxPoolSize(val);
-        assertThat(obj.getMaxPoolSize()).isEqualTo(val);
-    }
-
-    @Test
-    void testAsyncQueueCapacity() {
-        ApplicationProperties.Async obj = properties.getAsync();
-        int val = ApplicationDefaults.Async.queueCapacity;
-        assertThat(obj.getQueueCapacity()).isEqualTo(val);
-        val++;
-        obj.setQueueCapacity(val);
-        assertThat(obj.getQueueCapacity()).isEqualTo(val);
-    }
-
-    @Test
-    void testHttpCacheTimeToLiveInDays() {
-        ApplicationProperties.Http.Cache obj = properties.getHttp().getCache();
-        int val = ApplicationDefaults.Http.Cache.timeToLiveInDays;
-        assertThat(obj.getTimeToLiveInDays()).isEqualTo(val);
-        val++;
-        obj.setTimeToLiveInDays(val);
-        assertThat(obj.getTimeToLiveInDays()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheEhcacheTimeToLiveSeconds() {
-        ApplicationProperties.Cache.Ehcache obj = properties.getCache().getEhcache();
-        int val = ApplicationDefaults.Cache.Ehcache.timeToLiveSeconds;
-        assertThat(obj.getTimeToLiveSeconds()).isEqualTo(val);
-        val++;
-        obj.setTimeToLiveSeconds(val);
-        assertThat(obj.getTimeToLiveSeconds()).isEqualTo(val);
-    }
-
-    @Test
-    void testCacheEhcacheMaxEntries() {
-        ApplicationProperties.Cache.Ehcache obj = properties.getCache().getEhcache();
-        long val = ApplicationDefaults.Cache.Ehcache.maxEntries;
-        assertThat(obj.getMaxEntries()).isEqualTo(val);
-        val++;
-        obj.setMaxEntries(val);
-        assertThat(obj.getMaxEntries()).isEqualTo(val);
-    }
-
-    @Test
-    void testMailFrom() {
-        ApplicationProperties.Mail obj = properties.getMail();
-        String val = ApplicationDefaults.Mail.from;
-        assertThat(obj.getFrom()).isEqualTo(val);
-        val = "1" + val;
-        obj.setFrom(val);
-        assertThat(obj.getFrom()).isEqualTo(val);
-    }
-
-    @Test
-    void testMailBaseUrl() {
-        ApplicationProperties.Mail obj = properties.getMail();
-        String val = ApplicationDefaults.Mail.baseUrl;
-        assertThat(obj.getBaseUrl()).isEqualTo(val);
-        val = "1" + val;
-        obj.setBaseUrl(val);
-        assertThat(obj.getBaseUrl()).isEqualTo(val);
-    }
-
-    @Test
-    void testMailEnabled() {
-        ApplicationProperties.Mail obj = properties.getMail();
-        boolean val = ApplicationDefaults.Mail.enabled;
-        assertThat(obj.isEnabled()).isEqualTo(val);
-        val = !val;
-        obj.setEnabled(val);
-        assertThat(obj.isEnabled()).isEqualTo(val);
     }
 
     @Test
@@ -197,26 +95,6 @@ class ApplicationPropertiesTest {
     }
 
     @Test
-    void testSecurityAuthenticationJwtTokenValidityInSeconds() {
-        ApplicationProperties.Security.Authentication.Jwt obj = properties.getSecurity().getAuthentication().getJwt();
-        long val = ApplicationDefaults.Security.Authentication.Jwt.tokenValidityInSeconds;
-        assertThat(obj.getTokenValidityInSeconds()).isEqualTo(val);
-        val++;
-        obj.setTokenValidityInSeconds(val);
-        assertThat(obj.getTokenValidityInSeconds()).isEqualTo(val);
-    }
-
-    @Test
-    void testSecurityAuthenticationJwtTokenValidityInSecondsForRememberMe() {
-        ApplicationProperties.Security.Authentication.Jwt obj = properties.getSecurity().getAuthentication().getJwt();
-        long val = ApplicationDefaults.Security.Authentication.Jwt.tokenValidityInSecondsForRememberMe;
-        assertThat(obj.getTokenValidityInSecondsForRememberMe()).isEqualTo(val);
-        val++;
-        obj.setTokenValidityInSecondsForRememberMe(val);
-        assertThat(obj.getTokenValidityInSecondsForRememberMe()).isEqualTo(val);
-    }
-
-    @Test
     void testSecurityRememberMeKey() {
         ApplicationProperties.Security.RememberMe obj = properties.getSecurity().getRememberMe();
         String val;
@@ -235,36 +113,6 @@ class ApplicationPropertiesTest {
         obj.setAudience(Arrays.asList("default", "account"));
         assertThat(obj.getAudience()).isNotEmpty().size().isEqualTo(2);
         assertThat(obj.getAudience()).contains("default", "account");
-    }
-
-    @Test
-    void testApiDocsTitle() {
-        ApplicationProperties.ApiDocs obj = properties.getApiDocs();
-        String val = ApplicationDefaults.ApiDocs.title;
-        assertThat(obj.getTitle()).isEqualTo(val);
-        val = "1" + val;
-        obj.setTitle(val);
-        assertThat(obj.getTitle()).isEqualTo(val);
-    }
-
-    @Test
-    void testApiDocsDescription() {
-        ApplicationProperties.ApiDocs obj = properties.getApiDocs();
-        String val = ApplicationDefaults.ApiDocs.description;
-        assertThat(obj.getDescription()).isEqualTo(val);
-        val = "1" + val;
-        obj.setDescription(val);
-        assertThat(obj.getDescription()).isEqualTo(val);
-    }
-
-    @Test
-    void testApiDocsVersion() {
-        ApplicationProperties.ApiDocs obj = properties.getApiDocs();
-        String val = ApplicationDefaults.ApiDocs.version;
-        assertThat(obj.getVersion()).isEqualTo(val);
-        val = "1" + val;
-        obj.setVersion(val);
-        assertThat(obj.getVersion()).isEqualTo(val);
     }
 
     @Test
@@ -327,25 +175,6 @@ class ApplicationPropertiesTest {
         assertThat(obj.getLicenseUrl()).isEqualTo(val);
     }
 
-    @Test
-    void testApiDocsDefaultIncludePattern() {
-        ApplicationProperties.ApiDocs obj = properties.getApiDocs();
-        String val = ApplicationDefaults.ApiDocs.defaultIncludePattern;
-        assertThat(obj.getDefaultIncludePattern()).isEqualTo(val);
-        val = "1" + val;
-        obj.setDefaultIncludePattern(val);
-        assertThat(obj.getDefaultIncludePattern()).isEqualTo(val);
-    }
-
-    @Test
-    void testApiDocsManagementIncludePattern() {
-        ApplicationProperties.ApiDocs obj = properties.getApiDocs();
-        String val = ApplicationDefaults.ApiDocs.managementIncludePattern;
-        assertThat(obj.getManagementIncludePattern()).isEqualTo(val);
-        val = "1" + val;
-        obj.setManagementIncludePattern(val);
-        assertThat(obj.getManagementIncludePattern()).isEqualTo(val);
-    }
 
     @Test
     void testApiDocsHost() {
@@ -357,16 +186,6 @@ class ApplicationPropertiesTest {
         assertThat(obj.getHost()).isEqualTo(val);
     }
 
-    @Test
-    void testApiDocsProtocols() {
-        ApplicationProperties.ApiDocs obj = properties.getApiDocs();
-        String[] def = ApplicationDefaults.ApiDocs.protocols;
-        List<String> val = new ArrayList<>(Arrays.asList(def));
-        assertThat(obj.getProtocols()).containsExactlyElementsOf(val);
-        val.add("1");
-        obj.setProtocols(val.toArray(def));
-        assertThat(obj.getProtocols()).containsExactlyElementsOf(val);
-    }
 
     @Test
     void testApiDocsServers() {
@@ -387,114 +206,6 @@ class ApplicationPropertiesTest {
     }
 
     @Test
-    void testApiDocsUseDefaultResponseMessages() {
-        ApplicationProperties.ApiDocs obj = properties.getApiDocs();
-        boolean val = ApplicationDefaults.ApiDocs.useDefaultResponseMessages;
-        assertThat(obj.isUseDefaultResponseMessages()).isEqualTo(val);
-        obj.setUseDefaultResponseMessages(false);
-        assertThat(obj.isUseDefaultResponseMessages()).isEqualTo(false);
-    }
-
-    @Test
-    void testLoggingUseJsonFormat() {
-        ApplicationProperties.Logging obj = properties.getLogging();
-        boolean val = ApplicationDefaults.Logging.useJsonFormat;
-        assertThat(obj.isUseJsonFormat()).isEqualTo(val);
-        obj.setUseJsonFormat(true);
-        assertThat(obj.isUseJsonFormat()).isEqualTo(true);
-    }
-
-    @Test
-    void testLoggingLogstashEnabled() {
-        ApplicationProperties.Logging.Logstash obj = properties.getLogging().getLogstash();
-        boolean val = ApplicationDefaults.Logging.Logstash.enabled;
-        assertThat(obj.isEnabled()).isEqualTo(val);
-        val = !val;
-        obj.setEnabled(val);
-        assertThat(obj.isEnabled()).isEqualTo(val);
-    }
-
-    @Test
-    void testLoggingLogstashHost() {
-        ApplicationProperties.Logging.Logstash obj = properties.getLogging().getLogstash();
-        String val = ApplicationDefaults.Logging.Logstash.host;
-        assertThat(obj.getHost()).isEqualTo(val);
-        val = "1" + val;
-        obj.setHost(val);
-        assertThat(obj.getHost()).isEqualTo(val);
-    }
-
-    @Test
-    void testLoggingLogstashPort() {
-        ApplicationProperties.Logging.Logstash obj = properties.getLogging().getLogstash();
-        int val = ApplicationDefaults.Logging.Logstash.port;
-        assertThat(obj.getPort()).isEqualTo(val);
-        val++;
-        obj.setPort(val);
-        assertThat(obj.getPort()).isEqualTo(val);
-    }
-
-    @Test
-    void testLoggingLogstashQueueSize() {
-        ApplicationProperties.Logging.Logstash obj = properties.getLogging().getLogstash();
-        int val = ApplicationDefaults.Logging.Logstash.queueSize;
-        assertThat(obj.getQueueSize()).isEqualTo(val);
-        val++;
-        obj.setQueueSize(val);
-        assertThat(obj.getQueueSize()).isEqualTo(val);
-    }
-
-    @Test
-    void testSocialRedirectAfterSignIn() {
-        ApplicationProperties.Social obj = properties.getSocial();
-        String val = ApplicationDefaults.Social.redirectAfterSignIn;
-        assertThat(obj.getRedirectAfterSignIn()).isEqualTo(val);
-        val = "1" + val;
-        obj.setRedirectAfterSignIn(val);
-        assertThat(obj.getRedirectAfterSignIn()).isEqualTo(val);
-    }
-
-    @Test
-    void testGatewayAuthorizedMicroservicesEndpoints() {
-        ApplicationProperties.Gateway obj = properties.getGateway();
-        Map<String, List<String>> val = ApplicationDefaults.Gateway.authorizedMicroservicesEndpoints;
-        assertThat(obj.getAuthorizedMicroservicesEndpoints()).isEqualTo(val);
-        val.put("1", null);
-        obj.setAuthorizedMicroservicesEndpoints(val);
-        assertThat(obj.getAuthorizedMicroservicesEndpoints()).isEqualTo(val);
-    }
-
-    @Test
-    void testGatewayRateLimitingEnabled() {
-        ApplicationProperties.Gateway.RateLimiting obj = properties.getGateway().getRateLimiting();
-        boolean val = ApplicationDefaults.Gateway.RateLimiting.enabled;
-        assertThat(obj.isEnabled()).isEqualTo(val);
-        val = !val;
-        obj.setEnabled(val);
-        assertThat(obj.isEnabled()).isEqualTo(val);
-    }
-
-    @Test
-    void testGatewayRateLimitingLimit() {
-        ApplicationProperties.Gateway.RateLimiting obj = properties.getGateway().getRateLimiting();
-        long val = ApplicationDefaults.Gateway.RateLimiting.limit;
-        assertThat(obj.getLimit()).isEqualTo(val);
-        val++;
-        obj.setLimit(val);
-        assertThat(obj.getLimit()).isEqualTo(val);
-    }
-
-    @Test
-    void testGatewayRateLimitingDurationInSeconds() {
-        ApplicationProperties.Gateway.RateLimiting obj = properties.getGateway().getRateLimiting();
-        int val = ApplicationDefaults.Gateway.RateLimiting.durationInSeconds;
-        assertThat(obj.getDurationInSeconds()).isEqualTo(val);
-        val++;
-        obj.setDurationInSeconds(val);
-        assertThat(obj.getDurationInSeconds()).isEqualTo(val);
-    }
-
-    @Test
     void testRegistryPassword() {
         ApplicationProperties.Registry obj = properties.getRegistry();
         String val;
@@ -502,34 +213,5 @@ class ApplicationPropertiesTest {
         val = "1" + null;
         obj.setPassword(val);
         assertThat(obj.getPassword()).isEqualTo(val);
-    }
-
-    @Test
-    void testClientAppName() {
-        ApplicationProperties.ClientApp obj = properties.getClientApp();
-        String val = ApplicationDefaults.ClientApp.name;
-        assertThat(obj.getName()).isEqualTo(val);
-        val = "1" + val;
-        obj.setName(val);
-        assertThat(obj.getName()).isEqualTo(val);
-    }
-
-    @Test
-    void testAuditEventsRetentionPeriod() {
-        ApplicationProperties.AuditEvents obj = properties.getAuditEvents();
-        int val = ApplicationDefaults.AuditEvents.retentionPeriod;
-        assertThat(obj.getRetentionPeriod()).isEqualTo(val);
-        val++;
-        obj.setRetentionPeriod(val);
-        assertThat(obj.getRetentionPeriod()).isEqualTo(val);
-    }
-
-    @Test
-    void testSecurityContentSecurityPolicy() {
-        ApplicationProperties.Security obj = properties.getSecurity();
-        String val = ApplicationDefaults.Security.contentSecurityPolicy;
-        assertThat(obj.getContentSecurityPolicy()).isEqualTo(val);
-        obj.setContentSecurityPolicy("foobar");
-        assertThat(obj.getContentSecurityPolicy()).isEqualTo("foobar");
     }
 }

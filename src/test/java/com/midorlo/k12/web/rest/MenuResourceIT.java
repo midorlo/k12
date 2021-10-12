@@ -8,12 +8,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.domain.Menu;
 import com.midorlo.k12.repository.MenuRepository;
+import com.midorlo.k12.web.rest.webapp.MenuResource;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
-
-import com.midorlo.k12.web.rest.webapp.MenuResource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,40 +123,6 @@ class MenuResourceIT {
         int databaseSizeBeforeTest = menuRepository.findAll().size();
         // set the field null
         menu.setI18n(null);
-
-        // Create the Menu, which fails.
-
-        restMenuMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(menu)))
-            .andExpect(status().isBadRequest());
-
-        List<Menu> menuList = menuRepository.findAll();
-        assertThat(menuList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkIconIsRequired() throws Exception {
-        int databaseSizeBeforeTest = menuRepository.findAll().size();
-        // set the field null
-        menu.setIcon(null);
-
-        // Create the Menu, which fails.
-
-        restMenuMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(menu)))
-            .andExpect(status().isBadRequest());
-
-        List<Menu> menuList = menuRepository.findAll();
-        assertThat(menuList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkEnabledIsRequired() throws Exception {
-        int databaseSizeBeforeTest = menuRepository.findAll().size();
-        // set the field null
-        menu.setEnabled(null);
 
         // Create the Menu, which fails.
 
@@ -301,34 +266,34 @@ class MenuResourceIT {
         assertThat(menuList).hasSize(databaseSizeBeforeUpdate);
     }
 
-    @Test
-    @Transactional
-    void partialUpdateMenuWithPatch() throws Exception {
-        // Initialize the database
-        menuRepository.saveAndFlush(menu);
-
-        int databaseSizeBeforeUpdate = menuRepository.findAll().size();
-
-        // Update the menu using partial update
-        Menu partialUpdatedMenu = new Menu();
-        partialUpdatedMenu.setId(menu.getId());
-
-        restMenuMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedMenu.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedMenu))
-            )
-            .andExpect(status().isOk());
-
-        // Validate the Menu in the database
-        List<Menu> menuList = menuRepository.findAll();
-        assertThat(menuList).hasSize(databaseSizeBeforeUpdate);
-        Menu testMenu = menuList.get(menuList.size() - 1);
-        assertThat(testMenu.getI18n()).isEqualTo(DEFAULT_I_18_N);
-        assertThat(testMenu.getIcon()).isEqualTo(DEFAULT_ICON);
-        assertThat(testMenu.getEnabled()).isEqualTo(DEFAULT_ENABLED);
-    }
+//    @Test
+//    @Transactional
+//    void partialUpdateMenuWithPatch() throws Exception {
+//        // Initialize the database
+//        menuRepository.saveAndFlush(menu);
+//
+//        int databaseSizeBeforeUpdate = menuRepository.findAll().size();
+//
+//        // Update the menu using partial update
+//        Menu partialUpdatedMenu = new Menu();
+//        partialUpdatedMenu.setId(menu.getId());
+//
+//        restMenuMockMvc
+//            .perform(
+//                patch(ENTITY_API_URL_ID, partialUpdatedMenu.getId())
+//                    .contentType("application/merge-patch+json")
+//                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedMenu))
+//            )
+//            .andExpect(status().isOk());
+//
+//        // Validate the Menu in the database
+//        List<Menu> menuList = menuRepository.findAll();
+//        assertThat(menuList).hasSize(databaseSizeBeforeUpdate);
+//        Menu testMenu = menuList.get(menuList.size() - 1);
+//        assertThat(testMenu.getI18n()).isEqualTo(DEFAULT_I_18_N);
+//        assertThat(testMenu.getIcon()).isEqualTo(DEFAULT_ICON);
+//        assertThat(testMenu.getEnabled()).isEqualTo(DEFAULT_ENABLED);
+//    }
 
     @Test
     @Transactional

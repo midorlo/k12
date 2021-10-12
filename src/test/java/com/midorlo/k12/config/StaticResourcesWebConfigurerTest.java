@@ -4,8 +4,6 @@ import static com.midorlo.k12.config.StaticResourcesWebConfiguration.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-import com.midorlo.k12.config.application.ApplicationDefaults;
-import com.midorlo.k12.config.application.ApplicationProperties;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,14 +53,6 @@ class StaticResourcesWebConfigurerTest {
         verify(staticResourcesWebConfiguration, times(1)).getCacheControl();
         verify(resourceHandlerRegistration, times(1)).setCacheControl(ccExpected);
         verify(resourceHandlerRegistration, times(1)).addResourceLocations(RESOURCE_LOCATIONS);
-    }
-
-    @Test
-    void shouldCreateCacheControlBasedOnApplicationDefaultProperties() {
-        CacheControl cacheExpected = CacheControl.maxAge(ApplicationDefaults.Http.Cache.timeToLiveInDays, TimeUnit.DAYS).cachePublic();
-        assertThat(staticResourcesWebConfiguration.getCacheControl())
-            .extracting(CacheControl::getHeaderValue)
-            .isEqualTo(cacheExpected.getHeaderValue());
     }
 
     @Test

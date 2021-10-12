@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 import com.midorlo.k12.IntegrationTest;
-import com.midorlo.k12.config.application.ApplicationConstants;
-import com.midorlo.k12.config.application.ApplicationProperties;
+import com.midorlo.k12.config.ApplicationConstants;
+import com.midorlo.k12.config.ApplicationProperties;
 import com.midorlo.k12.domain.User;
 import java.io.ByteArrayOutputStream;
 import java.io.File;

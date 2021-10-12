@@ -8,12 +8,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.domain.MenuItem;
 import com.midorlo.k12.repository.MenuItemRepository;
+import com.midorlo.k12.web.rest.webapp.MenuItemResource;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
-
-import com.midorlo.k12.web.rest.webapp.MenuItemResource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

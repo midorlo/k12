@@ -2,7 +2,7 @@ package com.midorlo.k12.security.jwt;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.midorlo.k12.config.application.ApplicationProperties;
+import com.midorlo.k12.config.ApplicationProperties;
 import com.midorlo.k12.security.AuthoritiesConstants;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

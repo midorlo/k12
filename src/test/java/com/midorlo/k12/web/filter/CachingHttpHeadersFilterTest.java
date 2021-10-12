@@ -7,7 +7,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
-import com.midorlo.k12.config.application.ApplicationProperties;
+import com.midorlo.k12.config.ApplicationProperties;
 import java.util.concurrent.TimeUnit;
 import javax.servlet.FilterChain;
 import org.junit.jupiter.api.AfterEach;
