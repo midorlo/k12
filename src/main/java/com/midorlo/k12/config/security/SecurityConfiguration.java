@@ -1,6 +1,6 @@
 package com.midorlo.k12.config.security;
 
-import com.midorlo.k12.config.application.ApplicationProperties;
+import com.midorlo.k12.config.ApplicationProperties;
 import com.midorlo.k12.security.*;
 import com.midorlo.k12.security.jwt.*;
 import org.springframework.context.annotation.Bean;

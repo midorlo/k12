@@ -1,6 +1,6 @@
 package com.midorlo.k12.security;
 
-import com.midorlo.k12.config.application.ApplicationConstants;
+import com.midorlo.k12.config.ApplicationConstants;
 import java.util.Optional;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.lang.NonNull;

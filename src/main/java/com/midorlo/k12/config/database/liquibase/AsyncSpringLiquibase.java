@@ -1,6 +1,6 @@
 package com.midorlo.k12.config.database.liquibase;
 
-import static com.midorlo.k12.config.application.ApplicationConstants.*;
+import static com.midorlo.k12.config.ApplicationConstants.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;

@@ -1,20 +1,30 @@
-package com.midorlo.k12.config.application;
+package com.midorlo.k12.config;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import javax.validation.constraints.NotNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.web.cors.CorsConfiguration;
+
+import javax.validation.constraints.NotNull;
+import java.util.*;
 
 /**
  * Properties specific to Application.
  *
  * <p> Properties are configured in the application.yml file. </p>
- * <p> This class also load properties in the Spring Environment from the git.properties and META-INF/build-info.properties
+ * <p> This class also load properties in the Spring Environment from the git.properties and META-INF/build-info
+ * .properties
  * files if they are found in the classpath.</p>
  */
+@EnableConfigurationProperties(ApplicationProperties.class)
+// Load some properties into the environment from files to make them available for interpolation in application.yaml.
+@PropertySources(
+    {
+        @PropertySource(value = "classpath:git.properties", ignoreResourceNotFound = true),
+        @PropertySource(value = "classpath:META-INF/build-info.properties", ignoreResourceNotFound = true),
+    }
+)
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 public class ApplicationProperties {
 
@@ -163,11 +173,11 @@ public class ApplicationProperties {
 
     public static class Async {
 
-        private int corePoolSize = ApplicationDefaults.Async.corePoolSize;
+        private int corePoolSize = 2;
 
-        private int maxPoolSize = ApplicationDefaults.Async.maxPoolSize;
+        private int maxPoolSize = 50;
 
-        private int queueCapacity = ApplicationDefaults.Async.queueCapacity;
+        private int queueCapacity = 10000;
 
         public int getCorePoolSize() {
             return corePoolSize;
@@ -204,7 +214,7 @@ public class ApplicationProperties {
 
         public static class Cache {
 
-            private int timeToLiveInDays = ApplicationDefaults.Http.Cache.timeToLiveInDays;
+            private int timeToLiveInDays = 1461;
 
             public int getTimeToLiveInDays() {
                 return timeToLiveInDays;
@@ -226,9 +236,9 @@ public class ApplicationProperties {
 
         public static class Ehcache {
 
-            private int timeToLiveSeconds = ApplicationDefaults.Cache.Ehcache.timeToLiveSeconds;
+            private int timeToLiveSeconds = 3600;
 
-            private long maxEntries = ApplicationDefaults.Cache.Ehcache.maxEntries;
+            private long maxEntries = 100;
 
             public int getTimeToLiveSeconds() {
                 return timeToLiveSeconds;
@@ -250,11 +260,11 @@ public class ApplicationProperties {
 
     public static class Mail {
 
-        private boolean enabled = ApplicationDefaults.Mail.enabled;
+        private boolean enabled = false;
 
-        private String from = ApplicationDefaults.Mail.from;
+        private String from = "";
 
-        private String baseUrl = ApplicationDefaults.Mail.baseUrl;
+        private String baseUrl = "";
 
         public boolean isEnabled() {
             return enabled;
@@ -283,7 +293,11 @@ public class ApplicationProperties {
 
     public static class Security {
 
-        private String contentSecurityPolicy = ApplicationDefaults.Security.contentSecurityPolicy;
+        private String contentSecurityPolicy = "default-src 'self'; frame-src 'self' data:; script-src 'self' " +
+                                               "'unsafe-inline' 'unsafe-eval' " +
+                                               "https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; " +
+                                               "img-src 'self' data:; font-src 'self' " +
+                                               "data:";
 
         private final ClientAuthorization clientAuthorization = new ClientAuthorization();
 
@@ -319,13 +333,13 @@ public class ApplicationProperties {
 
         public static class ClientAuthorization {
 
-            private String accessTokenUri = ApplicationDefaults.Security.ClientAuthorization.accessTokenUri;
+            private String accessTokenUri = null;
 
-            private String tokenServiceId = ApplicationDefaults.Security.ClientAuthorization.tokenServiceId;
+            private String tokenServiceId = null;
 
-            private String clientId = ApplicationDefaults.Security.ClientAuthorization.clientId;
+            private String clientId = null;
 
-            private String clientSecret = ApplicationDefaults.Security.ClientAuthorization.clientSecret;
+            private String clientSecret = null;
 
             public String getAccessTokenUri() {
                 return accessTokenUri;
@@ -370,14 +384,13 @@ public class ApplicationProperties {
 
             public static class Jwt {
 
-                private String secret = ApplicationDefaults.Security.Authentication.Jwt.secret;
+                private String secret = null;
 
-                private String base64Secret = ApplicationDefaults.Security.Authentication.Jwt.base64Secret;
+                private String base64Secret = null;
 
-                private long tokenValidityInSeconds = ApplicationDefaults.Security.Authentication.Jwt.tokenValidityInSeconds;
+                private long tokenValidityInSeconds = 1800;
 
-                private long tokenValidityInSecondsForRememberMe =
-                    ApplicationDefaults.Security.Authentication.Jwt.tokenValidityInSecondsForRememberMe;
+                private long tokenValidityInSecondsForRememberMe = 2592000;
 
                 public String getSecret() {
                     return secret;
@@ -416,7 +429,7 @@ public class ApplicationProperties {
         public static class RememberMe {
 
             @NotNull
-            private String key = ApplicationDefaults.Security.RememberMe.key;
+            private String key = null;
 
             public String getKey() {
                 return key;
@@ -443,35 +456,22 @@ public class ApplicationProperties {
 
     public static class ApiDocs {
 
-        private String title = ApplicationDefaults.ApiDocs.title;
-
-        private String description = ApplicationDefaults.ApiDocs.description;
-
-        private String version = ApplicationDefaults.ApiDocs.version;
-
-        private String termsOfServiceUrl = ApplicationDefaults.ApiDocs.termsOfServiceUrl;
-
-        private String contactName = ApplicationDefaults.ApiDocs.contactName;
-
-        private String contactUrl = ApplicationDefaults.ApiDocs.contactUrl;
-
-        private String contactEmail = ApplicationDefaults.ApiDocs.contactEmail;
-
-        private String license = ApplicationDefaults.ApiDocs.license;
-
-        private String licenseUrl = ApplicationDefaults.ApiDocs.licenseUrl;
-
-        private String defaultIncludePattern = ApplicationDefaults.ApiDocs.defaultIncludePattern;
-
-        private String managementIncludePattern = ApplicationDefaults.ApiDocs.managementIncludePattern;
-
-        private String host = ApplicationDefaults.ApiDocs.host;
-
-        private String[] protocols = ApplicationDefaults.ApiDocs.protocols;
+        private String   title                      = "Application API";
+        private String   description                = "API documentation";
+        private String   version                    = "0.0.1";
+        private String   termsOfServiceUrl          = null;
+        private String   contactName                = null;
+        private String   contactUrl                 = null;
+        private String   contactEmail               = null;
+        private String   license                    = null;
+        private String   licenseUrl                 = null;
+        private String   defaultIncludePattern      = "/api/.*";
+        private String   managementIncludePattern   = "/management/.*";
+        private String   host                       = null;
+        private String[] protocols                  = {};
+        private boolean  useDefaultResponseMessages = true;
 
         private Server[] servers = {};
-
-        private boolean useDefaultResponseMessages = ApplicationDefaults.ApiDocs.useDefaultResponseMessages;
 
         public String getTitle() {
             return title;
@@ -627,7 +627,7 @@ public class ApplicationProperties {
 
     public static class Logging {
 
-        private boolean useJsonFormat = ApplicationDefaults.Logging.useJsonFormat;
+        private boolean useJsonFormat = false;
 
         private final Logstash logstash = new Logstash();
 
@@ -645,13 +645,10 @@ public class ApplicationProperties {
 
         public static class Logstash {
 
-            private boolean enabled = ApplicationDefaults.Logging.Logstash.enabled;
-
-            private String host = ApplicationDefaults.Logging.Logstash.host;
-
-            private int port = ApplicationDefaults.Logging.Logstash.port;
-
-            private int queueSize = ApplicationDefaults.Logging.Logstash.queueSize;
+            private boolean enabled   = false;
+            private String  host      = "localhost";
+            private int     port      = 5000;
+            private int     queueSize = 512;
 
             public boolean isEnabled() {
                 return enabled;
@@ -689,7 +686,7 @@ public class ApplicationProperties {
 
     public static class Social {
 
-        private String redirectAfterSignIn = ApplicationDefaults.Social.redirectAfterSignIn;
+        private String redirectAfterSignIn = "/#/home";
 
         public String getRedirectAfterSignIn() {
             return redirectAfterSignIn;
@@ -708,7 +705,7 @@ public class ApplicationProperties {
             return rateLimiting;
         }
 
-        private Map<String, List<String>> authorizedMicroservicesEndpoints = ApplicationDefaults.Gateway.authorizedMicroservicesEndpoints;
+        private Map<String, List<String>> authorizedMicroservicesEndpoints = new LinkedHashMap<>();
 
         public Map<String, List<String>> getAuthorizedMicroservicesEndpoints() {
             return authorizedMicroservicesEndpoints;
@@ -720,11 +717,9 @@ public class ApplicationProperties {
 
         public static class RateLimiting {
 
-            private boolean enabled = ApplicationDefaults.Gateway.RateLimiting.enabled;
-
-            private long limit = ApplicationDefaults.Gateway.RateLimiting.limit;
-
-            private int durationInSeconds = ApplicationDefaults.Gateway.RateLimiting.durationInSeconds;
+            private boolean enabled           = false;
+            private long    limit             = 100_000L;
+            private int     durationInSeconds = 3_600;
 
             public boolean isEnabled() {
                 return enabled;
@@ -754,7 +749,7 @@ public class ApplicationProperties {
 
     public static class Registry {
 
-        private String password = ApplicationDefaults.Registry.password;
+        private String password = null;
 
         public String getPassword() {
             return password;
@@ -767,7 +762,7 @@ public class ApplicationProperties {
 
     public static class ClientApp {
 
-        private String name = ApplicationDefaults.ClientApp.name;
+        private String name = "applicationApp";
 
         public String getName() {
             return name;
@@ -780,7 +775,7 @@ public class ApplicationProperties {
 
     public static class AuditEvents {
 
-        private int retentionPeriod = ApplicationDefaults.AuditEvents.retentionPeriod;
+        private int retentionPeriod = 30;
 
         public int getRetentionPeriod() {
             return retentionPeriod;

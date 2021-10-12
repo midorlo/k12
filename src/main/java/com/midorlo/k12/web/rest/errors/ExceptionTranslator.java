@@ -1,6 +1,6 @@
 package com.midorlo.k12.web.rest.errors;
 
-import com.midorlo.k12.config.application.ApplicationConstants;
+import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.web.util.HeaderUtil;
 import java.net.URI;
 import java.util.Arrays;

@@ -1,6 +1,6 @@
 package com.midorlo.k12.service;
 
-import com.midorlo.k12.config.application.ApplicationProperties;
+import com.midorlo.k12.config.ApplicationProperties;
 import com.midorlo.k12.domain.User;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;

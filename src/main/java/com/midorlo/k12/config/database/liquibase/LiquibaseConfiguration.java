@@ -1,6 +1,6 @@
 package com.midorlo.k12.config.database.liquibase;
 
-import com.midorlo.k12.config.application.ApplicationConstants;
+import com.midorlo.k12.config.ApplicationConstants;
 import java.util.concurrent.Executor;
 import javax.sql.DataSource;
 import liquibase.integration.spring.SpringLiquibase;

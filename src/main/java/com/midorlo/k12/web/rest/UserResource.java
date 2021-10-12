@@ -1,6 +1,6 @@
 package com.midorlo.k12.web.rest;
 
-import com.midorlo.k12.config.application.ApplicationConstants;
+import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.domain.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.security.AuthoritiesConstants;

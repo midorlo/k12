@@ -5,7 +5,7 @@ import static com.midorlo.k12.config.logging.LoggingUtils.*;
 import ch.qos.logback.classic.LoggerContext;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.midorlo.k12.config.application.ApplicationProperties;
+import com.midorlo.k12.config.ApplicationProperties;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.LoggerFactory;

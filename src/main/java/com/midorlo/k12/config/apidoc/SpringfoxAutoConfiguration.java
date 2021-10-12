@@ -1,11 +1,11 @@
 package com.midorlo.k12.config.apidoc;
 
-import static com.midorlo.k12.config.application.ApplicationConstants.SPRING_PROFILE_API_DOCS;
+import static com.midorlo.k12.config.ApplicationConstants.SPRING_PROFILE_API_DOCS;
 import static springfox.documentation.builders.PathSelectors.regex;
 
+import com.midorlo.k12.config.ApplicationProperties;
 import com.midorlo.k12.config.apidoc.customizer.ApplicationSpringfoxCustomizer;
 import com.midorlo.k12.config.apidoc.customizer.SpringfoxCustomizer;
-import com.midorlo.k12.config.application.ApplicationProperties;
 import java.nio.ByteBuffer;
 import java.util.*;
 import org.slf4j.Logger;

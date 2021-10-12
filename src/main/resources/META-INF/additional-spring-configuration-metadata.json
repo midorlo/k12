@@ -2,133 +2,133 @@
   "groups": [
     {
       "name": "application",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties"
+      "type": "com.midorlo.k12.config.ApplicationProperties",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties"
     },
     {
       "name": "application.api-docs",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties",
+      "type": "com.midorlo.k12.config.ApplicationProperties$ApiDocs",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties",
       "sourceMethod": "getApiDocs()"
     },
     {
       "name": "application.async",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Async",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Async",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties",
       "sourceMethod": "getAsync()"
     },
     {
       "name": "application.audit-events",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$AuditEvents",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties",
+      "type": "com.midorlo.k12.config.ApplicationProperties$AuditEvents",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties",
       "sourceMethod": "getAuditEvents()"
     },
     {
       "name": "application.cache",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Cache",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Cache",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties",
       "sourceMethod": "getCache()"
     },
     {
       "name": "application.cache.ehcache",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Cache$Ehcache",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Cache",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Cache$Ehcache",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Cache",
       "sourceMethod": "getEhcache()"
     },
     {
       "name": "application.client-app",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$ClientApp",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties",
+      "type": "com.midorlo.k12.config.ApplicationProperties$ClientApp",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties",
       "sourceMethod": "getClientApp()"
     },
     {
       "name": "application.gateway",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Gateway",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Gateway",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties",
       "sourceMethod": "getGateway()"
     },
     {
       "name": "application.gateway.rate-limiting",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Gateway$RateLimiting",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Gateway",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Gateway$RateLimiting",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Gateway",
       "sourceMethod": "getRateLimiting()"
     },
     {
       "name": "application.http",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Http",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Http",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties",
       "sourceMethod": "getHttp()"
     },
     {
       "name": "application.http.cache",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Http$Cache",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Http",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Http$Cache",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Http",
       "sourceMethod": "getCache()"
     },
     {
       "name": "application.logging",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Logging",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Logging",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties",
       "sourceMethod": "getLogging()"
     },
     {
       "name": "application.logging.logstash",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Logging$Logstash",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Logging",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Logging$Logstash",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Logging",
       "sourceMethod": "getLogstash()"
     },
     {
       "name": "application.mail",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Mail",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Mail",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties",
       "sourceMethod": "getMail()"
     },
     {
       "name": "application.registry",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Registry",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Registry",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties",
       "sourceMethod": "getRegistry()"
     },
     {
       "name": "application.security",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Security",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Security",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties",
       "sourceMethod": "getSecurity()"
     },
     {
       "name": "application.security.authentication",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Security$Authentication",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Security$Authentication",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security",
       "sourceMethod": "getAuthentication()"
     },
     {
       "name": "application.security.authentication.jwt",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Security$Authentication$Jwt",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security$Authentication",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Security$Authentication$Jwt",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security$Authentication",
       "sourceMethod": "getJwt()"
     },
     {
       "name": "application.security.client-authorization",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Security$ClientAuthorization",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Security$ClientAuthorization",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security",
       "sourceMethod": "getClientAuthorization()"
     },
     {
       "name": "application.security.oauth2",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Security$OAuth2",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Security$OAuth2",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security",
       "sourceMethod": "getOauth2()"
     },
     {
       "name": "application.security.remember-me",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Security$RememberMe",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Security$RememberMe",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security",
       "sourceMethod": "getRememberMe()"
     },
     {
       "name": "application.social",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$Social",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties",
+      "type": "com.midorlo.k12.config.ApplicationProperties$Social",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties",
       "sourceMethod": "getSocial()"
     },
     {
@@ -141,113 +141,113 @@
     {
       "name": "application.api-docs.contact-email",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ApiDocs"
     },
     {
       "name": "application.api-docs.contact-name",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ApiDocs"
     },
     {
       "name": "application.api-docs.contact-url",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ApiDocs"
     },
     {
       "name": "application.api-docs.default-include-pattern",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ApiDocs"
     },
     {
       "name": "application.api-docs.description",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ApiDocs"
     },
     {
       "name": "application.api-docs.host",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ApiDocs"
     },
     {
       "name": "application.api-docs.license",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ApiDocs"
     },
     {
       "name": "application.api-docs.license-url",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ApiDocs"
     },
     {
       "name": "application.api-docs.management-include-pattern",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ApiDocs"
     },
     {
       "name": "application.api-docs.protocols",
       "type": "java.lang.String[]",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ApiDocs"
     },
     {
       "name": "application.api-docs.servers",
-      "type": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs$Server[]",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs",
+      "type": "com.midorlo.k12.config.ApplicationProperties$ApiDocs$Server[]",
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ApiDocs",
       "defaultValue": []
     },
     {
       "name": "application.api-docs.terms-of-service-url",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ApiDocs"
     },
     {
       "name": "application.api-docs.title",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ApiDocs"
     },
     {
       "name": "application.api-docs.use-default-response-messages",
       "type": "java.lang.Boolean",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ApiDocs"
     },
     {
       "name": "application.api-docs.version",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ApiDocs"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ApiDocs"
     },
     {
       "name": "application.async.core-pool-size",
       "type": "java.lang.Integer",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Async"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Async"
     },
     {
       "name": "application.async.max-pool-size",
       "type": "java.lang.Integer",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Async"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Async"
     },
     {
       "name": "application.async.queue-capacity",
       "type": "java.lang.Integer",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Async"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Async"
     },
     {
       "name": "application.audit-events.retention-period",
       "type": "java.lang.Integer",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$AuditEvents"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$AuditEvents"
     },
     {
       "name": "application.cache.ehcache.max-entries",
       "type": "java.lang.Long",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Cache$Ehcache"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Cache$Ehcache"
     },
     {
       "name": "application.cache.ehcache.time-to-live-seconds",
       "type": "java.lang.Integer",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Cache$Ehcache"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Cache$Ehcache"
     },
     {
       "name": "application.client-app.name",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$ClientApp"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$ClientApp"
     },
     {
       "name": "application.cors.allow-credentials",
@@ -288,132 +288,132 @@
     {
       "name": "application.gateway.authorized-microservices-endpoints",
       "type": "java.util.Map<java.lang.String,java.util.List<java.lang.String>>",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Gateway"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Gateway"
     },
     {
       "name": "application.gateway.rate-limiting.duration-in-seconds",
       "type": "java.lang.Integer",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Gateway$RateLimiting"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Gateway$RateLimiting"
     },
     {
       "name": "application.gateway.rate-limiting.enabled",
       "type": "java.lang.Boolean",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Gateway$RateLimiting"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Gateway$RateLimiting"
     },
     {
       "name": "application.gateway.rate-limiting.limit",
       "type": "java.lang.Long",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Gateway$RateLimiting"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Gateway$RateLimiting"
     },
     {
       "name": "application.http.cache.time-to-live-in-days",
       "type": "java.lang.Integer",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Http$Cache"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Http$Cache"
     },
     {
       "name": "application.logging.logstash.enabled",
       "type": "java.lang.Boolean",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Logging$Logstash"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Logging$Logstash"
     },
     {
       "name": "application.logging.logstash.host",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Logging$Logstash"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Logging$Logstash"
     },
     {
       "name": "application.logging.logstash.port",
       "type": "java.lang.Integer",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Logging$Logstash"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Logging$Logstash"
     },
     {
       "name": "application.logging.logstash.queue-size",
       "type": "java.lang.Integer",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Logging$Logstash"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Logging$Logstash"
     },
     {
       "name": "application.logging.use-json-format",
       "type": "java.lang.Boolean",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Logging"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Logging"
     },
     {
       "name": "application.mail.base-url",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Mail"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Mail"
     },
     {
       "name": "application.mail.enabled",
       "type": "java.lang.Boolean",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Mail"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Mail"
     },
     {
       "name": "application.mail.from",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Mail"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Mail"
     },
     {
       "name": "application.registry.password",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Registry"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Registry"
     },
     {
       "name": "application.security.authentication.jwt.base64-secret",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security$Authentication$Jwt"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security$Authentication$Jwt"
     },
     {
       "name": "application.security.authentication.jwt.secret",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security$Authentication$Jwt"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security$Authentication$Jwt"
     },
     {
       "name": "application.security.authentication.jwt.token-validity-in-seconds",
       "type": "java.lang.Long",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security$Authentication$Jwt"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security$Authentication$Jwt"
     },
     {
       "name": "application.security.authentication.jwt.token-validity-in-seconds-for-remember-me",
       "type": "java.lang.Long",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security$Authentication$Jwt"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security$Authentication$Jwt"
     },
     {
       "name": "application.security.client-authorization.access-token-uri",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security$ClientAuthorization"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security$ClientAuthorization"
     },
     {
       "name": "application.security.client-authorization.client-id",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security$ClientAuthorization"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security$ClientAuthorization"
     },
     {
       "name": "application.security.client-authorization.client-secret",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security$ClientAuthorization"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security$ClientAuthorization"
     },
     {
       "name": "application.security.client-authorization.token-service-id",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security$ClientAuthorization"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security$ClientAuthorization"
     },
     {
       "name": "application.security.content-security-policy",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security"
     },
     {
       "name": "application.security.oauth2.audience",
       "type": "java.util.List<java.lang.String>",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security$OAuth2"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security$OAuth2"
     },
     {
       "name": "application.security.remember-me.key",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Security$RememberMe"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Security$RememberMe"
     },
     {
       "name": "application.social.redirect-after-sign-in",
       "type": "java.lang.String",
-      "sourceType": "com.midorlo.k12.config.application.ApplicationProperties$Social"
+      "sourceType": "com.midorlo.k12.config.ApplicationProperties$Social"
     },
     {
       "name": "management.endpoint.metrics.cache.time-to-live",

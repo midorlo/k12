@@ -1,6 +1,6 @@
 package com.midorlo.k12.config.cache;
 
-import com.midorlo.k12.config.application.ApplicationProperties;
+import com.midorlo.k12.config.ApplicationProperties;
 import com.midorlo.k12.domain.Authority;
 import com.midorlo.k12.domain.User;
 import java.time.Duration;

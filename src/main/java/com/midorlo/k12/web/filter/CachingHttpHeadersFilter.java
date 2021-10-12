@@ -1,6 +1,6 @@
 package com.midorlo.k12.web.filter;
 
-import com.midorlo.k12.config.application.ApplicationProperties;
+import com.midorlo.k12.config.ApplicationProperties;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javax.servlet.*;

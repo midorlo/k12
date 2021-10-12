@@ -1,14 +1,17 @@
 package com.midorlo.k12.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.io.Serializable;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A MenuItem.
@@ -86,7 +89,18 @@ public class MenuItem implements Serializable {
         this.setParent(menu);
         return this;
     }
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        MenuItem menuItem = (MenuItem) o;
+        return id != null && Objects.equals(id, menuItem.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }

@@ -2,8 +2,8 @@ package com.midorlo.k12.config.security;
 
 import static java.net.URLDecoder.decode;
 
-import com.midorlo.k12.config.application.ApplicationConstants;
-import com.midorlo.k12.config.application.ApplicationProperties;
+import com.midorlo.k12.config.ApplicationConstants;
+import com.midorlo.k12.config.ApplicationProperties;
 import com.midorlo.k12.config.database.H2ConfigurationHelper;
 import java.io.File;
 import java.io.UnsupportedEncodingException;

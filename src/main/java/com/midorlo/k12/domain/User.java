@@ -1,7 +1,7 @@
 package com.midorlo.k12.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.midorlo.k12.config.application.ApplicationConstants;
+import com.midorlo.k12.config.ApplicationConstants;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;

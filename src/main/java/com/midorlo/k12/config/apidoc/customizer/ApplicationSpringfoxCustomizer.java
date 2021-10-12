@@ -2,7 +2,7 @@ package com.midorlo.k12.config.apidoc.customizer;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
-import com.midorlo.k12.config.application.ApplicationProperties;
+import com.midorlo.k12.config.ApplicationProperties;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
