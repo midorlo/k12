@@ -2,7 +2,7 @@ package com.midorlo.k12.domain.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.midorlo.k12.test.LogbackRecorder;
+import com.midorlo.k12.LogbackRecorder;
 import java.sql.Types;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;

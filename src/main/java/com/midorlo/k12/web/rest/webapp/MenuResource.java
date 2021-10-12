@@ -2,7 +2,7 @@ package com.midorlo.k12.web.rest.webapp;
 
 import com.midorlo.k12.domain.Menu;
 import com.midorlo.k12.repository.MenuRepository;
-import com.midorlo.k12.web.rest.errors.BadRequestAlertException;
+import com.midorlo.k12.web.exception.BadRequestAlertException;
 import com.midorlo.k12.web.util.HeaderUtil;
 import com.midorlo.k12.web.util.ResponseUtil;
 import java.net.URI;

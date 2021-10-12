@@ -1,4 +1,4 @@
-package com.midorlo.k12.aop.logging;
+package com.midorlo.k12.service.logging;
 
 import com.midorlo.k12.config.ApplicationConstants;
 import java.util.Arrays;

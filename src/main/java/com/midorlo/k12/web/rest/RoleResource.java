@@ -2,7 +2,7 @@ package com.midorlo.k12.web.rest;
 
 import com.midorlo.k12.domain.Role;
 import com.midorlo.k12.repository.RoleRepository;
-import com.midorlo.k12.web.rest.errors.BadRequestAlertException;
+import com.midorlo.k12.web.exception.BadRequestAlertException;
 import com.midorlo.k12.web.util.HeaderUtil;
 import com.midorlo.k12.web.util.ResponseUtil;
 import java.net.URI;

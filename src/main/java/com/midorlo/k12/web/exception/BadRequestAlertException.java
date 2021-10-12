@@ -1,4 +1,4 @@
-package com.midorlo.k12.web.rest.errors;
+package com.midorlo.k12.web.exception;
 
 import java.net.URI;
 import java.util.HashMap;

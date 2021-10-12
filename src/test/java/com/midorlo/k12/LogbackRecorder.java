@@ -1,4 +1,4 @@
-package com.midorlo.k12.test;
+package com.midorlo.k12;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
