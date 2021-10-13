@@ -15,9 +15,51 @@ import org.springframework.web.util.UriComponentsBuilder;
 /**
  * Tests based on parsing algorithm in app/components/util/pagination-util.service.js
  *
- * @see PaginationUtil
+ * @see PaginationUtilities
  */
-class PaginationUtilUnitTest {
+class PaginationUtilitiesUnitTest {
+
+    private static final int PAGE_SIZE = 20;
+    private static final int TOTAL_ELEMENTS_OF_3 = 3;
+    private static final int TOTAL_ELEMENTS_OF_40 = 40;
+    private static final int TOTAL_PAGES_OF_1 = 1;
+    private static final int TOTAL_PAGES_OF_2 = 2;
+
+    private List<Integer> content;
+
+    @BeforeEach
+    void setup() {
+        content = new ArrayList<>();
+    }
+
+    @Test
+    void generatePageFromListTestShouldCreatePage() {
+        content.add(1);
+        content.add(2);
+        content.add(3);
+
+        Page<Integer> page = PaginationUtilities.createPageFromList(content, PageRequest.of(0, PAGE_SIZE));
+
+        assertThat(page).isNotNull();
+        assertThat(page.getSize()).isEqualTo(PAGE_SIZE);
+        assertThat(page.getTotalElements()).isEqualTo(TOTAL_ELEMENTS_OF_3);
+        assertThat(page.getTotalPages()).isEqualTo(TOTAL_PAGES_OF_1);
+    }
+
+    @Test
+    void generatePageFromListShouldCreatePageWithTwoTotalPages() {
+        for (int i = 0; i < TOTAL_ELEMENTS_OF_40; i++) {
+            content.add(i);
+        }
+
+        Page<Integer> page = PaginationUtilities.createPageFromList(content, PageRequest.of(0, PAGE_SIZE));
+
+        assertThat(page).isNotNull();
+        assertThat(page.getSize()).isEqualTo(PAGE_SIZE);
+        assertThat(page.getTotalElements()).isEqualTo(TOTAL_ELEMENTS_OF_40);
+        assertThat(page.getTotalPages()).isEqualTo(TOTAL_PAGES_OF_2);
+    }
+
 
     private static final String BASE_URL = "/api/_search/example";
 
@@ -31,7 +73,7 @@ class PaginationUtilUnitTest {
     @Test
     void generatePaginationHttpHeadersTest() {
         Page<String> page = new PageImpl<>(new ArrayList<>(), PageRequest.of(6, 50), 400L);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder, page);
+        HttpHeaders headers = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
         List<String> strHeaders = headers.get(HttpHeaders.LINK);
         assertThat(strHeaders).isNotNull();
         assertThat(strHeaders).hasSize(1);
@@ -54,7 +96,7 @@ class PaginationUtilUnitTest {
         uriBuilder.queryParam("query", "Test1, test2");
         List<String> content = new ArrayList<>();
         Page<String> page = new PageImpl<>(content);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder, page);
+        HttpHeaders headers = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
         List<String> strHeaders = headers.get(HttpHeaders.LINK);
         assertThat(strHeaders).isNotNull();
         assertThat(strHeaders).hasSize(1);
@@ -77,7 +119,7 @@ class PaginationUtilUnitTest {
 
         // Page 0
         Page<String> page = new PageImpl<>(content, PageRequest.of(0, 50), 400L);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder, page);
+        HttpHeaders headers = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
         List<String> strHeaders = headers.get(HttpHeaders.LINK);
         assertThat(strHeaders).isNotNull();
         assertThat(strHeaders).hasSize(1);
@@ -96,7 +138,7 @@ class PaginationUtilUnitTest {
         // Page 1
         uriBuilder.queryParam("page", "1");
         page = new PageImpl<>(content, PageRequest.of(1, 50), 400L);
-        headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder, page);
+        headers = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
         strHeaders = headers.get(HttpHeaders.LINK);
         assertThat(strHeaders).isNotNull();
         assertThat(strHeaders).hasSize(1);
@@ -116,7 +158,7 @@ class PaginationUtilUnitTest {
         // Page 6
         uriBuilder.queryParam("page", "6");
         page = new PageImpl<>(content, PageRequest.of(6, 50), 400L);
-        headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder, page);
+        headers = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
         strHeaders = headers.get(HttpHeaders.LINK);
         assertThat(strHeaders).isNotNull();
         assertThat(strHeaders).hasSize(1);
@@ -136,7 +178,7 @@ class PaginationUtilUnitTest {
         // Page 7
         uriBuilder.queryParam("page", "7");
         page = new PageImpl<>(content, PageRequest.of(7, 50), 400L);
-        headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder, page);
+        headers = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
         strHeaders = headers.get(HttpHeaders.LINK);
         assertThat(strHeaders).isNotNull();
         assertThat(strHeaders).hasSize(1);
@@ -153,7 +195,7 @@ class PaginationUtilUnitTest {
     void greaterSemicolonTest() {
         uriBuilder.queryParam("query", "Test>;test");
         Page<String> page = new PageImpl<>(new ArrayList<>());
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder, page);
+        HttpHeaders headers = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
         List<String> strHeaders = headers.get(HttpHeaders.LINK);
         assertThat(strHeaders).isNotNull();
         assertThat(strHeaders).hasSize(1);

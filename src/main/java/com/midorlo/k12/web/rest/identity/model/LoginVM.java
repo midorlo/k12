@@ -1,4 +1,4 @@
-package com.midorlo.k12.web.rest.vm;
+package com.midorlo.k12.web.rest.identity.model;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

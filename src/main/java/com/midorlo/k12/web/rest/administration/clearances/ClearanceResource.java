@@ -1,10 +1,10 @@
-package com.midorlo.k12.web.rest;
+package com.midorlo.k12.web.rest.administration.clearances;
 
 import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.repository.ClearanceRepository;
 import com.midorlo.k12.web.exception.BadRequestAlertException;
-import com.midorlo.k12.web.util.HeaderUtil;
-import com.midorlo.k12.web.util.ResponseUtil;
+import com.midorlo.k12.web.util.HttpHeaderUtilities;
+import com.midorlo.k12.web.util.HttpResponseUtilities;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -58,7 +58,7 @@ public class ClearanceResource {
         Clearance result = clearanceRepository.save(clearance);
         return ResponseEntity
             .created(new URI("/api/clearances/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HttpHeaderUtilities.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -91,7 +91,7 @@ public class ClearanceResource {
         Clearance result = clearanceRepository.save(clearance);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, clearance.getId().toString()))
+            .headers(HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, clearance.getId().toString()))
             .body(result);
     }
 
@@ -136,9 +136,9 @@ public class ClearanceResource {
             )
             .map(clearanceRepository::save);
 
-        return ResponseUtil.wrapOrNotFound(
+        return HttpResponseUtilities.wrapOrNotFound(
             result.orElseThrow(EntityNotFoundException::new),
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, clearance.getId().toString())
+            HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, clearance.getId().toString())
         );
     }
 
@@ -164,7 +164,7 @@ public class ClearanceResource {
     public ResponseEntity<Clearance> getClearance(@PathVariable Long id) {
         log.debug("REST request to get Clearance : {}", id);
         Optional<Clearance> clearance = clearanceRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(clearance.orElseThrow(EntityNotFoundException::new));
+        return HttpResponseUtilities.wrapOrNotFound(clearance.orElseThrow(EntityNotFoundException::new));
     }
 
     /**
@@ -179,7 +179,7 @@ public class ClearanceResource {
         clearanceRepository.deleteById(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HttpHeaderUtilities.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
 }

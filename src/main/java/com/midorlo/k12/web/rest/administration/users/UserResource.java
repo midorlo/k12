@@ -1,4 +1,4 @@
-package com.midorlo.k12.web.rest;
+package com.midorlo.k12.web.rest.administration.users;
 
 import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.domain.security.User;
@@ -9,9 +9,9 @@ import com.midorlo.k12.service.security.dto.AdminUserDTO;
 import com.midorlo.k12.web.exception.BadRequestAlertException;
 import com.midorlo.k12.web.exception.EmailAlreadyUsedException;
 import com.midorlo.k12.web.exception.LoginAlreadyUsedException;
-import com.midorlo.k12.web.util.HeaderUtil;
-import com.midorlo.k12.web.util.PaginationUtil;
-import com.midorlo.k12.web.util.ResponseUtil;
+import com.midorlo.k12.web.util.HttpHeaderUtilities;
+import com.midorlo.k12.web.util.PaginationUtilities;
+import com.midorlo.k12.web.util.HttpResponseUtilities;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -122,7 +122,7 @@ public class UserResource {
             return ResponseEntity
                 .created(new URI("/api/admin/users/" + newUser.getLogin()))
                 .headers(
-                    HeaderUtil.createAlert(applicationName, "A user is created with identifier " + newUser.getLogin(), newUser.getLogin())
+                    HttpHeaderUtilities.createAlert(applicationName, "A user is created with identifier " + newUser.getLogin(), newUser.getLogin())
                 )
                 .body(newUser);
         }
@@ -151,9 +151,9 @@ public class UserResource {
         Optional<AdminUserDTO> updatedUser = userService.updateUser(userDTO);
         AdminUserDTO adminUserDTO = updatedUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return ResponseUtil.wrapOrNotFound(
+        return HttpResponseUtilities.wrapOrNotFound(
             adminUserDTO,
-            HeaderUtil.createAlert(applicationName, "A user is updated with identifier " + userDTO.getLogin(), userDTO.getLogin())
+            HttpHeaderUtilities.createAlert(applicationName, "A user is updated with identifier " + userDTO.getLogin(), userDTO.getLogin())
         );
     }
 
@@ -173,7 +173,7 @@ public class UserResource {
         }
 
         final Page<AdminUserDTO> page = userService.getAllManagedUsers(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        HttpHeaders headers = PaginationUtilities.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -196,7 +196,7 @@ public class UserResource {
             .getUserWithAuthoritiesByLogin(login)
             .map(AdminUserDTO::new)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return ResponseUtil.wrapOrNotFound(adminUserDTO);
+        return HttpResponseUtilities.wrapOrNotFound(adminUserDTO);
     }
 
     /**
@@ -212,7 +212,7 @@ public class UserResource {
         userService.deleteUser(login);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createAlert(applicationName, "A user is deleted with identifier " + login, login))
+            .headers(HttpHeaderUtilities.createAlert(applicationName, "A user is deleted with identifier " + login, login))
             .build();
     }
 }

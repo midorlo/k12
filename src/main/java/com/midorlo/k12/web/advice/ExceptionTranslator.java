@@ -4,7 +4,7 @@ import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.service.security.exception.UsernameAlreadyUsedException;
 import com.midorlo.k12.web.advice.model.FieldErrorVM;
 import com.midorlo.k12.web.exception.*;
-import com.midorlo.k12.web.util.HeaderUtil;
+import com.midorlo.k12.web.util.HttpHeaderUtilities;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Collection;
@@ -125,7 +125,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
         return create(
             problem,
             request,
-            HeaderUtil.createFailureAlert(applicationName, false, problem.getEntityName(), problem.getErrorKey(), problem.getMessage())
+            HttpHeaderUtilities.createFailureAlert(applicationName, false, problem.getEntityName(), problem.getErrorKey(), problem.getMessage())
         );
     }
 
@@ -138,7 +138,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
         return create(
             problem,
             request,
-            HeaderUtil.createFailureAlert(applicationName, false, problem.getEntityName(), problem.getErrorKey(), problem.getMessage())
+            HttpHeaderUtilities.createFailureAlert(applicationName, false, problem.getEntityName(), problem.getErrorKey(), problem.getMessage())
         );
     }
 
@@ -155,7 +155,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
         return create(
             ex,
             request,
-            HeaderUtil.createFailureAlert(applicationName, false, ex.getEntityName(), ex.getErrorKey(), ex.getMessage())
+            HttpHeaderUtilities.createFailureAlert(applicationName, false, ex.getEntityName(), ex.getErrorKey(), ex.getMessage())
         );
     }
 

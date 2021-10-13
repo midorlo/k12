@@ -1,4 +1,4 @@
-package com.midorlo.k12.web.rest;
+package com.midorlo.k12.web.rest.webapp;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

@@ -13,9 +13,9 @@ import com.midorlo.k12.service.security.dto.PasswordChangeDTO;
 import com.midorlo.k12.web.exception.EmailAlreadyUsedException;
 import com.midorlo.k12.web.exception.InvalidPasswordException;
 import com.midorlo.k12.web.exception.LoginAlreadyUsedException;
-import com.midorlo.k12.web.rest.vm.KeyAndPasswordVM;
-import com.midorlo.k12.web.rest.vm.LoginVM;
-import com.midorlo.k12.web.rest.vm.ManagedUserVM;
+import com.midorlo.k12.web.rest.identity.model.KeyAndPasswordVM;
+import com.midorlo.k12.web.rest.identity.model.LoginVM;
+import com.midorlo.k12.web.rest.identity.model.ManagedUserVM;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -36,11 +36,11 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/identity")
-public class AccountResource {
+public class IdentityController {
 
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final Logger log = LoggerFactory.getLogger(AccountResource.class);
+    private final Logger log = LoggerFactory.getLogger(IdentityController.class);
     private final UserRepository userRepository;
     private final UserService userService;
     private final MailService mailService;
@@ -52,7 +52,7 @@ public class AccountResource {
         }
     }
 
-    public AccountResource(
+    public IdentityController(
         TokenProvider tokenProvider,
         AuthenticationManagerBuilder authenticationManagerBuilder,
         UserRepository userRepository,

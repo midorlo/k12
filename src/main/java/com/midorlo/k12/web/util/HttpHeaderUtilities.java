@@ -12,9 +12,9 @@ import org.springframework.http.HttpHeaders;
  * Utility class for HTTP headers creation.
  */
 @UtilityClass
-public final class HeaderUtil {
+public final class HttpHeaderUtilities {
 
-    private static final Logger log = LoggerFactory.getLogger(HeaderUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(HttpHeaderUtilities.class);
 
     /**
      * <p>createAlert.</p>

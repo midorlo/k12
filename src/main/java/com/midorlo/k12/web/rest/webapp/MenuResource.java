@@ -3,8 +3,8 @@ package com.midorlo.k12.web.rest.webapp;
 import com.midorlo.k12.domain.webapp.Menu;
 import com.midorlo.k12.repository.MenuRepository;
 import com.midorlo.k12.web.exception.BadRequestAlertException;
-import com.midorlo.k12.web.util.HeaderUtil;
-import com.midorlo.k12.web.util.ResponseUtil;
+import com.midorlo.k12.web.util.HttpHeaderUtilities;
+import com.midorlo.k12.web.util.HttpResponseUtilities;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -57,7 +57,7 @@ public class MenuResource {
         Menu result = menuRepository.save(menu);
         return ResponseEntity
             .created(new URI("/api/webapp/menus/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HttpHeaderUtilities.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -87,7 +87,7 @@ public class MenuResource {
         Menu result = menuRepository.save(menu);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, menu.getId().toString()))
+            .headers(HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, menu.getId().toString()))
             .body(result);
     }
 
@@ -137,9 +137,9 @@ public class MenuResource {
             )
             .map(menuRepository::save);
 
-        return ResponseUtil.wrapOrNotFound(
+        return HttpResponseUtilities.wrapOrNotFound(
             result.orElseThrow(EntityNotFoundException::new),
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, menu.getId().toString())
+            HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, menu.getId().toString())
         );
     }
 
@@ -164,7 +164,7 @@ public class MenuResource {
     public ResponseEntity<Menu> getMenu(@PathVariable Long id) {
         log.debug("REST request to get Menu : {}", id);
         Optional<Menu> menu = menuRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(menu.orElseThrow(EntityNotFoundException::new));
+        return HttpResponseUtilities.wrapOrNotFound(menu.orElseThrow(EntityNotFoundException::new));
     }
 
     /**
@@ -179,7 +179,7 @@ public class MenuResource {
         menuRepository.deleteById(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HttpHeaderUtilities.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
 }

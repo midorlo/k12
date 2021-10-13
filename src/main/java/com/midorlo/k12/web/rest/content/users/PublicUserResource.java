@@ -1,8 +1,8 @@
-package com.midorlo.k12.web.rest;
+package com.midorlo.k12.web.rest.content.users;
 
 import com.midorlo.k12.service.security.UserService;
 import com.midorlo.k12.service.security.dto.UserDTO;
-import com.midorlo.k12.web.util.PaginationUtil;
+import com.midorlo.k12.web.util.PaginationUtilities;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +53,7 @@ public class PublicUserResource {
         }
 
         final Page<UserDTO> page = userService.getAllPublicUsers(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        HttpHeaders headers = PaginationUtilities.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 

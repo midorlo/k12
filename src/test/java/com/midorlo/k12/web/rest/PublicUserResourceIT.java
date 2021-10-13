@@ -12,6 +12,8 @@ import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 
 import javax.persistence.EntityManager;
+
+import com.midorlo.k12.web.rest.administration.users.UserResource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

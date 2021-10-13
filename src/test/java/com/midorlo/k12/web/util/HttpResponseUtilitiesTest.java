@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
 @SuppressWarnings("UastIncorrectHttpHeaderInspection")
-class ResponseUtilTest {
+class HttpResponseUtilitiesTest {
 
     private static final String HEADER_NAME = "X-Test";
     private static final String HEADER_VALUE = "FooBar";
@@ -27,7 +27,7 @@ class ResponseUtilTest {
 
     @Test
     void testOptionalYesWithoutHeaders() {
-        ResponseEntity<Integer> response = ResponseUtil.wrapOrNotFound(
+        ResponseEntity<Integer> response = HttpResponseUtilities.wrapOrNotFound(
             Optional.of(42).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND))
         );
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -37,7 +37,7 @@ class ResponseUtilTest {
 
     @Test
     void testOptionalYesWithHeaders() {
-        ResponseEntity<Integer> response = ResponseUtil.wrapOrNotFound(
+        ResponseEntity<Integer> response = HttpResponseUtilities.wrapOrNotFound(
             Optional.of(42).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)),
             headers
         );

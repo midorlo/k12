@@ -1,10 +1,10 @@
-package com.midorlo.k12.web.rest;
+package com.midorlo.k12.web.rest.administration.roles;
 
 import com.midorlo.k12.domain.security.Role;
 import com.midorlo.k12.repository.RoleRepository;
 import com.midorlo.k12.web.exception.BadRequestAlertException;
-import com.midorlo.k12.web.util.HeaderUtil;
-import com.midorlo.k12.web.util.ResponseUtil;
+import com.midorlo.k12.web.util.HttpHeaderUtilities;
+import com.midorlo.k12.web.util.HttpResponseUtilities;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -57,7 +57,7 @@ public class RoleResource {
         Role result = roleRepository.save(role);
         return ResponseEntity
             .created(new URI("/api/roles/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HttpHeaderUtilities.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -87,7 +87,7 @@ public class RoleResource {
         Role result = roleRepository.save(role);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, role.getId().toString()))
+            .headers(HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, role.getId().toString()))
             .body(result);
     }
 
@@ -131,9 +131,9 @@ public class RoleResource {
             )
             .map(roleRepository::save);
 
-        return ResponseUtil.wrapOrNotFound(
+        return HttpResponseUtilities.wrapOrNotFound(
             result.orElseThrow(EntityNotFoundException::new),
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, role.getId().toString())
+            HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, role.getId().toString())
         );
     }
 
@@ -159,7 +159,7 @@ public class RoleResource {
     public ResponseEntity<Role> getRole(@PathVariable Long id) {
         log.debug("REST request to get Role : {}", id);
         Optional<Role> role = roleRepository.findOneWithEagerRelationships(id);
-        return ResponseUtil.wrapOrNotFound(role.orElseThrow(EntityNotFoundException::new));
+        return HttpResponseUtilities.wrapOrNotFound(role.orElseThrow(EntityNotFoundException::new));
     }
 
     /**
@@ -174,7 +174,7 @@ public class RoleResource {
         roleRepository.deleteById(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HttpHeaderUtilities.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
 }
