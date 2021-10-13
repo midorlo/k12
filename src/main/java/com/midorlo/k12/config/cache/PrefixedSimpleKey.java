@@ -1,9 +1,10 @@
 package com.midorlo.k12.config.cache;
 
-import java.io.Serializable;
-import java.util.Arrays;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+
+import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * <p>PrefixedSimpleKey class.</p>

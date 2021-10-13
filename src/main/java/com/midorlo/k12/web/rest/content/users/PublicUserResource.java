@@ -3,7 +3,7 @@ package com.midorlo.k12.web.rest.content.users;
 import com.midorlo.k12.service.security.UserService;
 import com.midorlo.k12.service.security.dto.UserDTO;
 import com.midorlo.k12.web.util.PaginationUtilities;
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.List;
+
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class PublicUserResource {
@@ -30,8 +33,6 @@ public class PublicUserResource {
         "activated",
         "langKey"
     );
-
-    private final Logger log = LoggerFactory.getLogger(PublicUserResource.class);
 
     private final UserService userService;
 

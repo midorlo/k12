@@ -27,6 +27,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
  * // perform assertions on the events
  * }
  */
+
 @ConditionalOnClass({ LoggerContext.class })
 public class LogbackRecorder {
 
@@ -84,22 +85,22 @@ public class LogbackRecorder {
             LogbackRecorder recorder = instances.get(logger);
             if (recorder == null) {
                 recorder = new LogbackRecorder((Logger) logger);
-                instances.put(recorder.logger, recorder);
+                instances.put(recorder.log, recorder);
             }
             return recorder;
         }
     }
 
-    private final Logger logger;
+    private final Logger      log;
     private final List<Event> events;
     private final AppenderBase<ILoggingEvent> appender;
     private boolean active;
     private boolean additive;
     private Level level;
 
-    private LogbackRecorder(Logger logger) {
-        this.logger = logger;
-        this.events = new ArrayList<>();
+    private LogbackRecorder(Logger log) {
+        this.log      = log;
+        this.events   = new ArrayList<>();
         this.appender =
             new AppenderBase<>() {
                 @Override
@@ -131,11 +132,11 @@ public class LogbackRecorder {
                 throw new IllegalStateException(CAPTURE_EXCEPTION_MESSAGE);
             }
             this.active = true;
-            this.additive = logger.isAdditive();
-            this.logger.setAdditive(false);
-            this.level = logger.getLevel();
-            this.logger.setLevel(Level.valueOf(level.toUpperCase()));
-            this.logger.addAppender(this.appender);
+            this.additive = log.isAdditive();
+            this.log.setAdditive(false);
+            this.level = log.getLevel();
+            this.log.setLevel(Level.valueOf(level.toUpperCase()));
+            this.log.addAppender(this.appender);
             this.appender.start();
         }
         return this;
@@ -152,9 +153,9 @@ public class LogbackRecorder {
                 throw new IllegalStateException(RELEASE_EXCEPTION_MESSAGE);
             }
             this.appender.stop();
-            this.logger.detachAppender(this.appender);
-            this.logger.setLevel(this.level);
-            this.logger.setAdditive(this.additive);
+            this.log.detachAppender(this.appender);
+            this.log.setLevel(this.level);
+            this.log.setAdditive(this.additive);
         }
         this.active = false;
         return this;

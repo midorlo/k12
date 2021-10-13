@@ -1,15 +1,16 @@
 package com.midorlo.k12.config.cache;
 
-import java.lang.reflect.Method;
-import java.time.Instant;
-import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.boot.info.GitProperties;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.lang.NonNull;
+
+import java.lang.reflect.Method;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 /**
  * <p>PrefixedKeyGenerator class.</p>

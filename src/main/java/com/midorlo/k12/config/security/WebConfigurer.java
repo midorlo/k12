@@ -1,6 +1,7 @@
 package com.midorlo.k12.config.security;
 
 import com.midorlo.k12.config.ApplicationProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.server.WebServerFactory;
@@ -27,11 +28,10 @@ import static java.net.URLDecoder.decode;
 /**
  * Configuration of web application with Servlet 3.0 APIs.
  */
+@Slf4j
 @Configuration
 public class WebConfigurer implements ServletContextInitializer,
                                       WebServerFactoryCustomizer<WebServerFactory> {
-
-    private final Logger log = LoggerFactory.getLogger(WebConfigurer.class);
 
     private final Environment env;
 

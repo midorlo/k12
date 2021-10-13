@@ -8,6 +8,8 @@ import com.midorlo.k12.config.apidoc.customizer.ApplicationSpringfoxCustomizer;
 import com.midorlo.k12.config.apidoc.customizer.SpringfoxCustomizer;
 import java.nio.ByteBuffer;
 import java.util.*;
+
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
@@ -39,6 +41,7 @@ import springfox.documentation.swagger2.configuration.Swagger2DocumentationConfi
  * Warning! When having a lot of REST endpoints, Springfox can become a performance issue.
  * In that case, you can use the "no-api-docs" Spring profile, so that this bean is ignored.
  */
+@Slf4j
 @Configuration
 @ConditionalOnWebApplication
 @ConditionalOnClass({ ApiInfo.class, BeanValidatorPluginsConfiguration.class, Docket.class })
@@ -52,8 +55,6 @@ public class SpringfoxAutoConfiguration {
     static final String MANAGEMENT_TITLE_SUFFIX = "Management API";
     static final String MANAGEMENT_GROUP_NAME = "management";
     static final String MANAGEMENT_DESCRIPTION = "Management endpoints documentation";
-
-    private final Logger log = LoggerFactory.getLogger(SpringfoxAutoConfiguration.class);
 
     private final ApplicationProperties.ApiDocs properties;
 

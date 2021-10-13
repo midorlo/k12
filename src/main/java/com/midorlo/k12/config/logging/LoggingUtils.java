@@ -7,7 +7,7 @@ import ch.qos.logback.classic.spi.LoggerContextListener;
 import ch.qos.logback.core.ConsoleAppender;
 import ch.qos.logback.core.spi.ContextAwareBase;
 import com.midorlo.k12.config.ApplicationProperties;
-import java.net.InetSocketAddress;
+import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.appender.LogstashTcpSocketAppender;
 import net.logstash.logback.composite.ContextJsonProvider;
 import net.logstash.logback.composite.GlobalCustomFieldsJsonProvider;
@@ -18,12 +18,13 @@ import net.logstash.logback.stacktrace.ShortenedThrowableConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.InetSocketAddress;
+
 /**
  * Utility methods to add appenders to a {@link LoggerContext}.
  */
+@Slf4j
 public final class LoggingUtils {
-
-    private static final Logger log = LoggerFactory.getLogger(LoggingUtils.class);
 
     private static final String CONSOLE_APPENDER_NAME = "CONSOLE";
     private static final String ASYNC_LOGSTASH_APPENDER_NAME = "ASYNC_LOGSTASH";

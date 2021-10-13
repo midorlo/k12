@@ -10,14 +10,9 @@ import com.midorlo.k12.web.exception.BadRequestAlertException;
 import com.midorlo.k12.web.exception.EmailAlreadyUsedException;
 import com.midorlo.k12.web.exception.LoginAlreadyUsedException;
 import com.midorlo.k12.web.util.HttpHeaderUtilities;
-import com.midorlo.k12.web.util.PaginationUtilities;
 import com.midorlo.k12.web.util.HttpResponseUtilities;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
-import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
+import com.midorlo.k12.web.util.PaginationUtilities;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +26,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing users.
@@ -56,6 +58,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
  * <p>
  * Another option would be to have a specific JPA entity graph to handle this case.
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/admin")
 public class UserResource {
@@ -73,8 +76,6 @@ public class UserResource {
         "lastModifiedBy",
         "lastModifiedDate"
     );
-
-    private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
     @Value("${application.clientApp.name}")
     private String applicationName;

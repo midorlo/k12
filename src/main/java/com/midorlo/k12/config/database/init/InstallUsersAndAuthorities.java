@@ -3,12 +3,13 @@ package com.midorlo.k12.config.database.init;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.AuthorityRepository;
 import com.midorlo.k12.repository.UserRepository;
-
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * CommandLineRunner to install the default User Accounts

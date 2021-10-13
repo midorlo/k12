@@ -1,7 +1,8 @@
 package com.midorlo.k12.config.database;
 
-import java.sql.Types;
 import org.hibernate.dialect.H2Dialect;
+
+import java.sql.Types;
 
 /**
  * <p>FixedH2Dialect class.</p>

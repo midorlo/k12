@@ -4,6 +4,7 @@ import io.micrometer.core.instrument.Timer;
 import io.micrometer.core.instrument.*;
 import io.micrometer.core.instrument.distribution.ValueAtPercentile;
 import io.micrometer.core.instrument.search.Search;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
@@ -15,12 +16,11 @@ import java.util.concurrent.TimeUnit;
 /**
  * <p>ApplicationMetricsEndpoint class.</p>
  */
+@Slf4j
 @WebEndpoint(id = "appmetrics")
 public class ApplicationMetricsEndpoint {
 
     private final MeterRegistry meterRegistry;
-
-    private final Logger logger = LoggerFactory.getLogger(ApplicationMetricsEndpoint.class);
 
     /**
      * Constant <code>MISSING_NAME_TAG_MESSAGE="Missing name tag for metric {}"</code>
@@ -232,7 +232,7 @@ public class ApplicationMetricsEndpoint {
                     }
                     resultsCache.get(name).put(key, counter.count());
                 } else {
-                    logger.warn(MISSING_NAME_TAG_MESSAGE, key);
+                    log.warn(MISSING_NAME_TAG_MESSAGE, key);
                 }
             }
         );
@@ -246,7 +246,7 @@ public class ApplicationMetricsEndpoint {
                     resultsCache.putIfAbsent(name, new HashMap<>());
                     resultsCache.get(name).put(key, gauge.value());
                 } else {
-                    logger.warn(MISSING_NAME_TAG_MESSAGE, key);
+                    log.warn(MISSING_NAME_TAG_MESSAGE, key);
                 }
             }
         );

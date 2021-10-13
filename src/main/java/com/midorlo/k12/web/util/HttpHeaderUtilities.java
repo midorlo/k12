@@ -1,20 +1,20 @@
 package com.midorlo.k12.web.util;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 /**
  * Utility class for HTTP headers creation.
  */
+@Slf4j
 @UtilityClass
 public final class HttpHeaderUtilities {
-
-    private static final Logger log = LoggerFactory.getLogger(HttpHeaderUtilities.class);
 
     /**
      * <p>createAlert.</p>
@@ -61,7 +61,10 @@ public final class HttpHeaderUtilities {
      * @param param a {@link String} object.
      * @return a {@link HttpHeaders} object.
      */
-    public static HttpHeaders createEntityUpdateAlert(String applicationName, boolean enableTranslation, String entityName, String param) {
+    public static HttpHeaders createEntityUpdateAlert(String applicationName,
+                                                      boolean enableTranslation,
+                                                      String entityName,
+                                                      String param) {
         String message = enableTranslation
             ? applicationName + "." + entityName + ".updated"
             : "A " + entityName + " is updated with identifier " + param;

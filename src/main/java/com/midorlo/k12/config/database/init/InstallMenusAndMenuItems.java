@@ -4,10 +4,12 @@ import com.midorlo.k12.domain.webapp.Menu;
 import com.midorlo.k12.domain.webapp.MenuItem;
 import com.midorlo.k12.repository.MenuItemRepository;
 import com.midorlo.k12.repository.MenuRepository;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Slf4j
 @Component

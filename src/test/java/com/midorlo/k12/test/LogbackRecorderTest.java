@@ -7,6 +7,8 @@ import static org.mockito.Mockito.mock;
 import com.midorlo.k12.LogbackRecorder;
 import com.midorlo.k12.LogbackRecorder.Event;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -14,12 +16,12 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
+@Slf4j
 class LogbackRecorderTest {
 
     private static final String[] TEST_MESSAGES = { "error", "warn", "info", "debug", "trace" };
     private static final Object[] TEST_ARGUMENTS = { null, true, 1, 2D, 3F };
 
-    private final Logger log = LoggerFactory.getLogger(LogbackRecorderTest.class);
     private final Marker marker = MarkerFactory.getMarker(log.getName());
 
     private final Exception exception = new RuntimeException("Eek");

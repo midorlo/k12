@@ -3,13 +3,14 @@ package com.midorlo.k12.service.security.dto;
 import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.domain.security.Authority;
 import com.midorlo.k12.domain.security.User;
-import java.time.Instant;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.time.Instant;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A DTO representing a user, with his authorities.

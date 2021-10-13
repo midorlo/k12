@@ -1,6 +1,7 @@
 package com.midorlo.k12.config.security.ssl;
 
 import io.undertow.UndertowOptions;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @see <a href="https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices#25-use-forward-secrecy" target="_blank">More explanation on perfect forward secrecy</a>
  */
+@Slf4j
 @Configuration
 @ConditionalOnBean(UndertowServletWebServerFactory.class)
 @ConditionalOnClass(UndertowOptions.class)
@@ -28,8 +30,6 @@ import org.springframework.context.annotation.Configuration;
 public class UndertowSSLConfiguration {
 
     private final UndertowServletWebServerFactory factory;
-
-    private final Logger log = LoggerFactory.getLogger(UndertowSSLConfiguration.class);
 
     /**
      * <p>Constructor for UndertowSSLConfiguration.</p>

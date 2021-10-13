@@ -1,20 +1,17 @@
 package com.midorlo.k12.service.security;
 
 import com.midorlo.k12.config.ApplicationConstants;
+import com.midorlo.k12.config.security.SecurityUtils;
 import com.midorlo.k12.domain.security.Authority;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.AuthorityRepository;
 import com.midorlo.k12.repository.UserRepository;
-import com.midorlo.k12.config.security.SecurityUtils;
+import com.midorlo.k12.service.security.dto.AdminUserDTO;
+import com.midorlo.k12.service.security.dto.UserDTO;
 import com.midorlo.k12.service.security.exception.EmailAlreadyUsedException;
 import com.midorlo.k12.service.security.exception.InvalidPasswordException;
 import com.midorlo.k12.service.security.exception.UsernameAlreadyUsedException;
-import com.midorlo.k12.service.security.dto.AdminUserDTO;
-import com.midorlo.k12.service.security.dto.UserDTO;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -25,14 +22,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.stream.Collectors;
+
 /**
  * Service class for managing users.
  */
+@Slf4j
 @Service
 @Transactional
 public class UserService {
-
-    private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
 

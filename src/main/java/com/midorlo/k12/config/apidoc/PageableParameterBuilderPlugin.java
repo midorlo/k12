@@ -2,8 +2,6 @@ package com.midorlo.k12.config.apidoc;
 
 import com.fasterxml.classmate.ResolvedType;
 import com.fasterxml.classmate.TypeResolver;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
 import springfox.documentation.builders.RequestParameterBuilder;
@@ -14,6 +12,9 @@ import springfox.documentation.service.ResolvedMethodParameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.OperationBuilderPlugin;
 import springfox.documentation.spi.service.contexts.OperationContext;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Springfox Plugin to resolve {@link Pageable} parameter into plain fields.

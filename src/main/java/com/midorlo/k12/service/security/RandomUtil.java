@@ -1,7 +1,8 @@
 package com.midorlo.k12.service.security;
 
-import java.security.SecureRandom;
 import org.apache.commons.lang3.RandomStringUtils;
+
+import java.security.SecureRandom;
 
 /**
  * Utility class for generating random Strings.

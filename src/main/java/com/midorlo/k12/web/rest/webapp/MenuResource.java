@@ -5,30 +5,29 @@ import com.midorlo.k12.repository.MenuRepository;
 import com.midorlo.k12.web.exception.BadRequestAlertException;
 import com.midorlo.k12.web.util.HttpHeaderUtilities;
 import com.midorlo.k12.web.util.HttpResponseUtilities;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
 /**
  * REST controller for managing {@link Menu}.
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/webapp")
 @Transactional
 public class MenuResource {
-
-    private final Logger log = LoggerFactory.getLogger(MenuResource.class);
 
     private static final String ENTITY_NAME = "menu";
 
@@ -45,7 +44,8 @@ public class MenuResource {
      * {@code POST  /menus} : Create a new menu.
      *
      * @param menu the menu to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new menu, or with status {@code 400 (Bad Request)} if the menu has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new menu, or with
+     * status {@code 400 (Bad Request)} if the menu has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/menus")
@@ -57,21 +57,23 @@ public class MenuResource {
         Menu result = menuRepository.save(menu);
         return ResponseEntity
             .created(new URI("/api/webapp/menus/" + result.getId()))
-            .headers(HttpHeaderUtilities.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HttpHeaderUtilities.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId()
+                                                                                                              .toString()))
             .body(result);
     }
 
     /**
      * {@code PUT  /menus/:id} : Updates an existing menu.
      *
-     * @param id the id of the menu to save.
+     * @param id   the id of the menu to save.
      * @param menu the menu to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated menu,
      * or with status {@code 400 (Bad Request)} if the menu is not valid,
      * or with status {@code 500 (Internal Server Error)} if the menu couldn't be updated.
      */
     @PutMapping("/menus/{id}")
-    public ResponseEntity<Menu> updateMenu(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Menu menu) {
+    public ResponseEntity<Menu> updateMenu(@PathVariable(value = "id", required = false) final Long id,
+                                           @Valid @RequestBody Menu menu) {
         log.debug("REST request to update Menu : {}, {}", id, menu);
         if (menu.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -87,14 +89,15 @@ public class MenuResource {
         Menu result = menuRepository.save(menu);
         return ResponseEntity
             .ok()
-            .headers(HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, menu.getId().toString()))
+            .headers(HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, menu.getId()
+                                                                                                          .toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /menus/:id} : Partial updates given fields of an existing menu, field will ignore if it is null
      *
-     * @param id the id of the menu to save.
+     * @param id   the id of the menu to save.
      * @param menu the menu to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated menu,
      * or with status {@code 400 (Bad Request)} if the menu is not valid,
@@ -158,7 +161,8 @@ public class MenuResource {
      * {@code GET  /menus/:id} : get the "id" menu.
      *
      * @param id the id of the menu to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the menu, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the menu, or with status {@code
+     * 404 (Not Found)}.
      */
     @GetMapping("/menus/{id}")
     public ResponseEntity<Menu> getMenu(@PathVariable Long id) {

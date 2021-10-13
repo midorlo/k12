@@ -1,11 +1,12 @@
 package com.midorlo.k12.web.rest.webapp;
 
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@SuppressWarnings({ "SameReturnValue", "MVCPathVariableInspection" })
 @Slf4j
+@SuppressWarnings({ "SameReturnValue", "MVCPathVariableInspection" })
 @Controller
 public class ClientForwardController {
 

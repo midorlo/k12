@@ -5,6 +5,7 @@ import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.service.security.exception.UserNotActivatedException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
+import org.slf4j.Logger;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

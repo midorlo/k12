@@ -3,17 +3,11 @@ package com.midorlo.k12.web.advice;
 import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.service.security.exception.UsernameAlreadyUsedException;
 import com.midorlo.k12.web.advice.model.FieldErrorVM;
-import com.midorlo.k12.web.exception.*;
+import com.midorlo.k12.web.exception.BadRequestAlertException;
+import com.midorlo.k12.web.exception.EmailAlreadyUsedException;
+import com.midorlo.k12.web.exception.InvalidPasswordException;
+import com.midorlo.k12.web.exception.LoginAlreadyUsedException;
 import com.midorlo.k12.web.util.HttpHeaderUtilities;
-import java.net.URI;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -31,6 +25,16 @@ import org.zalando.problem.*;
 import org.zalando.problem.spring.web.advice.ProblemHandling;
 import org.zalando.problem.spring.web.advice.security.SecurityAdviceTrait;
 import org.zalando.problem.violations.ConstraintViolationProblem;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Controller advice to translate the server side exceptions to client-friendly json structures.

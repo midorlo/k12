@@ -1,7 +1,5 @@
 package com.midorlo.k12.config.security;
 
-import java.util.concurrent.TimeUnit;
-
 import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.config.ApplicationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +9,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 @Profile({ ApplicationConstants.ContextConstants.SPRING_PROFILE_PRODUCTION })

@@ -1,16 +1,17 @@
 package com.midorlo.k12.config.logging;
 
-import static com.midorlo.k12.config.logging.LoggingUtils.*;
-
 import ch.qos.logback.classic.LoggerContext;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.midorlo.k12.config.ApplicationProperties;
-import java.util.HashMap;
-import java.util.Map;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.midorlo.k12.config.logging.LoggingUtils.*;
 
 /*
  * Configures the console and Logstash log appenders from the app properties

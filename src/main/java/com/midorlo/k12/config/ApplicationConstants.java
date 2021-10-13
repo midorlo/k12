@@ -10,7 +10,7 @@ import java.net.URI;
  * Reminder: These values are not environment ie dev,qa,stage specific and do not change throughout the lifecycle.
  */
 @UtilityClass
-public class ApplicationConstants {
+public final class ApplicationConstants {
 
     /**
      * Regex for acceptable logins

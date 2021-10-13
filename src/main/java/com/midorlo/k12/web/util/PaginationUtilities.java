@@ -19,7 +19,7 @@ import java.util.List;
  * and follow <a href="http://tools.ietf.org/html/rfc5988">RFC 5988 (Link header)</a>.
  */
 @UtilityClass
-public class PaginationUtilities {
+public final class PaginationUtilities {
 
     private static final String HEADER_X_TOTAL_COUNT = "X-Total-Count";
     private static final String HEADER_LINK_FORMAT   = "<{0}>; rel=\"{1}\"";

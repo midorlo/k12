@@ -1,9 +1,10 @@
 package com.midorlo.k12.service.query.filter;
 
-import java.time.LocalDate;
-import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Filter class for {@link LocalDate} type attributes.

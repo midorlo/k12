@@ -1,12 +1,12 @@
 package com.midorlo.k12.web.exception;
 
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.midorlo.k12.config.ApplicationConstants;
 import org.zalando.problem.AbstractThrowableProblem;
 import org.zalando.problem.Status;
+
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BadRequestAlertException extends AbstractThrowableProblem {
 

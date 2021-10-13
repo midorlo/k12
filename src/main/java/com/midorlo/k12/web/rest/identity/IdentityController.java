@@ -1,12 +1,12 @@
 package com.midorlo.k12.web.rest.identity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.midorlo.k12.domain.security.User;
-import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.config.security.SecurityUtils;
 import com.midorlo.k12.config.security.jwt.JwtFilterBean;
-import com.midorlo.k12.service.security.TokenProvider;
+import com.midorlo.k12.domain.security.User;
+import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.service.mail.MailService;
+import com.midorlo.k12.service.security.TokenProvider;
 import com.midorlo.k12.service.security.UserService;
 import com.midorlo.k12.service.security.dto.AdminUserDTO;
 import com.midorlo.k12.service.security.dto.PasswordChangeDTO;
@@ -16,9 +16,7 @@ import com.midorlo.k12.web.exception.LoginAlreadyUsedException;
 import com.midorlo.k12.web.rest.identity.model.KeyAndPasswordVM;
 import com.midorlo.k12.web.rest.identity.model.LoginVM;
 import com.midorlo.k12.web.rest.identity.model.ManagedUserVM;
-import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,16 +29,20 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.Optional;
+
 /**
  * REST controller for managing the current user's account.
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/identity")
 public class IdentityController {
 
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final Logger log = LoggerFactory.getLogger(IdentityController.class);
     private final UserRepository userRepository;
     private final UserService userService;
     private final MailService mailService;

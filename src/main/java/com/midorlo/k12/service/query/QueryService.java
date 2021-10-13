@@ -3,17 +3,18 @@ package com.midorlo.k12.service.query;
 import com.midorlo.k12.service.query.filter.Filter;
 import com.midorlo.k12.service.query.filter.RangeFilter;
 import com.midorlo.k12.service.query.filter.StringFilter;
-import java.util.Collection;
-import java.util.Set;
-import java.util.function.Function;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.SetJoin;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.Collection;
+import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Base service for constructing and executing complex queries.

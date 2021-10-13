@@ -2,6 +2,7 @@ package com.midorlo.k12;
 
 import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.config.ApplicationProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +19,13 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
 
+@Slf4j
 @SpringBootApplication
 @EnableJpaRepositories("com.midorlo.k12.repository")
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 @EnableConfigurationProperties({ ApplicationProperties.class })
 public class Application {
-
-    private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     private final Environment env;
 
