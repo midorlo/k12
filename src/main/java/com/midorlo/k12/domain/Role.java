@@ -40,7 +40,6 @@ public class Role implements Serializable {
     @JsonIgnoreProperties(value = { "roles" }, allowSetters = true)
     private Set<Clearance> clearances = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
     }
@@ -92,7 +91,6 @@ public class Role implements Serializable {
         this.clearances = clearances;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
