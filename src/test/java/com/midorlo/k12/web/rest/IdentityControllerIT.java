@@ -125,7 +125,7 @@ class IdentityControllerIT {
         validUser.setEmail("test-register-valid@example.com");
         validUser.setImageUrl("http://placehold.it/50x50");
         validUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        validUser.setAuthorities(Collections.singleton(ApplicationConstants.USER));
+        validUser.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.USER));
         assertThat(userRepository.findOneByLogin("test-register-valid")).isEmpty();
 
         restAccountMockMvc
@@ -149,7 +149,7 @@ class IdentityControllerIT {
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        invalidUser.setAuthorities(Collections.singleton(ApplicationConstants.USER));
+        invalidUser.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.USER));
 
         restAccountMockMvc
             .perform(
@@ -175,7 +175,7 @@ class IdentityControllerIT {
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        invalidUser.setAuthorities(Collections.singleton(ApplicationConstants.USER));
+        invalidUser.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.USER));
 
         restAccountMockMvc
             .perform(
@@ -201,7 +201,7 @@ class IdentityControllerIT {
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        invalidUser.setAuthorities(Collections.singleton(ApplicationConstants.USER));
+        invalidUser.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.USER));
 
         restAccountMockMvc
             .perform(
@@ -227,7 +227,7 @@ class IdentityControllerIT {
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        invalidUser.setAuthorities(Collections.singleton(ApplicationConstants.USER));
+        invalidUser.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.USER));
 
         restAccountMockMvc
             .perform(
@@ -253,7 +253,7 @@ class IdentityControllerIT {
         firstUser.setEmail("alice@example.com");
         firstUser.setImageUrl("http://placehold.it/50x50");
         firstUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        firstUser.setAuthorities(Collections.singleton(ApplicationConstants.USER));
+        firstUser.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.USER));
 
         // Duplicate login, different email
         ManagedUserVM secondUser = new ManagedUserVM();
@@ -313,7 +313,7 @@ class IdentityControllerIT {
         firstUser.setEmail("test-register-duplicate-email@example.com");
         firstUser.setImageUrl("http://placehold.it/50x50");
         firstUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        firstUser.setAuthorities(Collections.singleton(ApplicationConstants.USER));
+        firstUser.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.USER));
 
         // Register first user
         restAccountMockMvc
@@ -459,7 +459,7 @@ class IdentityControllerIT {
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        userDTO.setAuthorities(Collections.singleton(ApplicationConstants.ADMIN));
+        userDTO.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.ADMIN));
 
         restAccountMockMvc
             .perform(
@@ -499,7 +499,7 @@ class IdentityControllerIT {
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        userDTO.setAuthorities(Collections.singleton(ApplicationConstants.ADMIN));
+        userDTO.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.ADMIN));
 
         restAccountMockMvc
             .perform(
@@ -537,7 +537,7 @@ class IdentityControllerIT {
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        userDTO.setAuthorities(Collections.singleton(ApplicationConstants.ADMIN));
+        userDTO.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.ADMIN));
 
         restAccountMockMvc
             .perform(
@@ -569,7 +569,7 @@ class IdentityControllerIT {
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        userDTO.setAuthorities(Collections.singleton(ApplicationConstants.ADMIN));
+        userDTO.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.ADMIN));
 
         restAccountMockMvc
             .perform(

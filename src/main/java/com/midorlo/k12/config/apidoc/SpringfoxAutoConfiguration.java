@@ -1,6 +1,6 @@
 package com.midorlo.k12.config.apidoc;
 
-import static com.midorlo.k12.config.ApplicationConstants.SPRING_PROFILE_API_DOCS;
+import static com.midorlo.k12.config.ApplicationConstants.ContextConstants.SPRING_PROFILE_API_DOCS;
 import static springfox.documentation.builders.PathSelectors.regex;
 
 import com.midorlo.k12.config.ApplicationProperties;

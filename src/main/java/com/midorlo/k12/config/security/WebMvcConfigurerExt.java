@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@Profile({ ApplicationConstants.SPRING_PROFILE_PRODUCTION })
+@Profile({ ApplicationConstants.ContextConstants.SPRING_PROFILE_PRODUCTION })
 public class WebMvcConfigurerExt implements WebMvcConfigurer {
 
     protected static final String[] RESOURCE_LOCATIONS = new String[] {

@@ -169,7 +169,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     public ProblemBuilder prepare(@NonNull final Throwable throwable, @NonNull final StatusType status, @NonNull final URI type) {
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
 
-        if (activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_PRODUCTION)) {
+        if (activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_PRODUCTION)) {
             if (throwable instanceof HttpMessageConversionException) {
                 return Problem
                     .builder()

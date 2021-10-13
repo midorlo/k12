@@ -50,20 +50,20 @@ class WebConfigurerTest {
 
     @Test
     void shouldStartUpProdServletContext() {
-        env.setActiveProfiles(ApplicationConstants.SPRING_PROFILE_PRODUCTION);
+        env.setActiveProfiles(ApplicationConstants.ContextConstants.SPRING_PROFILE_PRODUCTION);
 
         assertThatCode(() -> webConfigurer.onStartup(servletContext)).doesNotThrowAnyException();
     }
 
     @Test
     void shouldStartUpDevServletContext() {
-        env.setActiveProfiles(ApplicationConstants.SPRING_PROFILE_DEVELOPMENT);
+        env.setActiveProfiles(ApplicationConstants.ContextConstants.SPRING_PROFILE_DEVELOPMENT);
         assertThatCode(() -> webConfigurer.onStartup(servletContext)).doesNotThrowAnyException();
     }
 
     @Test
     void shouldCustomizeServletContainer() {
-        env.setActiveProfiles(ApplicationConstants.SPRING_PROFILE_PRODUCTION);
+        env.setActiveProfiles(ApplicationConstants.ContextConstants.SPRING_PROFILE_PRODUCTION);
         UndertowServletWebServerFactory container = new UndertowServletWebServerFactory();
         webConfigurer.customize(container);
         assertThat(container.getMimeMappings().get("abs")).isEqualTo("audio/x-mpeg");

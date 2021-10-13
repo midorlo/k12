@@ -43,8 +43,8 @@ public class Application {
     public void initApplication() {
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
         if (
-            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_DEVELOPMENT) &&
-            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_PRODUCTION)
+                activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_DEVELOPMENT) &&
+                activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_PRODUCTION)
         ) {
             log.error(
                 "You have misconfigured your application! It should not run " + "with both the 'dev' and 'prod' " +
@@ -52,8 +52,8 @@ public class Application {
             );
         }
         if (
-            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_DEVELOPMENT) &&
-            activeProfiles.contains(ApplicationConstants.SPRING_PROFILE_CLOUD)
+                activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_DEVELOPMENT) &&
+                activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_CLOUD)
         ) {
             log.error(
                 "You have misconfigured your application! It should not " + "run with both the 'dev' and 'cloud' " +
@@ -120,7 +120,7 @@ public class Application {
          * This cannot be set in the application.yml file.
          * See https://github.com/spring-projects/spring-boot/issues/1219
          */
-        defProperties.put(SPRING_PROFILE_DEFAULT, ApplicationConstants.SPRING_PROFILE_DEVELOPMENT);
+        defProperties.put(SPRING_PROFILE_DEFAULT, ApplicationConstants.ContextConstants.SPRING_PROFILE_DEVELOPMENT);
         app.setDefaultProperties(defProperties);
     }
 }

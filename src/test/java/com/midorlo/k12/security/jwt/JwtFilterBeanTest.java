@@ -44,7 +44,7 @@ class JwtFilterBeanTest {
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
             "test-user",
             "test-password",
-            Collections.singletonList(new SimpleGrantedAuthority(ApplicationConstants.USER))
+            Collections.singletonList(new SimpleGrantedAuthority(ApplicationConstants.SecurityConstants.USER))
         );
         String jwt = tokenProvider.createToken(authentication, false);
         MockHttpServletRequest request = new MockHttpServletRequest();
@@ -99,7 +99,7 @@ class JwtFilterBeanTest {
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
             "test-user",
             "test-password",
-            Collections.singletonList(new SimpleGrantedAuthority(ApplicationConstants.USER))
+            Collections.singletonList(new SimpleGrantedAuthority(ApplicationConstants.SecurityConstants.USER))
         );
         String jwt = tokenProvider.createToken(authentication, false);
         MockHttpServletRequest request = new MockHttpServletRequest();

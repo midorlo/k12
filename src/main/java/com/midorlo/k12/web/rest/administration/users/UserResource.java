@@ -105,7 +105,7 @@ public class UserResource {
      * @throws BadRequestAlertException {@code 400 (Bad Request)} if the login or email is already in use.
      */
     @PostMapping("/users")
-    @PreAuthorize("hasAuthority(\"" + ApplicationConstants.ADMIN + "\")")
+    @PreAuthorize("hasAuthority(\"" + ApplicationConstants.SecurityConstants.ADMIN + "\")")
     public ResponseEntity<User> createUser(@Valid @RequestBody AdminUserDTO userDTO) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
 
@@ -137,7 +137,7 @@ public class UserResource {
      * @throws LoginAlreadyUsedException {@code 400 (Bad Request)} if the login is already in use.
      */
     @PutMapping("/users")
-    @PreAuthorize("hasAuthority(\"" + ApplicationConstants.ADMIN + "\")")
+    @PreAuthorize("hasAuthority(\"" + ApplicationConstants.SecurityConstants.ADMIN + "\")")
     public ResponseEntity<AdminUserDTO> updateUser(@Valid @RequestBody AdminUserDTO userDTO) {
         log.debug("REST request to update User : {}", userDTO);
         Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
@@ -165,7 +165,7 @@ public class UserResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
      */
     @GetMapping("/users")
-    @PreAuthorize("hasAuthority(\"" + ApplicationConstants.ADMIN + "\")")
+    @PreAuthorize("hasAuthority(\"" + ApplicationConstants.SecurityConstants.ADMIN + "\")")
     public ResponseEntity<List<AdminUserDTO>> getAllUsers(Pageable pageable) {
         log.debug("REST request to get all User for an admin");
         if (!onlyContainsAllowedProperties(pageable)) {
@@ -189,7 +189,7 @@ public class UserResource {
      * {@code 404 (Not Found)}.
      */
     @GetMapping("/users/{login}")
-    @PreAuthorize("hasAuthority(\"" + ApplicationConstants.ADMIN + "\")")
+    @PreAuthorize("hasAuthority(\"" + ApplicationConstants.SecurityConstants.ADMIN + "\")")
     public ResponseEntity<AdminUserDTO> getUser(@PathVariable @Pattern(regexp = ApplicationConstants.LOGIN_REGEX) String login) {
         log.debug("REST request to get User : {}", login);
         AdminUserDTO adminUserDTO = userService
@@ -206,7 +206,7 @@ public class UserResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/users/{login}")
-    @PreAuthorize("hasAuthority(\"" + ApplicationConstants.ADMIN + "\")")
+    @PreAuthorize("hasAuthority(\"" + ApplicationConstants.SecurityConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteUser(@PathVariable @Pattern(regexp = ApplicationConstants.LOGIN_REGEX) String login) {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);
