@@ -3,6 +3,8 @@ package com.midorlo.k12.web.exception;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.midorlo.k12.config.ApplicationConstants;
 import org.zalando.problem.AbstractThrowableProblem;
 import org.zalando.problem.Status;
 
@@ -15,7 +17,7 @@ public class BadRequestAlertException extends AbstractThrowableProblem {
     private final String errorKey;
 
     public BadRequestAlertException(String defaultMessage, String entityName, String errorKey) {
-        this(ErrorConstants.DEFAULT_TYPE, defaultMessage, entityName, errorKey);
+        this(ApplicationConstants.ErrorConstants.DEFAULT_TYPE, defaultMessage, entityName, errorKey);
     }
 
     public BadRequestAlertException(URI type, String defaultMessage, String entityName, String errorKey) {

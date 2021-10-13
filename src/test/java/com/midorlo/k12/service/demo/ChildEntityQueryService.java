@@ -1,7 +1,7 @@
 //package com.midorlo.k12.service.demo;
 //
-//import com.midorlo.k12.service.QueryService;
-//import com.midorlo.k12.service.filter.LongFilter;
+//import com.midorlo.k12.service.query.QueryService;
+//import com.midorlo.k12.service.query.filter.LongFilter;
 //import org.springframework.data.jpa.domain.Specification;
 //
 ///**

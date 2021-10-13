@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.midorlo.k12.service.query.filter.Filter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -69,7 +71,7 @@ class FilterTest {
 
     @Test
     void testSetIn() {
-        List<Object> list = new LinkedList<>();
+        List<Object>   list  = new LinkedList<>();
         Filter<Object> chain = filter.setIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getIn()).isEqualTo(list);

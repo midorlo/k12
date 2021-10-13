@@ -6,12 +6,14 @@ import static org.mockito.Mockito.when;
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
-import com.midorlo.k12.security.RandomUtil;
+import com.midorlo.k12.service.security.RandomUtil;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+
+import com.midorlo.k12.service.security.UserService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

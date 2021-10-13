@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+
+import com.midorlo.k12.service.query.filter.Filter;
+import com.midorlo.k12.service.query.filter.UUIDFilter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

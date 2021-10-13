@@ -6,6 +6,9 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.midorlo.k12.service.query.filter.Filter;
+import com.midorlo.k12.service.query.filter.InstantFilter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -73,7 +76,7 @@ class InstantFilterTest {
 
     @Test
     void testSetIn() {
-        List<Instant> list = new LinkedList<>();
+        List<Instant>   list  = new LinkedList<>();
         Filter<Instant> chain = filter.setIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getIn()).isEqualTo(list);

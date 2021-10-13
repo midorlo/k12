@@ -2,8 +2,9 @@ package com.midorlo.k12.security.jwt;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.config.ApplicationProperties;
-import com.midorlo.k12.security.AuthoritiesConstants;
+import com.midorlo.k12.service.security.TokenProvider;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -23,7 +24,7 @@ class TokenProviderTest {
 
     private static final long ONE_MINUTE = 60000;
 
-    private Key key;
+    private Key           key;
     private TokenProvider tokenProvider;
 
     @BeforeEach
@@ -109,7 +110,7 @@ class TokenProviderTest {
 
     private Authentication createAuthentication() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
+        authorities.add(new SimpleGrantedAuthority(ApplicationConstants.ANONYMOUS));
         return new UsernamePasswordAuthenticationToken("anonymous", "anonymous", authorities);
     }
 

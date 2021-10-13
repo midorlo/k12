@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.midorlo.k12.service.query.filter.BigDecimalFilter;
+import com.midorlo.k12.service.query.filter.Filter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -3,12 +3,14 @@ package com.midorlo.k12.service.mapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.midorlo.k12.domain.security.User;
-import com.midorlo.k12.service.dto.AdminUserDTO;
-import com.midorlo.k12.service.dto.UserDTO;
+import com.midorlo.k12.service.security.dto.AdminUserDTO;
+import com.midorlo.k12.service.security.dto.UserDTO;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import com.midorlo.k12.service.security.mapper.UserMapper;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

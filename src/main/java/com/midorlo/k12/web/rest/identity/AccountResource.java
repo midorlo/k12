@@ -3,13 +3,13 @@ package com.midorlo.k12.web.rest.identity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
-import com.midorlo.k12.security.SecurityUtils;
-import com.midorlo.k12.security.jwt.JWTFilter;
-import com.midorlo.k12.security.jwt.TokenProvider;
-import com.midorlo.k12.service.MailService;
-import com.midorlo.k12.service.UserService;
-import com.midorlo.k12.service.dto.AdminUserDTO;
-import com.midorlo.k12.service.dto.PasswordChangeDTO;
+import com.midorlo.k12.config.security.SecurityUtils;
+import com.midorlo.k12.config.security.jwt.JwtFilterBean;
+import com.midorlo.k12.service.security.TokenProvider;
+import com.midorlo.k12.service.mail.MailService;
+import com.midorlo.k12.service.security.UserService;
+import com.midorlo.k12.service.security.dto.AdminUserDTO;
+import com.midorlo.k12.service.security.dto.PasswordChangeDTO;
 import com.midorlo.k12.web.exception.EmailAlreadyUsedException;
 import com.midorlo.k12.web.exception.InvalidPasswordException;
 import com.midorlo.k12.web.exception.LoginAlreadyUsedException;
@@ -214,7 +214,7 @@ public class AccountResource {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.createToken(authentication, loginVM.isRememberMe());
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        httpHeaders.add(JwtFilterBean.AUTHORIZATION_HEADER, "Bearer " + jwt);
         return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
     }
 

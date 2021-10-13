@@ -1,5 +1,7 @@
 package com.midorlo.k12.config;
 
+import java.net.URI;
+
 /**
  * Application constants.
  *
@@ -68,4 +70,21 @@ public class ApplicationConstants {
                                                              "'none'; microphone 'none'; camera 'none'; " +
                                                              "magnetometer 'none'; gyroscope 'none'; " +
                                                              "fullscreen 'self'; payment 'none'";
+    public static final String ADMIN = "ROLE_ADMIN";
+    public static final String USER      = "ROLE_USER";
+    public static final String ANONYMOUS = "ROLE_ANONYMOUS";
+
+    public static final class ErrorConstants {
+
+        public static final String ERR_CONCURRENCY_FAILURE   = "error.concurrencyFailure";
+        public static final String ERR_VALIDATION            = "error.validation";
+        public static final String PROBLEM_BASE_URL          = "https://www.application.tld/problem";
+        public static final URI    DEFAULT_TYPE              = URI.create(PROBLEM_BASE_URL + "/problem-with-message");
+        public static final URI    CONSTRAINT_VIOLATION_TYPE = URI.create(PROBLEM_BASE_URL + "/constraint-violation");
+        public static final URI    INVALID_PASSWORD_TYPE     = URI.create(PROBLEM_BASE_URL + "/invalid-password");
+        public static final URI    EMAIL_ALREADY_USED_TYPE   = URI.create(PROBLEM_BASE_URL + "/email-already-used");
+        public static final URI    LOGIN_ALREADY_USED_TYPE   = URI.create(PROBLEM_BASE_URL + "/login-already-used");
+
+        private ErrorConstants() {}
+    }
 }

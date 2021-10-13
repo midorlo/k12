@@ -1,7 +1,7 @@
 package com.midorlo.k12.web.rest;
 
-import com.midorlo.k12.service.UserService;
-import com.midorlo.k12.service.dto.UserDTO;
+import com.midorlo.k12.service.security.UserService;
+import com.midorlo.k12.service.security.dto.UserDTO;
 import com.midorlo.k12.web.util.PaginationUtil;
 import java.util.List;
 import org.slf4j.Logger;

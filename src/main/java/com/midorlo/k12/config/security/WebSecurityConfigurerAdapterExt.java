@@ -2,9 +2,8 @@ package com.midorlo.k12.config.security;
 
 import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.config.ApplicationProperties;
-import com.midorlo.k12.security.AuthoritiesConstants;
-import com.midorlo.k12.security.jwt.JWTConfigurer;
-import com.midorlo.k12.security.jwt.TokenProvider;
+import com.midorlo.k12.config.security.jwt.JwtSecurityConfigurerAdapter;
+import com.midorlo.k12.service.security.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -86,13 +85,13 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/identity/account/reset-password/init").permitAll()
             .antMatchers("/api/identity/account/reset-password/finish").permitAll()
-            .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/admin/**").hasAuthority(ApplicationConstants.ADMIN)
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/health/**").permitAll()
             .antMatchers("/management/info").permitAll()
             .antMatchers("/management/prometheus").permitAll()
-            .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/management/**").hasAuthority(ApplicationConstants.ADMIN)
             .and()
             .httpBasic()
             .and()
@@ -100,7 +99,7 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
         // @formatter:on
     }
 
-    private JWTConfigurer securityConfigurerAdapter() {
-        return new JWTConfigurer(tokenProvider);
+    private JwtSecurityConfigurerAdapter securityConfigurerAdapter() {
+        return new JwtSecurityConfigurerAdapter(tokenProvider);
     }
 }

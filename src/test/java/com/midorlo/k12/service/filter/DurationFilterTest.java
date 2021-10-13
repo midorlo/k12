@@ -6,6 +6,9 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.midorlo.k12.service.query.filter.DurationFilter;
+import com.midorlo.k12.service.query.filter.Filter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
