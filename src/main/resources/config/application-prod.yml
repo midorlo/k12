@@ -38,9 +38,6 @@ spring:
       auto-commit: false
   jpa:
     database-platform: com.midorlo.k12.domain.util.FixedPostgreSQL10Dialect
-  # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
-  liquibase:
-    contexts: prod
   mail:
     host: localhost
     port: 25

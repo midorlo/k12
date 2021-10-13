@@ -28,7 +28,6 @@
 //@SpringBootTest(
 //    classes = SpringfoxAutoconfigurationTest.TestApp.class,
 //    properties = {
-//        "spring.liquibase.enabled=false",
 //        "security.basic.enabled=false",
 //        "application.api-docs.default-include-pattern=/scanned/.*",
 //        "application.api-docs.host=test.application.com",

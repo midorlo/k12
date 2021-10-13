@@ -44,11 +44,6 @@ public class ApplicationConstants {
      */
     public static final String SPRING_PROFILE_API_DOCS     = "api-docs";
     /**
-     * Spring profile used to disable running liquibase
-     * Constant <code>SPRING_PROFILE_NO_LIQUIBASE="no-liquibase"</code>
-     */
-    public static final String SPRING_PROFILE_NO_LIQUIBASE = "no-liquibase";
-    /**
      * Spring profile used when deploying to Kubernetes and OpenShift
      * Constant <code>SPRING_PROFILE_K8S="k8s"</code>
      */
