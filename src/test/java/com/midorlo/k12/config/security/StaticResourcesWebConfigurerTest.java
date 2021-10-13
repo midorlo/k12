@@ -1,10 +1,12 @@
-package com.midorlo.k12.config;
+package com.midorlo.k12.config.security;
 
-import static com.midorlo.k12.config.StaticResourcesWebConfiguration.*;
+import static com.midorlo.k12.config.security.StaticResourcesWebConfiguration.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 import java.util.concurrent.TimeUnit;
+
+import com.midorlo.k12.config.ApplicationProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.CacheControl;
@@ -15,12 +17,12 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 
 class StaticResourcesWebConfigurerTest {
 
-    public static final int MAX_AGE_TEST = 5;
-    public StaticResourcesWebConfiguration staticResourcesWebConfiguration;
-    private ResourceHandlerRegistry resourceHandlerRegistry;
+    public static final int                             MAX_AGE_TEST = 5;
+    public              StaticResourcesWebConfiguration staticResourcesWebConfiguration;
+    private             ResourceHandlerRegistry         resourceHandlerRegistry;
     private MockServletContext servletContext;
-    private WebApplicationContext applicationContext;
-    private ApplicationProperties props;
+    private             WebApplicationContext           applicationContext;
+    private             ApplicationProperties           props;
 
     @BeforeEach
     void setUp() {

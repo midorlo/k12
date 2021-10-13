@@ -1,4 +1,4 @@
-package com.midorlo.k12.async;
+package com.midorlo.k12.config.async;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
@@ -14,7 +14,7 @@ import org.springframework.lang.NonNull;
  */
 public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, InitializingBean, DisposableBean {
 
-    static final String EXCEPTION_MESSAGE = "Caught async exception";
+    public static final String EXCEPTION_MESSAGE = "Caught async exception";
 
     private final Logger log = LoggerFactory.getLogger(ExceptionHandlingAsyncTaskExecutor.class);
 

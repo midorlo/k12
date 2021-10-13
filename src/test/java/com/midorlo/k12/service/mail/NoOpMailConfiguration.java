@@ -1,4 +1,4 @@
-package com.midorlo.k12.config;
+package com.midorlo.k12.service.mail;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;

@@ -1,4 +1,4 @@
-package com.midorlo.k12.async;
+package com.midorlo.k12.config.async;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,9 +27,9 @@ class ExceptionHandlingAsyncTaskExecutorTest {
 
     private boolean done;
     private Exception handled;
-    private MockAsyncTaskExecutor task;
+    private MockAsyncTaskExecutor              task;
     private ExceptionHandlingAsyncTaskExecutor executor;
-    private LogbackRecorder recorder;
+    private LogbackRecorder                    recorder;
 
     @BeforeEach
     void setup() {

@@ -1,6 +1,9 @@
-package com.midorlo.k12.config;
+package com.midorlo.k12.config.security;
 
 import java.util.concurrent.TimeUnit;
+
+import com.midorlo.k12.config.ApplicationConstants;
+import com.midorlo.k12.config.ApplicationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.CacheControl;
@@ -18,7 +21,7 @@ public class StaticResourcesWebConfiguration implements WebMvcConfigurer {
         "classpath:/static/content/",
         "classpath:/static/i18n/",
     };
-    protected static final String[] RESOURCE_PATHS = new String[] {
+    public static final    String[] RESOURCE_PATHS     = new String[] {
         "/*.js",
         "/*.css",
         "/*.svg",
@@ -44,11 +47,11 @@ public class StaticResourcesWebConfiguration implements WebMvcConfigurer {
         return registry.addResourceHandler(RESOURCE_PATHS);
     }
 
-    protected void initializeResourceHandler(ResourceHandlerRegistration resourceHandlerRegistration) {
+    public void initializeResourceHandler(ResourceHandlerRegistration resourceHandlerRegistration) {
         resourceHandlerRegistration.addResourceLocations(RESOURCE_LOCATIONS).setCacheControl(getCacheControl());
     }
 
-    protected CacheControl getCacheControl() {
+    public CacheControl getCacheControl() {
         return CacheControl.maxAge(getApplicationHttpCacheProperty(), TimeUnit.DAYS).cachePublic();
     }
 

@@ -1,4 +1,4 @@
-package com.midorlo.k12.config;
+package com.midorlo.k12.config.security;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

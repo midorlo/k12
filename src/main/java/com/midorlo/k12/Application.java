@@ -2,7 +2,6 @@ package com.midorlo.k12;
 
 import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.config.ApplicationProperties;
-import com.midorlo.k12.config.util.DefaultProfileUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.annotation.PostConstruct;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 
 @SpringBootApplication
 @EnableJpaRepositories("com.midorlo.k12.repository")
@@ -72,7 +69,7 @@ public class Application {
      */
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(Application.class);
-        DefaultProfileUtil.addDefaultProfile(app);
+        addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
         logApplicationStartup(env);
     }
@@ -107,5 +104,23 @@ public class Application {
             contextPath,
             env.getActiveProfiles().length == 0 ? env.getDefaultProfiles() : env.getActiveProfiles()
         );
+    }
+
+    private static final String SPRING_PROFILE_DEFAULT = "spring.profiles.default";
+
+    /**
+     * Set a default to use when no profile is configured.
+     *
+     * @param app the Spring application.
+     */
+    public static void addDefaultProfile(SpringApplication app) {
+        Map<String, Object> defProperties = new HashMap<>();
+        /*
+         * The default profile to use when no other profiles are defined
+         * This cannot be set in the application.yml file.
+         * See https://github.com/spring-projects/spring-boot/issues/1219
+         */
+        defProperties.put(SPRING_PROFILE_DEFAULT, ApplicationConstants.SPRING_PROFILE_DEVELOPMENT);
+        app.setDefaultProperties(defProperties);
     }
 }

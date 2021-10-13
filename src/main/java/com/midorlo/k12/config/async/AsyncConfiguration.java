@@ -1,6 +1,5 @@
 package com.midorlo.k12.config.async;
 
-import com.midorlo.k12.async.ExceptionHandlingAsyncTaskExecutor;
 import java.util.concurrent.Executor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

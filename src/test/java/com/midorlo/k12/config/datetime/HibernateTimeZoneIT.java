@@ -1,4 +1,4 @@
-package com.midorlo.k12.config.timezone;
+package com.midorlo.k12.config.datetime;
 
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;

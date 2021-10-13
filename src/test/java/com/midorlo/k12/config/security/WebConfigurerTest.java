@@ -1,4 +1,4 @@
-package com.midorlo.k12.config;
+package com.midorlo.k12.config.security;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -8,7 +8,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.midorlo.k12.config.security.WebConfigurer;
+import com.midorlo.k12.config.ApplicationConstants;
+import com.midorlo.k12.config.ApplicationProperties;
+
 import java.io.File;
 import java.util.*;
 import javax.servlet.*;
