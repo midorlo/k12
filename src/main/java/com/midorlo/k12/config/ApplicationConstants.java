@@ -66,4 +66,11 @@ public class ApplicationConstants {
      * Global system language.
      */
     public static final String DEFAULT_LANGUAGE            = "de";
+    /**
+     * Http feature policy config.
+     */
+    public static final String PERMISSIONS_POLICY_CONFIG   = "geolocation 'none'; midi 'none'; sync-xhr " +
+                                                             "'none'; microphone 'none'; camera 'none'; " +
+                                                             "magnetometer 'none'; gyroscope 'none'; " +
+                                                             "fullscreen 'self'; payment 'none'";
 }

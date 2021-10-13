@@ -1,8 +1,10 @@
 package com.midorlo.k12.config.security;
 
+import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.config.ApplicationProperties;
-import com.midorlo.k12.security.*;
-import com.midorlo.k12.security.jwt.*;
+import com.midorlo.k12.security.AuthoritiesConstants;
+import com.midorlo.k12.security.jwt.JWTConfigurer;
+import com.midorlo.k12.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -24,22 +26,18 @@ import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 @Import(SecurityProblemSupport.class)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final ApplicationProperties applicationProperties;
-
-    private final TokenProvider tokenProvider;
-
-    private final CorsFilter corsFilter;
+    private final ApplicationProperties  applicationProperties;
+    private final TokenProvider          tokenProvider;
+    private final CorsFilter             corsFilter;
     private final SecurityProblemSupport problemSupport;
 
-    public SecurityConfiguration(
-        TokenProvider tokenProvider,
-        CorsFilter corsFilter,
-        ApplicationProperties applicationProperties,
-        SecurityProblemSupport problemSupport
-    ) {
-        this.tokenProvider = tokenProvider;
-        this.corsFilter = corsFilter;
-        this.problemSupport = problemSupport;
+    public SecurityConfiguration(TokenProvider tokenProvider,
+                                 CorsFilter corsFilter,
+                                 ApplicationProperties applicationProperties,
+                                 SecurityProblemSupport problemSupport) {
+        this.tokenProvider         = tokenProvider;
+        this.corsFilter            = corsFilter;
+        this.problemSupport        = problemSupport;
         this.applicationProperties = applicationProperties;
     }
 
@@ -50,41 +48,39 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web
-            .ignoring()
-            .antMatchers(HttpMethod.OPTIONS, "/**")
-            .antMatchers("/app/**/*.{js,html}")
-            .antMatchers("/i18n/**")
-            .antMatchers("/content/**")
-            .antMatchers("/h2-console/**")
-            .antMatchers("/swagger-ui/**")
-            .antMatchers("/test/**");
+        web.ignoring()
+           .antMatchers(HttpMethod.OPTIONS, "/**")
+           .antMatchers("/app/**/*.{js,html}")
+           .antMatchers("/i18n/**")
+           .antMatchers("/content/**")
+           .antMatchers("/h2-console/**")
+           .antMatchers("/swagger-ui/**")
+           .antMatchers("/test/**");
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http
+            .headers(h -> h.permissionsPolicy(p -> p.policy(ApplicationConstants.PERMISSIONS_POLICY_CONFIG)))
             .csrf()
             .disable()
             .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
             .exceptionHandling()
-                .authenticationEntryPoint(problemSupport)
-                .accessDeniedHandler(problemSupport)
-        .and()
+            .authenticationEntryPoint(problemSupport)
+            .accessDeniedHandler(problemSupport)
+            .and()
             .headers()
             .contentSecurityPolicy(applicationProperties.getSecurity().getContentSecurityPolicy())
-        .and()
+            .and()
             .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
-        .and()
-            .featurePolicy("geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'self'; payment 'none'")
-        .and()
+            .and()
             .frameOptions()
             .deny()
-        .and()
+            .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
+            .and()
             .authorizeRequests()
             .antMatchers("/api/identity/**").permitAll()
             .antMatchers("/api/webapp/**").permitAll()
@@ -98,9 +94,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/management/info").permitAll()
             .antMatchers("/management/prometheus").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-        .and()
+            .and()
             .httpBasic()
-        .and()
+            .and()
             .apply(securityConfigurerAdapter());
         // @formatter:on
     }
