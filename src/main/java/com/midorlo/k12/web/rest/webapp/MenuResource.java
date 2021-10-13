@@ -1,6 +1,6 @@
 package com.midorlo.k12.web.rest.webapp;
 
-import com.midorlo.k12.domain.Menu;
+import com.midorlo.k12.domain.webapp.Menu;
 import com.midorlo.k12.repository.MenuRepository;
 import com.midorlo.k12.web.exception.BadRequestAlertException;
 import com.midorlo.k12.web.util.HeaderUtil;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * REST controller for managing {@link com.midorlo.k12.domain.Menu}.
+ * REST controller for managing {@link Menu}.
  */
 @RestController
 @RequestMapping("/api/webapp")

@@ -29,19 +29,19 @@ public class CachingHttpHeadersFilter implements Filter {
         this.applicationProperties = applicationProperties;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void init(FilterConfig filterConfig) {
         cacheTimeToLive = TimeUnit.DAYS.toMillis(applicationProperties.getHttp().getCache().getTimeToLiveInDays());
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void destroy() {
         // Nothing to destroy
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse httpResponse = (HttpServletResponse) response;

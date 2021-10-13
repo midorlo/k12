@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.midorlo.k12.IntegrationTest;
-import com.midorlo.k12.domain.Clearance;
+import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.repository.ClearanceRepository;
 import java.util.List;
 import java.util.Random;

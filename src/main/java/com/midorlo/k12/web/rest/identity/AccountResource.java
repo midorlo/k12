@@ -1,7 +1,7 @@
 package com.midorlo.k12.web.rest.identity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.midorlo.k12.domain.User;
+import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.security.SecurityUtils;
 import com.midorlo.k12.security.jwt.JWTFilter;

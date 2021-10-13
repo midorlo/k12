@@ -40,7 +40,7 @@ public class LoggingAspect {
     }
 
     /**
-     * Pointcut that matches all Spring beans in the application's main packages.
+     * Pointcut that matches all Spring init in the application's main packages.
      */
     @Pointcut(
         "within(com.midorlo.k12.repository..*)" + " || within(com.midorlo.k12.service..*)" + " || within(com.midorlo.k12.web.rest..*)"

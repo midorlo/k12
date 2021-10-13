@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
  */
 public class AjaxLogoutSuccessHandler extends AbstractAuthenticationTargetUrlRequestHandler implements LogoutSuccessHandler {
 
-    /** {@inheritDoc} */
+
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         response.setStatus(HttpServletResponse.SC_OK);

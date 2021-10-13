@@ -1,4 +1,4 @@
-package com.midorlo.k12.domain;
+package com.midorlo.k12.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 

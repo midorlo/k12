@@ -1,4 +1,4 @@
-package com.midorlo.k12.domain.util;
+package com.midorlo.k12.config.database;
 
 import java.time.*;
 import java.util.Date;

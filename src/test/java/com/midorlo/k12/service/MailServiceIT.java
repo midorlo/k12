@@ -7,7 +7,7 @@ import static org.mockito.Mockito.*;
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.config.ApplicationProperties;
-import com.midorlo.k12.domain.User;
+import com.midorlo.k12.domain.security.User;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;

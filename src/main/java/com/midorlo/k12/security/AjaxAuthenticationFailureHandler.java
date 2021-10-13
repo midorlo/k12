@@ -14,7 +14,7 @@ public class AjaxAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
     /** Constant <code>UNAUTHORIZED_MESSAGE="Authentication failed"</code> */
     public static final String UNAUTHORIZED_MESSAGE = "Authentication failed";
 
-    /** {@inheritDoc} */
+
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
         throws IOException {

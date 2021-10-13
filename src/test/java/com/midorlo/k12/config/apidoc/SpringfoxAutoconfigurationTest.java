@@ -1,7 +1,7 @@
 //package com.midorlo.k12.config.apidoc;
 //
 //import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.init.factory.annotation.Autowired;
 //import org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration;
 //import org.springframework.boot.autoconfigure.SpringBootApplication;
 //import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;

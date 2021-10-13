@@ -1,4 +1,4 @@
-package com.midorlo.k12.domain.util;
+package com.midorlo.k12.config.database;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,6 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import com.midorlo.k12.config.database.FixedPostgreSQL10Dialect;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.type.descriptor.sql.BinaryTypeDescriptor;
 import org.hibernate.type.descriptor.sql.BlobTypeDescriptor;
@@ -17,13 +19,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class FixedPostgreSQL82DialectTest {
+class FixedPostgreSQL10DialectTest {
 
     private final List<LogbackRecorder> recorders = new LinkedList<>();
 
     private final Map<Integer, String> registered = new LinkedHashMap<>();
 
-    private FixedPostgreSQL82Dialect dialect;
+    private FixedPostgreSQL10Dialect dialect;
 
     @BeforeEach
     void setup() {
@@ -31,7 +33,7 @@ class FixedPostgreSQL82DialectTest {
         recorders.add(LogbackRecorder.forClass(Dialect.class).reset().capture("ALL"));
 
         dialect =
-            new FixedPostgreSQL82Dialect() {
+            new FixedPostgreSQL10Dialect() {
                 @Override
                 protected void registerColumnType(int code, String name) {
                     registered.put(code, name);

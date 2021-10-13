@@ -1,6 +1,6 @@
 package com.midorlo.k12.security;
 
-import com.midorlo.k12.domain.User;
+import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 import java.util.List;
 import java.util.Locale;

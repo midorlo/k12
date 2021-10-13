@@ -10,7 +10,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
  */
 public class AjaxAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    /** {@inheritDoc} */
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         response.setStatus(HttpServletResponse.SC_OK);

@@ -1,6 +1,6 @@
 package com.midorlo.k12.repository;
 
-import com.midorlo.k12.domain.User;
+import com.midorlo.k12.domain.security.User;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;

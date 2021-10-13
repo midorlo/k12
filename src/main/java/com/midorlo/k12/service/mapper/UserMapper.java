@@ -1,7 +1,7 @@
 package com.midorlo.k12.service.mapper;
 
-import com.midorlo.k12.domain.Authority;
-import com.midorlo.k12.domain.User;
+import com.midorlo.k12.domain.security.Authority;
+import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.service.dto.AdminUserDTO;
 import com.midorlo.k12.service.dto.UserDTO;
 import java.util.*;

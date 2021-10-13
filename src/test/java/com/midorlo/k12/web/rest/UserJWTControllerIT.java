@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.midorlo.k12.IntegrationTest;
-import com.midorlo.k12.domain.User;
+import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.web.rest.vm.LoginVM;
 import org.junit.jupiter.api.Test;

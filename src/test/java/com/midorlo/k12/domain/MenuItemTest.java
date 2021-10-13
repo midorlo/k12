@@ -2,6 +2,7 @@ package com.midorlo.k12.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.midorlo.k12.domain.webapp.MenuItem;
 import com.midorlo.k12.web.rest.TestUtil;
 import org.junit.jupiter.api.Test;
 

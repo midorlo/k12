@@ -34,7 +34,7 @@ public class PrefixedSimpleKey implements Serializable {
         this.hashCode = 31 * this.hashCode + Arrays.deepHashCode(this.params);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public boolean equals(Object other) {
         return (
@@ -48,13 +48,13 @@ public class PrefixedSimpleKey implements Serializable {
         );
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public final int hashCode() {
         return this.hashCode;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String toString() {
         return (

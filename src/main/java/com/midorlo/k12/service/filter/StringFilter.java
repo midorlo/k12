@@ -39,7 +39,7 @@ public class StringFilter extends Filter<String> {
         this.doesNotContain = filter.doesNotContain;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public StringFilter copy() {
         return new StringFilter(this);
@@ -85,7 +85,7 @@ public class StringFilter extends Filter<String> {
         return this;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -101,13 +101,13 @@ public class StringFilter extends Filter<String> {
         return Objects.equals(contains, that.contains) && Objects.equals(doesNotContain, that.doesNotContain);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), contains, doesNotContain);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String toString() {
         return (

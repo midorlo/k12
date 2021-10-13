@@ -1,4 +1,4 @@
-package com.midorlo.k12.domain;
+package com.midorlo.k12.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.midorlo.k12.config.ApplicationConstants;
@@ -12,6 +12,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import com.midorlo.k12.domain.AbstractAuditingEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;

@@ -1,10 +1,7 @@
 
-  ${AnsiColor.GREEN}      ██╗${AnsiColor.RED} ████████╗ ████████╗ ████████╗
-  ${AnsiColor.GREEN}      ██║${AnsiColor.RED} ██║   ██║ ██╔═══██╗ ██╔═══██╗
-  ${AnsiColor.GREEN}      ██║${AnsiColor.RED} ████████║ ███████╔╝ ███████╔╝
-  ${AnsiColor.GREEN}██╗   ██║${AnsiColor.RED} ██╔═══██║ ██╔════╝  ██╔════╝
-  ${AnsiColor.GREEN}╚██████╔╝${AnsiColor.RED} ██║   ██║ ██║       ██║
-  ${AnsiColor.GREEN} ╚═════╝ ${AnsiColor.RED} ╚═╝   ╚═╝ ╚═╝       ╚═╝
+   / \__
+  (    @\___    ${AnsiColor.BRIGHT_CYAN}:: Starting up K9 :: on Spring Boot ${spring-boot.version} ::
+  /         O   :: https://www.application.tld ::${AnsiColor.BLACK}
+ /   (_____/
+/_____/   U
 
-${AnsiColor.BRIGHT_CYAN}:: Application 🤓  :: Running Spring Boot ${spring-boot.version} ::
-:: https://www.application.tld ::${AnsiColor.BLACK}

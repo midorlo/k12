@@ -1,4 +1,4 @@
-package com.midorlo.k12.domain;
+package com.midorlo.k12.domain.security;
 
 import java.io.Serializable;
 import java.util.Objects;

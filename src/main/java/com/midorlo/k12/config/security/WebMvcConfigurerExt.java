@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @Profile({ ApplicationConstants.SPRING_PROFILE_PRODUCTION })
-public class StaticResourcesWebConfiguration implements WebMvcConfigurer {
+public class WebMvcConfigurerExt implements WebMvcConfigurer {
 
     protected static final String[] RESOURCE_LOCATIONS = new String[] {
         "classpath:/static/",
@@ -33,7 +33,7 @@ public class StaticResourcesWebConfiguration implements WebMvcConfigurer {
 
     private final ApplicationProperties applicationProperties;
 
-    public StaticResourcesWebConfiguration(ApplicationProperties applicationProperties) {
+    public WebMvcConfigurerExt(ApplicationProperties applicationProperties) {
         this.applicationProperties = applicationProperties;
     }
 

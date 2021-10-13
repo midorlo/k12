@@ -1,4 +1,4 @@
 /**
- * Service layer beans.
+ * Service layer init.
  */
 package com.midorlo.k12.service;

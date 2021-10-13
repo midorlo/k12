@@ -1,6 +1,6 @@
 package com.midorlo.k12.service.dto;
 
-import com.midorlo.k12.domain.User;
+import com.midorlo.k12.domain.security.User;
 
 /**
  * A DTO representing a user, with only the public attributes.

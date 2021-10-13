@@ -1,6 +1,6 @@
 package com.midorlo.k12.web.rest;
 
-import com.midorlo.k12.domain.Role;
+import com.midorlo.k12.domain.security.Role;
 import com.midorlo.k12.repository.RoleRepository;
 import com.midorlo.k12.web.exception.BadRequestAlertException;
 import com.midorlo.k12.web.util.HeaderUtil;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * REST controller for managing {@link com.midorlo.k12.domain.Role}.
+ * REST controller for managing {@link Role}.
  */
 @RestController
 @RequestMapping("/api")

@@ -29,13 +29,13 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, In
         this.executor = executor;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void execute(@NonNull Runnable task) {
         executor.execute(createWrappedRunnable(task));
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void execute(@NonNull Runnable task, long startTimeout) {
         executor.execute(createWrappedRunnable(task), startTimeout);
@@ -71,21 +71,21 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, In
         log.error(EXCEPTION_MESSAGE, e);
     }
 
-    /** {@inheritDoc} */
+
     @NonNull
     @Override
     public Future<?> submit(@NonNull Runnable task) {
         return executor.submit(createWrappedRunnable(task));
     }
 
-    /** {@inheritDoc} */
+
     @NonNull
     @Override
     public <T> Future<T> submit(@NonNull Callable<T> task) {
         return executor.submit(createCallable(task));
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void destroy() throws Exception {
         if (executor instanceof DisposableBean) {
@@ -94,7 +94,7 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, In
         }
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void afterPropertiesSet() throws Exception {
         if (executor instanceof InitializingBean) {

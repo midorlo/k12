@@ -1,7 +1,7 @@
 package com.midorlo.k12.service;
 
 import com.midorlo.k12.config.ApplicationProperties;
-import com.midorlo.k12.domain.User;
+import com.midorlo.k12.domain.security.User;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import javax.mail.MessagingException;

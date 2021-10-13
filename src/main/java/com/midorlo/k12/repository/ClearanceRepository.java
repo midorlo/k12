@@ -1,6 +1,6 @@
 package com.midorlo.k12.repository;
 
-import com.midorlo.k12.domain.Clearance;
+import com.midorlo.k12.domain.security.Clearance;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 

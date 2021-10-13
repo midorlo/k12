@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.midorlo.k12.IntegrationTest;
-import com.midorlo.k12.domain.Menu;
+import com.midorlo.k12.domain.webapp.Menu;
 import com.midorlo.k12.repository.MenuRepository;
 import com.midorlo.k12.web.rest.webapp.MenuResource;
 import java.util.List;

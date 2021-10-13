@@ -1,4 +1,4 @@
-package com.midorlo.k12.domain;
+package com.midorlo.k12.domain.webapp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
+import com.midorlo.k12.domain.security.Clearance;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;

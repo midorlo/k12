@@ -40,7 +40,7 @@ public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer, Orde
         this.properties = properties;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void customize(Docket docket) {
         Contact contact = new Contact(properties.getContactName(), properties.getContactUrl(), properties.getContactEmail());
@@ -86,7 +86,7 @@ public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer, Orde
         this.order = order;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public int getOrder() {
         return order;

@@ -1,8 +1,8 @@
 package com.midorlo.k12.service.dto;
 
 import com.midorlo.k12.config.ApplicationConstants;
-import com.midorlo.k12.domain.Authority;
-import com.midorlo.k12.domain.User;
+import com.midorlo.k12.domain.security.Authority;
+import com.midorlo.k12.domain.security.User;
 import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;

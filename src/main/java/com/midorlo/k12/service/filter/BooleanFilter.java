@@ -30,7 +30,7 @@ public class BooleanFilter extends Filter<Boolean> {
         super(filter);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public BooleanFilter copy() {
         return new BooleanFilter(this);

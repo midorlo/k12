@@ -1,6 +1,6 @@
 package com.midorlo.k12.config.security;
 
-import static com.midorlo.k12.config.security.StaticResourcesWebConfiguration.*;
+import static com.midorlo.k12.config.security.WebMvcConfigurerExt.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -17,9 +17,9 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 
 class StaticResourcesWebConfigurerTest {
 
-    public static final int                             MAX_AGE_TEST = 5;
-    public              StaticResourcesWebConfiguration staticResourcesWebConfiguration;
-    private             ResourceHandlerRegistry         resourceHandlerRegistry;
+    public static final int                     MAX_AGE_TEST = 5;
+    public              WebMvcConfigurerExt     webMvcConfigurerExt;
+    private             ResourceHandlerRegistry resourceHandlerRegistry;
     private MockServletContext servletContext;
     private             WebApplicationContext           applicationContext;
     private             ApplicationProperties           props;
@@ -29,16 +29,16 @@ class StaticResourcesWebConfigurerTest {
         servletContext = spy(new MockServletContext());
         applicationContext = mock(WebApplicationContext.class);
         resourceHandlerRegistry = spy(new ResourceHandlerRegistry(applicationContext, servletContext));
-        props = new ApplicationProperties();
-        staticResourcesWebConfiguration = spy(new StaticResourcesWebConfiguration(props));
+        props               = new ApplicationProperties();
+        webMvcConfigurerExt = spy(new WebMvcConfigurerExt(props));
     }
 
     @Test
     void shouldAppendResourceHandlerAndInitializeIt() {
-        staticResourcesWebConfiguration.addResourceHandlers(resourceHandlerRegistry);
+        webMvcConfigurerExt.addResourceHandlers(resourceHandlerRegistry);
 
         verify(resourceHandlerRegistry, times(1)).addResourceHandler(RESOURCE_PATHS);
-        verify(staticResourcesWebConfiguration, times(1)).initializeResourceHandler(any(ResourceHandlerRegistration.class));
+        verify(webMvcConfigurerExt, times(1)).initializeResourceHandler(any(ResourceHandlerRegistration.class));
         for (String testingPath : RESOURCE_PATHS) {
             assertThat(resourceHandlerRegistry.hasMappingForPattern(testingPath)).isTrue();
         }
@@ -47,12 +47,12 @@ class StaticResourcesWebConfigurerTest {
     @Test
     void shouldInitializeResourceHandlerWithCacheControlAndLocations() {
         CacheControl ccExpected = CacheControl.maxAge(5, TimeUnit.DAYS).cachePublic();
-        when(staticResourcesWebConfiguration.getCacheControl()).thenReturn(ccExpected);
+        when(webMvcConfigurerExt.getCacheControl()).thenReturn(ccExpected);
         ResourceHandlerRegistration resourceHandlerRegistration = spy(new ResourceHandlerRegistration(RESOURCE_PATHS));
 
-        staticResourcesWebConfiguration.initializeResourceHandler(resourceHandlerRegistration);
+        webMvcConfigurerExt.initializeResourceHandler(resourceHandlerRegistration);
 
-        verify(staticResourcesWebConfiguration, times(1)).getCacheControl();
+        verify(webMvcConfigurerExt, times(1)).getCacheControl();
         verify(resourceHandlerRegistration, times(1)).setCacheControl(ccExpected);
         verify(resourceHandlerRegistration, times(1)).addResourceLocations(RESOURCE_LOCATIONS);
     }
@@ -61,7 +61,7 @@ class StaticResourcesWebConfigurerTest {
     void shouldCreateCacheControlWithSpecificConfigurationInProperties() {
         props.getHttp().getCache().setTimeToLiveInDays(MAX_AGE_TEST);
         CacheControl cacheExpected = CacheControl.maxAge(MAX_AGE_TEST, TimeUnit.DAYS).cachePublic();
-        assertThat(staticResourcesWebConfiguration.getCacheControl())
+        assertThat(webMvcConfigurerExt.getCacheControl())
             .extracting(CacheControl::getHeaderValue)
             .isEqualTo(cacheExpected.getHeaderValue());
     }

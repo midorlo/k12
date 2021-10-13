@@ -1,4 +1,4 @@
-package com.midorlo.k12.domain.util;
+package com.midorlo.k12.config.database;
 
 import java.sql.Types;
 import org.hibernate.dialect.PostgreSQL95Dialect;

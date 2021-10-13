@@ -24,17 +24,17 @@ import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Import(SecurityProblemSupport.class)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapter {
 
     private final ApplicationProperties  applicationProperties;
     private final TokenProvider          tokenProvider;
     private final CorsFilter             corsFilter;
     private final SecurityProblemSupport problemSupport;
 
-    public SecurityConfiguration(TokenProvider tokenProvider,
-                                 CorsFilter corsFilter,
-                                 ApplicationProperties applicationProperties,
-                                 SecurityProblemSupport problemSupport) {
+    public WebSecurityConfigurerAdapterExt(TokenProvider tokenProvider,
+                                           CorsFilter corsFilter,
+                                           ApplicationProperties applicationProperties,
+                                           SecurityProblemSupport problemSupport) {
         this.tokenProvider         = tokenProvider;
         this.corsFilter            = corsFilter;
         this.problemSupport        = problemSupport;

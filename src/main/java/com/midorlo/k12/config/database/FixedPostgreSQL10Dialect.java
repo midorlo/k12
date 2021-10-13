@@ -1,4 +1,4 @@
-package com.midorlo.k12.domain.util;
+package com.midorlo.k12.config.database;
 
 import java.sql.Types;
 import org.hibernate.dialect.PostgreSQL10Dialect;
@@ -19,7 +19,7 @@ public class FixedPostgreSQL10Dialect extends PostgreSQL10Dialect {
         registerColumnType(Types.BLOB, "bytea");
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public SqlTypeDescriptor remapSqlTypeDescriptor(SqlTypeDescriptor sqlTypeDescriptor) {
         if (sqlTypeDescriptor.getSqlType() == Types.BLOB) {

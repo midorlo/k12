@@ -35,7 +35,7 @@ spring:
       poolName: Hikari
       auto-commit: false
   jpa:
-    database-platform: com.midorlo.k12.domain.util.FixedPostgreSQL10Dialect
+    database-platform: com.midorlo.k12.config.database.FixedPostgreSQL10Dialect
   mail:
     host: localhost
     port: 25

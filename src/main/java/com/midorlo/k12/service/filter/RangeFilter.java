@@ -57,7 +57,7 @@ public class RangeFilter<FIELD_TYPE extends Comparable<? super FIELD_TYPE>> exte
         this.lessThanOrEqual = filter.lessThanOrEqual;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public RangeFilter<FIELD_TYPE> copy() {
         return new RangeFilter<>(this);
@@ -143,7 +143,7 @@ public class RangeFilter<FIELD_TYPE extends Comparable<? super FIELD_TYPE>> exte
         return this;
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -164,13 +164,13 @@ public class RangeFilter<FIELD_TYPE extends Comparable<? super FIELD_TYPE>> exte
         );
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), greaterThan, lessThan, greaterThanOrEqual, lessThanOrEqual);
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public String toString() {
         return (

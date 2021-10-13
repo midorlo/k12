@@ -37,7 +37,7 @@ spring:
       poolName: Hikari
       auto-commit: false
   jpa:
-    database-platform: com.midorlo.k12.domain.util.FixedPostgreSQL10Dialect
+    database-platform: com.midorlo.k12.config.database.FixedPostgreSQL10Dialect
   mail:
     host: localhost
     port: 25
@@ -58,7 +58,7 @@ spring:
 # server:
 #   port: 443
 #   ssl:
-#     key-store: classpath:config/tls/keystore.p12
+#     key-store: classpath:tls/keystore.p12
 #     key-store-password: password
 #     key-store-type: PKCS12
 #     key-alias: selfsigned

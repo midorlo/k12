@@ -23,7 +23,7 @@ public class ActiveProfilesInfoContributor implements InfoContributor {
         this.profiles = Arrays.asList(environment.getActiveProfiles());
     }
 
-    /** {@inheritDoc} */
+
     @Override
     public void contribute(Info.Builder builder) {
         builder.withDetail(ACTIVE_PROFILES, this.profiles);

@@ -1,7 +1,7 @@
-package com.midorlo.k12.beans;
+package com.midorlo.k12.config.database.init;
 
-import com.midorlo.k12.domain.Menu;
-import com.midorlo.k12.domain.MenuItem;
+import com.midorlo.k12.domain.webapp.Menu;
+import com.midorlo.k12.domain.webapp.MenuItem;
 import com.midorlo.k12.repository.MenuItemRepository;
 import com.midorlo.k12.repository.MenuRepository;
 import java.util.List;

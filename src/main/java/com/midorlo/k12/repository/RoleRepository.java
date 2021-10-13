@@ -1,6 +1,6 @@
 package com.midorlo.k12.repository;
 
-import com.midorlo.k12.domain.Role;
+import com.midorlo.k12.domain.security.Role;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;

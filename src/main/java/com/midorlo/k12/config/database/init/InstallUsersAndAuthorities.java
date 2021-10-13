@@ -1,9 +1,9 @@
-package com.midorlo.k12.beans;
+package com.midorlo.k12.config.database.init;
 
-import com.midorlo.k12.domain.User;
+import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.AuthorityRepository;
 import com.midorlo.k12.repository.UserRepository;
-import java.time.Instant;
+
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
