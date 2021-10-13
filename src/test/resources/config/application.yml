@@ -31,7 +31,7 @@ spring:
     database-platform: com.midorlo.k12.domain.util.FixedH2Dialect
     open-in-view: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
@@ -41,11 +41,9 @@ spring:
       hibernate.cache.use_second_level_cache: false
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
-      hibernate.hbm2ddl.auto: validate
+      hibernate.hbm2ddl.auto: create-drop
       hibernate.jdbc.time_zone: UTC
       hibernate.query.fail_on_pagination_over_collection_fetch: true
-  liquibase:
-    contexts: test
   mail:
     host: localhost
   main:

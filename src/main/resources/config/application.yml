@@ -18,7 +18,7 @@ management:
       base-path: /management
       exposure:
         include:
-          ['configprops', 'env', 'health', 'info', 'metrics', 'logfile', 'loggers', 'prometheus', 'threaddump', 'caches', 'liquibase']
+          ['configprops', 'env', 'health', 'info', 'metrics', 'logfile', 'loggers', 'prometheus', 'threaddump', 'caches']
   endpoint:
     health:
       show-details: when_authorized
@@ -64,8 +64,6 @@ management:
             enabled: true
 
 spring:
-  liquibase:
-    database-change-log-lock-table: liquibase_changelog
   application:
     name: application
   profiles:
@@ -101,7 +99,7 @@ spring:
       hibernate.query.fail_on_pagination_over_collection_fetch: true
       hibernate.query.in_clause_parameter_padding: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
