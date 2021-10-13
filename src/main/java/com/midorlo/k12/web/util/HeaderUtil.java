@@ -2,6 +2,8 @@ package com.midorlo.k12.web.util;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+
+import lombok.experimental.UtilityClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -9,11 +11,10 @@ import org.springframework.http.HttpHeaders;
 /**
  * Utility class for HTTP headers creation.
  */
+@UtilityClass
 public final class HeaderUtil {
 
     private static final Logger log = LoggerFactory.getLogger(HeaderUtil.class);
-
-    private HeaderUtil() {}
 
     /**
      * <p>createAlert.</p>
