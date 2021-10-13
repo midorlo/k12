@@ -1,9 +1,5 @@
 package com.midorlo.k12.web.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -11,10 +7,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SuppressWarnings("UastIncorrectHttpHeaderInspection")
 class ResponseUtilTest {
 
-    private static final String HEADER_NAME = "X-Test";
+    private static final String HEADER_NAME  = "X-Test";
     private static final String HEADER_VALUE = "FooBar";
 
     private HttpHeaders headers;

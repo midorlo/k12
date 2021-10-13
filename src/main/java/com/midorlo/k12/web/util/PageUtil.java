@@ -1,25 +1,29 @@
 package com.midorlo.k12.web.util;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.experimental.UtilityClass;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Utility class for creating a Page object.
  */
-public interface PageUtil {
+@UtilityClass
+public class PageUtil {
+
     /**
      * Create a {@link Page} from a {@link List} of objects
      *
-     * @param list list of objects
+     * @param list     list of objects
      * @param pageable pagination information.
-     * @param <T> type of object
+     * @param <T>      type of object
      * @return page containing objects, and attributes set according to pageable
      * @throws IllegalArgumentException - if list is null
      */
-    static <T> Page<T> createPageFromList(List<T> list, Pageable pageable) {
+    public static <T> Page<T> createPageFromList(List<T> list, Pageable pageable) {
         if (list == null) {
             throw new IllegalArgumentException("To create a Page, the list mustn't be null!");
         }
