@@ -10,7 +10,7 @@
 const ESLintPlugin = require('eslint-webpack-plugin');
 const MergeJsonWebpackPlugin = require('merge-jsons-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { configure } = require('quasar/wrappers');
+const {configure} = require('quasar/wrappers');
 
 module.exports = configure(function (ctx) {
   return {
@@ -79,8 +79,8 @@ module.exports = configure(function (ctx) {
           {
             output: {
               groupBy: [
-                { pattern: '../src/main/webapp/i18n/en/*.json', fileName: '../i18n/en.json' },
-                { pattern: '../src/main/webapp/i18n/fr/*.json', fileName: '../i18n/fr.json' },
+                {pattern: './i18n/en/*.json', fileName: '../i18n/en.json'},
+                {pattern: './i18n/fr/*.json', fileName: '../i18n/fr.json'},
               ],
             },
           },
@@ -89,13 +89,10 @@ module.exports = configure(function (ctx) {
           {
             patterns: [
               {
-                context: './node_modules/swagger-ui-dist/',
-                from: '*.{js,css,html,png}',
-                to: '../swagger-ui/',
-                globOptions: { ignore: ['**/index.html'] },
+                context: './node_modules/swagger-ui-dist/', from: '*.{js,css,html,png}', to: '../swagger-ui/', globOptions: {ignore: ['**/index.html']},
               },
-              { from: './node_modules/axios/dist/axios.min.js', to: '../swagger-ui/' },
-              { from: '../src/main/webapp/swagger-ui/', to: '../swagger-ui/' },
+              {from: './node_modules/axios/dist/axios.min.js', to: '../swagger-ui/'},
+              {from: './swagger-ui/', to: '../swagger-ui/'},
             ],
           },
         ]);
@@ -109,7 +106,17 @@ module.exports = configure(function (ctx) {
       port: 8100,
       open: true, // opens browser window automatically
       proxy: {
-        context: ['/api', '/i18n', '/management', '/swagger-ui', '/swagger-resources', '/v3/api-docs', '/oauth2', '/login', '/auth'],
+        context: [
+          '/api',
+          '/i18n',
+          '/management',
+          '/swagger-ui',
+          '/swagger-resources',
+          '/v3/api-docs',
+          '/oauth2',
+          '/login',
+          '/auth'
+        ],
         target: 'http://localhost:8080',
       },
     },
@@ -152,7 +159,7 @@ module.exports = configure(function (ctx) {
       // Tell browser when a file from the server should expire from cache (in ms)
 
       chainWebpackWebserver(chain) {
-        chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [{ extensions: ['js'] }]);
+        chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [{extensions: ['js']}]);
       },
 
       middlewares: [
@@ -169,7 +176,7 @@ module.exports = configure(function (ctx) {
       // for the custom service worker ONLY (/src-pwa/custom-service-worker.[js|ts])
       // if using workbox in InjectManifest mode
       chainWebpackCustomSW(chain) {
-        chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [{ extensions: ['js'] }]);
+        chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [{extensions: ['js']}]);
       },
 
       manifest: {
@@ -243,12 +250,12 @@ module.exports = configure(function (ctx) {
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
       chainWebpackMain(chain) {
-        chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [{ extensions: ['js'] }]);
+        chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [{extensions: ['js']}]);
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
       chainWebpackPreload(chain) {
-        chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [{ extensions: ['js'] }]);
+        chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [{extensions: ['js']}]);
       },
     },
   };

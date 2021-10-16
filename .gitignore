@@ -2,6 +2,7 @@
 # Project Specific
 ######################
 /src/main/webapp/content/css/main.css
+/src/main/webapp/node_modules
 /target/classes/static/**
 /src/test/javascript/coverage/
 
