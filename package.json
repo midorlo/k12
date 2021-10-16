@@ -1,6 +1,6 @@
 {
   "name": "k-12",
-  "version": "0.0.0",
+  "version": "0.0.1-SNAPSHOT",
   "private": true,
   "description": "Description for k12",
   "license": "UNLICENSED",
@@ -39,10 +39,10 @@
     "java:docker:prod": "npm run java:docker -- -Pprod",
     "prettier:check": "prettier --check \"{,src/**/}*.{md,json,yml,html,java}\"",
     "prettier:format": "prettier --write \"{,src/**/}*.{md,json,yml,html,java}\"",
-    "webapp:build": "cd quasar && npm run build",
-    "webapp:build:dev": "cd quasar && npm run build",
-    "webapp:build:prod": "cd quasar && npm run build",
-    "webapp:prod": "cd quasar && npm run build",
+    "webapp:build": "cd src/main/webapp && npm run build",
+    "webapp:build:dev": "cd src/main/webapp && npm run build",
+    "webapp:build:prod": "cd src/main/webapp && npm run build",
+    "webapp:prod": "cd src/main/webapp && npm run build",
     "webapp:test": ""
   },
   "config": {
