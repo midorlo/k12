@@ -7,11 +7,13 @@ import com.midorlo.k12.repository.MenuRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.Ordered;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
 
 @Slf4j
+@Component
 public class InstallMenusAndMenuItems implements CommandLineRunner,
                                                  Ordered {
 

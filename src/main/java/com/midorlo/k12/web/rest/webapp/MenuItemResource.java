@@ -29,10 +29,10 @@ import java.util.Optional;
 @Transactional
 public class MenuItemResource {
 
-    private static final String ENTITY_NAME = "menuItem";
-    private final MenuItemRepository menuItemRepository;
+    private static final String             ENTITY_NAME = "menuItem";
+    private final        MenuItemRepository menuItemRepository;
     @Value("${application.clientApp.name}")
-    private String applicationName;
+    private              String             applicationName;
 
     public MenuItemResource(MenuItemRepository menuItemRepository) {
         this.menuItemRepository = menuItemRepository;
@@ -94,6 +94,19 @@ public class MenuItemResource {
             .body(result);
     }
 
+    private void verify(final Long id, @NotNull MenuItem menuItem) {
+        if (menuItem.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, menuItem.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!menuItemRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+    }
+
     /**
      * {@code PATCH  /menu-items/:id} : Partial updates given fields of an existing menuItem, field will ignore if it
      * is null
@@ -106,49 +119,36 @@ public class MenuItemResource {
      * or with status {@code 500 (Internal Server Error)} if the menuItem couldn't be updated.
      */
     @PatchMapping(value = "/menu-items/{id}", consumes = "application/merge-patch+json")
-    public ResponseEntity<MenuItem> partialUpdateMenuItem(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody MenuItem menuItem
-    ) {
+    public ResponseEntity<MenuItem> partialUpdateMenuItem(@PathVariable(value = "id", required = false) final Long id,
+                                                          @NotNull @RequestBody MenuItem menuItem) {
         log.debug("REST request to partial update MenuItem partially : {}, {}", id, menuItem);
-        if (menuItem.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, menuItem.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
+        verify(id, menuItem);
+        Optional<MenuItem> result = menuItemRepository.findById(menuItem.getId())
+                                                      .map(
+                                                          existingMenuItem -> {
+                                                              if (menuItem.getI18n() != null) {
+                                                                  existingMenuItem.setI18n(menuItem.getI18n());
+                                                              }
+                                                              if (menuItem.getIcon() != null) {
+                                                                  existingMenuItem.setIcon(menuItem.getIcon());
+                                                              }
+                                                              if (menuItem.getTarget() != null) {
+                                                                  existingMenuItem.setTarget(menuItem.getTarget());
+                                                              }
+                                                              if (menuItem.getEnabled() != null) {
+                                                                  existingMenuItem.setEnabled(menuItem.getEnabled());
+                                                              }
 
-        if (!menuItemRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<MenuItem> result = menuItemRepository
-            .findById(menuItem.getId())
-            .map(
-                existingMenuItem -> {
-                    if (menuItem.getI18n() != null) {
-                        existingMenuItem.setI18n(menuItem.getI18n());
-                    }
-                    if (menuItem.getIcon() != null) {
-                        existingMenuItem.setIcon(menuItem.getIcon());
-                    }
-                    if (menuItem.getTarget() != null) {
-                        existingMenuItem.setTarget(menuItem.getTarget());
-                    }
-                    if (menuItem.getEnabled() != null) {
-                        existingMenuItem.setEnabled(menuItem.getEnabled());
-                    }
-
-                    return existingMenuItem;
-                }
-            )
-            .map(menuItemRepository::save);
-
-        return HttpResponseUtilities.wrapOrNotFound(
-            result.orElseThrow(EntityNotFoundException::new),
-            HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, menuItem.getId()
-                                                                                                     .toString())
-        );
+                                                              return existingMenuItem;
+                                                          }
+                                                      )
+                                                      .map(menuItemRepository::save);
+        return HttpResponseUtilities.wrapOrNotFound(result.orElseThrow(EntityNotFoundException::new),
+                                                    HttpHeaderUtilities.createEntityUpdateAlert(applicationName,
+                                                                                                false,
+                                                                                                ENTITY_NAME,
+                                                                                                menuItem.getId()
+                                                                                                        .toString()));
     }
 
     /**

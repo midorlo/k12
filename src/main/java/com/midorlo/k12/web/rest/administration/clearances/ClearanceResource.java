@@ -3,6 +3,7 @@ package com.midorlo.k12.web.rest.administration.clearances;
 import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.repository.ClearanceRepository;
 import com.midorlo.k12.web.exception.BadRequestAlertException;
+import com.midorlo.k12.web.rest.webapp.MenuItemResource;
 import com.midorlo.k12.web.util.HttpHeaderUtilities;
 import com.midorlo.k12.web.util.HttpResponseUtilities;
 import lombok.extern.slf4j.Slf4j;

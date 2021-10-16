@@ -133,8 +133,8 @@
     },
     {
       "name": "management.endpoint.metrics",
-      "type": "com.midorlo.k12.config.metric.ApplicationMetricsEndpoint",
-      "sourceType": "com.midorlo.k12.config.metric.ApplicationMetricsEndpoint"
+      "type": "com.midorlo.k12.web.ApplicationMetricsEndpoint",
+      "sourceType": "com.midorlo.k12.web.ApplicationMetricsEndpoint"
     }
   ],
   "properties": [
@@ -419,14 +419,14 @@
       "name": "management.endpoint.metrics.cache.time-to-live",
       "type": "java.time.Duration",
       "description": "Maximum time that a response can be cached.",
-      "sourceType": "com.midorlo.k12.config.metric.ApplicationMetricsEndpoint",
+      "sourceType": "com.midorlo.k12.web.ApplicationMetricsEndpoint",
       "defaultValue": "0ms"
     },
     {
       "name": "management.endpoint.metrics.enabled",
       "type": "java.lang.Boolean",
       "description": "Whether to enable the metrics endpoint.",
-      "sourceType": "com.midorlo.k12.config.metric.ApplicationMetricsEndpoint",
+      "sourceType": "com.midorlo.k12.web.ApplicationMetricsEndpoint",
       "defaultValue": true
     },
     {

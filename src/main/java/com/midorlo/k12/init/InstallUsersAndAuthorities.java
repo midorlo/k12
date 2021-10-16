@@ -62,7 +62,10 @@ public class InstallUsersAndAuthorities implements CommandLineRunner {
                                     )
                                     .setRoles(Set.of(new Role()
                                                          .setI18n("ADMIN")
-                                                         .setClearances(Set.of(new Clearance().setI18n("nouns.admin"))))),
+                                                         .setClearances(Set.of(
+                                                             new Clearance().setI18n("ROLE_ADMIN"),
+                                                             new Clearance().setI18n("ADMIN")
+                                                         )))),
                                 new User()
                                     .setActivated(true)
                                     .setLogin("user")

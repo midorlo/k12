@@ -5,10 +5,10 @@ import { i18n } from './i18n';
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
-// If any client changes this (global) instance, it might be a
+// If any webapp changes this (global) instance, it might be a
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
-// for each client)
+// for each webapp)
 const api = axios.create();
 
 export default boot(({ app }) => {

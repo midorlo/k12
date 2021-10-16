@@ -16,7 +16,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * An authority (a security role) used by Spring Security.
+ * An authority (a web role) used by Spring Security.
  */
 @Entity
 @Getter

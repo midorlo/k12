@@ -46,7 +46,7 @@
       </div>
       <div class="q-pt-xl column items-center">
         <div class="col">
-          {{ $t('global.messages.info.register.noaccount') }}
+          {{ $t('global.messages.actuator.register.noaccount') }}
         </div>
         <div class="col">
           <q-btn

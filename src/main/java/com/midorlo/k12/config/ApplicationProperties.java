@@ -14,7 +14,7 @@ import java.util.*;
  * Properties specific to Application.
  *
  * <p> Properties are configured in the application.yml file. </p>
- * <p> This class also load properties in the Spring Environment from the git.properties and META-INF/build-info
+ * <p> This class also load properties in the Spring Environment from the git.properties and META-INF/build-actuator
  * .properties
  * files if they are found in the classpath.</p>
  */
@@ -24,7 +24,7 @@ import java.util.*;
 @PropertySources(
     {
         @PropertySource(value = "classpath:git.properties", ignoreResourceNotFound = true),
-        @PropertySource(value = "classpath:META-INF/build-info.properties", ignoreResourceNotFound = true),
+        @PropertySource(value = "classpath:META-INF/build-actuator.properties", ignoreResourceNotFound = true),
     }
 )
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)

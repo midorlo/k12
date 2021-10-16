@@ -1,8 +1,8 @@
 package com.midorlo.k12.web.rest.identity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.midorlo.k12.config.security.SecurityUtils;
-import com.midorlo.k12.config.security.jwt.JwtFilterBean;
+import com.midorlo.k12.config.web.SecurityUtils;
+import com.midorlo.k12.config.web.jwt.JwtFilterBean;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.service.mail.MailService;
@@ -59,7 +59,7 @@ public class IdentityController {
         this.mailService                  = mailService;
     }
 
-    private static boolean isPasswordLengthInvalid(String password) {
+    private static boolean isPasswordLengthInvalid(CharSequence password) {
         return (
             StringUtils.isEmpty(password) ||
             password.length() < ManagedUserVM.PASSWORD_MIN_LENGTH ||
@@ -207,13 +207,18 @@ public class IdentityController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+
+        Authentication authenticationToken = new UsernamePasswordAuthenticationToken(
             loginVM.getUsername(),
             loginVM.getPassword()
         );
 
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authentication authentication = authenticationManagerBuilder.getObject()
+                                                                    .authenticate(authenticationToken);
+
+        SecurityContextHolder.getContext()
+                             .setAuthentication(authentication);
+
         String      jwt         = tokenProvider.createToken(authentication, loginVM.isRememberMe());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilterBean.AUTHORIZATION_HEADER, "Bearer " + jwt);

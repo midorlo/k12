@@ -1,6 +1,6 @@
 package com.midorlo.k12.security.ssl;
 
-import com.midorlo.k12.config.security.ssl.UndertowSSLConfiguration;
+import com.midorlo.k12.config.web.ssl.UndertowSSLConfiguration;
 import io.undertow.Undertow;
 import io.undertow.UndertowOptions;
 import org.junit.jupiter.api.Test;

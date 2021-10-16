@@ -18,7 +18,7 @@ management:
       base-path: /management
       exposure:
         include:
-          [ 'configprops', 'env', 'health', 'info', 'metrics', 'logfile', 'loggers', 'prometheus', 'threaddump', 'caches' ]
+          [ 'configprops', 'env', 'health', 'actuator', 'metrics', 'logfile', 'loggers', 'prometheus', 'threaddump', 'caches' ]
   endpoint:
     health:
       show-details: when_authorized
@@ -93,7 +93,7 @@ spring:
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
       hibernate.javax.cache.missing_cache_strategy: create
-      # modify batch size as necessary
+      # modify scheduling size as necessary
       hibernate.jdbc.batch_size: 25
       hibernate.order_inserts: true
       hibernate.order_updates: true
@@ -131,7 +131,7 @@ server:
       cookie:
         http-only: true
 
-# Properties to be exposed on the /info management endpoint
+# Properties to be exposed on the /actuator management endpoint
 info:
   # Comma separated list of profiles that will trigger the ribbon to show
   display-ribbon-on-profiles: 'dev'

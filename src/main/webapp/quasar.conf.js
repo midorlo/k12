@@ -18,7 +18,7 @@ module.exports = configure(function (ctx) {
     animations: 'all',
     extras: ['roboto-font', 'material-icons'],
     build: {
-      publicPath: '/spa',
+      publicPath: '/',
       vueRouterMode: 'history',
       env: {
         APP_VERSION: process.env.APP_VERSION ? `v${process.env.APP_VERSION}` : 'DEV',
@@ -29,9 +29,9 @@ module.exports = configure(function (ctx) {
           {
             output: {
               groupBy: [
-                {pattern: './i18n/de/*.json', fileName: '../i18n/de.json'},
-                {pattern: './i18n/en/*.json', fileName: '../i18n/en.json'},
-                {pattern: './i18n/fr/*.json', fileName: '../i18n/fr.json'},
+                {pattern: './i18n/de/*.json', fileName: './i18n/de.json'},
+                {pattern: './i18n/en/*.json', fileName: './i18n/en.json'},
+                {pattern: './i18n/fr/*.json', fileName: './i18n/fr.json'},
               ],
             },
           },

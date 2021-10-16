@@ -1,4 +1,3 @@
-<!--suppress ALL -->
 <template>
   <div class="q-pa-md">
     <q-table
@@ -111,28 +110,27 @@
 </template>
 
 <script>
-import { api } from 'boot/axios';
-import { parseISO } from 'date-fns';
-import { useQuasar } from 'quasar';
-import { defineComponent, onMounted, ref } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router';
-import { useStore } from 'vuex';
-import { format } from '../util/format';
+import {api} from 'boot/axios';
+import {parseISO} from 'date-fns';
+import {useQuasar} from 'quasar';
+import {defineComponent, onMounted, ref} from 'vue';
+import {useI18n} from 'vue-i18n';
+import {useRoute, useRouter} from 'vue-router';
+import {useStore} from 'vuex';
+import {format} from '../util/format';
 
 export default defineComponent({
   name: 'PageUsers',
 
   setup() {
     const $q = useQuasar();
-    const { t } = useI18n();
+    const {t} = useI18n();
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
 
     const rows = ref([]);
     const loading = ref(false);
-
     const pagination = ref({
       sortBy: route.query.sortBy || 'login',
       descending: route.query.descending === 'true',
@@ -140,27 +138,44 @@ export default defineComponent({
       rowsPerPage: Number.parseInt(route.query.rowsPerPage) || 10,
       rowsNumber: 10,
     });
-
     const loadingActivation = ref([]);
 
     const currentLogin = store.state.auth.account.login;
 
     const columns = [
-      { name: 'login', align: 'left', label: t('userManagement.login'), field: 'login', sortable: true },
-      { name: 'firstName', align: 'left', label: t('userManagement.firstName'), field: 'firstName', sortable: true },
-      { name: 'lastName', align: 'left', label: t('userManagement.lastName'), field: 'lastName', sortable: true },
-      { name: 'email', align: 'left', label: t('userManagement.email'), field: 'email', sortable: true },
-      { name: 'langKey', align: 'left', label: t('userManagement.langKey'), field: 'langKey', sortable: true },
-      { name: 'createdBy', align: 'left', label: t('userManagement.createdBy'), field: 'createdBy', sortable: true },
-      { name: 'createdDate', align: 'left', label: t('userManagement.createdDate'), field: 'createdDate', sortable: true },
-      { name: 'lastModifiedBy', align: 'left', label: t('userManagement.lastModifiedBy'), field: 'lastModifiedBy', sortable: true },
-      { name: 'lastModifiedDate', align: 'left', label: t('userManagement.lastModifiedDate'), field: 'lastModifiedDate', sortable: true },
-      { name: 'authorities', align: 'left', label: t('userManagement.profiles'), field: 'authorities', sortable: false },
-      { name: 'activated', align: 'left', label: t('userManagement.activated'), field: 'activated', sortable: true },
+      {name: 'login', align: 'left', label: t('userManagement.login'), field: 'login', sortable: true},
+      {name: 'firstName', align: 'left', label: t('userManagement.firstName'), field: 'firstName', sortable: true},
+      {name: 'lastName', align: 'left', label: t('userManagement.lastName'), field: 'lastName', sortable: true},
+      {name: 'email', align: 'left', label: t('userManagement.email'), field: 'email', sortable: true},
+      {name: 'langKey', align: 'left', label: t('userManagement.langKey'), field: 'langKey', sortable: true},
+      {name: 'createdBy', align: 'left', label: t('userManagement.createdBy'), field: 'createdBy', sortable: true},
+      {
+        name: 'createdDate',
+        align: 'left',
+        label: t('userManagement.createdDate'),
+        field: 'createdDate',
+        sortable: true
+      },
+      {
+        name: 'lastModifiedBy',
+        align: 'left',
+        label: t('userManagement.lastModifiedBy'),
+        field: 'lastModifiedBy',
+        sortable: true
+      },
+      {
+        name: 'lastModifiedDate',
+        align: 'left',
+        label: t('userManagement.lastModifiedDate'),
+        field: 'lastModifiedDate',
+        sortable: true
+      },
+      {name: 'authorities', align: 'left', label: t('userManagement.profiles'), field: 'authorities', sortable: false},
+      {name: 'activated', align: 'left', label: t('userManagement.activated'), field: 'activated', sortable: true},
     ];
 
     const onRequest = async props => {
-      const { page, rowsPerPage, sortBy, descending } = props.pagination;
+      const {page, rowsPerPage, sortBy, descending} = props.pagination;
 
       loading.value = true;
 
@@ -182,19 +197,18 @@ export default defineComponent({
       pagination.value.rowsPerPage = rowsPerPage;
       pagination.value.sortBy = sortBy;
       pagination.value.descending = descending;
-
-      router.replace({ query: { page, sortBy, descending, rowsPerPage } });
+      router.replace({query: {page, sortBy, descending, rowsPerPage}});
     };
 
-    onMounted(() => onRequest({ pagination: pagination.value }));
+    onMounted(() => onRequest({pagination: pagination.value}));
 
     const deleteUser = async login => {
       $q.dialog({
-        message: t('userManagement.delete.question', { login: login }),
+        message: t('userManagement.delete.question', {login: login}),
         cancel: true,
       }).onOk(async () => {
         await api.delete(`/api/admin/users/${login}`);
-        onRequest({ pagination: pagination.value });
+        onRequest({pagination: pagination.value});
       });
     };
 
@@ -203,7 +217,7 @@ export default defineComponent({
         loadingActivation.value[row.login] = true;
         try {
           await api.put('/api/admin/users', row);
-          onRequest({ pagination: pagination.value });
+          onRequest({pagination: pagination.value});
         } finally {
           loadingActivation.value[row.login] = false;
         }

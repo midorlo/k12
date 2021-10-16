@@ -29,10 +29,10 @@ import java.util.Optional;
 @Transactional
 public class RoleResource {
 
-    private static final String ENTITY_NAME = "role";
-    private final RoleRepository roleRepository;
+    private static final String         ENTITY_NAME = "role";
+    private final        RoleRepository roleRepository;
     @Value("${application.clientApp.name}")
-    private String applicationName;
+    private              String         applicationName;
 
     public RoleResource(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;

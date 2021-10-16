@@ -1,6 +1,6 @@
 package com.midorlo.k12.web.rest;
 
-import com.midorlo.k12.web.rest.webapp.ClientForwardController;
+import com.midorlo.k12.web.client.ClientForwardController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
