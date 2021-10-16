@@ -2,7 +2,7 @@ package com.midorlo.k12.config.web;
 
 import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.config.ApplicationProperties;
-import com.midorlo.k12.config.web.jwt.JwtFilterBean;
+import com.midorlo.k12.config.web.filter.JwtFilterBean;
 import com.midorlo.k12.service.security.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -91,16 +91,16 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
             .antMatchers("/api/admin/**").hasAuthority(ApplicationConstants.SecurityConstants.ADMIN)
 
             .antMatchers("/management").permitAll()
-            .antMatchers("/management/**").hasAuthority(ApplicationConstants.SecurityConstants.ADMIN)
-
-            .antMatchers("/management/health").permitAll()
-            .antMatchers("/management/health/**").permitAll()
-
-            .antMatchers("/management/actuator").permitAll()
-            .antMatchers("/management/actuator/**").permitAll()
-
-            .antMatchers("/api/management/prometheus").permitAll()
-            .antMatchers("/api/management/prometheus/**").permitAll()
+            .antMatchers("/management/**").permitAll()
+//            .antMatchers("/management/**").hasAuthority(ApplicationConstants.SecurityConstants.ADMIN)
+//
+//            .antMatchers("/management/health").permitAll()
+//            .antMatchers("/management/health/**").permitAll()
+//
+//            .antMatchers("/management/actuator").permitAll()
+//            .antMatchers("/management/actuator/**").permitAll()
+//            .antMatchers("/management/prometheus").permitAll()
+//            .antMatchers("/management/prometheus/**").permitAll()
 
             .and()
             .httpBasic()

@@ -2,7 +2,7 @@ package com.midorlo.k12.security.jwt;
 
 import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.config.ApplicationProperties;
-import com.midorlo.k12.config.web.jwt.JwtFilterBean;
+import com.midorlo.k12.config.web.filter.JwtFilterBean;
 import com.midorlo.k12.service.security.TokenProvider;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -48,7 +48,7 @@ class JwtFilterBeanTest {
             "test-password",
             Collections.singletonList(new SimpleGrantedAuthority(ApplicationConstants.SecurityConstants.USER))
         );
-        String                 jwt     = tokenProvider.createToken(authentication, false);
+        String                 jwt     = tokenProvider.createToken(authentication);
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addHeader(JwtFilterBean.AUTHORIZATION_HEADER, "Bearer " + jwt);
         request.setRequestURI("/api/test");
@@ -103,7 +103,7 @@ class JwtFilterBeanTest {
             "test-password",
             Collections.singletonList(new SimpleGrantedAuthority(ApplicationConstants.SecurityConstants.USER))
         );
-        String                 jwt     = tokenProvider.createToken(authentication, false);
+        String                 jwt     = tokenProvider.createToken(authentication);
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addHeader(JwtFilterBean.AUTHORIZATION_HEADER, "Basic " + jwt);
         request.setRequestURI("/api/test");

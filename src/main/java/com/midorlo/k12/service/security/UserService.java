@@ -91,7 +91,7 @@ public class UserService {
             .filter(User::isActivated)
             .map(
                 user -> {
-                    user.setResetKey(RandomUtil.generateResetKey());
+                    user.setResetKey(SecurityUtilities.generateResetKey());
                     user.setResetDate(Instant.now());
                     this.clearUserCaches(user);
                     return user;
@@ -135,7 +135,7 @@ public class UserService {
         // new user is not active
         newUser.setActivated(false);
         // new user gets registration key
-        newUser.setActivationKey(RandomUtil.generateActivationKey());
+        newUser.setActivationKey(SecurityUtilities.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(ApplicationConstants.SecurityConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
@@ -169,9 +169,9 @@ public class UserService {
         } else {
             user.setLangKey(userDTO.getLangKey());
         }
-        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+        String encryptedPassword = passwordEncoder.encode(SecurityUtilities.generatePassword());
         user.setPassword(encryptedPassword);
-        user.setResetKey(RandomUtil.generateResetKey());
+        user.setResetKey(SecurityUtilities.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
         if (userDTO.getAuthorities() != null) {

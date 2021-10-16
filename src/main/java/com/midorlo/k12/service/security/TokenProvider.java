@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.nio.charset.StandardCharsets;
@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Component
+@Service
 public class TokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
@@ -43,7 +43,7 @@ public class TokenProvider {
         } else {
             log.warn(
                 "Warning: the JWT key used is not Base64-encoded. " +
-                "We recommend using the `application.web.authentication.jwt.base64-secret` key for optimum " +
+                "We recommend using the `application.web.authentication.filter.base64-secret` key for optimum " +
                 "web."
             );
             secret   = applicationProperties.getSecurity().getAuthentication().getJwt().getSecret();
@@ -58,7 +58,15 @@ public class TokenProvider {
                                         .getTokenValidityInSecondsForRememberMe();
     }
 
-    public String createToken(Authentication authentication, boolean rememberMe) {
+    public String createToken(Authentication authentication) {
+        return createToken(authentication, false);
+    }
+
+    public String createTokenWithLongerDuration(Authentication authentication) {
+        return createToken(authentication, true);
+    }
+
+    private String createToken(Authentication authentication, boolean rememberMe) {
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                                            .collect(Collectors.joining(","));
 

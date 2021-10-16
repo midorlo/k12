@@ -238,9 +238,9 @@ public class LogbackRecorder {
         }
 
         /**
-         * Logged exception passed in argument to the logger or null if none.
+         * Logged problem passed in argument to the logger or null if none.
          *
-         * @return the logged exception as {@code exception.getClass().getName() + ": " + exception.getMessage()}
+         * @return the logged problem as {@code problem.getClass().getName() + ": " + problem.getMessage()}
          */
         public String getThrown() {
             return this.thrown;

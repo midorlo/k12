@@ -3,7 +3,7 @@ package com.midorlo.k12.service.security.exception;
 import org.springframework.security.core.AuthenticationException;
 
 /**
- * This exception is thrown in case of a not activated user trying to authenticate.
+ * This problem is thrown in case of a not activated user trying to authenticate.
  */
 public class UserNotActivatedException extends AuthenticationException {
 

@@ -45,7 +45,7 @@ public class LoggingAspect {
      */
     @Pointcut(
         "within(com.midorlo.k12.repository..*)" + " || within(com.midorlo.k12.service..*)" + " || within(com.midorlo" +
-        ".k12.web.rest..*)"
+        ".k12.web.api..*)"
     )
     public void applicationPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
@@ -65,14 +65,14 @@ public class LoggingAspect {
      * Advice that logs methods throwing exceptions.
      *
      * @param joinPoint join point for advice.
-     * @param e         exception.
+     * @param e         problem.
      */
     @AfterThrowing(pointcut = "applicationPackagePointcut() && springBeanPointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
         if (env.acceptsProfiles(Profiles.of(ApplicationConstants.ContextConstants.SPRING_PROFILE_DEVELOPMENT))) {
             logger(joinPoint)
                 .error(
-                    "Exception in {}() with cause = '{}' and exception = '{}'",
+                    "Exception in {}() with cause = '{}' and problem = '{}'",
                     joinPoint.getSignature().getName(),
                     e.getCause() != null ? e.getCause() : "NULL",
                     e.getMessage(),

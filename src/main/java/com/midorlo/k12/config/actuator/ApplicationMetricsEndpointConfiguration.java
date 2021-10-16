@@ -1,6 +1,5 @@
 package com.midorlo.k12.config.actuator;
 
-import com.midorlo.k12.web.ApplicationMetricsEndpoint;
 import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.boot.actuate.autoconfigure.endpoint.condition.ConditionalOnAvailableEndpoint;

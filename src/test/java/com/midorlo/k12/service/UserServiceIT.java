@@ -3,7 +3,7 @@ package com.midorlo.k12.service;
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
-import com.midorlo.k12.service.security.RandomUtil;
+import com.midorlo.k12.service.security.SecurityUtilities;
 import com.midorlo.k12.service.security.UserService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -102,7 +102,7 @@ class UserServiceIT {
     @Transactional
     void assertThatResetKeyMustNotBeOlderThan24Hours() {
         Instant daysAgo  = Instant.now().minus(25, ChronoUnit.HOURS);
-        String  resetKey = RandomUtil.generateResetKey();
+        String  resetKey = SecurityUtilities.generateResetKey();
         user.setActivated(true);
         user.setResetDate(daysAgo);
         user.setResetKey(resetKey);
@@ -132,7 +132,7 @@ class UserServiceIT {
     void assertThatUserCanResetPassword() {
         String  oldPassword = user.getPassword();
         Instant daysAgo     = Instant.now().minus(2, ChronoUnit.HOURS);
-        String  resetKey    = RandomUtil.generateResetKey();
+        String  resetKey    = SecurityUtilities.generateResetKey();
         user.setActivated(true);
         user.setResetDate(daysAgo);
         user.setResetKey(resetKey);

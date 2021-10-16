@@ -17,7 +17,7 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor,
                                                            InitializingBean,
                                                            DisposableBean {
 
-    public static final String EXCEPTION_MESSAGE = "Caught scheduling exception";
+    public static final String EXCEPTION_MESSAGE = "Caught scheduling problem";
 
     private final AsyncTaskExecutor executor;
 

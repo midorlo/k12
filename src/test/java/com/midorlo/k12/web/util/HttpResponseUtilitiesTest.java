@@ -1,5 +1,6 @@
 package com.midorlo.k12.web.util;
 
+import com.midorlo.k12.web.RestUtilities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +29,7 @@ class HttpResponseUtilitiesTest {
 
     @Test
     void testOptionalYesWithoutHeaders() {
-        ResponseEntity<Integer> response = HttpResponseUtilities.wrapOrNotFound(
+        ResponseEntity<Integer> response = RestUtilities.wrapOrNotFound(
             Optional.of(42).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND))
         );
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -38,7 +39,7 @@ class HttpResponseUtilitiesTest {
 
     @Test
     void testOptionalYesWithHeaders() {
-        ResponseEntity<Integer> response = HttpResponseUtilities.wrapOrNotFound(
+        ResponseEntity<Integer> response = RestUtilities.wrapOrNotFound(
             Optional.of(42).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)),
             headers
         );
