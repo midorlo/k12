@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -18,9 +20,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * A user.
@@ -92,7 +93,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private Instant resetDate = null;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(cascade = { CascadeType.PERSIST })
     @JoinTable(
         name = "users_authorities",
         joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
@@ -102,10 +103,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+    @JsonIgnore
+    @ManyToMany(cascade = { CascadeType.PERSIST })
     @JoinTable(name = "users_roles",
                joinColumns = @JoinColumn(name = "user_id"),
-               inverseJoinColumns = @JoinColumn(name = "role_id"))
+               inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") }
+    )
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @BatchSize(size = 20)
     private Set<Role> roles = new HashSet<>();
 
     public Long getId() {
@@ -116,6 +121,15 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public User setLogin(String login) {
         this.login = StringUtils.lowerCase(login, Locale.ENGLISH);
         return this;
+    }
+
+    public List<GrantedAuthority> getSpringSecurityAuthorities() {
+        return getRoles()
+            .stream()
+            .map(Role::getClearances)
+            .flatMap(Collection::stream)
+            .map(c -> new SimpleGrantedAuthority(c.getI18n()))
+            .collect(Collectors.toList());
     }
 
     @Override

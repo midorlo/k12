@@ -1,5 +1,6 @@
 package com.midorlo.k12.config.database.init;
 
+import com.midorlo.k12.domain.security.Authority;
 import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.domain.security.Role;
 import com.midorlo.k12.domain.security.User;
@@ -59,8 +60,12 @@ public class InstallUsersAndAuthorities implements CommandLineRunner {
                                     .setLangKey("de")
                                     .setFirstName("-")
                                     .setLastName("-")
+                                    .setAuthorities(Set.of(new Authority().setName("ADMIN"),
+                                                           new Authority().setName("ROLE_ADMIN")
+                                                    )
+                                    )
                                     .setRoles(Set.of(new Role()
-                                                         .setI18n("nouns.admin")
+                                                         .setI18n("ADMIN")
                                                          .setClearances(Set.of(new Clearance().setI18n("nouns.admin"))))),
                                 new User()
                                     .setActivated(true)
@@ -71,7 +76,7 @@ public class InstallUsersAndAuthorities implements CommandLineRunner {
                                     .setFirstName("-")
                                     .setLastName("-")
                                     .setRoles(Set.of(new Role()
-                                                         .setI18n("nouns.user")
+                                                         .setI18n("USER")
                                                          .setClearances(Set.of(new Clearance().setI18n("nouns.user")))))
                             )
                         )

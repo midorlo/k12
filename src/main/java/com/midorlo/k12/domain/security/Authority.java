@@ -1,5 +1,8 @@
 package com.midorlo.k12.domain.security;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -16,6 +19,9 @@ import java.util.Objects;
  * An authority (a security role) used by Spring Security.
  */
 @Entity
+@Getter
+@Setter
+@Accessors(chain = true)
 @Table(name = "authorities")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Authority implements Serializable {
@@ -27,14 +33,6 @@ public class Authority implements Serializable {
     @Id
     @Column(length = 50)
     private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public boolean equals(Object o) {

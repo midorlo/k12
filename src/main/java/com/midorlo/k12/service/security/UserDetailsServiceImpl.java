@@ -44,7 +44,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                                                                  "database"));
         }
 
-        String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
+        String lowercaseLogin = login.toLowerCase(Locale.GERMAN);
         return userRepository
             .findOneWithAuthoritiesByLogin(lowercaseLogin)
             .map(user -> createSpringSecurityUser(lowercaseLogin, user))
@@ -57,11 +57,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (!user.isActivated()) {
             throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
         }
-        List<GrantedAuthority> grantedAuthorities = user
-            .getAuthorities()
-            .stream()
-            .map(authority -> new SimpleGrantedAuthority(authority.getName()))
-            .collect(Collectors.toList());
-        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(
+            user.getLogin(),
+            user.getPassword(),
+            user.getSpringSecurityAuthorities()
+        );
     }
 }
