@@ -6,8 +6,6 @@ import com.midorlo.k12.web.exception.BadRequestAlertException;
 import com.midorlo.k12.web.util.HttpHeaderUtilities;
 import com.midorlo.k12.web.util.HttpResponseUtilities;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -129,7 +127,7 @@ public class ClearanceResource {
             .map(
                 existingClearance -> {
                     if (clearance.getI18n() != null) {
-                        existingClearance.seti18n(clearance.getI18n());
+                        existingClearance.setI18n(clearance.getI18n());
                     }
 
                     return existingClearance;

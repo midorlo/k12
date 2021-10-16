@@ -25,7 +25,7 @@ export default route(function ({ store /*, ssrContext */ }) {
     {
       path: '/',
       meta: { public: true },
-      component: () => import('layouts/Shell.vue'),
+      component: () => import('layouts/MainLayout.vue'),
       children: [
         { path: '', meta: { public: true }, component: () => import('pages/Index.vue') },
         { path: '/register', meta: { public: true }, component: () => import('pages/Register.vue') },

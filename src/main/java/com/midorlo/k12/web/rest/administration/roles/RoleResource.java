@@ -124,7 +124,7 @@ public class RoleResource {
             .map(
                 existingRole -> {
                     if (role.getI18n() != null) {
-                        existingRole.seti18n(role.getI18n());
+                        existingRole.setI18n(role.getI18n());
                     }
 
                     return existingRole;

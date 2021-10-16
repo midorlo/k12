@@ -1,18 +1,8 @@
 package com.midorlo.k12.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.repository.ClearanceRepository;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
-import javax.persistence.EntityManager;
-
 import com.midorlo.k12.web.rest.administration.clearances.ClearanceResource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +12,16 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link ClearanceResource} REST controller.
@@ -34,11 +34,11 @@ class ClearanceResourceIT {
     private static final String DEFAULT_I_18_N = "AAAAAAAAAA";
     private static final String UPDATED_I_18_N = "BBBBBBBBBB";
 
-    private static final String ENTITY_API_URL = "/api/clearances";
+    private static final String ENTITY_API_URL    = "/api/clearances";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
-    private static final Random random = new Random();
-    private static final AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+    private static final Random     random = new Random();
+    private static final AtomicLong count  = new AtomicLong(random.nextInt() + (2L * Integer.MAX_VALUE));
 
     @Autowired
     private ClearanceRepository clearanceRepository;
@@ -58,7 +58,7 @@ class ClearanceResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Clearance createEntity(EntityManager em) {
-        return new Clearance().i18n(DEFAULT_I_18_N);
+        return new Clearance().setI18n(DEFAULT_I_18_N);
     }
 
     /**
@@ -68,7 +68,7 @@ class ClearanceResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Clearance createUpdatedEntity(EntityManager em) {
-        return new Clearance().i18n(UPDATED_I_18_N);
+        return new Clearance().setI18n(UPDATED_I_18_N);
     }
 
     @BeforeEach
@@ -82,7 +82,8 @@ class ClearanceResourceIT {
         int databaseSizeBeforeCreate = clearanceRepository.findAll().size();
         // Create the Clearance
         restClearanceMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clearance)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                                         .content(TestUtil.convertObjectToJsonBytes(clearance)))
             .andExpect(status().isCreated());
 
         // Validate the Clearance in the database
@@ -102,7 +103,8 @@ class ClearanceResourceIT {
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restClearanceMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clearance)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                                         .content(TestUtil.convertObjectToJsonBytes(clearance)))
             .andExpect(status().isBadRequest());
 
         // Validate the Clearance in the database
@@ -115,12 +117,13 @@ class ClearanceResourceIT {
     void checki18nIsRequired() throws Exception {
         int databaseSizeBeforeTest = clearanceRepository.findAll().size();
         // set the field null
-        clearance.seti18n(null);
+        clearance.setI18n(null);
 
         // Create the Clearance, which fails.
 
         restClearanceMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clearance)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                                         .content(TestUtil.convertObjectToJsonBytes(clearance)))
             .andExpect(status().isBadRequest());
 
         List<Clearance> clearanceList = clearanceRepository.findAll();
@@ -176,7 +179,7 @@ class ClearanceResourceIT {
         Clearance updatedClearance = clearanceRepository.findById(clearance.getId()).get();
         // Disconnect from session so that the updates on updatedClearance are not directly saved in db
         em.detach(updatedClearance);
-        updatedClearance.i18n(UPDATED_I_18_N);
+        updatedClearance.setI18n(UPDATED_I_18_N);
 
         restClearanceMockMvc
             .perform(
@@ -241,7 +244,8 @@ class ClearanceResourceIT {
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClearanceMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clearance)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                                        .content(TestUtil.convertObjectToJsonBytes(clearance)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Clearance in the database
@@ -261,7 +265,7 @@ class ClearanceResourceIT {
         Clearance partialUpdatedClearance = new Clearance();
         partialUpdatedClearance.setId(clearance.getId());
 
-        partialUpdatedClearance.i18n(UPDATED_I_18_N);
+        partialUpdatedClearance.setI18n(UPDATED_I_18_N);
 
         restClearanceMockMvc
             .perform(
@@ -290,7 +294,7 @@ class ClearanceResourceIT {
         Clearance partialUpdatedClearance = new Clearance();
         partialUpdatedClearance.setId(clearance.getId());
 
-        partialUpdatedClearance.i18n(UPDATED_I_18_N);
+        partialUpdatedClearance.setI18n(UPDATED_I_18_N);
 
         restClearanceMockMvc
             .perform(
@@ -356,7 +360,8 @@ class ClearanceResourceIT {
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restClearanceMockMvc
             .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(clearance))
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json")
+                                     .content(TestUtil.convertObjectToJsonBytes(clearance))
             )
             .andExpect(status().isMethodNotAllowed());
 
