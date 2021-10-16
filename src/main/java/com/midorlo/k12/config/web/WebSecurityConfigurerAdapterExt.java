@@ -2,7 +2,7 @@ package com.midorlo.k12.config.web;
 
 import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.config.ApplicationProperties;
-import com.midorlo.k12.config.web.jwt.JwtSecurityConfigurerAdapter;
+import com.midorlo.k12.config.web.jwt.JwtFilterBean;
 import com.midorlo.k12.service.security.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -79,32 +79,34 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
+
             .authorizeRequests()
+            .antMatchers("/api/identity").permitAll()
             .antMatchers("/api/identity/**").permitAll()
+
+            .antMatchers("/api/webapp").permitAll()
             .antMatchers("/api/webapp/**").permitAll()
-            .antMatchers("/api/activate").permitAll()
 
-            .antMatchers("/api/identity/account/reset-password/init").permitAll()
-            .antMatchers("/api/identity/account/reset-password/finish").permitAll()
-
-            .antMatchers("/api/admin/*").hasAuthority(ApplicationConstants.SecurityConstants.ADMIN)
+            .antMatchers("/api/admin").hasAuthority(ApplicationConstants.SecurityConstants.ADMIN)
             .antMatchers("/api/admin/**").hasAuthority(ApplicationConstants.SecurityConstants.ADMIN)
-            .antMatchers("/api/admin/users").authenticated()
 
-            .antMatchers("/api/**").authenticated()
+            .antMatchers("/management").permitAll()
+            .antMatchers("/management/**").hasAuthority(ApplicationConstants.SecurityConstants.ADMIN)
+
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/health/**").permitAll()
+
             .antMatchers("/management/actuator").permitAll()
-            .antMatchers("/management/prometheus").permitAll()
-            .antMatchers("/management/**").hasAuthority(ApplicationConstants.SecurityConstants.ADMIN)
+            .antMatchers("/management/actuator/**").permitAll()
+
+            .antMatchers("/api/management/prometheus").permitAll()
+            .antMatchers("/api/management/prometheus/**").permitAll()
+
             .and()
             .httpBasic()
-            .and()
-            .apply(securityConfigurerAdapter());
-        // @formatter:on
-    }
 
-    private JwtSecurityConfigurerAdapter securityConfigurerAdapter() {
-        return new JwtSecurityConfigurerAdapter(tokenProvider);
+            .and()
+            .addFilterBefore(new JwtFilterBean(tokenProvider), UsernamePasswordAuthenticationFilter.class);
+        // @formatter:on
     }
 }
