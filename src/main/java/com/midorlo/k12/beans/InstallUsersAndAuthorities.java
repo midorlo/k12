@@ -1,4 +1,4 @@
-package com.midorlo.k12.init;
+package com.midorlo.k12.beans;
 
 import com.midorlo.k12.domain.security.Authority;
 import com.midorlo.k12.domain.security.Clearance;

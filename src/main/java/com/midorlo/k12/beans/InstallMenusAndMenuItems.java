@@ -1,4 +1,4 @@
-package com.midorlo.k12.init;
+package com.midorlo.k12.beans;
 
 import com.midorlo.k12.domain.webapp.Menu;
 import com.midorlo.k12.domain.webapp.MenuItem;
