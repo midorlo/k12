@@ -18,10 +18,13 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
 
+import static com.midorlo.k12.Application.REPOSITORY_PACKAGE;
+import static com.midorlo.k12.config.ApplicationConstants.TechConstants.AUDITOR_BEAN;
+
 @Slf4j
 @SpringBootApplication
-@EnableJpaRepositories("com.midorlo.k12.repository")
-@EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
+@EnableJpaRepositories(REPOSITORY_PACKAGE)
+@EnableJpaAuditing(auditorAwareRef = AUDITOR_BEAN)
 @EnableTransactionManagement
 @EnableConfigurationProperties({ ApplicationProperties.class })
 @ComponentScan(basePackages = {
@@ -30,6 +33,7 @@ import java.util.*;
 })
 public class Application {
 
+    public static final String REPOSITORY_PACKAGE = "com.midorlo.k12.repository";
     private final Environment env;
 
     public Application(Environment env) {
@@ -46,8 +50,8 @@ public class Application {
     public void initApplication() {
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
         if (
-                activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_DEVELOPMENT) &&
-                activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_PRODUCTION)
+            activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_DEVELOPMENT) &&
+            activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_PRODUCTION)
         ) {
             log.error(
                 "You have misconfigured your application! It should not run " + "with both the 'dev' and 'prod' " +
@@ -55,8 +59,8 @@ public class Application {
             );
         }
         if (
-                activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_DEVELOPMENT) &&
-                activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_CLOUD)
+            activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_DEVELOPMENT) &&
+            activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_CLOUD)
         ) {
             log.error(
                 "You have misconfigured your application! It should not " + "run with both the 'dev' and 'cloud' " +
@@ -78,8 +82,8 @@ public class Application {
     }
 
     private static void logApplicationStartup(Environment env) {
-        String protocol   = Optional.ofNullable(env.getProperty("server.ssl.key-store")).map(key -> "https")
-                                    .orElse("http");
+        String protocol = Optional.ofNullable(env.getProperty("server.ssl.key-store")).map(key -> "https")
+                                  .orElse("http");
         String serverPort = env.getProperty("server.port");
         String contextPath = Optional
             .ofNullable(env.getProperty("server.servlet.context-path"))

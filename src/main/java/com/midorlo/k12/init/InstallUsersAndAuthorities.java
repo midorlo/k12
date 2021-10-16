@@ -1,4 +1,4 @@
-package com.midorlo.k12.config.database.init;
+package com.midorlo.k12.init;
 
 import com.midorlo.k12.domain.security.Authority;
 import com.midorlo.k12.domain.security.Clearance;

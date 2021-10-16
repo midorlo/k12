@@ -1,18 +1,17 @@
-package com.midorlo.k12.config.database.init;
+package com.midorlo.k12.init;
 
 import com.midorlo.k12.domain.webapp.Menu;
 import com.midorlo.k12.domain.webapp.MenuItem;
 import com.midorlo.k12.repository.MenuItemRepository;
 import com.midorlo.k12.repository.MenuRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Slf4j
-@Component
 public class InstallMenusAndMenuItems implements CommandLineRunner {
 
     private final MenuRepository menuRepository;

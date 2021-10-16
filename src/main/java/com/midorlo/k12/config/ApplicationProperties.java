@@ -1,5 +1,6 @@
 package com.midorlo.k12.config;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
@@ -17,6 +18,7 @@ import java.util.*;
  * .properties
  * files if they are found in the classpath.</p>
  */
+@Data
 @EnableConfigurationProperties(ApplicationProperties.class)
 // Load some properties into the environment from files to make them available for interpolation in application.yaml.
 @PropertySources(
@@ -54,123 +56,7 @@ public class ApplicationProperties {
 
     private final AuditEvents auditEvents = new AuditEvents();
 
-    /**
-     * <p>Getter for the field <code>async</code>.</p>
-     *
-     * @return a {@link Async} object.
-     */
-    public Async getAsync() {
-        return async;
-    }
-
-    /**
-     * <p>Getter for the field <code>http</code>.</p>
-     *
-     * @return a {@link Http} object.
-     */
-    public Http getHttp() {
-        return http;
-    }
-
-    /**
-     * <p>Getter for the field <code>cache</code>.</p>
-     *
-     * @return a {@link Cache} object.
-     */
-    public Cache getCache() {
-        return cache;
-    }
-
-    /**
-     * <p>Getter for the field <code>mail</code>.</p>
-     *
-     * @return a {@link Mail} object.
-     */
-    public Mail getMail() {
-        return mail;
-    }
-
-    /**
-     * <p>Getter for the field <code>registry</code>.</p>
-     *
-     * @return a {@link Registry} object.
-     */
-    public Registry getRegistry() {
-        return registry;
-    }
-
-    /**
-     * <p>Getter for the field <code>security</code>.</p>
-     *
-     * @return a {@link Security} object.
-     */
-    public Security getSecurity() {
-        return security;
-    }
-
-    /**
-     * <p>Getter for the field <code>api-docs</code>.</p>
-     *
-     * @return a {@link ApiDocs} object.
-     */
-    public ApiDocs getApiDocs() {
-        return apiDocs;
-    }
-
-    /**
-     * <p>Getter for the field <code>logging</code>.</p>
-     *
-     * @return a {@link Logging} object.
-     */
-    public Logging getLogging() {
-        return logging;
-    }
-
-    /**
-     * <p>Getter for the field <code>cors</code>.</p>
-     *
-     * @return a {@link CorsConfiguration} object.
-     */
-    public CorsConfiguration getCors() {
-        return cors;
-    }
-
-    /**
-     * <p>Getter for the field <code>social</code>.</p>
-     *
-     * @return a {@link Social} object.
-     */
-    public Social getSocial() {
-        return social;
-    }
-
-    /**
-     * <p>Getter for the field <code>gateway</code>.</p>
-     *
-     * @return a {@link Gateway} object.
-     */
-    public Gateway getGateway() {
-        return gateway;
-    }
-
-    /**
-     * <p>Getter for the field <code>clientApp</code>.</p>
-     *
-     * @return a {@link ClientApp} object.
-     */
-    public ClientApp getClientApp() {
-        return clientApp;
-    }
-
-    /**
-     * <p>Getter for the field <code>auditEvents</code>.</p>
-     *
-     * @return a {@link AuditEvents} object.
-     */
-    public AuditEvents getAuditEvents() {
-        return auditEvents;
-    }
-
+    @Data
     public static class Async {
 
         private int corePoolSize = 2;
@@ -179,38 +65,12 @@ public class ApplicationProperties {
 
         private int queueCapacity = 10000;
 
-        public int getCorePoolSize() {
-            return corePoolSize;
-        }
-
-        public void setCorePoolSize(int corePoolSize) {
-            this.corePoolSize = corePoolSize;
-        }
-
-        public int getMaxPoolSize() {
-            return maxPoolSize;
-        }
-
-        public void setMaxPoolSize(int maxPoolSize) {
-            this.maxPoolSize = maxPoolSize;
-        }
-
-        public int getQueueCapacity() {
-            return queueCapacity;
-        }
-
-        public void setQueueCapacity(int queueCapacity) {
-            this.queueCapacity = queueCapacity;
-        }
     }
 
+    @Data
     public static class Http {
 
         private final Cache cache = new Cache();
-
-        public Cache getCache() {
-            return cache;
-        }
 
         public static class Cache {
 
@@ -226,13 +86,10 @@ public class ApplicationProperties {
         }
     }
 
+    @Data
     public static class Cache {
 
         private final Ehcache ehcache = new Ehcache();
-
-        public Ehcache getEhcache() {
-            return ehcache;
-        }
 
         public static class Ehcache {
 
@@ -258,6 +115,7 @@ public class ApplicationProperties {
         }
     }
 
+    @Data
     public static class Mail {
 
         private boolean enabled = false;
@@ -266,31 +124,9 @@ public class ApplicationProperties {
 
         private String baseUrl = "";
 
-        public boolean isEnabled() {
-            return enabled;
-        }
-
-        public void setEnabled(boolean enabled) {
-            this.enabled = enabled;
-        }
-
-        public String getFrom() {
-            return from;
-        }
-
-        public void setFrom(String from) {
-            this.from = from;
-        }
-
-        public String getBaseUrl() {
-            return baseUrl;
-        }
-
-        public void setBaseUrl(String baseUrl) {
-            this.baseUrl = baseUrl;
-        }
     }
 
+    @Data
     public static class Security {
 
         private String contentSecurityPolicy = "default-src 'self'; frame-src 'self' data:; script-src 'self' " +
@@ -306,30 +142,6 @@ public class ApplicationProperties {
         private final RememberMe rememberMe = new RememberMe();
 
         private final OAuth2 oauth2 = new OAuth2();
-
-        public ClientAuthorization getClientAuthorization() {
-            return clientAuthorization;
-        }
-
-        public Authentication getAuthentication() {
-            return authentication;
-        }
-
-        public RememberMe getRememberMe() {
-            return rememberMe;
-        }
-
-        public OAuth2 getOauth2() {
-            return oauth2;
-        }
-
-        public String getContentSecurityPolicy() {
-            return contentSecurityPolicy;
-        }
-
-        public void setContentSecurityPolicy(String contentSecurityPolicy) {
-            this.contentSecurityPolicy = contentSecurityPolicy;
-        }
 
         public static class ClientAuthorization {
 
@@ -454,6 +266,7 @@ public class ApplicationProperties {
         }
     }
 
+    @Data
     public static class ApiDocs {
 
         private String   title                      = "Application API";
@@ -472,126 +285,6 @@ public class ApplicationProperties {
         private boolean  useDefaultResponseMessages = true;
 
         private Server[] servers = {};
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public String getVersion() {
-            return version;
-        }
-
-        public void setVersion(String version) {
-            this.version = version;
-        }
-
-        public String getTermsOfServiceUrl() {
-            return termsOfServiceUrl;
-        }
-
-        public void setTermsOfServiceUrl(String termsOfServiceUrl) {
-            this.termsOfServiceUrl = termsOfServiceUrl;
-        }
-
-        public String getContactName() {
-            return contactName;
-        }
-
-        public void setContactName(String contactName) {
-            this.contactName = contactName;
-        }
-
-        public String getContactUrl() {
-            return contactUrl;
-        }
-
-        public void setContactUrl(String contactUrl) {
-            this.contactUrl = contactUrl;
-        }
-
-        public String getContactEmail() {
-            return contactEmail;
-        }
-
-        public void setContactEmail(String contactEmail) {
-            this.contactEmail = contactEmail;
-        }
-
-        public String getLicense() {
-            return license;
-        }
-
-        public void setLicense(String license) {
-            this.license = license;
-        }
-
-        public String getLicenseUrl() {
-            return licenseUrl;
-        }
-
-        public void setLicenseUrl(String licenseUrl) {
-            this.licenseUrl = licenseUrl;
-        }
-
-        public String getDefaultIncludePattern() {
-            return defaultIncludePattern;
-        }
-
-        public void setDefaultIncludePattern(String defaultIncludePattern) {
-            this.defaultIncludePattern = defaultIncludePattern;
-        }
-
-        public String getManagementIncludePattern() {
-            return managementIncludePattern;
-        }
-
-        public void setManagementIncludePattern(String managementIncludePattern) {
-            this.managementIncludePattern = managementIncludePattern;
-        }
-
-        public String getHost() {
-            return host;
-        }
-
-        public void setHost(final String host) {
-            this.host = host;
-        }
-
-        public String[] getProtocols() {
-            return protocols;
-        }
-
-        public void setProtocols(final String[] protocols) {
-            this.protocols = protocols;
-        }
-
-        public Server[] getServers() {
-            return servers;
-        }
-
-        public void setServers(final Server[] servers) {
-            this.servers = servers;
-        }
-
-        public boolean isUseDefaultResponseMessages() {
-            return useDefaultResponseMessages;
-        }
-
-        public void setUseDefaultResponseMessages(final boolean useDefaultResponseMessages) {
-            this.useDefaultResponseMessages = useDefaultResponseMessages;
-        }
 
         public static class Server {
 
@@ -625,23 +318,12 @@ public class ApplicationProperties {
         }
     }
 
+    @Data
     public static class Logging {
 
         private boolean useJsonFormat = false;
 
         private final Logstash logstash = new Logstash();
-
-        public boolean isUseJsonFormat() {
-            return useJsonFormat;
-        }
-
-        public void setUseJsonFormat(boolean useJsonFormat) {
-            this.useJsonFormat = useJsonFormat;
-        }
-
-        public Logstash getLogstash() {
-            return logstash;
-        }
 
         public static class Logstash {
 
@@ -684,36 +366,19 @@ public class ApplicationProperties {
         }
     }
 
+    @Data
     public static class Social {
 
         private String redirectAfterSignIn = "/#/home";
 
-        public String getRedirectAfterSignIn() {
-            return redirectAfterSignIn;
-        }
-
-        public void setRedirectAfterSignIn(String redirectAfterSignIn) {
-            this.redirectAfterSignIn = redirectAfterSignIn;
-        }
     }
 
+    @Data
     public static class Gateway {
 
         private final RateLimiting rateLimiting = new RateLimiting();
 
-        public RateLimiting getRateLimiting() {
-            return rateLimiting;
-        }
-
         private Map<String, List<String>> authorizedMicroservicesEndpoints = new LinkedHashMap<>();
-
-        public Map<String, List<String>> getAuthorizedMicroservicesEndpoints() {
-            return authorizedMicroservicesEndpoints;
-        }
-
-        public void setAuthorizedMicroservicesEndpoints(Map<String, List<String>> authorizedMicroservicesEndpoints) {
-            this.authorizedMicroservicesEndpoints = authorizedMicroservicesEndpoints;
-        }
 
         public static class RateLimiting {
 
@@ -747,42 +412,24 @@ public class ApplicationProperties {
         }
     }
 
+    @Data
     public static class Registry {
 
         private String password = null;
 
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
     }
 
+    @Data
     public static class ClientApp {
 
         private String name = "applicationApp";
 
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
     }
 
+    @Data
     public static class AuditEvents {
 
         private int retentionPeriod = 30;
 
-        public int getRetentionPeriod() {
-            return retentionPeriod;
-        }
-
-        public void setRetentionPeriod(int retentionPeriod) {
-            this.retentionPeriod = retentionPeriod;
-        }
     }
 }

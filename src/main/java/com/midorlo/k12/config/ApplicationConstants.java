@@ -101,4 +101,8 @@ public final class ApplicationConstants {
 
         private ErrorConstants() {}
     }
+
+    public static final class TechConstants {
+        public static final String   AUDITOR_BEAN           = "springSecurityAuditorAware";
+    }
 }
