@@ -1,7 +1,7 @@
 module.exports = {
   // https://eslint.org/docs/user-guide/configuring#configuration-cascading-and-hierarchy
   // This option interrupts the configuration hierarchy at this file
-  // Remove this if you have an higher level ESLint config file (it usually happens into a monorepos)
+  // Remove this if you have an higher level ESLint configuration file (it usually happens into a monorepos)
   root: true,
 
   parserOptions: {
@@ -27,7 +27,7 @@ module.exports = {
     // 'plugin:vue/vue3-recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
 
     // https://github.com/prettier/eslint-config-prettier#installation
-    // usage with Prettier, provided by 'eslint-config-prettier'.
+    // usage with Prettier, provided by 'eslint-configuration-prettier'.
     'prettier',
   ],
 

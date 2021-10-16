@@ -1,6 +1,6 @@
 package com.midorlo.k12.service.security;
 
-import com.midorlo.k12.config.ApplicationProperties;
+import com.midorlo.k12.configuration.ApplicationProperties;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

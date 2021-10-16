@@ -28,7 +28,7 @@ spring:
     serialization:
       write-durations-as-timestamps: false
   jpa:
-    database-platform: com.midorlo.k12.config.database.FixedH2Dialect
+    database-platform: com.midorlo.k12.configuration.database.FixedH2Dialect
     open-in-view: false
     hibernate:
       ddl-auto: create-drop

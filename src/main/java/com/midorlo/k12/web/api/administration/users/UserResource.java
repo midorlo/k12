@@ -1,14 +1,14 @@
 package com.midorlo.k12.web.api.administration.users;
 
-import com.midorlo.k12.config.ApplicationConstants;
+import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.service.mail.MailService;
 import com.midorlo.k12.service.security.UserService;
 import com.midorlo.k12.service.security.dto.AdminUserDTO;
-import com.midorlo.k12.config.web.problem.BadRequestAlertProblem;
-import com.midorlo.k12.config.web.problem.EmailAlreadyUsedProblem;
-import com.midorlo.k12.config.web.problem.LoginAlreadyUsedProblem;
+import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;
+import com.midorlo.k12.configuration.web.problem.EmailAlreadyUsedProblem;
+import com.midorlo.k12.configuration.web.problem.LoginAlreadyUsedProblem;
 import com.midorlo.k12.web.RestUtilities;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

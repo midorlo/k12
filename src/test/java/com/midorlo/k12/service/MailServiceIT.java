@@ -1,8 +1,8 @@
 package com.midorlo.k12.service;
 
 import com.midorlo.k12.IntegrationTest;
-import com.midorlo.k12.config.ApplicationConstants;
-import com.midorlo.k12.config.ApplicationProperties;
+import com.midorlo.k12.configuration.ApplicationConstants;
+import com.midorlo.k12.configuration.ApplicationProperties;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.service.mail.MailService;
 import org.junit.jupiter.api.BeforeEach;

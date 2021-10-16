@@ -1,7 +1,7 @@
 package com.midorlo.k12.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.midorlo.k12.config.ApplicationConstants;
+import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.domain.AbstractAuditingEntity;
 import lombok.Getter;
 import lombok.Setter;

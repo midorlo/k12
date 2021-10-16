@@ -1,7 +1,7 @@
 package com.midorlo.k12.security;
 
-import com.midorlo.k12.config.ApplicationConstants;
-import com.midorlo.k12.config.web.SecurityUtils;
+import com.midorlo.k12.configuration.ApplicationConstants;
+import com.midorlo.k12.configuration.web.SecurityUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

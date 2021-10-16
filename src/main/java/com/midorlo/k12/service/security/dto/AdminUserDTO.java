@@ -1,6 +1,6 @@
 package com.midorlo.k12.service.security.dto;
 
-import com.midorlo.k12.config.ApplicationConstants;
+import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.domain.security.Authority;
 import com.midorlo.k12.domain.security.User;
 

@@ -1,11 +1,11 @@
 package com.midorlo.k12.web.api.identity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.midorlo.k12.config.web.SecurityUtils;
-import com.midorlo.k12.config.web.filter.JwtFilterBean;
-import com.midorlo.k12.config.web.problem.EmailAlreadyUsedProblem;
-import com.midorlo.k12.config.web.problem.InvalidPasswordProblem;
-import com.midorlo.k12.config.web.problem.LoginAlreadyUsedProblem;
+import com.midorlo.k12.configuration.web.SecurityUtils;
+import com.midorlo.k12.configuration.web.filter.JwtFilterBean;
+import com.midorlo.k12.configuration.web.problem.EmailAlreadyUsedProblem;
+import com.midorlo.k12.configuration.web.problem.InvalidPasswordProblem;
+import com.midorlo.k12.configuration.web.problem.LoginAlreadyUsedProblem;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.service.mail.MailService;

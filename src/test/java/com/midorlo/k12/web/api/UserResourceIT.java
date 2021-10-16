@@ -1,7 +1,7 @@
 package com.midorlo.k12.web.api;
 
 import com.midorlo.k12.IntegrationTest;
-import com.midorlo.k12.config.ApplicationConstants;
+import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.domain.security.Authority;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;

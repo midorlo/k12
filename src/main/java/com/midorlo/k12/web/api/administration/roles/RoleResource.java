@@ -3,7 +3,7 @@ package com.midorlo.k12.web.api.administration.roles;
 import com.midorlo.k12.domain.security.Role;
 import com.midorlo.k12.repository.RoleRepository;
 import com.midorlo.k12.web.RestUtilities;
-import com.midorlo.k12.config.web.problem.BadRequestAlertProblem;
+import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;

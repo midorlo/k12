@@ -1,7 +1,7 @@
 package com.midorlo.k12;
 
-import com.midorlo.k12.config.ApplicationConstants;
-import com.midorlo.k12.config.ApplicationProperties;
+import com.midorlo.k12.configuration.ApplicationConstants;
+import com.midorlo.k12.configuration.ApplicationProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.SpringApplication;
@@ -18,9 +18,9 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
 
-import static com.midorlo.k12.config.ApplicationConstants.ContextConstants.*;
-import static com.midorlo.k12.config.ApplicationConstants.REPOSITORY_PACKAGE;
-import static com.midorlo.k12.config.ApplicationConstants.TechConstants.AUDITOR_BEAN;
+import static com.midorlo.k12.configuration.ApplicationConstants.ContextConstants.*;
+import static com.midorlo.k12.configuration.ApplicationConstants.REPOSITORY_PACKAGE;
+import static com.midorlo.k12.configuration.ApplicationConstants.TechConstants.AUDITOR_BEAN;
 
 @Slf4j
 @SpringBootApplication

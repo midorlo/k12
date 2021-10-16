@@ -5,7 +5,7 @@ services:
     volumes:
       - ./prometheus/:/etc/prometheus/
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--configuration.file=/etc/prometheus/prometheus.yml'
     ports:
       - '127.0.0.1:9090:9090'
     network_mode: 'host'

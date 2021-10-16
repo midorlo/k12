@@ -1,8 +1,8 @@
 package com.midorlo.k12.security.jwt;
 
-import com.midorlo.k12.config.ApplicationConstants;
-import com.midorlo.k12.config.ApplicationProperties;
-import com.midorlo.k12.config.web.filter.JwtFilterBean;
+import com.midorlo.k12.configuration.ApplicationConstants;
+import com.midorlo.k12.configuration.ApplicationProperties;
+import com.midorlo.k12.configuration.web.filter.JwtFilterBean;
 import com.midorlo.k12.service.security.TokenProvider;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

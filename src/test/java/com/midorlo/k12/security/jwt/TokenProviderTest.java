@@ -1,7 +1,7 @@
 package com.midorlo.k12.security.jwt;
 
-import com.midorlo.k12.config.ApplicationConstants;
-import com.midorlo.k12.config.ApplicationProperties;
+import com.midorlo.k12.configuration.ApplicationConstants;
+import com.midorlo.k12.configuration.ApplicationProperties;
 import com.midorlo.k12.service.security.TokenProvider;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

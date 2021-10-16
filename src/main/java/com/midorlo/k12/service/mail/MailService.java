@@ -1,6 +1,6 @@
 package com.midorlo.k12.service.mail;
 
-import com.midorlo.k12.config.ApplicationProperties;
+import com.midorlo.k12.configuration.ApplicationProperties;
 import com.midorlo.k12.domain.security.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
