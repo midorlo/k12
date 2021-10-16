@@ -30,11 +30,9 @@ import java.util.Optional;
 public class ClearanceResource {
 
     private static final String ENTITY_NAME = "clearance";
-
+    private final ClearanceRepository clearanceRepository;
     @Value("${application.clientApp.name}")
     private String applicationName;
-
-    private final ClearanceRepository clearanceRepository;
 
     public ClearanceResource(ClearanceRepository clearanceRepository) {
         this.clearanceRepository = clearanceRepository;
@@ -49,7 +47,8 @@ public class ClearanceResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/clearances")
-    public ResponseEntity<Clearance> createClearance(@Valid @RequestBody Clearance clearance) throws URISyntaxException {
+    public ResponseEntity<Clearance> createClearance(@Valid @RequestBody Clearance clearance) throws
+                                                                                              URISyntaxException {
         log.debug("REST request to save Clearance : {}", clearance);
         if (clearance.getId() != null) {
             throw new BadRequestAlertException("A new clearance cannot already have an ID", ENTITY_NAME, "idexists");
@@ -57,7 +56,8 @@ public class ClearanceResource {
         Clearance result = clearanceRepository.save(clearance);
         return ResponseEntity
             .created(new URI("/api/clearances/" + result.getId()))
-            .headers(HttpHeaderUtilities.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HttpHeaderUtilities.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId()
+                                                                                                              .toString()))
             .body(result);
     }
 
@@ -90,7 +90,8 @@ public class ClearanceResource {
         Clearance result = clearanceRepository.save(clearance);
         return ResponseEntity
             .ok()
-            .headers(HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, clearance.getId().toString()))
+            .headers(HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, clearance.getId()
+                                                                                                               .toString()))
             .body(result);
     }
 
@@ -137,7 +138,8 @@ public class ClearanceResource {
 
         return HttpResponseUtilities.wrapOrNotFound(
             result.orElseThrow(EntityNotFoundException::new),
-            HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, clearance.getId().toString())
+            HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, clearance.getId()
+                                                                                                      .toString())
         );
     }
 

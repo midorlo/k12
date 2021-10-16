@@ -1,9 +1,9 @@
 package com.midorlo.k12.web.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("UastIncorrectHttpHeaderInspection")
 class HttpHeaderUtilitiesTest {
@@ -11,7 +11,7 @@ class HttpHeaderUtilitiesTest {
     @Test
     void createAlert() {
         String message = "any.message";
-        String param = "24";
+        String param   = "24";
 
         HttpHeaders headers = HttpHeaderUtilities.createAlert("myApp", message, param);
         assertThat(headers.getFirst("X-myApp-alert")).isEqualTo(message);
@@ -62,14 +62,16 @@ class HttpHeaderUtilitiesTest {
 
     @Test
     void createFailureAlertWithTranslation() {
-        HttpHeaders headers = HttpHeaderUtilities.createFailureAlert("myApp", true, "User", "404", "Failed to find user");
+        HttpHeaders headers = HttpHeaderUtilities.createFailureAlert("myApp", true, "User", "404", "Failed to find " +
+                                                                                                   "user");
         assertThat(headers.getFirst("X-myApp-error")).isEqualTo("error.404");
         assertThat(headers.getFirst("X-myApp-params")).isEqualTo("User");
     }
 
     @Test
     void createFailureAlertNoTranslation() {
-        HttpHeaders headers = HttpHeaderUtilities.createFailureAlert("myApp", false, "User", "404", "Failed to find user");
+        HttpHeaders headers = HttpHeaderUtilities.createFailureAlert("myApp", false, "User", "404", "Failed to find " +
+                                                                                                    "user");
         assertThat(headers.getFirst("X-myApp-error")).isEqualTo("Failed to find user");
         assertThat(headers.getFirst("X-myApp-params")).isEqualTo("User");
     }

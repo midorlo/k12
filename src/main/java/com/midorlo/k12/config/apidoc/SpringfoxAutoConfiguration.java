@@ -1,17 +1,9 @@
 package com.midorlo.k12.config.apidoc;
 
-import static com.midorlo.k12.config.ApplicationConstants.ContextConstants.SPRING_PROFILE_API_DOCS;
-import static springfox.documentation.builders.PathSelectors.regex;
-
 import com.midorlo.k12.config.ApplicationProperties;
 import com.midorlo.k12.config.apidoc.customizer.ApplicationSpringfoxCustomizer;
 import com.midorlo.k12.config.apidoc.customizer.SpringfoxCustomizer;
-import java.nio.ByteBuffer;
-import java.util.*;
-
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -35,6 +27,12 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration;
 
+import java.nio.ByteBuffer;
+import java.util.*;
+
+import static com.midorlo.k12.config.ApplicationConstants.ContextConstants.SPRING_PROFILE_API_DOCS;
+import static springfox.documentation.builders.PathSelectors.regex;
+
 /**
  * Springfox OpenAPI configuration.
  * <p>
@@ -47,14 +45,15 @@ import springfox.documentation.swagger2.configuration.Swagger2DocumentationConfi
 @ConditionalOnClass({ ApiInfo.class, BeanValidatorPluginsConfiguration.class, Docket.class })
 @Profile(SPRING_PROFILE_API_DOCS)
 @AutoConfigureAfter(ApplicationProperties.class)
-@Import({ OpenApiDocumentationConfiguration.class, Swagger2DocumentationConfiguration.class, BeanValidatorPluginsConfiguration.class })
+@Import({ OpenApiDocumentationConfiguration.class, Swagger2DocumentationConfiguration.class,
+          BeanValidatorPluginsConfiguration.class })
 public class SpringfoxAutoConfiguration {
 
-    static final String STARTING_MESSAGE = "Starting OpenAPI docs";
-    static final String STARTED_MESSAGE = "Started OpenAPI docs in {} ms";
+    static final String STARTING_MESSAGE        = "Starting OpenAPI docs";
+    static final String STARTED_MESSAGE         = "Started OpenAPI docs in {} ms";
     static final String MANAGEMENT_TITLE_SUFFIX = "Management API";
-    static final String MANAGEMENT_GROUP_NAME = "management";
-    static final String MANAGEMENT_DESCRIPTION = "Management endpoints documentation";
+    static final String MANAGEMENT_GROUP_NAME   = "management";
+    static final String MANAGEMENT_DESCRIPTION  = "Management endpoints documentation";
 
     private final ApplicationProperties.ApiDocs properties;
 
@@ -71,7 +70,7 @@ public class SpringfoxAutoConfiguration {
      * Springfox configuration for the OpenAPI docs.
      *
      * @param springfoxCustomizers Springfox customizers
-     * @param alternateTypeRules alternate type rules
+     * @param alternateTypeRules   alternate type rules
      * @return the Springfox configuration
      */
     @Bean
@@ -111,7 +110,7 @@ public class SpringfoxAutoConfiguration {
     /**
      * Springfox configuration for the management endpoints (actuator) OpenAPI docs.
      *
-     * @param appName               the application name
+     * @param appName the application name
      * @return the Springfox configuration
      */
     @Bean
@@ -133,7 +132,8 @@ public class SpringfoxAutoConfiguration {
 
         for (ApplicationProperties.ApiDocs.Server server : properties.getServers()) {
             docket.servers(
-                new Server(server.getName(), server.getUrl(), server.getDescription(), Collections.emptyList(), Collections.emptyList())
+                new Server(server.getName(), server.getUrl(), server.getDescription(), Collections.emptyList(),
+                           Collections.emptyList())
             );
         }
 
@@ -149,7 +149,8 @@ public class SpringfoxAutoConfiguration {
                 .genericModelSubstitutes(ResponseEntity.class);
 
         // ignore Pageable parameter only if the class is present
-        if (ClassUtils.isPresent("org.springframework.data.domain.Pageable", SpringfoxAutoConfiguration.class.getClassLoader())) {
+        if (ClassUtils.isPresent("org.springframework.data.domain.Pageable",
+                                 SpringfoxAutoConfiguration.class.getClassLoader())) {
             docket = docket.ignoredParameterTypes(org.springframework.data.domain.Pageable.class);
         }
 

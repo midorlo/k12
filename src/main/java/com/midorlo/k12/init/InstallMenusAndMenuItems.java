@@ -6,30 +6,31 @@ import com.midorlo.k12.repository.MenuItemRepository;
 import com.midorlo.k12.repository.MenuRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.core.Ordered;
 
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
-public class InstallMenusAndMenuItems implements CommandLineRunner {
+public class InstallMenusAndMenuItems implements CommandLineRunner,
+                                                 Ordered {
 
-    private final MenuRepository menuRepository;
+    private final MenuRepository     menuRepository;
     private final MenuItemRepository menuItemRepository;
 
     public InstallMenusAndMenuItems(MenuRepository menuRepository, MenuItemRepository menuItemRepository) {
-        this.menuRepository = menuRepository;
+        this.menuRepository     = menuRepository;
         this.menuItemRepository = menuItemRepository;
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         List<Menu> menus = menuRepository.findAll();
         installAccountMenu(menus);
         installAdminMenu(menus);
     }
 
-    private void installAdminMenu(List<Menu> allStoredMenus) {
+    private void installAdminMenu(Collection<Menu> allStoredMenus) {
         allStoredMenus
             .stream()
             .filter(m -> m.getI18n().equals("Administration"))
@@ -98,7 +99,8 @@ public class InstallMenusAndMenuItems implements CommandLineRunner {
             );
     }
 
-    private void installAccountMenu(List<Menu> allStoredMenus) {
+    private void installAccountMenu(Collection<Menu> allStoredMenus) {
+        Menu menuAccount = new Menu().setEnabled(true).setIcon("home").setI18n("Account");
         allStoredMenus
             .stream()
             .filter(m -> m.getI18n().equals("Account"))
@@ -106,7 +108,7 @@ public class InstallMenusAndMenuItems implements CommandLineRunner {
             .ifPresentOrElse(
                 menu1 -> log.info("Account Menu already installed"),
                 () -> {
-                    Menu m = menuRepository.save(new Menu().setEnabled(true).setIcon("home").setI18n("Account"));
+                    Menu m = menuRepository.save(menuAccount);
                     log.info("Created {}", m);
                     log.info(
                         "Created {}",
@@ -132,5 +134,10 @@ public class InstallMenusAndMenuItems implements CommandLineRunner {
                     );
                 }
             );
+    }
+
+    @Override
+    public int getOrder() {
+        return 1;
     }
 }

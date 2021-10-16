@@ -129,19 +129,15 @@ public class ApplicationProperties {
     @Data
     public static class Security {
 
+        private final ClientAuthorization clientAuthorization = new ClientAuthorization();
+        private final Authentication authentication = new Authentication();
+        private final RememberMe rememberMe = new RememberMe();
+        private final OAuth2 oauth2 = new OAuth2();
         private String contentSecurityPolicy = "default-src 'self'; frame-src 'self' data:; script-src 'self' " +
                                                "'unsafe-inline' 'unsafe-eval' " +
                                                "https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; " +
                                                "img-src 'self' data:; font-src 'self' " +
                                                "data:";
-
-        private final ClientAuthorization clientAuthorization = new ClientAuthorization();
-
-        private final Authentication authentication = new Authentication();
-
-        private final RememberMe rememberMe = new RememberMe();
-
-        private final OAuth2 oauth2 = new OAuth2();
 
         public static class ClientAuthorization {
 
@@ -260,7 +256,7 @@ public class ApplicationProperties {
                 return Collections.unmodifiableList(audience);
             }
 
-            public void setAudience(@NotNull List<String> audience) {
+            public void setAudience(@NotNull Collection<String> audience) {
                 this.audience.addAll(audience);
             }
         }
@@ -321,9 +317,8 @@ public class ApplicationProperties {
     @Data
     public static class Logging {
 
-        private boolean useJsonFormat = false;
-
         private final Logstash logstash = new Logstash();
+        private boolean useJsonFormat = false;
 
         public static class Logstash {
 

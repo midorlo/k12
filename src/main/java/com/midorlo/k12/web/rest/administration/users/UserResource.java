@@ -13,8 +13,6 @@ import com.midorlo.k12.web.util.HttpHeaderUtilities;
 import com.midorlo.k12.web.util.HttpResponseUtilities;
 import com.midorlo.k12.web.util.PaginationUtilities;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -76,20 +74,16 @@ public class UserResource {
         "lastModifiedBy",
         "lastModifiedDate"
     );
-
+    private final UserService userService;
+    private final UserRepository userRepository;
+    private final MailService mailService;
     @Value("${application.clientApp.name}")
     private String applicationName;
 
-    private final UserService userService;
-
-    private final UserRepository userRepository;
-
-    private final MailService mailService;
-
     public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
-        this.userService = userService;
+        this.userService    = userService;
         this.userRepository = userRepository;
-        this.mailService = mailService;
+        this.mailService    = mailService;
     }
 
     /**
@@ -123,7 +117,9 @@ public class UserResource {
             return ResponseEntity
                 .created(new URI("/api/admin/users/" + newUser.getLogin()))
                 .headers(
-                    HttpHeaderUtilities.createAlert(applicationName, "A user is created with identifier " + newUser.getLogin(), newUser.getLogin())
+                    HttpHeaderUtilities.createAlert(applicationName,
+                                                    "A user is created with identifier " + newUser.getLogin(),
+                                                    newUser.getLogin())
                 )
                 .body(newUser);
         }
@@ -149,12 +145,15 @@ public class UserResource {
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(userDTO.getId()))) {
             throw new LoginAlreadyUsedException();
         }
-        Optional<AdminUserDTO> updatedUser = userService.updateUser(userDTO);
-        AdminUserDTO adminUserDTO = updatedUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Optional<AdminUserDTO> updatedUser  = userService.updateUser(userDTO);
+        AdminUserDTO           adminUserDTO =
+            updatedUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return HttpResponseUtilities.wrapOrNotFound(
             adminUserDTO,
-            HttpHeaderUtilities.createAlert(applicationName, "A user is updated with identifier " + userDTO.getLogin(), userDTO.getLogin())
+            HttpHeaderUtilities.createAlert(applicationName,
+                                            "A user is updated with identifier " + userDTO.getLogin(),
+                                            userDTO.getLogin())
         );
     }
 
@@ -173,8 +172,9 @@ public class UserResource {
             return ResponseEntity.badRequest().build();
         }
 
-        final Page<AdminUserDTO> page = userService.getAllManagedUsers(pageable);
-        HttpHeaders headers = PaginationUtilities.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        final Page<AdminUserDTO> page    = userService.getAllManagedUsers(pageable);
+        HttpHeaders              headers =
+            PaginationUtilities.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -213,7 +213,8 @@ public class UserResource {
         userService.deleteUser(login);
         return ResponseEntity
             .noContent()
-            .headers(HttpHeaderUtilities.createAlert(applicationName, "A user is deleted with identifier " + login, login))
+            .headers(HttpHeaderUtilities.createAlert(applicationName, "A user is deleted with identifier " + login,
+                                                     login))
             .build();
     }
 }

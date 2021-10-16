@@ -2,8 +2,6 @@ package com.midorlo.k12.web.util;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 
 import java.net.URLEncoder;
@@ -20,8 +18,8 @@ public final class HttpHeaderUtilities {
      * <p>createAlert.</p>
      *
      * @param applicationName a {@link String} object.
-     * @param message a {@link String} object.
-     * @param param a {@link String} object.
+     * @param message         a {@link String} object.
+     * @param param           a {@link String} object.
      * @return a {@link HttpHeaders} object.
      */
     public static HttpHeaders createAlert(String applicationName, String message, String param) {
@@ -34,10 +32,10 @@ public final class HttpHeaderUtilities {
     /**
      * <p>createEntityCreationAlert.</p>
      *
-     * @param applicationName a {@link String} object.
+     * @param applicationName   a {@link String} object.
      * @param enableTranslation a boolean.
-     * @param entityName a {@link String} object.
-     * @param param a {@link String} object.
+     * @param entityName        a {@link String} object.
+     * @param param             a {@link String} object.
      * @return a {@link HttpHeaders} object.
      */
     public static HttpHeaders createEntityCreationAlert(
@@ -47,18 +45,18 @@ public final class HttpHeaderUtilities {
         String param
     ) {
         String message = enableTranslation
-            ? applicationName + "." + entityName + ".created"
-            : "A new " + entityName + " is created with identifier " + param;
+                         ? applicationName + "." + entityName + ".created"
+                         : "A new " + entityName + " is created with identifier " + param;
         return createAlert(applicationName, message, param);
     }
 
     /**
      * <p>createEntityUpdateAlert.</p>
      *
-     * @param applicationName a {@link String} object.
+     * @param applicationName   a {@link String} object.
      * @param enableTranslation a boolean.
-     * @param entityName a {@link String} object.
-     * @param param a {@link String} object.
+     * @param entityName        a {@link String} object.
+     * @param param             a {@link String} object.
      * @return a {@link HttpHeaders} object.
      */
     public static HttpHeaders createEntityUpdateAlert(String applicationName,
@@ -66,18 +64,18 @@ public final class HttpHeaderUtilities {
                                                       String entityName,
                                                       String param) {
         String message = enableTranslation
-            ? applicationName + "." + entityName + ".updated"
-            : "A " + entityName + " is updated with identifier " + param;
+                         ? applicationName + "." + entityName + ".updated"
+                         : "A " + entityName + " is updated with identifier " + param;
         return createAlert(applicationName, message, param);
     }
 
     /**
      * <p>createEntityDeletionAlert.</p>
      *
-     * @param applicationName a {@link String} object.
+     * @param applicationName   a {@link String} object.
      * @param enableTranslation a boolean.
-     * @param entityName a {@link String} object.
-     * @param param a {@link String} object.
+     * @param entityName        a {@link String} object.
+     * @param param             a {@link String} object.
      * @return a {@link HttpHeaders} object.
      */
     public static HttpHeaders createEntityDeletionAlert(
@@ -87,19 +85,19 @@ public final class HttpHeaderUtilities {
         String param
     ) {
         String message = enableTranslation
-            ? applicationName + "." + entityName + ".deleted"
-            : "A " + entityName + " is deleted with identifier " + param;
+                         ? applicationName + "." + entityName + ".deleted"
+                         : "A " + entityName + " is deleted with identifier " + param;
         return createAlert(applicationName, message, param);
     }
 
     /**
      * <p>createFailureAlert.</p>
      *
-     * @param applicationName a {@link String} object.
+     * @param applicationName   a {@link String} object.
      * @param enableTranslation a boolean.
-     * @param entityName a {@link String} object.
-     * @param errorKey a {@link String} object.
-     * @param defaultMessage a {@link String} object.
+     * @param entityName        a {@link String} object.
+     * @param errorKey          a {@link String} object.
+     * @param defaultMessage    a {@link String} object.
      * @return a {@link HttpHeaders} object.
      */
     public static HttpHeaders createFailureAlert(

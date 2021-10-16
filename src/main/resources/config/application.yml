@@ -18,7 +18,7 @@ management:
       base-path: /management
       exposure:
         include:
-          ['configprops', 'env', 'health', 'info', 'metrics', 'logfile', 'loggers', 'prometheus', 'threaddump', 'caches']
+          [ 'configprops', 'env', 'health', 'info', 'metrics', 'logfile', 'loggers', 'prometheus', 'threaddump', 'caches' ]
   endpoint:
     health:
       show-details: when_authorized

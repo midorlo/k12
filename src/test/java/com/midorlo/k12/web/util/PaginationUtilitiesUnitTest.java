@@ -1,9 +1,5 @@
 package com.midorlo.k12.web.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
@@ -12,6 +8,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Tests based on parsing algorithm in app/components/util/pagination-util.service.js
  *
@@ -19,13 +20,14 @@ import org.springframework.web.util.UriComponentsBuilder;
  */
 class PaginationUtilitiesUnitTest {
 
-    private static final int PAGE_SIZE = 20;
-    private static final int TOTAL_ELEMENTS_OF_3 = 3;
+    private static final int PAGE_SIZE            = 20;
+    private static final int TOTAL_ELEMENTS_OF_3  = 3;
     private static final int TOTAL_ELEMENTS_OF_40 = 40;
-    private static final int TOTAL_PAGES_OF_1 = 1;
-    private static final int TOTAL_PAGES_OF_2 = 2;
-
+    private static final int TOTAL_PAGES_OF_1     = 1;
+    private static final int TOTAL_PAGES_OF_2     = 2;
+    private static final String BASE_URL = "/api/_search/example";
     private List<Integer> content;
+    private UriComponentsBuilder uriBuilder;
 
     @BeforeEach
     void setup() {
@@ -60,11 +62,6 @@ class PaginationUtilitiesUnitTest {
         assertThat(page.getTotalPages()).isEqualTo(TOTAL_PAGES_OF_2);
     }
 
-
-    private static final String BASE_URL = "/api/_search/example";
-
-    private UriComponentsBuilder uriBuilder;
-
     @BeforeEach
     void init() {
         uriBuilder = UriComponentsBuilder.fromUriString(BASE_URL);
@@ -72,8 +69,8 @@ class PaginationUtilitiesUnitTest {
 
     @Test
     void generatePaginationHttpHeadersTest() {
-        Page<String> page = new PageImpl<>(new ArrayList<>(), PageRequest.of(6, 50), 400L);
-        HttpHeaders headers = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
+        Page<String> page       = new PageImpl<>(new ArrayList<>(), PageRequest.of(6, 50), 400L);
+        HttpHeaders  headers    = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
         List<String> strHeaders = headers.get(HttpHeaders.LINK);
         assertThat(strHeaders).isNotNull();
         assertThat(strHeaders).hasSize(1);
@@ -94,9 +91,9 @@ class PaginationUtilitiesUnitTest {
     @Test
     void commaTest() {
         uriBuilder.queryParam("query", "Test1, test2");
-        List<String> content = new ArrayList<>();
-        Page<String> page = new PageImpl<>(content);
-        HttpHeaders headers = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
+        List<String> content    = new ArrayList<>();
+        Page<String> page       = new PageImpl<>(content);
+        HttpHeaders  headers    = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
         List<String> strHeaders = headers.get(HttpHeaders.LINK);
         assertThat(strHeaders).isNotNull();
         assertThat(strHeaders).hasSize(1);
@@ -118,8 +115,8 @@ class PaginationUtilitiesUnitTest {
         List<String> content = new ArrayList<>();
 
         // Page 0
-        Page<String> page = new PageImpl<>(content, PageRequest.of(0, 50), 400L);
-        HttpHeaders headers = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
+        Page<String> page       = new PageImpl<>(content, PageRequest.of(0, 50), 400L);
+        HttpHeaders  headers    = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
         List<String> strHeaders = headers.get(HttpHeaders.LINK);
         assertThat(strHeaders).isNotNull();
         assertThat(strHeaders).hasSize(1);
@@ -137,8 +134,8 @@ class PaginationUtilitiesUnitTest {
 
         // Page 1
         uriBuilder.queryParam("page", "1");
-        page = new PageImpl<>(content, PageRequest.of(1, 50), 400L);
-        headers = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
+        page       = new PageImpl<>(content, PageRequest.of(1, 50), 400L);
+        headers    = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
         strHeaders = headers.get(HttpHeaders.LINK);
         assertThat(strHeaders).isNotNull();
         assertThat(strHeaders).hasSize(1);
@@ -157,8 +154,8 @@ class PaginationUtilitiesUnitTest {
 
         // Page 6
         uriBuilder.queryParam("page", "6");
-        page = new PageImpl<>(content, PageRequest.of(6, 50), 400L);
-        headers = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
+        page       = new PageImpl<>(content, PageRequest.of(6, 50), 400L);
+        headers    = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
         strHeaders = headers.get(HttpHeaders.LINK);
         assertThat(strHeaders).isNotNull();
         assertThat(strHeaders).hasSize(1);
@@ -177,8 +174,8 @@ class PaginationUtilitiesUnitTest {
 
         // Page 7
         uriBuilder.queryParam("page", "7");
-        page = new PageImpl<>(content, PageRequest.of(7, 50), 400L);
-        headers = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
+        page       = new PageImpl<>(content, PageRequest.of(7, 50), 400L);
+        headers    = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
         strHeaders = headers.get(HttpHeaders.LINK);
         assertThat(strHeaders).isNotNull();
         assertThat(strHeaders).hasSize(1);
@@ -194,8 +191,8 @@ class PaginationUtilitiesUnitTest {
     @Test
     void greaterSemicolonTest() {
         uriBuilder.queryParam("query", "Test>;test");
-        Page<String> page = new PageImpl<>(new ArrayList<>());
-        HttpHeaders headers = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
+        Page<String> page       = new PageImpl<>(new ArrayList<>());
+        HttpHeaders  headers    = PaginationUtilities.generatePaginationHttpHeaders(uriBuilder, page);
         List<String> strHeaders = headers.get(HttpHeaders.LINK);
         assertThat(strHeaders).isNotNull();
         assertThat(strHeaders).hasSize(1);

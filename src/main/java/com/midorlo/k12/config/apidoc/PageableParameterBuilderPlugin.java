@@ -29,7 +29,7 @@ public class PageableParameterBuilderPlugin implements OperationBuilderPlugin {
     /**
      * Constant <code>PAGE_DESCRIPTION="Page number of the requested page"</code>
      */
-    public static final String PAGE_DESCRIPTION = "Page number of the requested page";
+    public static final String PAGE_DESCRIPTION  = "Page number of the requested page";
 
     /**
      * Constant <code>DEFAULT_SIZE_NAME="size"</code>
@@ -38,7 +38,7 @@ public class PageableParameterBuilderPlugin implements OperationBuilderPlugin {
     /**
      * Constant <code>SIZE_DESCRIPTION="Size of a page"</code>
      */
-    public static final String SIZE_DESCRIPTION = "Size of a page";
+    public static final String SIZE_DESCRIPTION  = "Size of a page";
 
     /**
      * Constant <code>DEFAULT_SORT_NAME="sort"</code>
@@ -47,7 +47,7 @@ public class PageableParameterBuilderPlugin implements OperationBuilderPlugin {
     /**
      * Constant <code>SORT_DESCRIPTION="Sorting criteria in the format: property"{trunked}</code>
      */
-    public static final String SORT_DESCRIPTION =
+    public static final String SORT_DESCRIPTION  =
         "Sorting criteria in the format: property(,asc|desc). " +
         "Default sort order is ascending. " +
         "Multiple sort criteria are supported.";

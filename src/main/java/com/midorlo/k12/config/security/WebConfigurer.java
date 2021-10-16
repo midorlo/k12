@@ -2,8 +2,6 @@ package com.midorlo.k12.config.security;
 
 import com.midorlo.k12.config.ApplicationProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.server.WebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
@@ -61,8 +59,8 @@ public class WebConfigurer implements ServletContextInitializer,
     private void setLocationForStaticAssets(WebServerFactory server) {
         if (server instanceof ConfigurableServletWebServerFactory) {
             ConfigurableServletWebServerFactory servletWebServer = (ConfigurableServletWebServerFactory) server;
-            File root;
-            String prefixPath = resolvePathPrefix();
+            File                                root;
+            String                              prefixPath       = resolvePathPrefix();
             root = new File(prefixPath + "target/classes/static/");
             if (root.exists() && root.isDirectory()) {
                 servletWebServer.setDocumentRoot(root);
@@ -73,20 +71,18 @@ public class WebConfigurer implements ServletContextInitializer,
     /**
      * Resolve path prefix to static resources.
      */
-    /**
-     * Resolve path prefix to static resources.
-     */
     private String resolvePathPrefix() {
         String fullExecutablePath;
         try {
-            fullExecutablePath = decode(this.getClass().getResource("").getPath(), StandardCharsets.UTF_8.name());
+            fullExecutablePath = decode(Objects.requireNonNull(this.getClass().getResource(""))
+                                               .getPath(), StandardCharsets.UTF_8.name());
         } catch (UnsupportedEncodingException e) {
             /* try without decoding if this ever happens */
-            fullExecutablePath = this.getClass().getResource("").getPath();
+            fullExecutablePath = Objects.requireNonNull(this.getClass().getResource("")).getPath();
         }
-        String rootPath = Paths.get(".").toUri().normalize().getPath();
-        String extractedPath = fullExecutablePath.replace(rootPath, "");
-        int extractionEndIndex = extractedPath.indexOf("target/");
+        String rootPath           = Paths.get(".").toUri().normalize().getPath();
+        String extractedPath      = fullExecutablePath.replace(rootPath, "");
+        int    extractionEndIndex = extractedPath.indexOf("target/");
         if (extractionEndIndex <= 0) {
             return "";
         }
@@ -97,7 +93,7 @@ public class WebConfigurer implements ServletContextInitializer,
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = applicationProperties.getCors();
+        CorsConfiguration               config = applicationProperties.getCors();
         if (!CollectionUtils.isEmpty(config.getAllowedOrigins()) || !CollectionUtils.isEmpty(config.getAllowedOriginPatterns())) {
             log.debug("Registering CORS filter");
             source.registerCorsConfiguration("/api/**", config);

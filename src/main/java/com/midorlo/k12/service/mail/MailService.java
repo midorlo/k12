@@ -3,8 +3,6 @@ package com.midorlo.k12.service.mail;
 import com.midorlo.k12.config.ApplicationProperties;
 import com.midorlo.k12.domain.security.User;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -48,9 +46,9 @@ public class MailService {
         SpringTemplateEngine templateEngine
     ) {
         this.applicationProperties = applicationProperties;
-        this.javaMailSender = javaMailSender;
-        this.messageSource = messageSource;
-        this.templateEngine = templateEngine;
+        this.javaMailSender        = javaMailSender;
+        this.messageSource         = messageSource;
+        this.templateEngine        = templateEngine;
     }
 
     @Async
@@ -85,7 +83,7 @@ public class MailService {
             log.debug("Email doesn't exist for user '{}'", user.getLogin());
             return;
         }
-        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Locale  locale  = Locale.forLanguageTag(user.getLangKey());
         Context context = new Context(locale);
         context.setVariable(USER, user);
         context.setVariable(BASE_URL, applicationProperties.getMail().getBaseUrl());

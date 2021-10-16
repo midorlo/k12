@@ -34,7 +34,7 @@ public class PrefixedKeyGenerator implements KeyGenerator {
     /**
      * <p>Constructor for PrefixedKeyGenerator.</p>
      *
-     * @param gitProperties a {@link GitProperties} object.
+     * @param gitProperties   a {@link GitProperties} object.
      * @param buildProperties a {@link BuildProperties} object.
      */
     public PrefixedKeyGenerator(GitProperties gitProperties, BuildProperties buildProperties) {
@@ -51,10 +51,10 @@ public class PrefixedKeyGenerator implements KeyGenerator {
             shortCommitId = gitProperties.getShortCommitId();
         }
 
-        Instant time = null;
-        String version = null;
+        Instant time    = null;
+        String  version = null;
         if (Objects.nonNull(buildProperties)) {
-            time = buildProperties.getTime();
+            time    = buildProperties.getTime();
             version = buildProperties.getVersion();
         }
         Object p = ObjectUtils.firstNonNull(shortCommitId, time, version, RandomStringUtils.randomAlphanumeric(12));

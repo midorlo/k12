@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class ActiveProfilesInfoContributor implements InfoContributor {
 
-    private static final String ACTIVE_PROFILES = "activeProfiles";
-    private final List<String> profiles;
+    private static final String       ACTIVE_PROFILES = "activeProfiles";
+    private final        List<String> profiles;
 
     /**
      * <p>Constructor for ActiveProfilesInfoContributor.</p>

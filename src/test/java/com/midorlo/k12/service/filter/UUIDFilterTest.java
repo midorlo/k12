@@ -1,22 +1,21 @@
 package com.midorlo.k12.service.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import com.midorlo.k12.service.query.filter.Filter;
+import com.midorlo.k12.service.query.filter.UUIDFilter;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import com.midorlo.k12.service.query.filter.Filter;
-import com.midorlo.k12.service.query.filter.UUIDFilter;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class UUIDFilterTest {
 
-    private UUIDFilter filter;
-
     private final UUID value = UUID.fromString("dbc36987-d354-4ddf-9b53-38ca19b5a409");
+    private UUIDFilter filter;
 
     @BeforeEach
     void setup() {
@@ -68,7 +67,7 @@ class UUIDFilterTest {
 
     @Test
     void testSetIn() {
-        List<UUID> list = new LinkedList<>();
+        List<UUID>   list  = new LinkedList<>();
         Filter<UUID> chain = filter.setIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getIn()).isEqualTo(list);
@@ -76,7 +75,7 @@ class UUIDFilterTest {
 
     @Test
     void testSetNotIn() {
-        List<UUID> list = new LinkedList<>();
+        List<UUID>   list  = new LinkedList<>();
         Filter<UUID> chain = filter.setNotIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getNotIn()).isEqualTo(list);
@@ -145,6 +144,7 @@ class UUIDFilterTest {
         filter.setIn(new LinkedList<>());
         filter.setNotIn(new LinkedList<>());
         String str = value.toString();
-        assertThat(filter.toString()).isEqualTo("UUIDFilter [equals=" + str + ", notEquals=" + str + ", specified=true, in=[], notIn=[]]");
+        assertThat(filter.toString()).isEqualTo("UUIDFilter [equals=" + str + ", notEquals=" + str + ", specified" +
+                                                "=true, in=[], notIn=[]]");
     }
 }

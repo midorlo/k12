@@ -18,8 +18,6 @@ import com.midorlo.k12.web.rest.identity.model.LoginVM;
 import com.midorlo.k12.web.rest.identity.model.ManagedUserVM;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,18 +39,11 @@ import java.util.Optional;
 @RequestMapping("/api/identity")
 public class IdentityController {
 
-    private final TokenProvider tokenProvider;
+    private final TokenProvider                tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final UserRepository userRepository;
-    private final UserService userService;
-    private final MailService mailService;
-
-    private static class AccountResourceException extends RuntimeException {
-
-        private AccountResourceException(String message) {
-            super(message);
-        }
-    }
+    private final UserRepository               userRepository;
+    private final UserService                  userService;
+    private final MailService                  mailService;
 
     public IdentityController(
         TokenProvider tokenProvider,
@@ -61,11 +52,19 @@ public class IdentityController {
         UserService userService,
         MailService mailService
     ) {
-        this.tokenProvider = tokenProvider;
+        this.tokenProvider                = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.userRepository = userRepository;
-        this.userService = userService;
-        this.mailService = mailService;
+        this.userRepository               = userRepository;
+        this.userService                  = userService;
+        this.mailService                  = mailService;
+    }
+
+    private static boolean isPasswordLengthInvalid(String password) {
+        return (
+            StringUtils.isEmpty(password) ||
+            password.length() < ManagedUserVM.PASSWORD_MIN_LENGTH ||
+            password.length() > ManagedUserVM.PASSWORD_MAX_LENGTH
+        );
     }
 
     /**
@@ -198,7 +197,8 @@ public class IdentityController {
         if (isPasswordLengthInvalid(keyAndPassword.getNewPassword())) {
             throw new InvalidPasswordException();
         }
-        Optional<User> user = userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
+        Optional<User> user = userService.completePasswordReset(keyAndPassword.getNewPassword(),
+                                                                keyAndPassword.getKey());
 
         if (user.isEmpty()) {
             throw new AccountResourceException("No user was found for this reset key");
@@ -214,10 +214,17 @@ public class IdentityController {
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = tokenProvider.createToken(authentication, loginVM.isRememberMe());
+        String      jwt         = tokenProvider.createToken(authentication, loginVM.isRememberMe());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilterBean.AUTHORIZATION_HEADER, "Bearer " + jwt);
         return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+    }
+
+    private static class AccountResourceException extends RuntimeException {
+
+        private AccountResourceException(String message) {
+            super(message);
+        }
     }
 
     /**
@@ -239,13 +246,5 @@ public class IdentityController {
         void setIdToken(String idToken) {
             this.idToken = idToken;
         }
-    }
-
-    private static boolean isPasswordLengthInvalid(String password) {
-        return (
-            StringUtils.isEmpty(password) ||
-            password.length() < ManagedUserVM.PASSWORD_MIN_LENGTH ||
-            password.length() > ManagedUserVM.PASSWORD_MAX_LENGTH
-        );
     }
 }

@@ -16,12 +16,7 @@ import java.util.concurrent.TimeUnit;
 @Profile({ ApplicationConstants.ContextConstants.SPRING_PROFILE_PRODUCTION })
 public class WebMvcConfigurerExt implements WebMvcConfigurer {
 
-    protected static final String[] RESOURCE_LOCATIONS = new String[] {
-        "classpath:/static/",
-        "classpath:/static/content/",
-        "classpath:/static/i18n/",
-    };
-    public static final    String[] RESOURCE_PATHS     = new String[] {
+    public static final    String[] RESOURCE_PATHS     = new String[]{
         "/*.js",
         "/*.css",
         "/*.svg",
@@ -29,8 +24,12 @@ public class WebMvcConfigurerExt implements WebMvcConfigurer {
         "*.ico",
         "/content/**",
         "/i18n/*",
-    };
-
+        };
+    protected static final String[] RESOURCE_LOCATIONS = new String[]{
+        "classpath:/static/",
+        "classpath:/static/content/",
+        "classpath:/static/i18n/",
+        };
     private final ApplicationProperties applicationProperties;
 
     public WebMvcConfigurerExt(ApplicationProperties applicationProperties) {

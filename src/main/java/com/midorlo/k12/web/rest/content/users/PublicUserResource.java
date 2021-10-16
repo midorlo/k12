@@ -4,8 +4,6 @@ import com.midorlo.k12.service.security.UserService;
 import com.midorlo.k12.service.security.dto.UserDTO;
 import com.midorlo.k12.web.util.PaginationUtilities;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -53,8 +51,9 @@ public class PublicUserResource {
             return ResponseEntity.badRequest().build();
         }
 
-        final Page<UserDTO> page = userService.getAllPublicUsers(pageable);
-        HttpHeaders headers = PaginationUtilities.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        final Page<UserDTO> page    = userService.getAllPublicUsers(pageable);
+        HttpHeaders         headers =
+            PaginationUtilities.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -64,6 +63,7 @@ public class PublicUserResource {
 
     /**
      * Gets a list of all roles.
+     *
      * @return a string list of all roles.
      */
     @GetMapping("/authorities")

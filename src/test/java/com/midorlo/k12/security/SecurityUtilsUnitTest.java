@@ -1,11 +1,5 @@
 package com.midorlo.k12.security;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
-
 import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.config.security.SecurityUtils;
 import org.junit.jupiter.api.AfterEach;
@@ -16,6 +10,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for the {@link SecurityUtils} utility class.
@@ -57,10 +57,11 @@ class SecurityUtilsUnitTest {
 
     @Test
     void testAnonymousIsNotAuthenticated() {
-        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        SecurityContext              securityContext = SecurityContextHolder.createEmptyContext();
+        Collection<GrantedAuthority> authorities     = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(ApplicationConstants.SecurityConstants.ANONYMOUS));
-        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("anonymous", "anonymous", authorities));
+        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("anonymous", "anonymous",
+                                                                                  authorities));
         SecurityContextHolder.setContext(securityContext);
         boolean isAuthenticated = SecurityUtils.isAuthenticated();
         assertThat(isAuthenticated).isFalse();
@@ -68,8 +69,8 @@ class SecurityUtilsUnitTest {
 
     @Test
     void testHasCurrentUserThisAuthority() {
-        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        SecurityContext              securityContext = SecurityContextHolder.createEmptyContext();
+        Collection<GrantedAuthority> authorities     = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(ApplicationConstants.SecurityConstants.USER));
         securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("user", "user", authorities));
         SecurityContextHolder.setContext(securityContext);

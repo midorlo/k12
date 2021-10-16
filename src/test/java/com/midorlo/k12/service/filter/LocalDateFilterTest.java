@@ -1,22 +1,21 @@
 package com.midorlo.k12.service.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import com.midorlo.k12.service.query.filter.Filter;
+import com.midorlo.k12.service.query.filter.LocalDateFilter;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.midorlo.k12.service.query.filter.Filter;
-import com.midorlo.k12.service.query.filter.LocalDateFilter;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class LocalDateFilterTest {
 
-    private LocalDateFilter filter;
-
     private final LocalDate value = LocalDate.now();
+    private LocalDateFilter filter;
 
     @BeforeEach
     void setup() {
@@ -76,7 +75,7 @@ class LocalDateFilterTest {
 
     @Test
     void testSetIn() {
-        List<LocalDate> list = new LinkedList<>();
+        List<LocalDate>   list  = new LinkedList<>();
         Filter<LocalDate> chain = filter.setIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getIn()).isEqualTo(list);
@@ -84,7 +83,7 @@ class LocalDateFilterTest {
 
     @Test
     void testSetNotIn() {
-        List<LocalDate> list = new LinkedList<>();
+        List<LocalDate>   list  = new LinkedList<>();
         Filter<LocalDate> chain = filter.setNotIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getNotIn()).isEqualTo(list);

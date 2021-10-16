@@ -5,8 +5,6 @@ import io.micrometer.core.instrument.*;
 import io.micrometer.core.instrument.distribution.ValueAtPercentile;
 import io.micrometer.core.instrument.search.Search;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 import org.springframework.boot.actuate.endpoint.web.annotation.WebEndpoint;
 
@@ -20,12 +18,11 @@ import java.util.concurrent.TimeUnit;
 @WebEndpoint(id = "appmetrics")
 public class ApplicationMetricsEndpoint {
 
-    private final MeterRegistry meterRegistry;
-
     /**
      * Constant <code>MISSING_NAME_TAG_MESSAGE="Missing name tag for metric {}"</code>
      */
     public static final String MISSING_NAME_TAG_MESSAGE = "Missing name tag for metric {}";
+    private final MeterRegistry meterRegistry;
 
     /**
      * <p>Constructor for ApplicationMetricsEndpoint.</p>

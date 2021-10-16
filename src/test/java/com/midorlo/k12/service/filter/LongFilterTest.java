@@ -1,21 +1,20 @@
 package com.midorlo.k12.service.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
 import com.midorlo.k12.service.query.filter.Filter;
 import com.midorlo.k12.service.query.filter.LongFilter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 class LongFilterTest {
 
-    private LongFilter filter;
-
     private final Long value = 42L;
+    private LongFilter filter;
 
     @BeforeEach
     void setup() {
@@ -83,7 +82,7 @@ class LongFilterTest {
 
     @Test
     void testSetNotIn() {
-        List<Long> list = new LinkedList<>();
+        List<Long>   list  = new LinkedList<>();
         Filter<Long> chain = filter.setNotIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getNotIn()).isEqualTo(list);

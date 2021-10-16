@@ -21,16 +21,15 @@ import static springfox.documentation.builders.PathSelectors.regex;
 /**
  * A Springfox customizer to set up {@link Docket} with Application settings.
  */
-public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer, Ordered {
+public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer,
+                                                       Ordered {
 
     /**
      * The default order for the customizer.
      */
     public static final int DEFAULT_ORDER = 0;
-
-    private int order = DEFAULT_ORDER;
-
     private final ApplicationProperties.ApiDocs properties;
+    private int order = DEFAULT_ORDER;
 
     /**
      * <p>Constructor for ApplicationSpringfoxCustomizer.</p>
@@ -44,7 +43,8 @@ public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer, Orde
 
     @Override
     public void customize(Docket docket) {
-        Contact contact = new Contact(properties.getContactName(), properties.getContactUrl(), properties.getContactEmail());
+        Contact contact = new Contact(properties.getContactName(), properties.getContactUrl(),
+                                      properties.getContactEmail());
 
         ApiInfo apiInfo = new ApiInfo(
             properties.getTitle(),
@@ -59,7 +59,8 @@ public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer, Orde
 
         for (ApplicationProperties.ApiDocs.Server server : properties.getServers()) {
             docket.servers(
-                new Server(server.getName(), server.getUrl(), server.getDescription(), Collections.emptyList(), Collections.emptyList())
+                new Server(server.getName(), server.getUrl(), server.getDescription(), Collections.emptyList(),
+                           Collections.emptyList())
             );
         }
 
@@ -78,6 +79,11 @@ public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer, Orde
             .build();
     }
 
+    @Override
+    public int getOrder() {
+        return order;
+    }
+
     /**
      * <p>Setter for the field <code>order</code>.</p>
      *
@@ -85,11 +91,5 @@ public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer, Orde
      */
     public void setOrder(int order) {
         this.order = order;
-    }
-
-
-    @Override
-    public int getOrder() {
-        return order;
     }
 }

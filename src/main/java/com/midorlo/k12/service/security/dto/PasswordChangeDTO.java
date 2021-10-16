@@ -14,7 +14,7 @@ public class PasswordChangeDTO {
 
     public PasswordChangeDTO(String currentPassword, String newPassword) {
         this.currentPassword = currentPassword;
-        this.newPassword = newPassword;
+        this.newPassword     = newPassword;
     }
 
     public String getCurrentPassword() {

@@ -1,18 +1,16 @@
 package com.midorlo.k12.service.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import com.midorlo.k12.service.query.filter.Filter;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.midorlo.k12.service.query.filter.Filter;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class FilterTest {
-
-    private Filter<Object> filter;
 
     private final Object value = new Object() {
         @Override
@@ -20,6 +18,7 @@ class FilterTest {
             return "{}";
         }
     };
+    private Filter<Object> filter;
 
     @BeforeEach
     void setup() {
@@ -79,7 +78,7 @@ class FilterTest {
 
     @Test
     void testSetNotIn() {
-        List<Object> list = new LinkedList<>();
+        List<Object>   list  = new LinkedList<>();
         Filter<Object> chain = filter.setNotIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getNotIn()).isEqualTo(list);

@@ -6,8 +6,6 @@ import com.midorlo.k12.web.exception.BadRequestAlertException;
 import com.midorlo.k12.web.util.HttpHeaderUtilities;
 import com.midorlo.k12.web.util.HttpResponseUtilities;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,11 +30,9 @@ import java.util.Optional;
 public class MenuItemResource {
 
     private static final String ENTITY_NAME = "menuItem";
-
+    private final MenuItemRepository menuItemRepository;
     @Value("${application.clientApp.name}")
     private String applicationName;
-
-    private final MenuItemRepository menuItemRepository;
 
     public MenuItemResource(MenuItemRepository menuItemRepository) {
         this.menuItemRepository = menuItemRepository;
@@ -46,7 +42,8 @@ public class MenuItemResource {
      * {@code POST  /menu-items} : Create a new menuItem.
      *
      * @param menuItem the menuItem to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new menuItem, or with status {@code 400 (Bad Request)} if the menuItem has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new menuItem, or with
+     * status {@code 400 (Bad Request)} if the menuItem has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/menu-items")
@@ -58,14 +55,15 @@ public class MenuItemResource {
         MenuItem result = menuItemRepository.save(menuItem);
         return ResponseEntity
             .created(new URI("/api/webapp/menu-items/" + result.getId()))
-            .headers(HttpHeaderUtilities.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HttpHeaderUtilities.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId()
+                                                                                                              .toString()))
             .body(result);
     }
 
     /**
      * {@code PUT  /menu-items/:id} : Updates an existing menuItem.
      *
-     * @param id the id of the menuItem to save.
+     * @param id       the id of the menuItem to save.
      * @param menuItem the menuItem to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated menuItem,
      * or with status {@code 400 (Bad Request)} if the menuItem is not valid,
@@ -91,14 +89,16 @@ public class MenuItemResource {
         MenuItem result = menuItemRepository.save(menuItem);
         return ResponseEntity
             .ok()
-            .headers(HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, menuItem.getId().toString()))
+            .headers(HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, menuItem.getId()
+                                                                                                              .toString()))
             .body(result);
     }
 
     /**
-     * {@code PATCH  /menu-items/:id} : Partial updates given fields of an existing menuItem, field will ignore if it is null
+     * {@code PATCH  /menu-items/:id} : Partial updates given fields of an existing menuItem, field will ignore if it
+     * is null
      *
-     * @param id the id of the menuItem to save.
+     * @param id       the id of the menuItem to save.
      * @param menuItem the menuItem to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated menuItem,
      * or with status {@code 400 (Bad Request)} if the menuItem is not valid,
@@ -146,7 +146,8 @@ public class MenuItemResource {
 
         return HttpResponseUtilities.wrapOrNotFound(
             result.orElseThrow(EntityNotFoundException::new),
-            HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, menuItem.getId().toString())
+            HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, menuItem.getId()
+                                                                                                     .toString())
         );
     }
 
@@ -165,7 +166,8 @@ public class MenuItemResource {
      * {@code GET  /menu-items/:id} : get the "id" menuItem.
      *
      * @param id the id of the menuItem to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the menuItem, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the menuItem, or with status
+     * {@code 404 (Not Found)}.
      */
     @GetMapping("/menu-items/{id}")
     public ResponseEntity<MenuItem> getMenuItem(@PathVariable Long id) {

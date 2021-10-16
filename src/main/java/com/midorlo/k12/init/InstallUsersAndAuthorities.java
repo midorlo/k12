@@ -22,24 +22,20 @@ import java.util.Set;
 @Component
 public class InstallUsersAndAuthorities implements CommandLineRunner {
 
-    private final UserRepository      userRepository;
-    private final PasswordEncoder     passwordEncoder;
-    private final RoleRepository      roleRepository;
-    private final AuthorityRepository authorityRepository;
+    private final UserRepository  userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public InstallUsersAndAuthorities(
         UserRepository userRepository,
         PasswordEncoder passwordEncoder,
         RoleRepository roleRepository, AuthorityRepository authorityRepository
     ) {
-        this.userRepository      = userRepository;
-        this.passwordEncoder     = passwordEncoder;
-        this.roleRepository      = roleRepository;
-        this.authorityRepository = authorityRepository;
+        this.userRepository  = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         userRepository
             .findAll()
             .stream()

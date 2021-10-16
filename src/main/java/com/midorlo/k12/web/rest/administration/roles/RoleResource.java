@@ -6,8 +6,6 @@ import com.midorlo.k12.web.exception.BadRequestAlertException;
 import com.midorlo.k12.web.util.HttpHeaderUtilities;
 import com.midorlo.k12.web.util.HttpResponseUtilities;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,11 +30,9 @@ import java.util.Optional;
 public class RoleResource {
 
     private static final String ENTITY_NAME = "role";
-
+    private final RoleRepository roleRepository;
     @Value("${application.clientApp.name}")
     private String applicationName;
-
-    private final RoleRepository roleRepository;
 
     public RoleResource(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
@@ -46,7 +42,8 @@ public class RoleResource {
      * {@code POST  /roles} : Create a new role.
      *
      * @param role the role to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new role, or with status {@code 400 (Bad Request)} if the role has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new role, or with
+     * status {@code 400 (Bad Request)} if the role has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/roles")
@@ -58,21 +55,23 @@ public class RoleResource {
         Role result = roleRepository.save(role);
         return ResponseEntity
             .created(new URI("/api/roles/" + result.getId()))
-            .headers(HttpHeaderUtilities.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HttpHeaderUtilities.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId()
+                                                                                                              .toString()))
             .body(result);
     }
 
     /**
      * {@code PUT  /roles/:id} : Updates an existing role.
      *
-     * @param id the id of the role to save.
+     * @param id   the id of the role to save.
      * @param role the role to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated role,
      * or with status {@code 400 (Bad Request)} if the role is not valid,
      * or with status {@code 500 (Internal Server Error)} if the role couldn't be updated.
      */
     @PutMapping("/roles/{id}")
-    public ResponseEntity<Role> updateRole(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Role role) {
+    public ResponseEntity<Role> updateRole(@PathVariable(value = "id", required = false) final Long id,
+                                           @Valid @RequestBody Role role) {
         log.debug("REST request to update Role : {}, {}", id, role);
         if (role.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -88,14 +87,15 @@ public class RoleResource {
         Role result = roleRepository.save(role);
         return ResponseEntity
             .ok()
-            .headers(HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, role.getId().toString()))
+            .headers(HttpHeaderUtilities.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, role.getId()
+                                                                                                          .toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /roles/:id} : Partial updates given fields of an existing role, field will ignore if it is null
      *
-     * @param id the id of the role to save.
+     * @param id   the id of the role to save.
      * @param role the role to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated role,
      * or with status {@code 400 (Bad Request)} if the role is not valid,
@@ -154,7 +154,8 @@ public class RoleResource {
      * {@code GET  /roles/:id} : get the "id" role.
      *
      * @param id the id of the role to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the role, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the role, or with status {@code
+     * 404 (Not Found)}.
      */
     @GetMapping("/roles/{id}")
     public ResponseEntity<Role> getRole(@PathVariable Long id) {

@@ -1,19 +1,19 @@
 package com.midorlo.k12.service.mapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.service.security.dto.AdminUserDTO;
 import com.midorlo.k12.service.security.dto.UserDTO;
+import com.midorlo.k12.service.security.mapper.UserMapper;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.midorlo.k12.service.security.mapper.UserMapper;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit tests for {@link UserMapper}.
@@ -21,16 +21,16 @@ import org.junit.jupiter.api.Test;
 class UserMapperTest {
 
     private static final String DEFAULT_LOGIN = "johndoe";
-    private static final Long DEFAULT_ID = 1L;
+    private static final Long   DEFAULT_ID    = 1L;
 
-    private UserMapper userMapper;
-    private User user;
+    private UserMapper   userMapper;
+    private User         user;
     private AdminUserDTO userDto;
 
     @BeforeEach
     public void init() {
         userMapper = new UserMapper();
-        user = new User();
+        user       = new User();
         user.setLogin(DEFAULT_LOGIN);
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);

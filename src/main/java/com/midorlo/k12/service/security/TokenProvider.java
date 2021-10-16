@@ -5,8 +5,6 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,21 +43,24 @@ public class TokenProvider {
         } else {
             log.warn(
                 "Warning: the JWT key used is not Base64-encoded. " +
-                "We recommend using the `application.security.authentication.jwt.base64-secret` key for optimum security."
+                "We recommend using the `application.security.authentication.jwt.base64-secret` key for optimum " +
+                "security."
             );
-            secret = applicationProperties.getSecurity().getAuthentication().getJwt().getSecret();
+            secret   = applicationProperties.getSecurity().getAuthentication().getJwt().getSecret();
             keyBytes = secret.getBytes(StandardCharsets.UTF_8);
         }
-        key = Keys.hmacShaKeyFor(keyBytes);
-        jwtParser = Jwts.parserBuilder().setSigningKey(key).build();
-        this.tokenValidityInMilliseconds =
+        key                                           = Keys.hmacShaKeyFor(keyBytes);
+        jwtParser                                     = Jwts.parserBuilder().setSigningKey(key).build();
+        this.tokenValidityInMilliseconds              =
             1000 * applicationProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSeconds();
         this.tokenValidityInMillisecondsForRememberMe =
-            1000 * applicationProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSecondsForRememberMe();
+            1000 * applicationProperties.getSecurity().getAuthentication().getJwt()
+                                        .getTokenValidityInSecondsForRememberMe();
     }
 
     public String createToken(Authentication authentication, boolean rememberMe) {
-        String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
+        String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+                                           .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
         Date validity;

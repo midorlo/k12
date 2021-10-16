@@ -1,12 +1,13 @@
 package com.midorlo.k12.config.info;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.actuate.info.Info;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.mock.env.MockEnvironment;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ActiveProfilesInfoContributorTest {
 

@@ -20,7 +20,8 @@
 //    public Specification<ChildEntity> createSpecification(ChildEntityCriteria criteria) {
 //        Specification<ChildEntity> specification = Specification.where(null);
 //        if (criteria.getParentId() != null) {
-//            specification = specification.and(buildReferringEntitySpecification(criteria.getParentId(), ChildEntity_.parent, ParentEntity_.id));
+//            specification = specification.and(buildReferringEntitySpecification(criteria.getParentId(),
+//            ChildEntity_.parent, ParentEntity_.id));
 //        }
 //        return specification;
 //    }

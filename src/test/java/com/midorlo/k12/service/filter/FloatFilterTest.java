@@ -1,21 +1,20 @@
 package com.midorlo.k12.service.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
 import com.midorlo.k12.service.query.filter.Filter;
 import com.midorlo.k12.service.query.filter.FloatFilter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 class FloatFilterTest {
 
-    private FloatFilter filter;
-
     private final Float value = 42F;
+    private FloatFilter filter;
 
     @BeforeEach
     void setup() {
@@ -75,7 +74,7 @@ class FloatFilterTest {
 
     @Test
     void testSetIn() {
-        List<Float> list = new LinkedList<>();
+        List<Float>   list  = new LinkedList<>();
         Filter<Float> chain = filter.setIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getIn()).isEqualTo(list);
@@ -83,7 +82,7 @@ class FloatFilterTest {
 
     @Test
     void testSetNotIn() {
-        List<Float> list = new LinkedList<>();
+        List<Float>   list  = new LinkedList<>();
         Filter<Float> chain = filter.setNotIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getNotIn()).isEqualTo(list);

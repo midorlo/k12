@@ -1,11 +1,5 @@
 package com.midorlo.k12.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.config.ApplicationConstants;
 import com.midorlo.k12.domain.security.Authority;
@@ -15,10 +9,6 @@ import com.midorlo.k12.service.security.dto.AdminUserDTO;
 import com.midorlo.k12.service.security.mapper.UserMapper;
 import com.midorlo.k12.web.rest.administration.users.UserResource;
 import com.midorlo.k12.web.rest.identity.model.ManagedUserVM;
-import java.time.Instant;
-import java.util.*;
-import java.util.function.Consumer;
-import javax.persistence.EntityManager;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +21,17 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.util.*;
+import java.util.function.Consumer;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link UserResource} REST controller.
@@ -80,12 +81,6 @@ class UserResourceIT {
 
     private User user;
 
-    @BeforeEach
-    public void setup() {
-        Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).clear();
-        Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).clear();
-    }
-
     /**
      * Create a User.
      *
@@ -113,6 +108,12 @@ class UserResourceIT {
         user.setLogin(DEFAULT_LOGIN);
         user.setEmail(DEFAULT_EMAIL);
         return user;
+    }
+
+    @BeforeEach
+    public void setup() {
+        Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).clear();
+        Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).clear();
     }
 
     @BeforeEach
@@ -281,7 +282,8 @@ class UserResourceIT {
         // Initialize the database
         userRepository.saveAndFlush(user);
 
-        assertThat(Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).get(user.getLogin())).isNull();
+        assertThat(Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE))
+                          .get(user.getLogin())).isNull();
 
         // Get the user
         restUserMockMvc
@@ -295,7 +297,8 @@ class UserResourceIT {
             .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGEURL))
             .andExpect(jsonPath("$.langKey").value(DEFAULT_LANGKEY));
 
-        assertThat(Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).get(user.getLogin())).isNotNull();
+        assertThat(Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE))
+                          .get(user.getLogin())).isNotNull();
     }
 
     @Test
@@ -312,7 +315,8 @@ class UserResourceIT {
         int databaseSizeBeforeUpdate = userRepository.findAll().size();
 
         // Update the user
-        User updatedUser = userRepository.findById(user.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User updatedUser = userRepository.findById(user.getId())
+                                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
         managedUserVM.setId(updatedUser.getId());
@@ -365,7 +369,8 @@ class UserResourceIT {
         int databaseSizeBeforeUpdate = userRepository.findAll().size();
 
         // Update the user
-        User updatedUser = userRepository.findById(user.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User updatedUser = userRepository.findById(user.getId())
+                                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
         managedUserVM.setId(updatedUser.getId());
@@ -429,7 +434,8 @@ class UserResourceIT {
         userRepository.saveAndFlush(anotherUser);
 
         // Update the user
-        User updatedUser = userRepository.findById(user.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User updatedUser = userRepository.findById(user.getId())
+                                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
         managedUserVM.setId(updatedUser.getId());
@@ -475,7 +481,8 @@ class UserResourceIT {
         userRepository.saveAndFlush(anotherUser);
 
         // Update the user
-        User updatedUser = userRepository.findById(user.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User updatedUser = userRepository.findById(user.getId())
+                                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
         managedUserVM.setId(updatedUser.getId());
@@ -512,10 +519,12 @@ class UserResourceIT {
 
         // Delete the user
         restUserMockMvc
-            .perform(delete("/api/admin/users/{login}", user.getLogin()).accept(MediaType.APPLICATION_JSON).with(csrf()))
+            .perform(delete("/api/admin/users/{login}", user.getLogin()).accept(MediaType.APPLICATION_JSON)
+                                                                        .with(csrf()))
             .andExpect(status().isNoContent());
 
-        assertThat(Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).get(user.getLogin())).isNull();
+        assertThat(Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE))
+                          .get(user.getLogin())).isNull();
 
         // Validate the database is empty
         assertPersistedUsers(users -> assertThat(users).hasSize(databaseSizeBeforeDelete - 1));
@@ -563,7 +572,8 @@ class UserResourceIT {
         assertThat(user.getCreatedDate()).isNotNull();
         assertThat(user.getLastModifiedBy()).isNull();
         assertThat(user.getLastModifiedDate()).isNotNull();
-        assertThat(user.getAuthorities()).extracting("name").containsExactly(ApplicationConstants.SecurityConstants.USER);
+        assertThat(user.getAuthorities()).extracting("name")
+                                         .containsExactly(ApplicationConstants.SecurityConstants.USER);
     }
 
     @Test
@@ -574,7 +584,7 @@ class UserResourceIT {
         user.setLastModifiedBy(DEFAULT_LOGIN);
         user.setLastModifiedDate(Instant.now());
         Set<Authority> authorities = new HashSet<>();
-        Authority authority = new Authority();
+        Authority      authority   = new Authority();
         authority.setName(ApplicationConstants.SecurityConstants.USER);
         authorities.add(authority);
         user.setAuthorities(authorities);

@@ -35,7 +35,7 @@ public class StringFilter extends Filter<String> {
      */
     public StringFilter(final StringFilter filter) {
         super(filter);
-        this.contains = filter.contains;
+        this.contains       = filter.contains;
         this.doesNotContain = filter.doesNotContain;
     }
 

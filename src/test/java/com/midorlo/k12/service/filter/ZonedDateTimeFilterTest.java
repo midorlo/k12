@@ -1,22 +1,21 @@
 package com.midorlo.k12.service.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import com.midorlo.k12.service.query.filter.Filter;
+import com.midorlo.k12.service.query.filter.ZonedDateTimeFilter;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.midorlo.k12.service.query.filter.Filter;
-import com.midorlo.k12.service.query.filter.ZonedDateTimeFilter;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ZonedDateTimeFilterTest {
 
-    private ZonedDateTimeFilter filter;
-
     private final ZonedDateTime value = ZonedDateTime.now();
+    private ZonedDateTimeFilter filter;
 
     @BeforeEach
     void setup() {
@@ -76,7 +75,7 @@ class ZonedDateTimeFilterTest {
 
     @Test
     void testSetIn() {
-        List<ZonedDateTime> list = new LinkedList<>();
+        List<ZonedDateTime>   list  = new LinkedList<>();
         Filter<ZonedDateTime> chain = filter.setIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getIn()).isEqualTo(list);
@@ -84,7 +83,7 @@ class ZonedDateTimeFilterTest {
 
     @Test
     void testSetNotIn() {
-        List<ZonedDateTime> list = new LinkedList<>();
+        List<ZonedDateTime>   list  = new LinkedList<>();
         Filter<ZonedDateTime> chain = filter.setNotIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getNotIn()).isEqualTo(list);

@@ -151,10 +151,10 @@ public class Menu implements Serializable {
     @Override
     public String toString() {
         return "Menu{" +
-            "id=" + getId() +
-            ", i18n='" + getI18n() + "'" +
-            ", icon='" + getIcon() + "'" +
-            ", enabled='" + getEnabled() + "'" +
-            "}";
+               "id=" + getId() +
+               ", i18n='" + getI18n() + "'" +
+               ", icon='" + getIcon() + "'" +
+               ", enabled='" + getEnabled() + "'" +
+               "}";
     }
 }

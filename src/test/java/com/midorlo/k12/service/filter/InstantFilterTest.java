@@ -1,22 +1,21 @@
 package com.midorlo.k12.service.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import com.midorlo.k12.service.query.filter.Filter;
+import com.midorlo.k12.service.query.filter.InstantFilter;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.midorlo.k12.service.query.filter.Filter;
-import com.midorlo.k12.service.query.filter.InstantFilter;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class InstantFilterTest {
 
-    private InstantFilter filter;
-
     private final Instant value = Instant.now();
+    private InstantFilter filter;
 
     @BeforeEach
     void setup() {
@@ -84,7 +83,7 @@ class InstantFilterTest {
 
     @Test
     void testSetNotIn() {
-        List<Instant> list = new LinkedList<>();
+        List<Instant>   list  = new LinkedList<>();
         Filter<Instant> chain = filter.setNotIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getNotIn()).isEqualTo(list);

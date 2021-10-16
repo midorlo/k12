@@ -32,7 +32,7 @@ public class LoggingConfiguration {
         map.put("app_port", serverPort);
         String customFields = mapper.writeValueAsString(map);
 
-        ApplicationProperties.Logging loggingProperties = applicationProperties.getLogging();
+        ApplicationProperties.Logging          loggingProperties  = applicationProperties.getLogging();
         ApplicationProperties.Logging.Logstash logstashProperties = loggingProperties.getLogstash();
 
         if (loggingProperties.isUseJsonFormat()) {

@@ -18,7 +18,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
 
-import static com.midorlo.k12.Application.REPOSITORY_PACKAGE;
+import static com.midorlo.k12.config.ApplicationConstants.ContextConstants.*;
+import static com.midorlo.k12.config.ApplicationConstants.REPOSITORY_PACKAGE;
 import static com.midorlo.k12.config.ApplicationConstants.TechConstants.AUDITOR_BEAN;
 
 @Slf4j
@@ -33,40 +34,10 @@ import static com.midorlo.k12.config.ApplicationConstants.TechConstants.AUDITOR_
 })
 public class Application {
 
-    public static final String REPOSITORY_PACKAGE = "com.midorlo.k12.repository";
     private final Environment env;
 
     public Application(Environment env) {
         this.env = env;
-    }
-
-    /**
-     * Initializes k12.
-     * <p>
-     * Spring profiles can be configured with a program argument --spring.profiles.active=your-active-profile
-     * <p>
-     */
-    @PostConstruct
-    public void initApplication() {
-        Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
-        if (
-            activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_DEVELOPMENT) &&
-            activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_PRODUCTION)
-        ) {
-            log.error(
-                "You have misconfigured your application! It should not run " + "with both the 'dev' and 'prod' " +
-                "profiles at the same time."
-            );
-        }
-        if (
-            activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_DEVELOPMENT) &&
-            activeProfiles.contains(ApplicationConstants.ContextConstants.SPRING_PROFILE_CLOUD)
-        ) {
-            log.error(
-                "You have misconfigured your application! It should not " + "run with both the 'dev' and 'cloud' " +
-                "profiles at the same time."
-            );
-        }
     }
 
     /**
@@ -113,8 +84,6 @@ public class Application {
         );
     }
 
-    private static final String SPRING_PROFILE_DEFAULT = "spring.profiles.default";
-
     /**
      * Set a default to use when no profile is configured.
      *
@@ -127,7 +96,19 @@ public class Application {
          * This cannot be set in the application.yml file.
          * See https://github.com/spring-projects/spring-boot/issues/1219
          */
-        defProperties.put(SPRING_PROFILE_DEFAULT, ApplicationConstants.ContextConstants.SPRING_PROFILE_DEVELOPMENT);
+        defProperties.put(ApplicationConstants.SPRING_PROFILE_DEFAULT, SPRING_PROFILE_DEVELOPMENT);
         app.setDefaultProperties(defProperties);
+    }
+
+    /**
+     * Verifies that no conflicting application contexts are loaded.
+     */
+    @PostConstruct
+    public void verifyContexts() {
+        List<String> profiles = Arrays.asList(env.getActiveProfiles());
+        if (profiles.containsAll(Set.of(SPRING_PROFILE_DEVELOPMENT, SPRING_PROFILE_PRODUCTION))
+            || profiles.containsAll(Set.of(SPRING_PROFILE_DEVELOPMENT, SPRING_PROFILE_CLOUD))) {
+            log.error("Configuration error! Conflicting profiles are active.");
+        }
     }
 }

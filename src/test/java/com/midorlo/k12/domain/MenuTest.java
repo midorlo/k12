@@ -1,10 +1,10 @@
 package com.midorlo.k12.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.midorlo.k12.domain.webapp.Menu;
 import com.midorlo.k12.web.rest.TestUtil;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class MenuTest {
 

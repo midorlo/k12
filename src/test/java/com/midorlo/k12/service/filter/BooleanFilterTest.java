@@ -1,21 +1,20 @@
 package com.midorlo.k12.service.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
 import com.midorlo.k12.service.query.filter.BooleanFilter;
 import com.midorlo.k12.service.query.filter.Filter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 class BooleanFilterTest {
 
-    private BooleanFilter filter;
-
     private final Boolean value = true;
+    private BooleanFilter filter;
 
     @BeforeEach
     void setup() {
@@ -67,7 +66,7 @@ class BooleanFilterTest {
 
     @Test
     void testSetIn() {
-        List<Boolean> list = new LinkedList<>();
+        List<Boolean>   list  = new LinkedList<>();
         Filter<Boolean> chain = filter.setIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getIn()).isEqualTo(list);
@@ -75,7 +74,7 @@ class BooleanFilterTest {
 
     @Test
     void testSetNotIn() {
-        List<Boolean> list = new LinkedList<>();
+        List<Boolean>   list  = new LinkedList<>();
         Filter<Boolean> chain = filter.setNotIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getNotIn()).isEqualTo(list);

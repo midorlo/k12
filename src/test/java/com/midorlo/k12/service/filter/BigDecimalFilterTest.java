@@ -1,22 +1,21 @@
 package com.midorlo.k12.service.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import com.midorlo.k12.service.query.filter.BigDecimalFilter;
+import com.midorlo.k12.service.query.filter.Filter;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.midorlo.k12.service.query.filter.BigDecimalFilter;
-import com.midorlo.k12.service.query.filter.Filter;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BigDecimalFilterTest {
 
-    private BigDecimalFilter filter;
-
     private final BigDecimal value = new BigDecimal(42L);
+    private BigDecimalFilter filter;
 
     @BeforeEach
     void setup() {
@@ -76,7 +75,7 @@ class BigDecimalFilterTest {
 
     @Test
     void testSetIn() {
-        List<BigDecimal> list = new LinkedList<>();
+        List<BigDecimal>   list  = new LinkedList<>();
         Filter<BigDecimal> chain = filter.setIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getIn()).isEqualTo(list);
@@ -84,7 +83,7 @@ class BigDecimalFilterTest {
 
     @Test
     void testSetNotIn() {
-        List<BigDecimal> list = new LinkedList<>();
+        List<BigDecimal>   list  = new LinkedList<>();
         Filter<BigDecimal> chain = filter.setNotIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getNotIn()).isEqualTo(list);

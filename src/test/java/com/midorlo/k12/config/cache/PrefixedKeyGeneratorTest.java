@@ -1,11 +1,12 @@
 package com.midorlo.k12.config.cache;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Properties;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.boot.info.GitProperties;
+
+import java.util.Properties;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PrefixedKeyGeneratorTest {
 
@@ -34,7 +35,8 @@ class PrefixedKeyGeneratorTest {
         Properties buildProperties = new Properties();
         buildProperties.put("version", "1.0.0");
 
-        PrefixedKeyGenerator prefixedKeyGenerator = new PrefixedKeyGenerator(null, new BuildProperties(buildProperties));
+        PrefixedKeyGenerator prefixedKeyGenerator = new PrefixedKeyGenerator(null,
+                                                                             new BuildProperties(buildProperties));
 
         assertThat(prefixedKeyGenerator.getPrefix()).isEqualTo("1.0.0");
     }
@@ -44,7 +46,8 @@ class PrefixedKeyGeneratorTest {
         Properties buildProperties = new Properties();
         buildProperties.put("time", "1583955265");
 
-        PrefixedKeyGenerator prefixedKeyGenerator = new PrefixedKeyGenerator(null, new BuildProperties(buildProperties));
+        PrefixedKeyGenerator prefixedKeyGenerator = new PrefixedKeyGenerator(null,
+                                                                             new BuildProperties(buildProperties));
 
         assertThat(prefixedKeyGenerator.getPrefix()).isEqualTo("1970-01-19T07:59:15.265Z");
     }

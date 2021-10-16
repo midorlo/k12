@@ -30,11 +30,9 @@ import java.util.Optional;
 public class MenuResource {
 
     private static final String ENTITY_NAME = "menu";
-
+    private final MenuRepository menuRepository;
     @Value("${application.clientApp.name}")
     private String applicationName;
-
-    private final MenuRepository menuRepository;
 
     public MenuResource(MenuRepository menuRepository) {
         this.menuRepository = menuRepository;

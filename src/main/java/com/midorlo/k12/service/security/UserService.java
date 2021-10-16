@@ -12,8 +12,6 @@ import com.midorlo.k12.service.security.exception.EmailAlreadyUsedException;
 import com.midorlo.k12.service.security.exception.InvalidPasswordException;
 import com.midorlo.k12.service.security.exception.UsernameAlreadyUsedException;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,10 +47,10 @@ public class UserService {
         AuthorityRepository authorityRepository,
         CacheManager cacheManager
     ) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+        this.userRepository      = userRepository;
+        this.passwordEncoder     = passwordEncoder;
         this.authorityRepository = authorityRepository;
-        this.cacheManager = cacheManager;
+        this.cacheManager        = cacheManager;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -122,7 +120,7 @@ public class UserService {
                     }
                 }
             );
-        User newUser = new User();
+        User   newUser           = new User();
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(userDTO.getLogin().toLowerCase());
         // new user gets initially a generated password
@@ -319,7 +317,8 @@ public class UserService {
     @Scheduled(cron = "0 0 1 * * ?")
     public void removeNotActivatedUsers() {
         userRepository
-            .findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant.now().minus(3, ChronoUnit.DAYS))
+            .findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant.now()
+                                                                                           .minus(3, ChronoUnit.DAYS))
             .forEach(
                 user -> {
                     log.debug("Deleting not activated user {}", user.getLogin());
@@ -331,6 +330,7 @@ public class UserService {
 
     /**
      * Gets a list of all the authorities.
+     *
      * @return a list of all the authorities.
      */
     @Transactional(readOnly = true)

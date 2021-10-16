@@ -1,11 +1,5 @@
 package com.midorlo.k12.config.security;
 
-import static com.midorlo.k12.config.security.WebMvcConfigurerExt.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
-
-import java.util.concurrent.TimeUnit;
-
 import com.midorlo.k12.config.ApplicationProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,22 +9,27 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
+import java.util.concurrent.TimeUnit;
+
+import static com.midorlo.k12.config.security.WebMvcConfigurerExt.RESOURCE_LOCATIONS;
+import static com.midorlo.k12.config.security.WebMvcConfigurerExt.RESOURCE_PATHS;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
 class StaticResourcesWebConfigurerTest {
 
     public static final int                     MAX_AGE_TEST = 5;
     public              WebMvcConfigurerExt     webMvcConfigurerExt;
     private             ResourceHandlerRegistry resourceHandlerRegistry;
-    private MockServletContext servletContext;
-    private             WebApplicationContext           applicationContext;
-    private             ApplicationProperties           props;
+    private             ApplicationProperties   props;
 
     @BeforeEach
     void setUp() {
-        servletContext = spy(new MockServletContext());
-        applicationContext = mock(WebApplicationContext.class);
+        MockServletContext    servletContext     = spy(new MockServletContext());
+        WebApplicationContext applicationContext = mock(WebApplicationContext.class);
         resourceHandlerRegistry = spy(new ResourceHandlerRegistry(applicationContext, servletContext));
-        props               = new ApplicationProperties();
-        webMvcConfigurerExt = spy(new WebMvcConfigurerExt(props));
+        props                   = new ApplicationProperties();
+        webMvcConfigurerExt     = spy(new WebMvcConfigurerExt(props));
     }
 
     @Test

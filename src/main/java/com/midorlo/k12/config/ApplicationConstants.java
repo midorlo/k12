@@ -34,6 +34,8 @@ public final class ApplicationConstants {
                                                            "'none'; microphone 'none'; camera 'none'; " +
                                                            "magnetometer 'none'; gyroscope 'none'; " +
                                                            "fullscreen 'self'; payment 'none'";
+    public static final String REPOSITORY_PACKAGE        = "com.midorlo.k12.repository";
+    public static final String SPRING_PROFILE_DEFAULT    = "spring.profiles.default";
 
     public static final class ContextConstants {
 
@@ -103,6 +105,6 @@ public final class ApplicationConstants {
     }
 
     public static final class TechConstants {
-        public static final String   AUDITOR_BEAN           = "springSecurityAuditorAware";
+        public static final String AUDITOR_BEAN = "springSecurityAuditorAware";
     }
 }
