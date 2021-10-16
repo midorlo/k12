@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class ClientForwardController {
 
-    public static final String FWD_ROOT = "forward:/spa/index.html";
-    public static final String FWD_PATH = "forward:/";
-
+    /**
+     * quasar.conf -> publicPath: '/spa',
+     * @return
+     */
     @GetMapping(value = "/")
     public String forwardRoot() {
         return "forward:/spa/index.html";
