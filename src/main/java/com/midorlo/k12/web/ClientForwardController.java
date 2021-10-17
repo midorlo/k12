@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ClientForwardController {
 
     /**
-     * If changing, also change <pre>quasar.conf -> publicPath: '/'</pre>
+     * If changing, also change the publicPath in quasar.conf.
      */
     @SuppressWarnings("SpringMVCViewInspection")
     @GetMapping(value = "/")
