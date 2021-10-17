@@ -1,7 +1,6 @@
 package com.midorlo.k12.web.api.identity.model;
 
 import com.midorlo.k12.service.security.dto.AdminUserDTO;
-
 import javax.validation.constraints.Size;
 
 /**

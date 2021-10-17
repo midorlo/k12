@@ -7,6 +7,7 @@ import ch.qos.logback.classic.spi.LoggerContextListener;
 import ch.qos.logback.core.ConsoleAppender;
 import ch.qos.logback.core.spi.ContextAwareBase;
 import com.midorlo.k12.configuration.ApplicationProperties;
+import java.net.InetSocketAddress;
 import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.appender.LogstashTcpSocketAppender;
 import net.logstash.logback.composite.ContextJsonProvider;
@@ -16,15 +17,13 @@ import net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder;
 import net.logstash.logback.encoder.LogstashEncoder;
 import net.logstash.logback.stacktrace.ShortenedThrowableConverter;
 
-import java.net.InetSocketAddress;
-
 /**
  * Utility methods to add appenders to a {@link LoggerContext}.
  */
 @Slf4j
 public final class LoggingUtils {
 
-    private static final String CONSOLE_APPENDER_NAME        = "CONSOLE";
+    private static final String CONSOLE_APPENDER_NAME = "CONSOLE";
     private static final String ASYNC_LOGSTASH_APPENDER_NAME = "ASYNC_LOGSTASH";
 
     private LoggingUtils() {}
@@ -65,8 +64,7 @@ public final class LoggingUtils {
 
         // More documentation is available at: https://github.com/logstash/logstash-logback-encoder
         LogstashTcpSocketAppender logstashAppender = new LogstashTcpSocketAppender();
-        logstashAppender.addDestinations(new InetSocketAddress(logstashProperties.getHost(),
-                                                               logstashProperties.getPort()));
+        logstashAppender.addDestinations(new InetSocketAddress(logstashProperties.getHost(), logstashProperties.getPort()));
         logstashAppender.setContext(context);
         logstashAppender.setEncoder(logstashEncoder(customFields));
         logstashAppender.setName(ASYNC_LOGSTASH_APPENDER_NAME);
@@ -83,9 +81,7 @@ public final class LoggingUtils {
      * @param customFields a {@link String} object.
      * @param properties   a {@link ApplicationProperties.Logging} object.
      */
-    public static void addContextListener(LoggerContext context,
-                                          String customFields,
-                                          ApplicationProperties.Logging properties) {
+    public static void addContextListener(LoggerContext context, String customFields, ApplicationProperties.Logging properties) {
         LogbackLoggerContextListener loggerContextListener = new LogbackLoggerContextListener(properties, customFields);
         loggerContextListener.setContext(context);
         context.addListener(loggerContextListener);
@@ -124,8 +120,7 @@ public final class LoggingUtils {
     }
 
     private static GlobalCustomFieldsJsonProvider<ILoggingEvent> customFieldsJsonProvider(String customFields) {
-        final GlobalCustomFieldsJsonProvider<ILoggingEvent> customFieldsJsonProvider =
-            new GlobalCustomFieldsJsonProvider<>();
+        final GlobalCustomFieldsJsonProvider<ILoggingEvent> customFieldsJsonProvider = new GlobalCustomFieldsJsonProvider<>();
         customFieldsJsonProvider.setCustomFields(customFields);
         return customFieldsJsonProvider;
     }
@@ -149,8 +144,7 @@ public final class LoggingUtils {
     }
 
     private static LoggingEventFormattedTimestampJsonProvider timestampJsonProvider() {
-        final LoggingEventFormattedTimestampJsonProvider timestampJsonProvider =
-            new LoggingEventFormattedTimestampJsonProvider();
+        final LoggingEventFormattedTimestampJsonProvider timestampJsonProvider = new LoggingEventFormattedTimestampJsonProvider();
         timestampJsonProvider.setTimeZone("UTC");
         timestampJsonProvider.setFieldName("timestamp");
         return timestampJsonProvider;
@@ -164,11 +158,11 @@ public final class LoggingUtils {
     private static class LogbackLoggerContextListener extends ContextAwareBase implements LoggerContextListener {
 
         private final ApplicationProperties.Logging loggingProperties;
-        private final String                        customFields;
+        private final String customFields;
 
         private LogbackLoggerContextListener(ApplicationProperties.Logging loggingProperties, String customFields) {
             this.loggingProperties = loggingProperties;
-            this.customFields      = customFields;
+            this.customFields = customFields;
         }
 
         @Override

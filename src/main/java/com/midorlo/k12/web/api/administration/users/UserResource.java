@@ -1,15 +1,21 @@
 package com.midorlo.k12.web.api.administration.users;
 
 import com.midorlo.k12.configuration.ApplicationConstants;
+import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;
+import com.midorlo.k12.configuration.web.problem.EmailAlreadyUsedProblem;
+import com.midorlo.k12.configuration.web.problem.LoginAlreadyUsedProblem;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.service.mail.MailService;
 import com.midorlo.k12.service.security.UserService;
 import com.midorlo.k12.service.security.dto.AdminUserDTO;
-import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;
-import com.midorlo.k12.configuration.web.problem.EmailAlreadyUsedProblem;
-import com.midorlo.k12.configuration.web.problem.LoginAlreadyUsedProblem;
 import com.midorlo.k12.web.RestUtilities;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -22,13 +28,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing users.
@@ -75,13 +74,14 @@ public class UserResource {
     private final UserService userService;
     private final UserRepository userRepository;
     private final MailService mailService;
+
     @Value("${application.clientApp.name}")
     private String applicationName;
 
     public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
-        this.userService    = userService;
+        this.userService = userService;
         this.userRepository = userRepository;
-        this.mailService    = mailService;
+        this.mailService = mailService;
     }
 
     /**
@@ -115,9 +115,11 @@ public class UserResource {
             return ResponseEntity
                 .created(new URI("/api/admin/users/" + newUser.getLogin()))
                 .headers(
-                    RestUtilities.createAlert(applicationName,
-                                                    "A user is created with identifier " + newUser.getLogin(),
-                                              newUser.getLogin())
+                    RestUtilities.createAlert(
+                        applicationName,
+                        "A user is created with identifier " + newUser.getLogin(),
+                        newUser.getLogin()
+                    )
                 )
                 .body(newUser);
         }
@@ -143,15 +145,12 @@ public class UserResource {
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(userDTO.getId()))) {
             throw new LoginAlreadyUsedProblem();
         }
-        Optional<AdminUserDTO> updatedUser  = userService.updateUser(userDTO);
-        AdminUserDTO           adminUserDTO =
-            updatedUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Optional<AdminUserDTO> updatedUser = userService.updateUser(userDTO);
+        AdminUserDTO adminUserDTO = updatedUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return RestUtilities.wrapOrNotFound(
             adminUserDTO,
-            RestUtilities.createAlert(applicationName,
-                                            "A user is updated with identifier " + userDTO.getLogin(),
-                                      userDTO.getLogin())
+            RestUtilities.createAlert(applicationName, "A user is updated with identifier " + userDTO.getLogin(), userDTO.getLogin())
         );
     }
 
@@ -170,9 +169,8 @@ public class UserResource {
             return ResponseEntity.badRequest().build();
         }
 
-        final Page<AdminUserDTO> page    = userService.getAllManagedUsers(pageable);
-        HttpHeaders              headers =
-            RestUtilities.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        final Page<AdminUserDTO> page = userService.getAllManagedUsers(pageable);
+        HttpHeaders headers = RestUtilities.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -211,8 +209,7 @@ public class UserResource {
         userService.deleteUser(login);
         return ResponseEntity
             .noContent()
-            .headers(RestUtilities.createAlert(applicationName, "A user is deleted with identifier " + login,
-                                               login))
+            .headers(RestUtilities.createAlert(applicationName, "A user is deleted with identifier " + login, login))
             .build();
     }
 }

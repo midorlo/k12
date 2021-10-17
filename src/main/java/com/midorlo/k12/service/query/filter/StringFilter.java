@@ -35,10 +35,9 @@ public class StringFilter extends Filter<String> {
      */
     public StringFilter(final StringFilter filter) {
         super(filter);
-        this.contains       = filter.contains;
+        this.contains = filter.contains;
         this.doesNotContain = filter.doesNotContain;
     }
-
 
     @Override
     public StringFilter copy() {
@@ -85,7 +84,6 @@ public class StringFilter extends Filter<String> {
         return this;
     }
 
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -101,12 +99,10 @@ public class StringFilter extends Filter<String> {
         return Objects.equals(contains, that.contains) && Objects.equals(doesNotContain, that.doesNotContain);
     }
 
-
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), contains, doesNotContain);
     }
-
 
     @Override
     public String toString() {

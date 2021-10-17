@@ -1,10 +1,9 @@
 package com.midorlo.k12.service.query.filter;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
-
 import java.time.ZonedDateTime;
 import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 /**
  * Filter class for {@link ZonedDateTime} type attributes.
@@ -29,12 +28,10 @@ public class ZonedDateTimeFilter extends RangeFilter<ZonedDateTime> {
         super(filter);
     }
 
-
     @Override
     public ZonedDateTimeFilter copy() {
         return new ZonedDateTimeFilter(this);
     }
-
 
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)
@@ -43,14 +40,12 @@ public class ZonedDateTimeFilter extends RangeFilter<ZonedDateTime> {
         return this;
     }
 
-
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)
     public ZonedDateTimeFilter setNotEquals(ZonedDateTime equals) {
         super.setNotEquals(equals);
         return this;
     }
-
 
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)
@@ -59,14 +54,12 @@ public class ZonedDateTimeFilter extends RangeFilter<ZonedDateTime> {
         return this;
     }
 
-
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)
     public ZonedDateTimeFilter setNotIn(List<ZonedDateTime> notIn) {
         super.setNotIn(notIn);
         return this;
     }
-
 
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)
@@ -75,7 +68,6 @@ public class ZonedDateTimeFilter extends RangeFilter<ZonedDateTime> {
         return this;
     }
 
-
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)
     public ZonedDateTimeFilter setLessThan(ZonedDateTime equals) {
@@ -83,14 +75,12 @@ public class ZonedDateTimeFilter extends RangeFilter<ZonedDateTime> {
         return this;
     }
 
-
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)
     public ZonedDateTimeFilter setGreaterThanOrEqual(ZonedDateTime equals) {
         super.setGreaterThanOrEqual(equals);
         return this;
     }
-
 
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)

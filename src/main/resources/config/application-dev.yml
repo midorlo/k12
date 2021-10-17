@@ -17,7 +17,6 @@ logging:
     com.midorlo.k12: DEBUG
 
 spring:
-
   devtools:
     restart:
       enabled: true

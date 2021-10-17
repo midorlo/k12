@@ -19,12 +19,12 @@ import java.util.Objects;
  */
 public class Filter<FIELD_TYPE> implements Serializable {
 
-    private static final long             serialVersionUID = 1L;
-    private              FIELD_TYPE       equals;
-    private              FIELD_TYPE       notEquals;
-    private              Boolean          specified;
-    private              List<FIELD_TYPE> in;
-    private              List<FIELD_TYPE> notIn;
+    private static final long serialVersionUID = 1L;
+    private FIELD_TYPE equals;
+    private FIELD_TYPE notEquals;
+    private Boolean specified;
+    private List<FIELD_TYPE> in;
+    private List<FIELD_TYPE> notIn;
 
     /**
      * <p>Constructor for Filter.</p>
@@ -37,11 +37,11 @@ public class Filter<FIELD_TYPE> implements Serializable {
      * @param filter a {@link Filter} object.
      */
     public Filter(Filter<FIELD_TYPE> filter) {
-        this.equals    = filter.equals;
+        this.equals = filter.equals;
         this.notEquals = filter.notEquals;
         this.specified = filter.specified;
-        this.in        = filter.in == null ? null : new ArrayList<>(filter.in);
-        this.notIn     = filter.notIn == null ? null : new ArrayList<>(filter.notIn);
+        this.in = filter.in == null ? null : new ArrayList<>(filter.in);
+        this.notIn = filter.notIn == null ? null : new ArrayList<>(filter.notIn);
     }
 
     /**
@@ -153,7 +153,6 @@ public class Filter<FIELD_TYPE> implements Serializable {
         return this;
     }
 
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -172,12 +171,10 @@ public class Filter<FIELD_TYPE> implements Serializable {
         );
     }
 
-
     @Override
     public int hashCode() {
         return Objects.hash(equals, notEquals, specified, in, notIn);
     }
-
 
     @Override
     public String toString() {

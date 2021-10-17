@@ -1,10 +1,18 @@
 package com.midorlo.k12.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.service.security.SecurityUtilities;
 import com.midorlo.k12.service.security.UserService;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,15 +21,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.auditing.AuditingHandler;
 import org.springframework.data.auditing.DateTimeProvider;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 /**
  * Integration tests for {@link UserService}.
@@ -101,8 +100,8 @@ class UserServiceIT {
     @Test
     @Transactional
     void assertThatResetKeyMustNotBeOlderThan24Hours() {
-        Instant daysAgo  = Instant.now().minus(25, ChronoUnit.HOURS);
-        String  resetKey = SecurityUtilities.generateResetKey();
+        Instant daysAgo = Instant.now().minus(25, ChronoUnit.HOURS);
+        String resetKey = SecurityUtilities.generateResetKey();
         user.setActivated(true);
         user.setResetDate(daysAgo);
         user.setResetKey(resetKey);
@@ -130,9 +129,9 @@ class UserServiceIT {
     @Test
     @Transactional
     void assertThatUserCanResetPassword() {
-        String  oldPassword = user.getPassword();
-        Instant daysAgo     = Instant.now().minus(2, ChronoUnit.HOURS);
-        String  resetKey    = SecurityUtilities.generateResetKey();
+        String oldPassword = user.getPassword();
+        Instant daysAgo = Instant.now().minus(2, ChronoUnit.HOURS);
+        String resetKey = SecurityUtilities.generateResetKey();
         user.setActivated(true);
         user.setResetDate(daysAgo);
         user.setResetKey(resetKey);
@@ -157,9 +156,8 @@ class UserServiceIT {
         User dbUser = userRepository.saveAndFlush(user);
         dbUser.setCreatedDate(now.minus(4, ChronoUnit.DAYS));
         userRepository.saveAndFlush(user);
-        Instant    threeDaysAgo = now.minus(3, ChronoUnit.DAYS);
-        List<User> users        =
-            userRepository.findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(threeDaysAgo);
+        Instant threeDaysAgo = now.minus(3, ChronoUnit.DAYS);
+        List<User> users = userRepository.findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(threeDaysAgo);
         assertThat(users).isNotEmpty();
         userService.removeNotActivatedUsers();
         users = userRepository.findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(threeDaysAgo);
@@ -175,9 +173,8 @@ class UserServiceIT {
         User dbUser = userRepository.saveAndFlush(user);
         dbUser.setCreatedDate(now.minus(4, ChronoUnit.DAYS));
         userRepository.saveAndFlush(user);
-        Instant    threeDaysAgo = now.minus(3, ChronoUnit.DAYS);
-        List<User> users        =
-            userRepository.findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(threeDaysAgo);
+        Instant threeDaysAgo = now.minus(3, ChronoUnit.DAYS);
+        List<User> users = userRepository.findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(threeDaysAgo);
         assertThat(users).isEmpty();
         userService.removeNotActivatedUsers();
         Optional<User> maybeDbUser = userRepository.findById(dbUser.getId());

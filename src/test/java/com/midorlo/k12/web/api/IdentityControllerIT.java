@@ -1,5 +1,12 @@
 package com.midorlo.k12.web.api;
 
+import static com.midorlo.k12.web.api.IdentityControllerIT.TEST_USER_LOGIN;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.domain.security.User;
@@ -11,6 +18,10 @@ import com.midorlo.k12.service.security.dto.PasswordChangeDTO;
 import com.midorlo.k12.web.api.identity.IdentityController;
 import com.midorlo.k12.web.api.identity.model.KeyAndPasswordVM;
 import com.midorlo.k12.web.api.identity.model.ManagedUserVM;
+import java.time.Instant;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +31,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.Instant;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-
-import static com.midorlo.k12.web.api.IdentityControllerIT.TEST_USER_LOGIN;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Integration tests for the {@link IdentityController} REST controller.
@@ -135,8 +134,7 @@ class IdentityControllerIT {
 
         restAccountMockMvc
             .perform(
-                post("/api/identity/register").contentType(MediaType.APPLICATION_JSON)
-                                              .content(TestUtil.convertObjectToJsonBytes(validUser))
+                post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(validUser))
             )
             .andExpect(status().isCreated());
 
@@ -279,8 +277,7 @@ class IdentityControllerIT {
         // First user
         restAccountMockMvc
             .perform(
-                post("/api/identity/register").contentType(MediaType.APPLICATION_JSON)
-                                              .content(TestUtil.convertObjectToJsonBytes(firstUser))
+                post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(firstUser))
             )
             .andExpect(status().isCreated());
 
@@ -325,8 +322,7 @@ class IdentityControllerIT {
         // Register first user
         restAccountMockMvc
             .perform(
-                post("/api/identity/register").contentType(MediaType.APPLICATION_JSON)
-                                              .content(TestUtil.convertObjectToJsonBytes(firstUser))
+                post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(firstUser))
             )
             .andExpect(status().isCreated());
 
@@ -427,7 +423,7 @@ class IdentityControllerIT {
     @Transactional
     void testActivateAccount() throws Exception {
         final String activationKey = "some activation key";
-        User         user          = new User();
+        User user = new User();
         user.setLogin("activate-account");
         user.setEmail("activate-account@example.com");
         user.setPassword(RandomStringUtils.random(60));
@@ -436,8 +432,7 @@ class IdentityControllerIT {
 
         userRepository.saveAndFlush(user);
 
-        restAccountMockMvc.perform(get("/api/identity/activate?key={activationKey}", activationKey))
-                          .andExpect(status().isOk());
+        restAccountMockMvc.perform(get("/api/identity/activate?key={activationKey}", activationKey)).andExpect(status().isOk());
 
         user = userRepository.findOneByLogin(user.getLogin()).orElse(null);
         assertThat(user != null).isTrue();
@@ -447,8 +442,7 @@ class IdentityControllerIT {
     @Test
     @Transactional
     void testActivateAccountWithWrongKey() throws Exception {
-        restAccountMockMvc.perform(get("/api/identity/activate?key=wrongActivationKey"))
-                          .andExpect(status().isInternalServerError());
+        restAccountMockMvc.perform(get("/api/identity/activate?key=wrongActivationKey")).andExpect(status().isInternalServerError());
     }
 
     @Test
@@ -474,8 +468,7 @@ class IdentityControllerIT {
 
         restAccountMockMvc
             .perform(
-                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON)
-                                             .content(TestUtil.convertObjectToJsonBytes(userDTO))
+                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO))
             )
             .andExpect(status().isOk());
 
@@ -515,8 +508,7 @@ class IdentityControllerIT {
 
         restAccountMockMvc
             .perform(
-                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON)
-                                             .content(TestUtil.convertObjectToJsonBytes(userDTO))
+                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -554,8 +546,7 @@ class IdentityControllerIT {
 
         restAccountMockMvc
             .perform(
-                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON)
-                                             .content(TestUtil.convertObjectToJsonBytes(userDTO))
+                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -587,8 +578,7 @@ class IdentityControllerIT {
 
         restAccountMockMvc
             .perform(
-                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON)
-                                             .content(TestUtil.convertObjectToJsonBytes(userDTO))
+                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO))
             )
             .andExpect(status().isOk());
 
@@ -601,7 +591,7 @@ class IdentityControllerIT {
     @Transactional
     @WithMockUser("change-password-wrong-existing-password")
     void testChangePasswordWrongExistingPassword() throws Exception {
-        User   user            = new User();
+        User user = new User();
         String currentPassword = RandomStringUtils.random(60);
         user.setPassword(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-wrong-existing-password");
@@ -612,9 +602,7 @@ class IdentityControllerIT {
             .perform(
                 post("/api/identity/account/change-password")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO("1" + currentPassword, "new " +
-                                                                                                            "password"
-                    )))
+                    .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO("1" + currentPassword, "new " + "password")))
             )
             .andExpect(status().isBadRequest());
 
@@ -628,7 +616,7 @@ class IdentityControllerIT {
     @Transactional
     @WithMockUser("change-password")
     void testChangePassword() throws Exception {
-        User   user            = new User();
+        User user = new User();
         String currentPassword = RandomStringUtils.random(60);
         user.setPassword(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password");
@@ -652,7 +640,7 @@ class IdentityControllerIT {
     @Transactional
     @WithMockUser("change-password-too-small")
     void testChangePasswordTooSmall() throws Exception {
-        User   user            = new User();
+        User user = new User();
         String currentPassword = RandomStringUtils.random(60);
         user.setPassword(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-too-small");
@@ -678,7 +666,7 @@ class IdentityControllerIT {
     @Transactional
     @WithMockUser("change-password-too-long")
     void testChangePasswordTooLong() throws Exception {
-        User   user            = new User();
+        User user = new User();
         String currentPassword = RandomStringUtils.random(60);
         user.setPassword(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-too-long");
@@ -704,7 +692,7 @@ class IdentityControllerIT {
     @Transactional
     @WithMockUser("change-password-empty")
     void testChangePasswordEmpty() throws Exception {
-        User   user            = new User();
+        User user = new User();
         String currentPassword = RandomStringUtils.random(60);
         user.setPassword(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-empty");
@@ -757,8 +745,7 @@ class IdentityControllerIT {
     @Test
     void testRequestPasswordResetWrongEmail() throws Exception {
         restAccountMockMvc
-            .perform(post("/api/identity/account/reset-password/init").content("password-reset-wrong-email@example" +
-                                                                               ".com"))
+            .perform(post("/api/identity/account/reset-password/init").content("password-reset-wrong-email@example" + ".com"))
             .andExpect(status().isOk());
     }
 

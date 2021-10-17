@@ -10,6 +10,7 @@ public class MenuService {
 
     private final MenuRepository menuRepository;
 
-    public MenuService(MenuRepository menuRepository) {this.menuRepository = menuRepository;}
-
+    public MenuService(MenuRepository menuRepository) {
+        this.menuRepository = menuRepository;
+    }
 }

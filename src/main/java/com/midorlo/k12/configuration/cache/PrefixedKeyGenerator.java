@@ -1,16 +1,15 @@
 package com.midorlo.k12.configuration.cache;
 
+import java.lang.reflect.Method;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.boot.info.GitProperties;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.lang.NonNull;
-
-import java.lang.reflect.Method;
-import java.time.Instant;
-import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
 /**
  * <p>PrefixedKeyGenerator class.</p>
@@ -51,10 +50,10 @@ public class PrefixedKeyGenerator implements KeyGenerator {
             shortCommitId = gitProperties.getShortCommitId();
         }
 
-        Instant time    = null;
-        String  version = null;
+        Instant time = null;
+        String version = null;
         if (Objects.nonNull(buildProperties)) {
-            time    = buildProperties.getTime();
+            time = buildProperties.getTime();
             version = buildProperties.getVersion();
         }
         Object p = ObjectUtils.firstNonNull(shortCommitId, time, version, RandomStringUtils.randomAlphanumeric(12));
@@ -64,7 +63,6 @@ public class PrefixedKeyGenerator implements KeyGenerator {
         }
         return p.toString();
     }
-
 
     @NonNull
     @Override

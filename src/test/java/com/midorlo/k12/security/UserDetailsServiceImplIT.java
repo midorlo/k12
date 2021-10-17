@@ -1,10 +1,14 @@
 package com.midorlo.k12.security;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.service.security.UserDetailsServiceImpl;
 import com.midorlo.k12.service.security.exception.UserNotActivatedException;
+import java.util.Locale;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,11 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Locale;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-
 /**
  * Integrations tests for {@link UserDetailsServiceImpl}.
  */
@@ -25,10 +24,10 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 @IntegrationTest
 class UserDetailsServiceImplIT {
 
-    private static final String USER_ONE_LOGIN   = "test-user-one";
-    private static final String USER_ONE_EMAIL   = "test-user-one@localhost";
-    private static final String USER_TWO_LOGIN   = "test-user-two";
-    private static final String USER_TWO_EMAIL   = "test-user-two@localhost";
+    private static final String USER_ONE_LOGIN = "test-user-one";
+    private static final String USER_ONE_EMAIL = "test-user-one@localhost";
+    private static final String USER_TWO_LOGIN = "test-user-two";
+    private static final String USER_TWO_EMAIL = "test-user-two@localhost";
     private static final String USER_THREE_LOGIN = "test-user-three";
     private static final String USER_THREE_EMAIL = "test-user-three@localhost";
 
@@ -80,8 +79,7 @@ class UserDetailsServiceImplIT {
 
     @Test
     void assertThatUserCanBeFoundByLoginIgnoreCase() {
-        UserDetails userDetails =
-            domainUserDetailsService.loadUserByUsername(USER_ONE_LOGIN.toUpperCase(Locale.ENGLISH));
+        UserDetails userDetails = domainUserDetailsService.loadUserByUsername(USER_ONE_LOGIN.toUpperCase(Locale.ENGLISH));
         assertThat(userDetails).isNotNull();
         assertThat(userDetails.getUsername()).isEqualTo(USER_ONE_LOGIN);
     }
@@ -95,8 +93,7 @@ class UserDetailsServiceImplIT {
 
     @Test
     void assertThatUserCanBeFoundByEmailIgnoreCase() {
-        UserDetails userDetails =
-            domainUserDetailsService.loadUserByUsername(USER_TWO_EMAIL.toUpperCase(Locale.ENGLISH));
+        UserDetails userDetails = domainUserDetailsService.loadUserByUsername(USER_TWO_EMAIL.toUpperCase(Locale.ENGLISH));
         assertThat(userDetails).isNotNull();
         assertThat(userDetails.getUsername()).isEqualTo(USER_TWO_LOGIN);
     }

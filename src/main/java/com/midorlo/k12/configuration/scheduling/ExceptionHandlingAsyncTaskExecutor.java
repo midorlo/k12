@@ -1,21 +1,18 @@
 package com.midorlo.k12.configuration.scheduling;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.lang.NonNull;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
-
 /**
  * <p>ExceptionHandlingAsyncTaskExecutor class.</p>
  */
 @Slf4j
-public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor,
-                                                           InitializingBean,
-                                                           DisposableBean {
+public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, InitializingBean, DisposableBean {
 
     public static final String EXCEPTION_MESSAGE = "Caught scheduling problem";
 
@@ -30,12 +27,10 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor,
         this.executor = executor;
     }
 
-
     @Override
     public void execute(@NonNull Runnable task) {
         executor.execute(createWrappedRunnable(task));
     }
-
 
     @Override
     public void execute(@NonNull Runnable task, long startTimeout) {
@@ -72,20 +67,17 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor,
         log.error(EXCEPTION_MESSAGE, e);
     }
 
-
     @NonNull
     @Override
     public Future<?> submit(@NonNull Runnable task) {
         return executor.submit(createWrappedRunnable(task));
     }
 
-
     @NonNull
     @Override
     public <T> Future<T> submit(@NonNull Callable<T> task) {
         return executor.submit(createCallable(task));
     }
-
 
     @Override
     public void destroy() throws Exception {
@@ -94,7 +86,6 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor,
             bean.destroy();
         }
     }
-
 
     @Override
     public void afterPropertiesSet() throws Exception {

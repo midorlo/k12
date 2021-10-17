@@ -1,8 +1,18 @@
 package com.midorlo.k12.web.api;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.repository.ClearanceRepository;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +21,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link com.midorlo.k12.web.api.administration.clearances.ClearanceResource} REST
@@ -36,11 +35,11 @@ class ClearanceResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String ENTITY_API_URL    = "/api/clearances";
+    private static final String ENTITY_API_URL = "/api/clearances";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
-    private static final Random     random = new Random();
-    private static final AtomicLong count  = new AtomicLong(random.nextInt() + (2L * Integer.MAX_VALUE));
+    private static final Random random = new Random();
+    private static final AtomicLong count = new AtomicLong(random.nextInt() + (2L * Integer.MAX_VALUE));
 
     @Autowired
     private ClearanceRepository clearanceRepository;
@@ -84,12 +83,10 @@ class ClearanceResourceIT {
     @Transactional
     void createClearance() throws Exception {
         restClearanceMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
-                                         .content(TestUtil.convertObjectToJsonBytes(clearance)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clearance)))
             .andExpect(status().isCreated());
         // Validate the Clearance in the database
-        assertThat(clearanceRepository.findAll().stream().map(Clearance::getName)
-                                      .collect(Collectors.toList())).contains(DEFAULT_NAME);
+        assertThat(clearanceRepository.findAll().stream().map(Clearance::getName).collect(Collectors.toList())).contains(DEFAULT_NAME);
     }
 
     @Test
@@ -97,18 +94,16 @@ class ClearanceResourceIT {
     void createClearanceWithExistingId() throws Exception {
         // Create the Clearance with an existing ID
         clearance.setName(DEFAULT_NAME);
-        restClearanceMockMvc.perform(post(ENTITY_API_URL)
-                                         .contentType(MediaType.APPLICATION_JSON)
-                                         .content(TestUtil.convertObjectToJsonBytes(clearance)))
-                            .andExpect(status().isCreated());
+        restClearanceMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clearance)))
+            .andExpect(status().isCreated());
         // remember the total count
         int databaseSizeBeforeCreate = clearanceRepository.findAll().size();
 
         //try to create the same clearance
-        restClearanceMockMvc.perform(post(ENTITY_API_URL)
-                                         .contentType(MediaType.APPLICATION_JSON)
-                                         .content(TestUtil.convertObjectToJsonBytes(clearance)))
-                            .andExpect(status().isBadRequest());
+        restClearanceMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clearance)))
+            .andExpect(status().isBadRequest());
         List<Clearance> clearanceList = clearanceRepository.findAll();
         assertThat(clearanceList).hasSize(databaseSizeBeforeCreate);
     }
@@ -123,8 +118,7 @@ class ClearanceResourceIT {
         // Create the Clearance, which fails.
 
         restClearanceMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
-                                         .content(TestUtil.convertObjectToJsonBytes(clearance)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clearance)))
             .andExpect(status().isBadRequest());
 
         List<Clearance> clearanceList = clearanceRepository.findAll();
@@ -235,8 +229,7 @@ class ClearanceResourceIT {
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertProblem
         restClearanceMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
-                                        .content(TestUtil.convertObjectToJsonBytes(clearance)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(clearance)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Clearance in the database
@@ -335,8 +328,7 @@ class ClearanceResourceIT {
         // If url ID doesn't match entity ID, it will throw BadRequestAlertProblem
         restClearanceMockMvc
             .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json")
-                                     .content(TestUtil.convertObjectToJsonBytes(clearance))
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(clearance))
             )
             .andExpect(status().isMethodNotAllowed());
 

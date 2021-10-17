@@ -11,6 +11,10 @@ import com.midorlo.k12.service.security.dto.UserDTO;
 import com.midorlo.k12.service.security.exception.EmailAlreadyUsedException;
 import com.midorlo.k12.service.security.exception.InvalidPasswordException;
 import com.midorlo.k12.service.security.exception.UsernameAlreadyUsedException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
@@ -19,11 +23,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Service class for managing users.
@@ -47,10 +46,10 @@ public class UserService {
         ClearanceRepository clearanceRepository,
         CacheManager cacheManager
     ) {
-        this.userRepository      = userRepository;
-        this.passwordEncoder     = passwordEncoder;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
         this.clearanceRepository = clearanceRepository;
-        this.cacheManager        = cacheManager;
+        this.cacheManager = cacheManager;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -120,7 +119,7 @@ public class UserService {
                     }
                 }
             );
-        User   newUser           = new User();
+        User newUser = new User();
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(userDTO.getLogin().toLowerCase());
         // new user gets initially a generated password
@@ -317,8 +316,7 @@ public class UserService {
     @Scheduled(cron = "0 0 1 * * ?")
     public void removeNotActivatedUsers() {
         userRepository
-            .findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant.now()
-                                                                                           .minus(3, ChronoUnit.DAYS))
+            .findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant.now().minus(3, ChronoUnit.DAYS))
             .forEach(
                 user -> {
                     log.debug("Deleting not activated user {}", user.getLogin());

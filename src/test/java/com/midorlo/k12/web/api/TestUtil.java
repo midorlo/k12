@@ -1,28 +1,27 @@
 package com.midorlo.k12.web.api;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeParseException;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Utility class for testing REST controllers.
@@ -110,8 +109,8 @@ public final class TestUtil {
      * @return the {@link FormattingConversionService}.
      */
     public static FormattingConversionService createFormattingConversionService() {
-        DefaultFormattingConversionService dfcs      = new DefaultFormattingConversionService();
-        DateTimeFormatterRegistrar         registrar = new DateTimeFormatterRegistrar();
+        DefaultFormattingConversionService dfcs = new DefaultFormattingConversionService();
+        DateTimeFormatterRegistrar registrar = new DateTimeFormatterRegistrar();
         registrar.setUseIsoFormat(true);
         registrar.registerFormatters(dfcs);
         return dfcs;
@@ -126,11 +125,11 @@ public final class TestUtil {
      * @return A list of all found objects
      */
     public static <T> List<T> findAll(EntityManager em, Class<T> clss) {
-        CriteriaBuilder  cb        = em.getCriteriaBuilder();
-        CriteriaQuery<T> cq        = cb.createQuery(clss);
-        Root<T>          rootEntry = cq.from(clss);
-        CriteriaQuery<T> all       = cq.select(rootEntry);
-        TypedQuery<T>    allQuery  = em.createQuery(all);
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<T> cq = cb.createQuery(clss);
+        Root<T> rootEntry = cq.from(clss);
+        CriteriaQuery<T> all = cq.select(rootEntry);
+        TypedQuery<T> allQuery = em.createQuery(all);
         return allQuery.getResultList();
     }
 
@@ -154,8 +153,7 @@ public final class TestUtil {
                 }
                 return true;
             } catch (DateTimeParseException e) {
-                mismatchDescription.appendText("was ").appendValue(item)
-                                   .appendText(", which could not be parsed as a ZonedDateTime");
+                mismatchDescription.appendText("was ").appendValue(item).appendText(", which could not be parsed as a ZonedDateTime");
                 return false;
             }
         }

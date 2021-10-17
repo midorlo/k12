@@ -4,6 +4,14 @@ import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;
 import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.repository.ClearanceRepository;
 import com.midorlo.k12.web.RestUtilities;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -11,15 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * REST controller for managing {@link Clearance}.
@@ -30,10 +29,11 @@ import java.util.Optional;
 @Transactional
 public class ClearanceResource {
 
-    private static final String              ENTITY_NAME = "clearance";
-    private final        ClearanceRepository clearanceRepository;
+    private static final String ENTITY_NAME = "clearance";
+    private final ClearanceRepository clearanceRepository;
+
     @Value("${application.clientApp.name}")
-    private              String              applicationName;
+    private String applicationName;
 
     public ClearanceResource(ClearanceRepository clearanceRepository) {
         this.clearanceRepository = clearanceRepository;
@@ -48,8 +48,7 @@ public class ClearanceResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/clearances")
-    public ResponseEntity<Clearance> createClearance(@Valid @RequestBody Clearance clearance) throws
-                                                                                              URISyntaxException {
+    public ResponseEntity<Clearance> createClearance(@Valid @RequestBody Clearance clearance) throws URISyntaxException {
         log.debug("REST request to save Clearance : {}", clearance);
 
         Optional<Clearance> byId = clearanceRepository.findById(clearance.getName());
@@ -165,8 +164,7 @@ public class ClearanceResource {
     public ResponseEntity<Clearance> getClearance(@PathVariable String name) {
         log.debug("REST request to get Clearance : {}", name);
         Optional<Clearance> clearance = clearanceRepository.findById(name);
-        return ResponseEntity.ok().body(clearance.orElseThrow(() -> new ResponseStatusException(HttpStatus
-                                                                                                    .NOT_FOUND)));
+        return ResponseEntity.ok().body(clearance.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
     /**
@@ -179,9 +177,6 @@ public class ClearanceResource {
     public ResponseEntity<Void> deleteClearance(@PathVariable String name) {
         log.debug("REST request to delete Clearance : {}", name);
         clearanceRepository.deleteById(name);
-        return ResponseEntity
-            .noContent()
-            .headers(RestUtilities.createEntityDeletionAlert(applicationName, ENTITY_NAME, name))
-            .build();
+        return ResponseEntity.noContent().headers(RestUtilities.createEntityDeletionAlert(applicationName, ENTITY_NAME, name)).build();
     }
 }

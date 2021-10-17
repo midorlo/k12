@@ -1,6 +1,13 @@
 package com.midorlo.k12.configuration.documentation.customizer;
 
+import static springfox.documentation.builders.PathSelectors.regex;
+
 import com.midorlo.k12.configuration.ApplicationProperties;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import org.springframework.core.Ordered;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -10,19 +17,10 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.service.Server;
 import springfox.documentation.spring.web.plugins.Docket;
 
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-
-import static springfox.documentation.builders.PathSelectors.regex;
-
 /**
  * A Springfox customizer to set up {@link Docket} with Application settings.
  */
-public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer,
-                                                       Ordered {
+public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer, Ordered {
 
     /**
      * The default order for the customizer.
@@ -40,11 +38,9 @@ public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer,
         this.properties = properties;
     }
 
-
     @Override
     public void customize(Docket docket) {
-        Contact contact = new Contact(properties.getContactName(), properties.getContactUrl(),
-                                      properties.getContactEmail());
+        Contact contact = new Contact(properties.getContactName(), properties.getContactUrl(), properties.getContactEmail());
 
         ApiInfo apiInfo = new ApiInfo(
             properties.getTitle(),
@@ -59,8 +55,7 @@ public class ApplicationSpringfoxCustomizer implements SpringfoxCustomizer,
 
         for (ApplicationProperties.ApiDocs.Server server : properties.getServers()) {
             docket.servers(
-                new Server(server.getName(), server.getUrl(), server.getDescription(), Collections.emptyList(),
-                           Collections.emptyList())
+                new Server(server.getName(), server.getUrl(), server.getDescription(), Collections.emptyList(), Collections.emptyList())
             );
         }
 

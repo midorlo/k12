@@ -1,16 +1,15 @@
 package com.midorlo.k12.configuration.actuator;
 
-import io.micrometer.core.instrument.Timer;
 import io.micrometer.core.instrument.*;
+import io.micrometer.core.instrument.Timer;
 import io.micrometer.core.instrument.distribution.ValueAtPercentile;
 import io.micrometer.core.instrument.search.Search;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 import org.springframework.boot.actuate.endpoint.web.annotation.WebEndpoint;
 import org.springframework.lang.NonNull;
-
-import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Exposes a new management endpoint under /management/metrics to be consumed by MicroMeter.
@@ -19,8 +18,8 @@ import java.util.concurrent.TimeUnit;
 @WebEndpoint(id = "metrics")
 public class ApplicationMetricsEndpoint {
 
-    public static final String        MISSING_NAME_TAG_MESSAGE = "Missing name tag for metric {}";
-    private final       MeterRegistry meterRegistry;
+    public static final String MISSING_NAME_TAG_MESSAGE = "Missing name tag for metric {}";
+    private final MeterRegistry meterRegistry;
 
     /**
      * @param meterRegistry a {@link MeterRegistry} object.
@@ -40,13 +39,20 @@ public class ApplicationMetricsEndpoint {
     @ReadOperation
     public Map<String, Map<?, ?>> allMetrics() {
         return Map.of(
-            "jvm", jvmMemoryMetrics(),
-            "http.server.requests", httpRequestsMetrics(),
-            "cache", cacheMetrics(),
-            "services", serviceMetrics(),
-            "databases", databaseMetrics(),
-            "garbageCollector", garbageCollectorMetrics(),
-            "processMetrics", processMetrics()
+            "jvm",
+            jvmMemoryMetrics(),
+            "http.server.requests",
+            httpRequestsMetrics(),
+            "cache",
+            cacheMetrics(),
+            "services",
+            serviceMetrics(),
+            "databases",
+            databaseMetrics(),
+            "garbageCollector",
+            garbageCollectorMetrics(),
+            "processMetrics",
+            processMetrics()
         );
     }
 
@@ -87,16 +93,14 @@ public class ApplicationMetricsEndpoint {
 
                 ValueAtPercentile[] percentiles = timer.takeSnapshot().percentileValues();
                 for (ValueAtPercentile percentile : percentiles) {
-                    gcPauseResults.put(String.valueOf(percentile.percentile()),
-                                       percentile.value(TimeUnit.MILLISECONDS));
+                    gcPauseResults.put(String.valueOf(percentile.percentile()), percentile.value(TimeUnit.MILLISECONDS));
                 }
 
                 resultsGarbageCollector.putIfAbsent(key, gcPauseResults);
             }
         );
 
-        Collection<Gauge> gauges = Search.in(this.meterRegistry)
-                                         .name(s -> s.contains("jvm.gc") && !s.contains("jvm.gc.pause")).gauges();
+        Collection<Gauge> gauges = Search.in(this.meterRegistry).name(s -> s.contains("jvm.gc") && !s.contains("jvm.gc.pause")).gauges();
         gauges.forEach(gauge -> resultsGarbageCollector.put(gauge.getId().getName(), gauge.value()));
 
         Collection<Counter> counters = Search
@@ -113,8 +117,7 @@ public class ApplicationMetricsEndpoint {
             .in(this.meterRegistry)
             .name(s -> s.contains("jvm.classes.unloaded"))
             .functionCounters();
-        Double classesUnloaded = functionCounters.stream().map(FunctionCounter::count).reduce(Double::sum)
-                                                 .orElse((double) 0);
+        Double classesUnloaded = functionCounters.stream().map(FunctionCounter::count).reduce(Double::sum).orElse((double) 0);
         resultsGarbageCollector.put("classesUnloaded", classesUnloaded);
 
         return resultsGarbageCollector;
@@ -139,9 +142,7 @@ public class ApplicationMetricsEndpoint {
 
                 ValueAtPercentile[] percentiles = timer.takeSnapshot().percentileValues();
                 for (ValueAtPercentile percentile : percentiles) {
-                    resultsDatabase.get(key)
-                                   .put(String.valueOf(percentile.percentile()),
-                                        percentile.value(TimeUnit.MILLISECONDS));
+                    resultsDatabase.get(key).put(String.valueOf(percentile.percentile()), percentile.value(TimeUnit.MILLISECONDS));
                 }
             }
         );
@@ -164,7 +165,7 @@ public class ApplicationMetricsEndpoint {
     private Map<String, Map<?, ?>> serviceMetrics() {
         Collection<String> crudOperation = Arrays.asList("GET", "POST", "PUT", "DELETE");
 
-        Set<String>       uris   = new HashSet<>();
+        Set<String> uris = new HashSet<>();
         Collection<Timer> timers = this.meterRegistry.find("http.server.requests").timers();
 
         timers.forEach(timer -> uris.add(timer.getId().getTag("uri")));
@@ -179,8 +180,7 @@ public class ApplicationMetricsEndpoint {
                         Map<String, Number> resultsPerUriPerCrudOperation = new HashMap<>();
 
                         Collection<Timer> httpTimersStream =
-                            this.meterRegistry.find("http.server.requests").tags("uri", uri, "method", operation)
-                                              .timers();
+                            this.meterRegistry.find("http.server.requests").tags("uri", uri, "method", operation).timers();
                         long count = getCount(httpTimersStream);
 
                         if (count != 0) {
@@ -211,7 +211,7 @@ public class ApplicationMetricsEndpoint {
             .functionCounters();
         counters.forEach(
             counter -> {
-                String key  = counter.getId().getName();
+                String key = counter.getId().getName();
                 String name = counter.getId().getTag("name");
                 if (name != null) {
                     resultsCache.putIfAbsent(name, new HashMap<>());
@@ -228,7 +228,7 @@ public class ApplicationMetricsEndpoint {
         Collection<Gauge> gauges = Search.in(this.meterRegistry).name(s -> s.contains("cache")).gauges();
         gauges.forEach(
             gauge -> {
-                String key  = gauge.getId().getName();
+                String key = gauge.getId().getName();
                 String name = gauge.getId().getTag("name");
                 if (name != null) {
                     resultsCache.putIfAbsent(name, new HashMap<>());
@@ -283,20 +283,19 @@ public class ApplicationMetricsEndpoint {
      * @return HTTP requests stats
      */
     private Map<String, Map<?, ?>> httpRequestsMetrics() {
-        Set<String>       statusCode = new HashSet<>();
-        Collection<Timer> timers     = this.meterRegistry.find("http.server.requests").timers();
+        Set<String> statusCode = new HashSet<>();
+        Collection<Timer> timers = this.meterRegistry.find("http.server.requests").timers();
 
         timers.forEach(timer -> statusCode.add(timer.getId().getTag("status")));
 
-        Map<String, Map<?, ?>>           resultsHttp        = new HashMap<>();
+        Map<String, Map<?, ?>> resultsHttp = new HashMap<>();
         Map<String, Map<String, Number>> resultsHttpPerCode = new HashMap<>();
 
         statusCode.forEach(
             code -> {
                 Map<String, Number> resultsPerCode = new HashMap<>();
 
-                Collection<Timer> httpTimersStream = this.meterRegistry.find("http.server.requests").tag("status", code)
-                                                                       .timers();
+                Collection<Timer> httpTimersStream = this.meterRegistry.find("http.server.requests").tag("status", code).timers();
                 long count = getCount(httpTimersStream);
                 resultsPerCode.put("count", count);
                 resultsPerCode.put("max", getMax(httpTimersStream));
@@ -309,8 +308,8 @@ public class ApplicationMetricsEndpoint {
         resultsHttp.put("percode", resultsHttpPerCode);
 
         timers = this.meterRegistry.find("http.server.requests").timers();
-        long                countAllrequests = getCount(timers);
-        Map<String, Number> resultsHTTPAll   = new HashMap<>();
+        long countAllrequests = getCount(timers);
+        Map<String, Number> resultsHTTPAll = new HashMap<>();
         resultsHTTPAll.put("count", countAllrequests);
 
         resultsHttp.put("all", resultsHTTPAll);
@@ -320,25 +319,16 @@ public class ApplicationMetricsEndpoint {
 
     @NonNull
     private Long getCount(Collection<Timer> httpTimersStream) {
-        return httpTimersStream.stream().map(Timer::count).reduce(Long::sum)
-                               .orElse(0L);
+        return httpTimersStream.stream().map(Timer::count).reduce(Long::sum).orElse(0L);
     }
 
     @NonNull
     private Double getTotalTime(Collection<Timer> httpTimersStream) {
-        return httpTimersStream
-            .stream()
-            .map(x -> x.totalTime(TimeUnit.MILLISECONDS))
-            .reduce(Double::sum)
-            .orElse((double) 0);
+        return httpTimersStream.stream().map(x -> x.totalTime(TimeUnit.MILLISECONDS)).reduce(Double::sum).orElse((double) 0);
     }
 
     @NonNull
     private Double getMax(Collection<Timer> httpTimersStream) {
-        return httpTimersStream
-            .stream()
-            .map(x -> x.max(TimeUnit.MILLISECONDS))
-            .reduce((x, y) -> x > y ? x : y)
-            .orElse((double) 0);
+        return httpTimersStream.stream().map(x -> x.max(TimeUnit.MILLISECONDS)).reduce((x, y) -> x > y ? x : y).orElse((double) 0);
     }
 }

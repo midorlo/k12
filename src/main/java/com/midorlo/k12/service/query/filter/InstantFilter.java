@@ -1,10 +1,9 @@
 package com.midorlo.k12.service.query.filter;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
-
 import java.time.Instant;
 import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 /**
  * Filter class for {@link Instant} type attributes.
@@ -29,12 +28,10 @@ public class InstantFilter extends RangeFilter<Instant> {
         super(filter);
     }
 
-
     @Override
     public InstantFilter copy() {
         return new InstantFilter(this);
     }
-
 
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)
@@ -43,14 +40,12 @@ public class InstantFilter extends RangeFilter<Instant> {
         return this;
     }
 
-
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)
     public InstantFilter setNotEquals(Instant equals) {
         super.setNotEquals(equals);
         return this;
     }
-
 
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)
@@ -59,14 +54,12 @@ public class InstantFilter extends RangeFilter<Instant> {
         return this;
     }
 
-
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)
     public InstantFilter setNotIn(List<Instant> notIn) {
         super.setNotIn(notIn);
         return this;
     }
-
 
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)
@@ -75,7 +68,6 @@ public class InstantFilter extends RangeFilter<Instant> {
         return this;
     }
 
-
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)
     public InstantFilter setLessThan(Instant equals) {
@@ -83,14 +75,12 @@ public class InstantFilter extends RangeFilter<Instant> {
         return this;
     }
 
-
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)
     public InstantFilter setGreaterThanOrEqual(Instant equals) {
         super.setGreaterThanOrEqual(equals);
         return this;
     }
-
 
     @Override
     @DateTimeFormat(iso = ISO.DATE_TIME)

@@ -1,6 +1,7 @@
 package com.midorlo.k12.configuration.logging;
 
 import com.midorlo.k12.configuration.ApplicationConstants;
+import java.util.Arrays;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -12,13 +13,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 
-import java.util.Arrays;
-
 /**
  * Aspect for logging execution of service and repository Spring components.
  *
  * By default, it only runs with the "dev" profile.
  */
+@SuppressWarnings("EmptyMethod")
 @Aspect
 public class LoggingAspect {
 
@@ -44,8 +44,7 @@ public class LoggingAspect {
      * Pointcut that matches all Spring init in the application's main packages.
      */
     @Pointcut(
-        "within(com.midorlo.k12.repository..*)" + " || within(com.midorlo.k12.service..*)" + " || within(com.midorlo" +
-        ".k12.web.api..*)"
+        "within(com.midorlo.k12.repository..*)" + " || within(com.midorlo.k12.service..*)" + " || within(com.midorlo" + ".k12.web.api..*)"
     )
     public void applicationPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
@@ -99,8 +98,7 @@ public class LoggingAspect {
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         Logger log = logger(joinPoint);
         if (log.isDebugEnabled()) {
-            log.debug("Enter: {}() with argument[s] = {}", joinPoint.getSignature()
-                                                                    .getName(), Arrays.toString(joinPoint.getArgs()));
+            log.debug("Enter: {}() with argument[s] = {}", joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
         }
         try {
             Object result = joinPoint.proceed();
@@ -109,8 +107,7 @@ public class LoggingAspect {
             }
             return result;
         } catch (IllegalArgumentException e) {
-            log.error("Illegal argument: {} in {}()", Arrays.toString(joinPoint.getArgs()), joinPoint.getSignature()
-                                                                                                     .getName());
+            log.error("Illegal argument: {} in {}()", Arrays.toString(joinPoint.getArgs()), joinPoint.getSignature().getName());
             throw e;
         }
     }

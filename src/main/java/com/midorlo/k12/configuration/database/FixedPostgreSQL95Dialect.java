@@ -1,10 +1,9 @@
 package com.midorlo.k12.configuration.database;
 
+import java.sql.Types;
 import org.hibernate.dialect.PostgreSQL95Dialect;
 import org.hibernate.type.descriptor.sql.BinaryTypeDescriptor;
 import org.hibernate.type.descriptor.sql.SqlTypeDescriptor;
-
-import java.sql.Types;
 
 /**
  * <p>FixedPostgreSQL95Dialect class.</p>

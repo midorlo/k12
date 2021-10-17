@@ -3,6 +3,7 @@ package com.midorlo.k12.web.api.content.users;
 import com.midorlo.k12.service.security.UserService;
 import com.midorlo.k12.service.security.dto.UserDTO;
 import com.midorlo.k12.web.RestUtilities;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,8 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -51,9 +50,8 @@ public class PublicUserResource {
             return ResponseEntity.badRequest().build();
         }
 
-        final Page<UserDTO> page    = userService.getAllPublicUsers(pageable);
-        HttpHeaders         headers =
-            RestUtilities.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        final Page<UserDTO> page = userService.getAllPublicUsers(pageable);
+        HttpHeaders headers = RestUtilities.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 

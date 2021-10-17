@@ -1,13 +1,12 @@
 package com.midorlo.k12.configuration;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class ApplicationPropertiesTest {
 
@@ -39,7 +38,7 @@ class ApplicationPropertiesTest {
     @Test
     void testSecurityClientAuthorizationAccessTokenUri() {
         ApplicationProperties.Security.ClientAuthorization obj = properties.getSecurity().getClientAuthorization();
-        String                                             val;
+        String val;
         assertThat(obj.getAccessTokenUri()).isEqualTo(null);
         val = "1" + null;
         obj.setAccessTokenUri(val);
@@ -49,7 +48,7 @@ class ApplicationPropertiesTest {
     @Test
     void testSecurityClientAuthorizationTokenServiceId() {
         ApplicationProperties.Security.ClientAuthorization obj = properties.getSecurity().getClientAuthorization();
-        String                                             val;
+        String val;
         assertThat(obj.getTokenServiceId()).isEqualTo(null);
         val = "1" + null;
         obj.setTokenServiceId(val);
@@ -59,7 +58,7 @@ class ApplicationPropertiesTest {
     @Test
     void testSecurityClientAuthorizationClientId() {
         ApplicationProperties.Security.ClientAuthorization obj = properties.getSecurity().getClientAuthorization();
-        String                                             val;
+        String val;
         assertThat(obj.getClientId()).isEqualTo(null);
         val = "1" + null;
         obj.setClientId(val);
@@ -69,7 +68,7 @@ class ApplicationPropertiesTest {
     @Test
     void testSecurityClientAuthorizationClientSecret() {
         ApplicationProperties.Security.ClientAuthorization obj = properties.getSecurity().getClientAuthorization();
-        String                                             val;
+        String val;
         assertThat(obj.getClientSecret()).isEqualTo(null);
         val = "1" + null;
         obj.setClientSecret(val);
@@ -79,7 +78,7 @@ class ApplicationPropertiesTest {
     @Test
     void testSecurityAuthenticationJwtSecret() {
         ApplicationProperties.Security.Authentication.Jwt obj = properties.getSecurity().getAuthentication().getJwt();
-        String                                            val;
+        String val;
         assertThat(obj.getSecret()).isEqualTo(null);
         val = "1" + null;
         obj.setSecret(val);
@@ -89,7 +88,7 @@ class ApplicationPropertiesTest {
     @Test
     void testSecurityAuthenticationJwtBase64Secret() {
         ApplicationProperties.Security.Authentication.Jwt obj = properties.getSecurity().getAuthentication().getJwt();
-        String                                            val;
+        String val;
         assertThat(obj.getSecret()).isEqualTo(null);
         val = "1" + null;
         obj.setBase64Secret(val);
@@ -99,7 +98,7 @@ class ApplicationPropertiesTest {
     @Test
     void testSecurityRememberMeKey() {
         ApplicationProperties.Security.RememberMe obj = properties.getSecurity().getRememberMe();
-        String                                    val;
+        String val;
         assertThat(obj.getKey()).isEqualTo(null);
         val = "1" + null;
         obj.setKey(val);
@@ -120,7 +119,7 @@ class ApplicationPropertiesTest {
     @Test
     void testApiDocsTermsOfServiceUrl() {
         ApplicationProperties.ApiDocs obj = properties.getApiDocs();
-        String                        val;
+        String val;
         assertThat(obj.getTermsOfServiceUrl()).isEqualTo(null);
         val = "1" + null;
         obj.setTermsOfServiceUrl(val);
@@ -130,7 +129,7 @@ class ApplicationPropertiesTest {
     @Test
     void testApiDocsContactName() {
         ApplicationProperties.ApiDocs obj = properties.getApiDocs();
-        String                        val;
+        String val;
         assertThat(obj.getContactName()).isEqualTo(null);
         val = "1" + null;
         obj.setContactName(val);
@@ -140,7 +139,7 @@ class ApplicationPropertiesTest {
     @Test
     void testApiDocsContactUrl() {
         ApplicationProperties.ApiDocs obj = properties.getApiDocs();
-        String                        val;
+        String val;
         assertThat(obj.getContactUrl()).isEqualTo(null);
         val = "1" + null;
         obj.setContactUrl(val);
@@ -150,7 +149,7 @@ class ApplicationPropertiesTest {
     @Test
     void testApiDocsContactEmail() {
         ApplicationProperties.ApiDocs obj = properties.getApiDocs();
-        String                        val;
+        String val;
         assertThat(obj.getContactEmail()).isEqualTo(null);
         val = "1" + null;
         obj.setContactEmail(val);
@@ -160,7 +159,7 @@ class ApplicationPropertiesTest {
     @Test
     void testApiDocsLicense() {
         ApplicationProperties.ApiDocs obj = properties.getApiDocs();
-        String                        val;
+        String val;
         assertThat(obj.getLicense()).isEqualTo(null);
         val = "1" + null;
         obj.setLicense(val);
@@ -170,24 +169,22 @@ class ApplicationPropertiesTest {
     @Test
     void testApiDocsLicenseUrl() {
         ApplicationProperties.ApiDocs obj = properties.getApiDocs();
-        String                        val;
+        String val;
         assertThat(obj.getLicenseUrl()).isEqualTo(null);
         val = "1" + null;
         obj.setLicenseUrl(val);
         assertThat(obj.getLicenseUrl()).isEqualTo(val);
     }
 
-
     @Test
     void testApiDocsHost() {
         ApplicationProperties.ApiDocs obj = properties.getApiDocs();
-        String                        val;
+        String val;
         assertThat(obj.getHost()).isEqualTo(null);
         val = "1" + null;
         obj.setHost(val);
         assertThat(obj.getHost()).isEqualTo(val);
     }
-
 
     @Test
     void testApiDocsServers() {
@@ -198,7 +195,7 @@ class ApplicationPropertiesTest {
         server.setDescription("description");
         server.setName("name");
 
-        ApplicationProperties.ApiDocs.Server[] val = new ApplicationProperties.ApiDocs.Server[]{ server };
+        ApplicationProperties.ApiDocs.Server[] val = new ApplicationProperties.ApiDocs.Server[] { server };
 
         obj.setServers(val);
         assertThat(obj.getServers().length).isEqualTo(1);
@@ -210,7 +207,7 @@ class ApplicationPropertiesTest {
     @Test
     void testRegistryPassword() {
         ApplicationProperties.Registry obj = properties.getRegistry();
-        String                         val;
+        String val;
         assertThat(obj.getPassword()).isEqualTo(null);
         val = "1" + null;
         obj.setPassword(val);

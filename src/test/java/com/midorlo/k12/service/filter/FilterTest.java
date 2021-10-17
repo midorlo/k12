@@ -1,14 +1,13 @@
 package com.midorlo.k12.service.filter;
 
-import com.midorlo.k12.service.query.filter.Filter;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import com.midorlo.k12.service.query.filter.Filter;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class FilterTest {
 
@@ -70,7 +69,7 @@ class FilterTest {
 
     @Test
     void testSetIn() {
-        List<Object>   list  = new LinkedList<>();
+        List<Object> list = new LinkedList<>();
         Filter<Object> chain = filter.setIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getIn()).isEqualTo(list);
@@ -78,7 +77,7 @@ class FilterTest {
 
     @Test
     void testSetNotIn() {
-        List<Object>   list  = new LinkedList<>();
+        List<Object> list = new LinkedList<>();
         Filter<Object> chain = filter.setNotIn(list);
         assertThat(chain).isEqualTo(filter);
         assertThat(filter.getNotIn()).isEqualTo(list);

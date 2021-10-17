@@ -44,7 +44,6 @@ public class UndertowSSLConfiguration {
     private void configuringUserCipherSuiteOrder() {
         log.info("Configuring Undertow");
         log.info("Setting user cipher suite order to true");
-        factory.addBuilderCustomizers(builder -> builder.setSocketOption(UndertowOptions.SSL_USER_CIPHER_SUITES_ORDER
-            , Boolean.TRUE));
+        factory.addBuilderCustomizers(builder -> builder.setSocketOption(UndertowOptions.SSL_USER_CIPHER_SUITES_ORDER, Boolean.TRUE));
     }
 }

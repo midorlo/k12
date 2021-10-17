@@ -1,5 +1,10 @@
 package com.midorlo.k12.configuration.web.problem;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.configuration.web.advice.ExceptionTranslator;
@@ -9,11 +14,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests {@link ExceptionTranslator} controller advice.
@@ -39,9 +39,7 @@ class ExceptionTranslatorIT {
     void testMethodArgumentNotValid() throws Exception {
         mockMvc
             .perform(
-                post("/api/exception-translator-test/method-argument").content("{}")
-                                                                      .contentType(MediaType.APPLICATION_JSON)
-                                                                      .with(csrf())
+                post("/api/exception-translator-test/method-argument").content("{}").contentType(MediaType.APPLICATION_JSON).with(csrf())
             )
             .andExpect(status().isBadRequest())
             .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))

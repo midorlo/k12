@@ -1,5 +1,7 @@
 package com.midorlo.k12.security.jwt;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.configuration.ApplicationProperties;
 import com.midorlo.k12.service.security.TokenProvider;
@@ -7,6 +9,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,29 +22,20 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 class TokenProviderTest {
 
     private static final long ONE_MINUTE = 60000;
 
-    private Key           key;
+    private Key key;
     private TokenProvider tokenProvider;
 
     @BeforeEach
     public void setup() {
         ApplicationProperties applicationProperties = new ApplicationProperties();
-        String                base64Secret          =
-            "fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8";
+        String base64Secret = "fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8";
         applicationProperties.getSecurity().getAuthentication().getJwt().setBase64Secret(base64Secret);
         tokenProvider = new TokenProvider(applicationProperties);
-        key           = Keys.hmacShaKeyFor(Decoders.BASE64.decode(base64Secret));
+        key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(base64Secret));
 
         ReflectionTestUtils.setField(tokenProvider, "key", key);
         ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", ONE_MINUTE);
@@ -53,9 +51,9 @@ class TokenProviderTest {
     @Test
     void testReturnFalseWhenJWTisMalformed() {
         Authentication authentication = createAuthentication();
-        String         token          = tokenProvider.createToken(authentication);
-        String         invalidToken   = token.substring(1);
-        boolean        isTokenValid   = tokenProvider.validateToken(invalidToken);
+        String token = tokenProvider.createToken(authentication);
+        String invalidToken = token.substring(1);
+        boolean isTokenValid = tokenProvider.validateToken(invalidToken);
 
         assertThat(isTokenValid).isFalse();
     }
@@ -65,7 +63,7 @@ class TokenProviderTest {
         ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", -ONE_MINUTE);
 
         Authentication authentication = createAuthentication();
-        String         token          = tokenProvider.createToken(authentication);
+        String token = tokenProvider.createToken(authentication);
 
         boolean isTokenValid = tokenProvider.validateToken(token);
 
@@ -90,7 +88,7 @@ class TokenProviderTest {
 
     @Test
     void testKeyIsSetFromSecretWhenSecretIsNotEmpty() {
-        final String          secret                = "NwskoUmKHZtzGRKJKVjsJF7BtQMMxNWi";
+        final String secret = "NwskoUmKHZtzGRKJKVjsJF7BtQMMxNWi";
         ApplicationProperties applicationProperties = new ApplicationProperties();
         applicationProperties.getSecurity().getAuthentication().getJwt().setSecret(secret);
 
@@ -102,8 +100,7 @@ class TokenProviderTest {
 
     @Test
     void testKeyIsSetFromBase64SecretWhenSecretIsEmpty() {
-        final String          base64Secret          =
-            "fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8";
+        final String base64Secret = "fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8";
         ApplicationProperties applicationProperties = new ApplicationProperties();
         applicationProperties.getSecurity().getAuthentication().getJwt().setBase64Secret(base64Secret);
 
@@ -125,8 +122,7 @@ class TokenProviderTest {
 
     private String createTokenWithDifferentSignature() {
         Key otherKey = Keys.hmacShaKeyFor(
-            Decoders.BASE64.decode(
-                "Xfd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8")
+            Decoders.BASE64.decode("Xfd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8")
         );
 
         return Jwts

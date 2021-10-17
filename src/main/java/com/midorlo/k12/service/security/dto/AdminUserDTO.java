@@ -3,14 +3,13 @@ package com.midorlo.k12.service.security.dto;
 import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.domain.security.User;
-
+import java.time.Instant;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.time.Instant;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * A DTO representing a user, with his authorities.
@@ -57,19 +56,19 @@ public class AdminUserDTO {
     }
 
     public AdminUserDTO(User user) {
-        this.id               = user.getId();
-        this.login            = user.getLogin();
-        this.firstName        = user.getFirstName();
-        this.lastName         = user.getLastName();
-        this.email            = user.getEmail();
-        this.activated        = user.isActivated();
-        this.imageUrl         = user.getImageUrl();
-        this.langKey          = user.getLangKey();
-        this.createdBy        = user.getCreatedBy();
-        this.createdDate      = user.getCreatedDate();
-        this.lastModifiedBy   = user.getLastModifiedBy();
+        this.id = user.getId();
+        this.login = user.getLogin();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+        this.activated = user.isActivated();
+        this.imageUrl = user.getImageUrl();
+        this.langKey = user.getLangKey();
+        this.createdBy = user.getCreatedBy();
+        this.createdDate = user.getCreatedDate();
+        this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
-        this.authorities      = user.getAuthorities().stream().map(Clearance::getName).collect(Collectors.toSet());
+        this.authorities = user.getAuthorities().stream().map(Clearance::getName).collect(Collectors.toSet());
     }
 
     public Long getId() {

@@ -1,23 +1,22 @@
 package com.midorlo.k12.web.api.webapp;
 
+import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;
 import com.midorlo.k12.domain.webapp.MenuItem;
 import com.midorlo.k12.repository.MenuItemRepository;
 import com.midorlo.k12.web.RestUtilities;
-import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * REST controller for managing {@link MenuItem}.
@@ -28,10 +27,11 @@ import java.util.Optional;
 @Transactional
 public class MenuItemResource {
 
-    private static final String             ENTITY_NAME = "menuItem";
-    private final        MenuItemRepository menuItemRepository;
+    private static final String ENTITY_NAME = "menuItem";
+    private final MenuItemRepository menuItemRepository;
+
     @Value("${application.clientApp.name}")
-    private              String             applicationName;
+    private String applicationName;
 
     public MenuItemResource(MenuItemRepository menuItemRepository) {
         this.menuItemRepository = menuItemRepository;
@@ -54,8 +54,7 @@ public class MenuItemResource {
         MenuItem result = menuItemRepository.save(menuItem);
         return ResponseEntity
             .created(new URI("/api/webapp/menu-items/" + result.getId()))
-            .headers(RestUtilities.createEntityCreationAlert(applicationName, ENTITY_NAME, result.getId()
-                                                                                                 .toString()))
+            .headers(RestUtilities.createEntityCreationAlert(applicationName, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -88,8 +87,7 @@ public class MenuItemResource {
         MenuItem result = menuItemRepository.save(menuItem);
         return ResponseEntity
             .ok()
-            .headers(RestUtilities.createEntityUpdateAlert(applicationName, ENTITY_NAME, menuItem.getId()
-                                                                                                 .toString()))
+            .headers(RestUtilities.createEntityUpdateAlert(applicationName, ENTITY_NAME, menuItem.getId().toString()))
             .body(result);
     }
 
@@ -118,35 +116,37 @@ public class MenuItemResource {
      * or with status {@code 500 (Internal Server Error)} if the menuItem couldn't be updated.
      */
     @PatchMapping(value = "/menu-items/{id}", consumes = "application/merge-patch+json")
-    public ResponseEntity<MenuItem> partialUpdateMenuItem(@PathVariable(value = "id", required = false) final Long id,
-                                                          @NotNull @RequestBody MenuItem menuItem) {
+    public ResponseEntity<MenuItem> partialUpdateMenuItem(
+        @PathVariable(value = "id", required = false) final Long id,
+        @NotNull @RequestBody MenuItem menuItem
+    ) {
         log.debug("REST request to partial update MenuItem partially : {}, {}", id, menuItem);
         verify(id, menuItem);
-        Optional<MenuItem> result = menuItemRepository.findById(menuItem.getId())
-                                                      .map(
-                                                          existingMenuItem -> {
-                                                              if (menuItem.getI18n() != null) {
-                                                                  existingMenuItem.setI18n(menuItem.getI18n());
-                                                              }
-                                                              if (menuItem.getIcon() != null) {
-                                                                  existingMenuItem.setIcon(menuItem.getIcon());
-                                                              }
-                                                              if (menuItem.getTarget() != null) {
-                                                                  existingMenuItem.setTarget(menuItem.getTarget());
-                                                              }
-                                                              if (menuItem.getEnabled() != null) {
-                                                                  existingMenuItem.setEnabled(menuItem.getEnabled());
-                                                              }
+        Optional<MenuItem> result = menuItemRepository
+            .findById(menuItem.getId())
+            .map(
+                existingMenuItem -> {
+                    if (menuItem.getI18n() != null) {
+                        existingMenuItem.setI18n(menuItem.getI18n());
+                    }
+                    if (menuItem.getIcon() != null) {
+                        existingMenuItem.setIcon(menuItem.getIcon());
+                    }
+                    if (menuItem.getTarget() != null) {
+                        existingMenuItem.setTarget(menuItem.getTarget());
+                    }
+                    if (menuItem.getEnabled() != null) {
+                        existingMenuItem.setEnabled(menuItem.getEnabled());
+                    }
 
-                                                              return existingMenuItem;
-                                                          }
-                                                      )
-                                                      .map(menuItemRepository::save);
-        return RestUtilities.wrapOrNotFound(result.orElseThrow(EntityNotFoundException::new),
-                                            RestUtilities.createEntityUpdateAlert(applicationName,
-                                                                                  ENTITY_NAME,
-                                                                                  menuItem.getId()
-                                                                                          .toString()));
+                    return existingMenuItem;
+                }
+            )
+            .map(menuItemRepository::save);
+        return RestUtilities.wrapOrNotFound(
+            result.orElseThrow(EntityNotFoundException::new),
+            RestUtilities.createEntityUpdateAlert(applicationName, ENTITY_NAME, menuItem.getId().toString())
+        );
     }
 
     /**

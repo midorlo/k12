@@ -2,17 +2,16 @@ package com.midorlo.k12.domain.webapp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.midorlo.k12.domain.security.Clearance;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A Menu.
