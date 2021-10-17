@@ -28,6 +28,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
  * }
  */
 
+@SuppressWarnings("unused")
 @ConditionalOnClass({ LoggerContext.class })
 public class LogbackRecorder {
 

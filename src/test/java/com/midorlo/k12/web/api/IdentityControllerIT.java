@@ -1,12 +1,5 @@
 package com.midorlo.k12.web.api;
 
-import static com.midorlo.k12.web.api.IdentityControllerIT.TEST_USER_LOGIN;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.domain.security.User;
@@ -18,10 +11,6 @@ import com.midorlo.k12.service.security.dto.PasswordChangeDTO;
 import com.midorlo.k12.web.api.identity.IdentityController;
 import com.midorlo.k12.web.api.identity.model.KeyAndPasswordVM;
 import com.midorlo.k12.web.api.identity.model.ManagedUserVM;
-import java.time.Instant;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +20,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.ADMIN;
+import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.USER;
+import static com.midorlo.k12.web.api.IdentityControllerIT.TEST_USER_LOGIN;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link IdentityController} REST controller.
@@ -83,33 +86,33 @@ class IdentityControllerIT {
             .andExpect(content().string(TEST_USER_LOGIN));
     }
 
-    //    @Test
-    //    void testGetExistingAccount() throws Exception {
-    //        Set<String> authorities = new HashSet<>();
-    //        authorities.add(AuthoritiesConstants.ADMIN);
-    //
-    //        AdminUserDTO user = new AdminUserDTO();
-    //        user.setLogin(TEST_USER_LOGIN);
-    //        user.setFirstName("john");
-    //        user.setLastName("doe");
-    //        user.setEmail("john.doe@domain.tld");
-    //        user.setImageUrl("http://placehold.it/50x50");
-    //        user.setLangKey("en");
-    //        user.setAuthorities(authorities);
-    //        userService.createUser(user);
-    //
-    //        restAccountMockMvc
-    //            .perform(get("/api/identity/account").accept(MediaType.APPLICATION_JSON))
-    //            .andExpect(status().isOk())
-    //            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-    //            .andExpect(jsonPath("$.login").value(TEST_USER_LOGIN))
-    //            .andExpect(jsonPath("$.firstName").value("john"))
-    //            .andExpect(jsonPath("$.lastName").value("doe"))
-    //            .andExpect(jsonPath("$.email").value("john.doe@domain.tld"))
-    //            .andExpect(jsonPath("$.imageUrl").value("http://placehold.it/50x50"))
-    //            .andExpect(jsonPath("$.langKey").value("en"))
-    //            .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN));
-    //    }
+    @Test
+    void testGetExistingAccount() throws Exception {
+        Set<String> authorities = new HashSet<>();
+        authorities.add(ADMIN);
+
+        AdminUserDTO user = new AdminUserDTO();
+        user.setLogin(TEST_USER_LOGIN);
+        user.setFirstName("john");
+        user.setLastName("doe");
+        user.setEmail("john.doe@domain.tld");
+        user.setImageUrl("http://placehold.it/50x50");
+        user.setLangKey("en");
+        user.setAuthorities(authorities);
+        userService.createUser(user);
+
+        restAccountMockMvc
+            .perform(get("/api/identity/account").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.login").value(TEST_USER_LOGIN))
+            .andExpect(jsonPath("$.firstName").value("john"))
+            .andExpect(jsonPath("$.lastName").value("doe"))
+            .andExpect(jsonPath("$.email").value("john.doe@domain.tld"))
+            .andExpect(jsonPath("$.imageUrl").value("http://placehold.it/50x50"))
+            .andExpect(jsonPath("$.langKey").value("en"))
+            .andExpect(jsonPath("$.authorities").value(ADMIN));
+    }
 
     @Test
     void testGetUnknownAccount() throws Exception {
@@ -129,12 +132,13 @@ class IdentityControllerIT {
         validUser.setEmail("test-register-valid@example.com");
         validUser.setImageUrl("http://placehold.it/50x50");
         validUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        validUser.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.USER));
+        validUser.setAuthorities(Collections.singleton(USER));
         assertThat(userRepository.findOneByLogin("test-register-valid")).isEmpty();
 
         restAccountMockMvc
             .perform(
-                post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(validUser))
+                post("/api/identity/register").contentType(MediaType.APPLICATION_JSON)
+                                              .content(TestUtil.convertObjectToJsonBytes(validUser))
             )
             .andExpect(status().isCreated());
 
@@ -153,7 +157,7 @@ class IdentityControllerIT {
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        invalidUser.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.USER));
+        invalidUser.setAuthorities(Collections.singleton(USER));
 
         restAccountMockMvc
             .perform(
@@ -179,7 +183,7 @@ class IdentityControllerIT {
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        invalidUser.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.USER));
+        invalidUser.setAuthorities(Collections.singleton(USER));
 
         restAccountMockMvc
             .perform(
@@ -205,7 +209,7 @@ class IdentityControllerIT {
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        invalidUser.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.USER));
+        invalidUser.setAuthorities(Collections.singleton(USER));
 
         restAccountMockMvc
             .perform(
@@ -231,7 +235,7 @@ class IdentityControllerIT {
         invalidUser.setActivated(true);
         invalidUser.setImageUrl("http://placehold.it/50x50");
         invalidUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        invalidUser.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.USER));
+        invalidUser.setAuthorities(Collections.singleton(USER));
 
         restAccountMockMvc
             .perform(
@@ -257,7 +261,7 @@ class IdentityControllerIT {
         firstUser.setEmail("alice@example.com");
         firstUser.setImageUrl("http://placehold.it/50x50");
         firstUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        firstUser.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.USER));
+        firstUser.setAuthorities(Collections.singleton(USER));
 
         // Duplicate login, different email
         ManagedUserVM secondUser = new ManagedUserVM();
@@ -277,7 +281,8 @@ class IdentityControllerIT {
         // First user
         restAccountMockMvc
             .perform(
-                post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(firstUser))
+                post("/api/identity/register").contentType(MediaType.APPLICATION_JSON)
+                                              .content(TestUtil.convertObjectToJsonBytes(firstUser))
             )
             .andExpect(status().isCreated());
 
@@ -317,12 +322,13 @@ class IdentityControllerIT {
         firstUser.setEmail("test-register-duplicate-email@example.com");
         firstUser.setImageUrl("http://placehold.it/50x50");
         firstUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        firstUser.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.USER));
+        firstUser.setAuthorities(Collections.singleton(USER));
 
         // Register first user
         restAccountMockMvc
             .perform(
-                post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(firstUser))
+                post("/api/identity/register").contentType(MediaType.APPLICATION_JSON)
+                                              .content(TestUtil.convertObjectToJsonBytes(firstUser))
             )
             .andExpect(status().isCreated());
 
@@ -393,37 +399,37 @@ class IdentityControllerIT {
             .andExpect(status().is4xxClientError());
     }
 
-    //    @Test
-    //    @Transactional
-    //    void testRegisterAdminIsIgnored() throws Exception {
-    //        ManagedUserVM validUser = new ManagedUserVM();
-    //        validUser.setLogin("badguy");
-    //        validUser.setPassword("password");
-    //        validUser.setFirstName("Bad");
-    //        validUser.setLastName("Guy");
-    //        validUser.setEmail("badguy@example.com");
-    //        validUser.setActivated(true);
-    //        validUser.setImageUrl("http://placehold.it/50x50");
-    //        validUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-    //        validUser.setAuthorities(Collections.singleton(AuthoritiesConstants.ADMIN));
-    //
-    //        restAccountMockMvc
-    //            .perform(post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil
-    //            .convertObjectToJsonBytes(validUser)))
-    //            .andExpect(status().isCreated());
-    //
-    //        Optional<User> userDup = userRepository.findOneWithAuthoritiesByLogin("badguy");
-    //        assertThat(userDup).isPresent();
-    //        assertThat(userDup.get().getAuthorities())
-    //            .hasSize(1)
-    //            .containsExactly(clearanceRepository.findById(AuthoritiesConstants.USER).orElse(null));
-    //    }
+    @Test
+    @Transactional
+    void testRegisterAdminIsIgnored() throws Exception {
+        ManagedUserVM validUser = new ManagedUserVM();
+        validUser.setLogin("badguy");
+        validUser.setPassword("password");
+        validUser.setFirstName("Bad");
+        validUser.setLastName("Guy");
+        validUser.setEmail("badguy@example.com");
+        validUser.setActivated(true);
+        validUser.setImageUrl("http://placehold.it/50x50");
+        validUser.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
+        validUser.setAuthorities(Collections.singleton(ADMIN));
+
+        restAccountMockMvc
+            .perform(post("/api/identity/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil
+                                                                                                        .convertObjectToJsonBytes(validUser)))
+            .andExpect(status().isCreated());
+
+        Optional<User> userDup = userRepository.findOneWithAuthoritiesByLogin("badguy");
+        assertThat(userDup).isPresent();
+        assertThat(userDup.get().getAuthorities())
+            .hasSize(1)
+            .containsExactly(clearanceRepository.findById(USER).orElse(null));
+    }
 
     @Test
     @Transactional
     void testActivateAccount() throws Exception {
         final String activationKey = "some activation key";
-        User user = new User();
+        User         user          = new User();
         user.setLogin("activate-account");
         user.setEmail("activate-account@example.com");
         user.setPassword(RandomStringUtils.random(60));
@@ -432,7 +438,8 @@ class IdentityControllerIT {
 
         userRepository.saveAndFlush(user);
 
-        restAccountMockMvc.perform(get("/api/identity/activate?key={activationKey}", activationKey)).andExpect(status().isOk());
+        restAccountMockMvc.perform(get("/api/identity/activate?key={activationKey}", activationKey))
+                          .andExpect(status().isOk());
 
         user = userRepository.findOneByLogin(user.getLogin()).orElse(null);
         assertThat(user != null).isTrue();
@@ -442,7 +449,8 @@ class IdentityControllerIT {
     @Test
     @Transactional
     void testActivateAccountWithWrongKey() throws Exception {
-        restAccountMockMvc.perform(get("/api/identity/activate?key=wrongActivationKey")).andExpect(status().isInternalServerError());
+        restAccountMockMvc.perform(get("/api/identity/activate?key=wrongActivationKey"))
+                          .andExpect(status().isInternalServerError());
     }
 
     @Test
@@ -464,11 +472,12 @@ class IdentityControllerIT {
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        userDTO.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.ADMIN));
+        userDTO.setAuthorities(Collections.singleton(ADMIN));
 
         restAccountMockMvc
             .perform(
-                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO))
+                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON)
+                                             .content(TestUtil.convertObjectToJsonBytes(userDTO))
             )
             .andExpect(status().isOk());
 
@@ -504,11 +513,12 @@ class IdentityControllerIT {
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        userDTO.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.ADMIN));
+        userDTO.setAuthorities(Collections.singleton(ADMIN));
 
         restAccountMockMvc
             .perform(
-                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO))
+                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON)
+                                             .content(TestUtil.convertObjectToJsonBytes(userDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -542,11 +552,12 @@ class IdentityControllerIT {
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        userDTO.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.ADMIN));
+        userDTO.setAuthorities(Collections.singleton(ADMIN));
 
         restAccountMockMvc
             .perform(
-                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO))
+                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON)
+                                             .content(TestUtil.convertObjectToJsonBytes(userDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -574,11 +585,12 @@ class IdentityControllerIT {
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(ApplicationConstants.DEFAULT_LANGUAGE);
-        userDTO.setAuthorities(Collections.singleton(ApplicationConstants.SecurityConstants.ADMIN));
+        userDTO.setAuthorities(Collections.singleton(ADMIN));
 
         restAccountMockMvc
             .perform(
-                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO))
+                post("/api/identity/account").contentType(MediaType.APPLICATION_JSON)
+                                             .content(TestUtil.convertObjectToJsonBytes(userDTO))
             )
             .andExpect(status().isOk());
 
@@ -591,7 +603,7 @@ class IdentityControllerIT {
     @Transactional
     @WithMockUser("change-password-wrong-existing-password")
     void testChangePasswordWrongExistingPassword() throws Exception {
-        User user = new User();
+        User   user            = new User();
         String currentPassword = RandomStringUtils.random(60);
         user.setPassword(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-wrong-existing-password");
@@ -602,7 +614,9 @@ class IdentityControllerIT {
             .perform(
                 post("/api/identity/account/change-password")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO("1" + currentPassword, "new " + "password")))
+                    .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO("1" + currentPassword, "new " +
+                                                                                                            "password"
+                    )))
             )
             .andExpect(status().isBadRequest());
 
@@ -616,7 +630,7 @@ class IdentityControllerIT {
     @Transactional
     @WithMockUser("change-password")
     void testChangePassword() throws Exception {
-        User user = new User();
+        User   user            = new User();
         String currentPassword = RandomStringUtils.random(60);
         user.setPassword(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password");
@@ -640,7 +654,7 @@ class IdentityControllerIT {
     @Transactional
     @WithMockUser("change-password-too-small")
     void testChangePasswordTooSmall() throws Exception {
-        User user = new User();
+        User   user            = new User();
         String currentPassword = RandomStringUtils.random(60);
         user.setPassword(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-too-small");
@@ -666,7 +680,7 @@ class IdentityControllerIT {
     @Transactional
     @WithMockUser("change-password-too-long")
     void testChangePasswordTooLong() throws Exception {
-        User user = new User();
+        User   user            = new User();
         String currentPassword = RandomStringUtils.random(60);
         user.setPassword(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-too-long");
@@ -692,7 +706,7 @@ class IdentityControllerIT {
     @Transactional
     @WithMockUser("change-password-empty")
     void testChangePasswordEmpty() throws Exception {
-        User user = new User();
+        User   user            = new User();
         String currentPassword = RandomStringUtils.random(60);
         user.setPassword(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-empty");

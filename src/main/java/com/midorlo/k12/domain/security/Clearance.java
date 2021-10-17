@@ -2,7 +2,9 @@ package com.midorlo.k12.domain.security;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -21,6 +23,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@ToString
 @Accessors(chain = true)
 @Table(name = "authorities")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -34,29 +37,16 @@ public class Clearance implements Serializable {
     @Column(length = 50, unique = true, updatable = false)
     private String name;
 
-    //<editor-fold desc="toString / equals / hashCode">
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Clearance)) {
-            return false;
-        }
-        return Objects.equals(name, ((Clearance) o).name);
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Clearance clearance = (Clearance) o;
+        return name != null && Objects.equals(name, clearance.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name);
+        return 0;
     }
-
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "Clearance{" +
-               "name='" + name + '\'' +
-               "}";
-    }
-    //</editor-fold>
 }

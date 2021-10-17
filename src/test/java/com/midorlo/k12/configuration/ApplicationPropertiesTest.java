@@ -8,6 +8,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("unused")
 class ApplicationPropertiesTest {
 
     private ApplicationProperties properties;

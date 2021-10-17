@@ -18,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  *
  * @see RestUtilities
  */
+@SuppressWarnings("UastIncorrectHttpHeaderInspection")
 class RestUtilitiesUnitTest {
 
     private static final int PAGE_SIZE = 20;
