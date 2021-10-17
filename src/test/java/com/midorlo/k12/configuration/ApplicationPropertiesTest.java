@@ -111,7 +111,6 @@ class ApplicationPropertiesTest {
         ApplicationProperties.Security.OAuth2 obj = properties.getSecurity().getOauth2();
         assertThat(obj).isNotNull();
         assertThat(obj.getAudience()).isNotNull().isEmpty();
-
         obj.setAudience(Arrays.asList("default", "account"));
         assertThat(obj.getAudience()).isNotEmpty().size().isEqualTo(2);
         assertThat(obj.getAudience()).contains("default", "account");
