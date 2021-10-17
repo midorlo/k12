@@ -1,8 +1,13 @@
 package com.midorlo.k12.configuration.datetime;
 
+import static java.lang.String.format;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.repository.timezone.DateTimeWrapper;
 import com.midorlo.k12.repository.timezone.DateTimeWrapperRepository;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.*;
-import java.time.format.DateTimeFormatter;
-
-import static java.lang.String.format;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Integration tests for the ZoneId Hibernate configuration.
@@ -32,7 +31,7 @@ class HibernateTimeZoneIT {
     @Value("${spring.jpa.properties.hibernate.jdbc.time_zone:UTC}")
     private String zoneId;
 
-    private DateTimeWrapper   dateTimeWrapper;
+    private DateTimeWrapper dateTimeWrapper;
     private DateTimeFormatter dateTimeFormatter;
     private DateTimeFormatter timeFormatter;
     private DateTimeFormatter dateFormatter;
@@ -60,9 +59,9 @@ class HibernateTimeZoneIT {
     void storeInstantWithZoneIdConfigShouldBeStoredOnGMTTimeZone() {
         dateTimeWrapperRepository.saveAndFlush(dateTimeWrapper);
 
-        String    request       = generateSqlRequest("instant", dateTimeWrapper.getId());
-        SqlRowSet resultSet     = jdbcTemplate.queryForRowSet(request);
-        String    expectedValue = dateTimeFormatter.format(dateTimeWrapper.getInstant());
+        String request = generateSqlRequest("instant", dateTimeWrapper.getId());
+        SqlRowSet resultSet = jdbcTemplate.queryForRowSet(request);
+        String expectedValue = dateTimeFormatter.format(dateTimeWrapper.getInstant());
 
         assertThatDateStoredValueIsEqualToInsertDateValueOnGMTTimeZone(resultSet, expectedValue);
     }
@@ -72,10 +71,9 @@ class HibernateTimeZoneIT {
     void storeLocalDateTimeWithZoneIdConfigShouldBeStoredOnGMTTimeZone() {
         dateTimeWrapperRepository.saveAndFlush(dateTimeWrapper);
 
-        String    request       = generateSqlRequest("local_date_time", dateTimeWrapper.getId());
-        SqlRowSet resultSet     = jdbcTemplate.queryForRowSet(request);
-        String    expectedValue = dateTimeWrapper.getLocalDateTime().atZone(ZoneId.systemDefault())
-                                                 .format(dateTimeFormatter);
+        String request = generateSqlRequest("local_date_time", dateTimeWrapper.getId());
+        SqlRowSet resultSet = jdbcTemplate.queryForRowSet(request);
+        String expectedValue = dateTimeWrapper.getLocalDateTime().atZone(ZoneId.systemDefault()).format(dateTimeFormatter);
 
         assertThatDateStoredValueIsEqualToInsertDateValueOnGMTTimeZone(resultSet, expectedValue);
     }
@@ -85,9 +83,9 @@ class HibernateTimeZoneIT {
     void storeOffsetDateTimeWithZoneIdConfigShouldBeStoredOnGMTTimeZone() {
         dateTimeWrapperRepository.saveAndFlush(dateTimeWrapper);
 
-        String    request       = generateSqlRequest("offset_date_time", dateTimeWrapper.getId());
-        SqlRowSet resultSet     = jdbcTemplate.queryForRowSet(request);
-        String    expectedValue = dateTimeWrapper.getOffsetDateTime().format(dateTimeFormatter);
+        String request = generateSqlRequest("offset_date_time", dateTimeWrapper.getId());
+        SqlRowSet resultSet = jdbcTemplate.queryForRowSet(request);
+        String expectedValue = dateTimeWrapper.getOffsetDateTime().format(dateTimeFormatter);
 
         assertThatDateStoredValueIsEqualToInsertDateValueOnGMTTimeZone(resultSet, expectedValue);
     }
@@ -97,9 +95,9 @@ class HibernateTimeZoneIT {
     void storeZoneDateTimeWithZoneIdConfigShouldBeStoredOnGMTTimeZone() {
         dateTimeWrapperRepository.saveAndFlush(dateTimeWrapper);
 
-        String    request       = generateSqlRequest("zoned_date_time", dateTimeWrapper.getId());
-        SqlRowSet resultSet     = jdbcTemplate.queryForRowSet(request);
-        String    expectedValue = dateTimeWrapper.getZonedDateTime().format(dateTimeFormatter);
+        String request = generateSqlRequest("zoned_date_time", dateTimeWrapper.getId());
+        SqlRowSet resultSet = jdbcTemplate.queryForRowSet(request);
+        String expectedValue = dateTimeWrapper.getZonedDateTime().format(dateTimeFormatter);
 
         assertThatDateStoredValueIsEqualToInsertDateValueOnGMTTimeZone(resultSet, expectedValue);
     }
@@ -109,7 +107,7 @@ class HibernateTimeZoneIT {
     void storeLocalTimeWithZoneIdConfigShouldBeStoredOnGMTTimeZoneAccordingToHis1stJan1970Value() {
         dateTimeWrapperRepository.saveAndFlush(dateTimeWrapper);
 
-        String    request   = generateSqlRequest("local_time", dateTimeWrapper.getId());
+        String request = generateSqlRequest("local_time", dateTimeWrapper.getId());
         SqlRowSet resultSet = jdbcTemplate.queryForRowSet(request);
         String expectedValue = dateTimeWrapper
             .getLocalTime()
@@ -125,7 +123,7 @@ class HibernateTimeZoneIT {
     void storeOffsetTimeWithZoneIdConfigShouldBeStoredOnGMTTimeZoneAccordingToHis1stJan1970Value() {
         dateTimeWrapperRepository.saveAndFlush(dateTimeWrapper);
 
-        String    request   = generateSqlRequest("offset_time", dateTimeWrapper.getId());
+        String request = generateSqlRequest("offset_time", dateTimeWrapper.getId());
         SqlRowSet resultSet = jdbcTemplate.queryForRowSet(request);
         String expectedValue = dateTimeWrapper
             .getOffsetTime()
@@ -142,9 +140,9 @@ class HibernateTimeZoneIT {
     void storeLocalDateWithZoneIdConfigShouldBeStoredWithoutTransformation() {
         dateTimeWrapperRepository.saveAndFlush(dateTimeWrapper);
 
-        String    request       = generateSqlRequest("local_date", dateTimeWrapper.getId());
-        SqlRowSet resultSet     = jdbcTemplate.queryForRowSet(request);
-        String    expectedValue = dateTimeWrapper.getLocalDate().format(dateFormatter);
+        String request = generateSqlRequest("local_date", dateTimeWrapper.getId());
+        SqlRowSet resultSet = jdbcTemplate.queryForRowSet(request);
+        String expectedValue = dateTimeWrapper.getLocalDate().format(dateFormatter);
 
         assertThatDateStoredValueIsEqualToInsertDateValueOnGMTTimeZone(resultSet, expectedValue);
     }
@@ -153,8 +151,7 @@ class HibernateTimeZoneIT {
         return format("SELECT %s FROM date_time_wrapper where id=%d", fieldName, id);
     }
 
-    private void assertThatDateStoredValueIsEqualToInsertDateValueOnGMTTimeZone(SqlRowSet sqlRowSet,
-                                                                                String expectedValue) {
+    private void assertThatDateStoredValueIsEqualToInsertDateValueOnGMTTimeZone(SqlRowSet sqlRowSet, String expectedValue) {
         while (sqlRowSet.next()) {
             String dbValue = sqlRowSet.getString(1);
 

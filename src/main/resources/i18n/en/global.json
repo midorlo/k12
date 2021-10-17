@@ -7,7 +7,10 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entitäten",
-        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+        "menu": "Menüs",
+        "menuItem": "Menü-Einträge",
+        "clearance": "Freigaben",
+        "role": "Rollen"
       },
       "account": {
         "main": "Zugang",
@@ -27,8 +30,7 @@
         "configuration": "Konfiguration",
         "logs": "Protokoll",
         "apidocs": "API",
-        "database": "Datenbank",
-        "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
+        "database": "Datenbank"
       },
       "language": "Sprache"
     },

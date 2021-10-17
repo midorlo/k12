@@ -7,7 +7,6 @@ public class LoginAlreadyUsedProblem extends BadRequestAlertProblem {
     private static final long serialVersionUID = 1L;
 
     public LoginAlreadyUsedProblem() {
-        super(ApplicationConstants.ErrorConstants.LOGIN_ALREADY_USED_TYPE, "Login name already used!",
-              "userManagement", "userexists");
+        super(ApplicationConstants.ErrorConstants.LOGIN_ALREADY_USED_TYPE, "Login name already used!", "userManagement", "userexists");
     }
 }

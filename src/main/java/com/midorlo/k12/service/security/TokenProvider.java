@@ -4,6 +4,12 @@ import com.midorlo.k12.configuration.ApplicationProperties;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,13 +18,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -46,16 +45,15 @@ public class TokenProvider {
                 "We recommend using the `application.web.authentication.filter.base64-secret` key for optimum " +
                 "web."
             );
-            secret   = applicationProperties.getSecurity().getAuthentication().getJwt().getSecret();
+            secret = applicationProperties.getSecurity().getAuthentication().getJwt().getSecret();
             keyBytes = secret.getBytes(StandardCharsets.UTF_8);
         }
-        key                                           = Keys.hmacShaKeyFor(keyBytes);
-        jwtParser                                     = Jwts.parserBuilder().setSigningKey(key).build();
-        this.tokenValidityInMilliseconds              =
+        key = Keys.hmacShaKeyFor(keyBytes);
+        jwtParser = Jwts.parserBuilder().setSigningKey(key).build();
+        this.tokenValidityInMilliseconds =
             1000 * applicationProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSeconds();
         this.tokenValidityInMillisecondsForRememberMe =
-            1000 * applicationProperties.getSecurity().getAuthentication().getJwt()
-                                        .getTokenValidityInSecondsForRememberMe();
+            1000 * applicationProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSecondsForRememberMe();
     }
 
     public String createToken(Authentication authentication) {
@@ -67,8 +65,7 @@ public class TokenProvider {
     }
 
     private String createToken(Authentication authentication, boolean rememberMe) {
-        String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-                                           .collect(Collectors.joining(","));
+        String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
         Date validity;

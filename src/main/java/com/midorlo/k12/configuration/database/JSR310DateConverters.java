@@ -1,10 +1,9 @@
 package com.midorlo.k12.configuration.database;
 
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.NonNull;
-
 import java.time.*;
 import java.util.Date;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.NonNull;
 
 /**
  * <p>JSR310DateConverters class.</p>

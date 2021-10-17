@@ -1,10 +1,9 @@
 package com.midorlo.k12.service.query.filter;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
-
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 /**
  * Filter class for {@link LocalDate} type attributes.
@@ -29,12 +28,10 @@ public class LocalDateFilter extends RangeFilter<LocalDate> {
         super(filter);
     }
 
-
     @Override
     public LocalDateFilter copy() {
         return new LocalDateFilter(this);
     }
-
 
     @Override
     @DateTimeFormat(iso = ISO.DATE)
@@ -43,14 +40,12 @@ public class LocalDateFilter extends RangeFilter<LocalDate> {
         return this;
     }
 
-
     @Override
     @DateTimeFormat(iso = ISO.DATE)
     public LocalDateFilter setNotEquals(LocalDate equals) {
         super.setNotEquals(equals);
         return this;
     }
-
 
     @Override
     @DateTimeFormat(iso = ISO.DATE)
@@ -59,14 +54,12 @@ public class LocalDateFilter extends RangeFilter<LocalDate> {
         return this;
     }
 
-
     @Override
     @DateTimeFormat(iso = ISO.DATE)
     public LocalDateFilter setNotIn(List<LocalDate> notIn) {
         super.setNotIn(notIn);
         return this;
     }
-
 
     @Override
     @DateTimeFormat(iso = ISO.DATE)
@@ -75,7 +68,6 @@ public class LocalDateFilter extends RangeFilter<LocalDate> {
         return this;
     }
 
-
     @Override
     @DateTimeFormat(iso = ISO.DATE)
     public LocalDateFilter setLessThan(LocalDate equals) {
@@ -83,14 +75,12 @@ public class LocalDateFilter extends RangeFilter<LocalDate> {
         return this;
     }
 
-
     @Override
     @DateTimeFormat(iso = ISO.DATE)
     public LocalDateFilter setGreaterThanOrEqual(LocalDate equals) {
         super.setGreaterThanOrEqual(equals);
         return this;
     }
-
 
     @Override
     @DateTimeFormat(iso = ISO.DATE)

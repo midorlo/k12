@@ -1,11 +1,15 @@
 package com.midorlo.k12.repository.timezone;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.*;
 import java.util.Objects;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "date_time_wrapper")
 @SuppressWarnings("JpaDataSourceORMInspection")
 public class DateTimeWrapper implements Serializable {
@@ -38,70 +42,6 @@ public class DateTimeWrapper implements Serializable {
     @Column(name = "local_date")
     private LocalDate localDate;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Instant getInstant() {
-        return instant;
-    }
-
-    public void setInstant(Instant instant) {
-        this.instant = instant;
-    }
-
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
-    }
-
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
-    }
-
-    public OffsetDateTime getOffsetDateTime() {
-        return offsetDateTime;
-    }
-
-    public void setOffsetDateTime(OffsetDateTime offsetDateTime) {
-        this.offsetDateTime = offsetDateTime;
-    }
-
-    public ZonedDateTime getZonedDateTime() {
-        return zonedDateTime;
-    }
-
-    public void setZonedDateTime(ZonedDateTime zonedDateTime) {
-        this.zonedDateTime = zonedDateTime;
-    }
-
-    public LocalTime getLocalTime() {
-        return localTime;
-    }
-
-    public void setLocalTime(LocalTime localTime) {
-        this.localTime = localTime;
-    }
-
-    public OffsetTime getOffsetTime() {
-        return offsetTime;
-    }
-
-    public void setOffsetTime(OffsetTime offsetTime) {
-        this.offsetTime = offsetTime;
-    }
-
-    public LocalDate getLocalDate() {
-        return localDate;
-    }
-
-    public void setLocalDate(LocalDate localDate) {
-        this.localDate = localDate;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -112,8 +52,7 @@ public class DateTimeWrapper implements Serializable {
         }
 
         DateTimeWrapper dateTimeWrapper = (DateTimeWrapper) o;
-        return !(dateTimeWrapper.getId() == null || getId() == null) && Objects.equals(getId(),
-                                                                                       dateTimeWrapper.getId());
+        return !(dateTimeWrapper.getId() == null || getId() == null) && Objects.equals(getId(), dateTimeWrapper.getId());
     }
 
     @Override

@@ -1,17 +1,17 @@
 package com.midorlo.k12.configuration.web.problem;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import lombok.Data;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 @RestController
 @RequestMapping("/api/exception-translator-test")
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({ "EmptyMethod", "unused" })
 public class ExceptionTranslatorTestController {
 
     @GetMapping("/concurrency-failure")
@@ -48,18 +48,11 @@ public class ExceptionTranslatorTestController {
         throw new RuntimeException();
     }
 
+    @Data
     public static class TestDTO {
 
         @NotNull
         private String test;
-
-        public String getTest() {
-            return test;
-        }
-
-        public void setTest(String test) {
-            this.test = test;
-        }
     }
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "test response status")

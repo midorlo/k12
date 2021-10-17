@@ -1,7 +1,15 @@
 package com.midorlo.k12.configuration.scheduling;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.mockito.Mockito.*;
+
 import com.midorlo.k12.LogbackRecorder;
 import com.midorlo.k12.LogbackRecorder.Event;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,32 +18,23 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 
-import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.mockito.Mockito.*;
-
 @SuppressWarnings("SynchronizeOnNonFinalField")
 class ExceptionHandlingAsyncTaskExecutorTest {
 
-    private static final RuntimeException exception  = new RuntimeException("Eek");
-    private static final int              testResult = 42;
+    private static final RuntimeException exception = new RuntimeException("Eek");
+    private static final int testResult = 42;
 
-    private boolean                            done;
-    private Exception                          handled;
-    private MockAsyncTaskExecutor              task;
+    private boolean done;
+    private Exception handled;
+    private MockAsyncTaskExecutor task;
     private ExceptionHandlingAsyncTaskExecutor executor;
-    private LogbackRecorder                    recorder;
+    private LogbackRecorder recorder;
 
     @BeforeEach
     void setup() {
-        done     = false;
-        handled  = null;
-        task     = spy(new MockAsyncTaskExecutor());
+        done = false;
+        handled = null;
+        task = spy(new MockAsyncTaskExecutor());
         executor = new TestExceptionHandlingAsyncTaskExecutor(task);
         recorder = LogbackRecorder.forClass(ExceptionHandlingAsyncTaskExecutor.class).reset().capture("ALL");
     }
@@ -47,8 +46,8 @@ class ExceptionHandlingAsyncTaskExecutorTest {
 
     @Test
     void testExecuteWithoutException() {
-        Runnable  runnable = spy(new MockRunnableWithoutException());
-        Throwable caught   = null;
+        Runnable runnable = spy(new MockRunnableWithoutException());
+        Throwable caught = null;
         try {
             synchronized (executor) {
                 executor.execute(runnable);
@@ -71,8 +70,8 @@ class ExceptionHandlingAsyncTaskExecutorTest {
 
     @Test
     void testExecuteWithException() {
-        Runnable  runnable = spy(new MockRunnableWithException());
-        Throwable caught   = null;
+        Runnable runnable = spy(new MockRunnableWithException());
+        Throwable caught = null;
         try {
             synchronized (executor) {
                 executor.execute(runnable, AsyncTaskExecutor.TIMEOUT_INDEFINITE);
@@ -99,9 +98,9 @@ class ExceptionHandlingAsyncTaskExecutorTest {
 
     @Test
     void testSubmitRunnableWithoutException() {
-        Runnable  runnable = spy(new MockRunnableWithoutException());
-        Future<?> future   = executor.submit(runnable);
-        Throwable caught   = catchThrowable(future::get);
+        Runnable runnable = spy(new MockRunnableWithoutException());
+        Future<?> future = executor.submit(runnable);
+        Throwable caught = catchThrowable(future::get);
         assertThat(done).isEqualTo(true);
         verify(runnable).run();
         assertThat(caught).isNull();
@@ -113,9 +112,9 @@ class ExceptionHandlingAsyncTaskExecutorTest {
 
     @Test
     void testSubmitRunnableWithException() {
-        Runnable  runnable = spy(new MockRunnableWithException());
-        Future<?> future   = executor.submit(runnable);
-        Throwable caught   = catchThrowable(future::get);
+        Runnable runnable = spy(new MockRunnableWithException());
+        Future<?> future = executor.submit(runnable);
+        Throwable caught = catchThrowable(future::get);
         assertThat(done).isEqualTo(true);
         verify(runnable).run();
         assertThat(caught).isNull();
@@ -132,8 +131,8 @@ class ExceptionHandlingAsyncTaskExecutorTest {
     @Test
     void testSubmitCallableWithoutException() {
         Callable<Integer> callable = spy(new MockCallableWithoutException());
-        Future<Integer>   future   = executor.submit(callable);
-        Throwable         caught   = catchThrowable(() -> assertThat(future.get()).isEqualTo(42));
+        Future<Integer> future = executor.submit(callable);
+        Throwable caught = catchThrowable(() -> assertThat(future.get()).isEqualTo(42));
         assertThat(done).isEqualTo(true);
         assertThat(caught).isNull();
         assertThat(handled).isNull();
@@ -145,8 +144,8 @@ class ExceptionHandlingAsyncTaskExecutorTest {
     @Test
     void testSubmitCallableWithException() {
         Callable<Integer> callable = spy(new MockCallableWithException());
-        Future<Integer>   future   = executor.submit(callable);
-        Throwable         caught   = catchThrowable(future::get);
+        Future<Integer> future = executor.submit(callable);
+        Throwable caught = catchThrowable(future::get);
         assertThat(done).isEqualTo(true);
         assertThat(caught).isInstanceOf(ExecutionException.class);
         assertThat(caught.getCause()).isEqualTo(handled);
@@ -162,7 +161,7 @@ class ExceptionHandlingAsyncTaskExecutorTest {
 
     @Test
     void testInitializingExecutor() {
-        task     = spy(new MockAsyncInitializingTaskExecutor());
+        task = spy(new MockAsyncInitializingTaskExecutor());
         executor = new TestExceptionHandlingAsyncTaskExecutor(task);
         Throwable caught = catchThrowable(
             () -> {
@@ -186,7 +185,7 @@ class ExceptionHandlingAsyncTaskExecutorTest {
 
     @Test
     void testDisposableExecutor() {
-        task     = spy(new MockAsyncDisposableTaskExecutor());
+        task = spy(new MockAsyncDisposableTaskExecutor());
         executor = new TestExceptionHandlingAsyncTaskExecutor(task);
         Throwable caught = catchThrowable(
             () -> {
@@ -213,7 +212,7 @@ class ExceptionHandlingAsyncTaskExecutorTest {
 
         public void afterPropertiesSet() {}
 
-        public void destroy()            {}
+        public void destroy() {}
     }
 
     private static class MockAsyncInitializingTaskExecutor extends MockAsyncTaskExecutor implements InitializingBean {}

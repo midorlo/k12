@@ -25,16 +25,14 @@ module.exports = configure(function (ctx) {
         BUILD_TIME: new Date().getTime(),
       },
       chainWebpack(chain) {
-        chain.plugin('merge-jsons-webpack-plugin').use(MergeJsonWebpackPlugin, [
-          {
-            output: {
-              groupBy: [
-                {pattern: './i18n/de/*.json', fileName: './i18n/de.json'},
-                {pattern: './i18n/en/*.json', fileName: './i18n/en.json'},
-                {pattern: './i18n/fr/*.json', fileName: './i18n/fr.json'},
-              ],
-            },
-          },
+        chain.plugin('merge-jsons-webpack-plugin').use(MergeJsonWebpackPlugin, [{
+          output: {
+            groupBy: [
+              {pattern: '../resources/i18n/de/*.json', fileName: './i18n/de.json'},
+              {pattern: '../resources/i18n/en/*.json', fileName: './i18n/en.json'},
+              {pattern: '../resources/i18n/fr/*.json', fileName: './i18n/fr.json'}]
+          }
+        },
         ]);
         chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [
           {

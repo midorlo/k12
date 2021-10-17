@@ -14,11 +14,11 @@
         <template v-slot:control>
           <div class="q-gutter-md">
             <q-badge
-              :key="authority"
-              v-for="authority in account.data.authorities"
+              :key="clearance"
+              v-for="clearance in account.data.authorities"
               color="primary"
             >
-              {{ authority }}
+              {{ clearance }}
             </q-badge>
           </div>
         </template>

@@ -1,10 +1,10 @@
 package com.midorlo.k12.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.midorlo.k12.domain.security.Role;
 import com.midorlo.k12.web.api.TestUtil;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class RoleTest {
 

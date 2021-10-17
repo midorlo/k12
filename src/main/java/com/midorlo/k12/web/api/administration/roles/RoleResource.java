@@ -1,23 +1,24 @@
 package com.midorlo.k12.web.api.administration.roles;
 
+import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;
 import com.midorlo.k12.domain.security.Role;
 import com.midorlo.k12.repository.RoleRepository;
 import com.midorlo.k12.web.RestUtilities;
-import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * REST controller for managing {@link Role}.
@@ -28,10 +29,11 @@ import java.util.Optional;
 @Transactional
 public class RoleResource {
 
-    private static final String         ENTITY_NAME = "role";
-    private final        RoleRepository roleRepository;
+    private static final String ENTITY_NAME = "role";
+    private final RoleRepository roleRepository;
+
     @Value("${application.clientApp.name}")
-    private              String         applicationName;
+    private String applicationName;
 
     public RoleResource(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
@@ -54,8 +56,7 @@ public class RoleResource {
         Role result = roleRepository.save(role);
         return ResponseEntity
             .created(new URI("/api/roles/" + result.getId()))
-            .headers(RestUtilities.createEntityCreationAlert(applicationName, ENTITY_NAME, result.getId()
-                                                                                                        .toString()))
+            .headers(RestUtilities.createEntityCreationAlert(applicationName, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -69,8 +70,7 @@ public class RoleResource {
      * or with status {@code 500 (Internal Server Error)} if the role couldn't be updated.
      */
     @PutMapping("/roles/{id}")
-    public ResponseEntity<Role> updateRole(@PathVariable(value = "id", required = false) final Long id,
-                                           @Valid @RequestBody Role role) {
+    public ResponseEntity<Role> updateRole(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Role role) {
         log.debug("REST request to update Role : {}, {}", id, role);
         if (role.getId() == null) {
             throw new BadRequestAlertProblem("Invalid id", ENTITY_NAME, "idnull");
@@ -86,8 +86,7 @@ public class RoleResource {
         Role result = roleRepository.save(role);
         return ResponseEntity
             .ok()
-            .headers(RestUtilities.createEntityUpdateAlert(applicationName, ENTITY_NAME, role.getId()
-                                                                                                    .toString()))
+            .headers(RestUtilities.createEntityUpdateAlert(applicationName, ENTITY_NAME, role.getId().toString()))
             .body(result);
     }
 
@@ -122,8 +121,8 @@ public class RoleResource {
             .findById(role.getId())
             .map(
                 existingRole -> {
-                    if (role.getI18n() != null) {
-                        existingRole.setI18n(role.getI18n());
+                    if (role.getName() != null) {
+                        existingRole.setName(role.getName());
                     }
 
                     return existingRole;
@@ -160,7 +159,7 @@ public class RoleResource {
     public ResponseEntity<Role> getRole(@PathVariable Long id) {
         log.debug("REST request to get Role : {}", id);
         Optional<Role> role = roleRepository.findOneWithEagerRelationships(id);
-        return RestUtilities.wrapOrNotFound(role.orElseThrow(EntityNotFoundException::new));
+        return ResponseEntity.ok().body(role.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
     /**

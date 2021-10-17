@@ -1,19 +1,18 @@
 package com.midorlo.k12.beans;
 
-import com.midorlo.k12.domain.security.Authority;
+import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.ADMIN;
+import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.USER;
+
 import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.domain.security.Role;
 import com.midorlo.k12.domain.security.User;
-import com.midorlo.k12.repository.AuthorityRepository;
-import com.midorlo.k12.repository.RoleRepository;
 import com.midorlo.k12.repository.UserRepository;
+import java.util.List;
+import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Set;
 
 /**
  * CommandLineRunner to install the default User Accounts
@@ -22,15 +21,11 @@ import java.util.Set;
 @Component
 public class InstallUsersAndAuthorities implements CommandLineRunner {
 
-    private final UserRepository  userRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public InstallUsersAndAuthorities(
-        UserRepository userRepository,
-        PasswordEncoder passwordEncoder,
-        RoleRepository roleRepository, AuthorityRepository authorityRepository
-    ) {
-        this.userRepository  = userRepository;
+    public InstallUsersAndAuthorities(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -56,16 +51,7 @@ public class InstallUsersAndAuthorities implements CommandLineRunner {
                                     .setLangKey("de")
                                     .setFirstName("-")
                                     .setLastName("-")
-                                    .setAuthorities(Set.of(new Authority().setName("ADMIN"),
-                                                           new Authority().setName("ROLE_ADMIN")
-                                                    )
-                                    )
-                                    .setRoles(Set.of(new Role()
-                                                         .setI18n("ADMIN")
-                                                         .setClearances(Set.of(
-                                                             new Clearance().setI18n("ROLE_ADMIN"),
-                                                             new Clearance().setI18n("ADMIN")
-                                                         )))),
+                                    .setRoles(Set.of(new Role().setName(ADMIN).setClearances(Set.of(new Clearance().setName(ADMIN))))),
                                 new User()
                                     .setActivated(true)
                                     .setLogin("user")
@@ -74,9 +60,7 @@ public class InstallUsersAndAuthorities implements CommandLineRunner {
                                     .setLangKey("de")
                                     .setFirstName("-")
                                     .setLastName("-")
-                                    .setRoles(Set.of(new Role()
-                                                         .setI18n("USER")
-                                                         .setClearances(Set.of(new Clearance().setI18n("nouns.user")))))
+                                    .setRoles(Set.of(new Role().setName(USER).setClearances(Set.of(new Clearance().setName(USER)))))
                             )
                         )
                     )

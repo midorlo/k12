@@ -2,17 +2,16 @@ package com.midorlo.k12.domain.webapp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.midorlo.k12.domain.security.Clearance;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A Menu.
@@ -60,75 +59,6 @@ public class Menu implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "requiredClearance", "parent" }, allowSetters = true)
     private Set<MenuItem> childItems = new HashSet<>();
-
-    public Menu id(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getI18n() {
-        return this.i18n;
-    }
-
-    public Menu i18n(String i18n) {
-        this.i18n = i18n;
-        return this;
-    }
-
-    public Menu icon(String icon) {
-        this.icon = icon;
-        return this;
-    }
-
-    public Menu enabled(Boolean enabled) {
-        this.enabled = enabled;
-        return this;
-    }
-
-    public Menu parent(Menu menu) {
-        this.setParent(menu);
-        return this;
-    }
-
-    public Menu requiredClearance(Clearance clearance) {
-        this.setRequiredClearance(clearance);
-        return this;
-    }
-
-    public Menu childMenus(Set<Menu> menus) {
-        this.setChildMenus(menus);
-        return this;
-    }
-
-    public Menu addChildMenus(Menu menu) {
-        this.childMenus.add(menu);
-        menu.setParent(this);
-        return this;
-    }
-
-    public Menu removeChildMenus(Menu menu) {
-        this.childMenus.remove(menu);
-        menu.setParent(null);
-        return this;
-    }
-
-    public Menu childItems(Set<MenuItem> menuItems) {
-        this.setChildItems(menuItems);
-        return this;
-    }
-
-    public Menu addChildItems(MenuItem menuItem) {
-        this.childItems.add(menuItem);
-        menuItem.setParent(this);
-        return this;
-    }
-
-    public Menu removeChildItems(MenuItem menuItem) {
-        this.childItems.remove(menuItem);
-        menuItem.setParent(null);
-        return this;
-    }
-
 
     @Override
     public boolean equals(Object o) {

@@ -1,6 +1,13 @@
 package com.midorlo.k12.configuration.database;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.midorlo.k12.LogbackRecorder;
+import java.sql.Types;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.type.descriptor.sql.BinaryTypeDescriptor;
 import org.hibernate.type.descriptor.sql.BlobTypeDescriptor;
@@ -9,14 +16,6 @@ import org.hibernate.type.descriptor.sql.SqlTypeDescriptor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.sql.Types;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class FixedPostgreSQL10DialectTest {
 

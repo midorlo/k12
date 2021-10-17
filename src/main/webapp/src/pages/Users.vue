@@ -55,11 +55,11 @@
           </q-td>
           <q-td>
             <div
-              :key="authority"
-              v-for="authority in props.row.authorities"
+              :key="clearance"
+              v-for="clearance in props.row.authorities"
             >
               <q-badge>
-                {{ authority }}
+                {{ clearance }}
               </q-badge>
             </div>
           </q-td>

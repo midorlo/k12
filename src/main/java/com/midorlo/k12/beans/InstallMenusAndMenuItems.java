@@ -4,24 +4,22 @@ import com.midorlo.k12.domain.webapp.Menu;
 import com.midorlo.k12.domain.webapp.MenuItem;
 import com.midorlo.k12.repository.MenuItemRepository;
 import com.midorlo.k12.repository.MenuRepository;
+import java.util.Collection;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.List;
-
 @Slf4j
 @Component
-public class InstallMenusAndMenuItems implements CommandLineRunner,
-                                                 Ordered {
+public class InstallMenusAndMenuItems implements CommandLineRunner, Ordered {
 
-    private final MenuRepository     menuRepository;
+    private final MenuRepository menuRepository;
     private final MenuItemRepository menuItemRepository;
 
     public InstallMenusAndMenuItems(MenuRepository menuRepository, MenuItemRepository menuItemRepository) {
-        this.menuRepository     = menuRepository;
+        this.menuRepository = menuRepository;
         this.menuItemRepository = menuItemRepository;
     }
 
@@ -61,7 +59,7 @@ public class InstallMenusAndMenuItems implements CommandLineRunner,
                                 .setIcon("health_and_safety")
                                 .setEnabled(true)
                                 .setTarget("/health")
-                                .setI18n("global.menu.admin.health_and_safety")
+                                .setI18n("global.menu.admin.health")
                         )
                     );
                     log.info(
@@ -72,7 +70,7 @@ public class InstallMenusAndMenuItems implements CommandLineRunner,
                                 .setIcon("analytics")
                                 .setEnabled(true)
                                 .setTarget("/metrics")
-                                .setI18n("global.menu.admin.health")
+                                .setI18n("global.menu.admin.metrics")
                         )
                     );
                     log.info(

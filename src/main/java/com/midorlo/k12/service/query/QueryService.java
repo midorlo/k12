@@ -3,18 +3,17 @@ package com.midorlo.k12.service.query;
 import com.midorlo.k12.service.query.filter.Filter;
 import com.midorlo.k12.service.query.filter.RangeFilter;
 import com.midorlo.k12.service.query.filter.StringFilter;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.transaction.annotation.Transactional;
-
+import java.util.Collection;
+import java.util.Set;
+import java.util.function.Function;
 import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.SetJoin;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
-import java.util.Collection;
-import java.util.Set;
-import java.util.function.Function;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Base service for constructing and executing complex queries.
@@ -33,8 +32,7 @@ public abstract class QueryService<ENTITY> {
      * @param <X>    The type of the attribute which is filtered.
      * @return a Specification
      */
-    protected <X> Specification<ENTITY> buildSpecification(Filter<X> filter,
-                                                           SingularAttribute<? super ENTITY, X> field) {
+    protected <X> Specification<ENTITY> buildSpecification(Filter<X> filter, SingularAttribute<? super ENTITY, X> field) {
         return buildSpecification(filter, root -> root.get(field));
     }
 
@@ -48,8 +46,7 @@ public abstract class QueryService<ENTITY> {
      * @param <X>               The type of the attribute which is filtered.
      * @return a Specification
      */
-    protected <X> Specification<ENTITY> buildSpecification(Filter<X> filter,
-                                                           Function<Root<ENTITY>, Expression<X>> metaclassFunction) {
+    protected <X> Specification<ENTITY> buildSpecification(Filter<X> filter, Function<Root<ENTITY>, Expression<X>> metaclassFunction) {
         if (filter.getEquals() != null) {
             return equalsSpecification(metaclassFunction, filter.getEquals());
         } else if (filter.getIn() != null) {
@@ -72,8 +69,7 @@ public abstract class QueryService<ENTITY> {
      * @param field  the JPA static metamodel representing the field.
      * @return a Specification
      */
-    protected Specification<ENTITY> buildStringSpecification(StringFilter filter,
-                                                             SingularAttribute<? super ENTITY, String> field) {
+    protected Specification<ENTITY> buildStringSpecification(StringFilter filter, SingularAttribute<? super ENTITY, String> field) {
         return buildSpecification(filter, root -> root.get(field));
     }
 
@@ -86,8 +82,7 @@ public abstract class QueryService<ENTITY> {
      *                          column
      * @return a Specification
      */
-    protected Specification<ENTITY> buildSpecification(StringFilter filter,
-                                                       Function<Root<ENTITY>, Expression<String>> metaclassFunction) {
+    protected Specification<ENTITY> buildSpecification(StringFilter filter, Function<Root<ENTITY>, Expression<String>> metaclassFunction) {
         if (filter.getEquals() != null) {
             return equalsSpecification(metaclassFunction, filter.getEquals());
         } else if (filter.getIn() != null) {
@@ -251,8 +246,7 @@ public abstract class QueryService<ENTITY> {
         SetAttribute<ENTITY, OTHER> reference,
         SingularAttribute<OTHER, X> valueField
     ) {
-        return buildReferringEntitySpecification(filter, root -> root.join(reference),
-                                                 entity -> entity.get(valueField));
+        return buildReferringEntitySpecification(filter, root -> root.join(reference), entity -> entity.get(valueField));
     }
 
     /**
@@ -319,8 +313,7 @@ public abstract class QueryService<ENTITY> {
         final SetAttribute<ENTITY, OTHER> reference,
         final SingularAttribute<OTHER, X> valueField
     ) {
-        return buildReferringEntitySpecification(filter, root -> root.join(reference),
-                                                 entity -> entity.get(valueField));
+        return buildReferringEntitySpecification(filter, root -> root.join(reference), entity -> entity.get(valueField));
     }
 
     /**
@@ -395,8 +388,7 @@ public abstract class QueryService<ENTITY> {
      * @param <X>               The type of the attribute which is filtered.
      * @return a Specification.
      */
-    protected <X> Specification<ENTITY> equalsSpecification(Function<Root<ENTITY>, Expression<X>> metaclassFunction,
-                                                            final X value) {
+    protected <X> Specification<ENTITY> equalsSpecification(Function<Root<ENTITY>, Expression<X>> metaclassFunction, final X value) {
         return (root, query, builder) -> builder.equal(metaclassFunction.apply(root), value);
     }
 
@@ -409,8 +401,7 @@ public abstract class QueryService<ENTITY> {
      * @param <X>               The type of the attribute which is filtered.
      * @return a Specification.
      */
-    protected <X> Specification<ENTITY> notEqualsSpecification(Function<Root<ENTITY>, Expression<X>> metaclassFunction,
-                                                               final X value) {
+    protected <X> Specification<ENTITY> notEqualsSpecification(Function<Root<ENTITY>, Expression<X>> metaclassFunction, final X value) {
         return (root, query, builder) -> builder.not(builder.equal(metaclassFunction.apply(root), value));
     }
 
@@ -425,8 +416,7 @@ public abstract class QueryService<ENTITY> {
         Function<Root<ENTITY>, Expression<String>> metaclassFunction,
         final String value
     ) {
-        return (root, query, builder) -> builder.like(builder.upper(metaclassFunction.apply(root)),
-                                                      wrapLikeQuery(value));
+        return (root, query, builder) -> builder.like(builder.upper(metaclassFunction.apply(root)), wrapLikeQuery(value));
     }
 
     /**
@@ -440,8 +430,7 @@ public abstract class QueryService<ENTITY> {
         Function<Root<ENTITY>, Expression<String>> metaclassFunction,
         final String value
     ) {
-        return (root, query, builder) -> builder.not(builder.like(builder.upper(metaclassFunction.apply(root)),
-                                                                  wrapLikeQuery(value)));
+        return (root, query, builder) -> builder.not(builder.like(builder.upper(metaclassFunction.apply(root)), wrapLikeQuery(value)));
     }
 
     /**
@@ -452,11 +441,10 @@ public abstract class QueryService<ENTITY> {
      * @param <X>               a X object.
      * @return a {@link Specification} object.
      */
-    protected <X> Specification<ENTITY> byFieldSpecified(Function<Root<ENTITY>, Expression<X>> metaclassFunction,
-                                                         final boolean specified) {
+    protected <X> Specification<ENTITY> byFieldSpecified(Function<Root<ENTITY>, Expression<X>> metaclassFunction, final boolean specified) {
         return specified
-               ? (root, query, builder) -> builder.isNotNull(metaclassFunction.apply(root))
-               : (root, query, builder) -> builder.isNull(metaclassFunction.apply(root));
+            ? (root, query, builder) -> builder.isNotNull(metaclassFunction.apply(root))
+            : (root, query, builder) -> builder.isNull(metaclassFunction.apply(root));
     }
 
     /**
@@ -472,8 +460,8 @@ public abstract class QueryService<ENTITY> {
         final boolean specified
     ) {
         return specified
-               ? (root, query, builder) -> builder.isNotEmpty(metaclassFunction.apply(root))
-               : (root, query, builder) -> builder.isEmpty(metaclassFunction.apply(root));
+            ? (root, query, builder) -> builder.isNotEmpty(metaclassFunction.apply(root))
+            : (root, query, builder) -> builder.isEmpty(metaclassFunction.apply(root));
     }
 
     /**
@@ -484,8 +472,7 @@ public abstract class QueryService<ENTITY> {
      * @param <X>               a X object.
      * @return a {@link Specification} object.
      */
-    protected <X> Specification<ENTITY> valueIn(Function<Root<ENTITY>, Expression<X>> metaclassFunction,
-                                                final Collection<X> values) {
+    protected <X> Specification<ENTITY> valueIn(Function<Root<ENTITY>, Expression<X>> metaclassFunction, final Collection<X> values) {
         return (root, query, builder) -> {
             In<X> in = builder.in(metaclassFunction.apply(root));
             for (X value : values) {
@@ -503,8 +490,7 @@ public abstract class QueryService<ENTITY> {
      * @param <X>               a X object.
      * @return a {@link Specification} object.
      */
-    protected <X> Specification<ENTITY> valueNotIn(Function<Root<ENTITY>, Expression<X>> metaclassFunction,
-                                                   final Collection<X> values) {
+    protected <X> Specification<ENTITY> valueNotIn(Function<Root<ENTITY>, Expression<X>> metaclassFunction, final Collection<X> values) {
         return (root, query, builder) -> {
             In<X> in = builder.in(metaclassFunction.apply(root));
             for (X value : values) {

@@ -1,9 +1,18 @@
 package com.midorlo.k12.web.api;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.domain.webapp.Menu;
 import com.midorlo.k12.repository.MenuRepository;
 import com.midorlo.k12.web.api.webapp.MenuResource;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +22,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 /**
  * Integration tests for the {@link MenuResource} REST controller.
  */
+@SuppressWarnings({ "unused", "OptionalGetWithoutIsPresent" })
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
@@ -37,14 +37,14 @@ class MenuResourceIT {
     private static final String DEFAULT_ICON = "AAAAAAAAAA";
     private static final String UPDATED_ICON = "BBBBBBBBBB";
 
-    private static final Boolean DEFAULT_ENABLED = false;
-    private static final Boolean UPDATED_ENABLED = true;
+    private static final Boolean DEFAULT_ENABLED = true;
+    private static final Boolean UPDATED_ENABLED = false;
 
-    private static final String ENTITY_API_URL    = "/api/webapp/menus";
+    private static final String ENTITY_API_URL = "/api/webapp/menus";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
-    private static final Random     random = new Random();
-    private static final AtomicLong count  = new AtomicLong(random.nextInt() + (2L * Integer.MAX_VALUE));
+    private static final Random random = new Random();
+    private static final AtomicLong count = new AtomicLong(random.nextInt() + (2L * Integer.MAX_VALUE));
 
     @Autowired
     private MenuRepository menuRepository;
@@ -64,7 +64,7 @@ class MenuResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Menu createEntity(EntityManager em) {
-        return new Menu().i18n(DEFAULT_I_18_N).icon(DEFAULT_ICON).enabled(DEFAULT_ENABLED);
+        return new Menu().setI18n(DEFAULT_I_18_N).setIcon(DEFAULT_ICON).setEnabled(DEFAULT_ENABLED);
     }
 
     /**
@@ -74,7 +74,7 @@ class MenuResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Menu createUpdatedEntity(EntityManager em) {
-        return new Menu().i18n(UPDATED_I_18_N).icon(UPDATED_ICON).enabled(UPDATED_ENABLED);
+        return new Menu().setI18n(UPDATED_I_18_N).setIcon(UPDATED_ICON).setEnabled(UPDATED_ENABLED);
     }
 
     @BeforeEach
@@ -88,8 +88,7 @@ class MenuResourceIT {
         int databaseSizeBeforeCreate = menuRepository.findAll().size();
         // Create the Menu
         restMenuMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
-                                         .content(TestUtil.convertObjectToJsonBytes(menu)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(menu)))
             .andExpect(status().isCreated());
 
         // Validate the Menu in the database
@@ -111,8 +110,7 @@ class MenuResourceIT {
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restMenuMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
-                                         .content(TestUtil.convertObjectToJsonBytes(menu)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(menu)))
             .andExpect(status().isBadRequest());
 
         // Validate the Menu in the database
@@ -130,8 +128,7 @@ class MenuResourceIT {
         // Create the Menu, which fails.
 
         restMenuMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
-                                         .content(TestUtil.convertObjectToJsonBytes(menu)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(menu)))
             .andExpect(status().isBadRequest());
 
         List<Menu> menuList = menuRepository.findAll();
@@ -172,16 +169,11 @@ class MenuResourceIT {
             .andExpect(jsonPath("$.enabled").value(DEFAULT_ENABLED));
     }
 
-    //    @Test
-    //    @Transactional
-    //    void getNonExistingMenu() throws Exception {
-    //         Get the menu
-    //        restMenuMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE))
-    //            .andExpect(status().is(
-    //
-    //            ))
-    //                       .andExpect(status().isNotFound());
-    //    }
+    @Test
+    @Transactional
+    void getNonExistingMenu() throws Exception {
+        restMenuMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
+    }
 
     @Test
     @Transactional
@@ -195,7 +187,7 @@ class MenuResourceIT {
         Menu updatedMenu = menuRepository.findById(menu.getId()).get();
         // Disconnect from session so that the updates on updatedMenu are not directly saved in db
         em.detach(updatedMenu);
-        updatedMenu.i18n(UPDATED_I_18_N).icon(UPDATED_ICON).enabled(UPDATED_ENABLED);
+        updatedMenu.setI18n(UPDATED_I_18_N).setIcon(UPDATED_ICON).setEnabled(UPDATED_ENABLED);
 
         restMenuMockMvc
             .perform(
@@ -262,8 +254,7 @@ class MenuResourceIT {
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertProblem
         restMenuMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
-                                        .content(TestUtil.convertObjectToJsonBytes(menu)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(menu)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Menu in the database
@@ -271,34 +262,34 @@ class MenuResourceIT {
         assertThat(menuList).hasSize(databaseSizeBeforeUpdate);
     }
 
-//    @Test
-//    @Transactional
-//    void partialUpdateMenuWithPatch() throws Exception {
-//        // Initialize the database
-//        menuRepository.saveAndFlush(menu);
-//
-//        int databaseSizeBeforeUpdate = menuRepository.findAll().size();
-//
-//        // Update the menu using partial update
-//        Menu partialUpdatedMenu = new Menu();
-//        partialUpdatedMenu.setId(menu.getId());
-//
-//        restMenuMockMvc
-//            .perform(
-//                patch(ENTITY_API_URL_ID, partialUpdatedMenu.getId())
-//                    .contentType("application/merge-patch+json")
-//                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedMenu))
-//            )
-//            .andExpect(status().isOk());
-//
-//        // Validate the Menu in the database
-//        List<Menu> menuList = menuRepository.findAll();
-//        assertThat(menuList).hasSize(databaseSizeBeforeUpdate);
-//        Menu testMenu = menuList.get(menuList.size() - 1);
-//        assertThat(testMenu.getI18n()).isEqualTo(DEFAULT_I_18_N);
-//        assertThat(testMenu.getIcon()).isEqualTo(DEFAULT_ICON);
-//        assertThat(testMenu.getEnabled()).isEqualTo(DEFAULT_ENABLED);
-//    }
+    @Test
+    @Transactional
+    void partialUpdateMenuWithPatch() throws Exception {
+        // Initialize the database
+        menuRepository.saveAndFlush(menu);
+
+        int databaseSizeBeforeUpdate = menuRepository.findAll().size();
+
+        // Update the menu using partial update
+        Menu partialUpdatedMenu = new Menu();
+        partialUpdatedMenu.setId(menu.getId());
+
+        restMenuMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, partialUpdatedMenu.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedMenu))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the Menu in the database
+        List<Menu> menuList = menuRepository.findAll();
+        assertThat(menuList).hasSize(databaseSizeBeforeUpdate);
+        Menu testMenu = menuList.get(menuList.size() - 1);
+        assertThat(testMenu.getI18n()).isEqualTo(DEFAULT_I_18_N);
+        assertThat(testMenu.getIcon()).isEqualTo(DEFAULT_ICON);
+        assertThat(testMenu.getEnabled()).isEqualTo(DEFAULT_ENABLED);
+    }
 
     @Test
     @Transactional
@@ -312,7 +303,7 @@ class MenuResourceIT {
         Menu partialUpdatedMenu = new Menu();
         partialUpdatedMenu.setId(menu.getId());
 
-        partialUpdatedMenu.i18n(UPDATED_I_18_N).icon(UPDATED_ICON).enabled(UPDATED_ENABLED);
+        partialUpdatedMenu.setI18n(UPDATED_I_18_N).setIcon(UPDATED_ICON).setEnabled(UPDATED_ENABLED);
 
         restMenuMockMvc
             .perform(
@@ -379,8 +370,7 @@ class MenuResourceIT {
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertProblem
         restMenuMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json")
-                                          .content(TestUtil.convertObjectToJsonBytes(menu)))
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(menu)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Menu in the database

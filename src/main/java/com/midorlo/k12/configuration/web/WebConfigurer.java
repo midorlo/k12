@@ -1,6 +1,14 @@
 package com.midorlo.k12.configuration.web;
 
+import static java.net.URLDecoder.decode;
+
 import com.midorlo.k12.configuration.ApplicationProperties;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
+import java.util.Objects;
+import javax.servlet.ServletContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.server.WebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
@@ -14,29 +22,19 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import javax.servlet.ServletContext;
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
-import java.util.Objects;
-
-import static java.net.URLDecoder.decode;
-
 /**
  * Configuration of web application with Servlet 3.0 APIs.
  */
 @Slf4j
 @Configuration
-public class WebConfigurer implements ServletContextInitializer,
-                                      WebServerFactoryCustomizer<WebServerFactory> {
+public class WebConfigurer implements ServletContextInitializer, WebServerFactoryCustomizer<WebServerFactory> {
 
     private final Environment env;
 
     private final ApplicationProperties applicationProperties;
 
     public WebConfigurer(Environment env, ApplicationProperties applicationProperties) {
-        this.env                   = env;
+        this.env = env;
         this.applicationProperties = applicationProperties;
     }
 
@@ -59,8 +57,8 @@ public class WebConfigurer implements ServletContextInitializer,
     private void setLocationForStaticAssets(WebServerFactory server) {
         if (server instanceof ConfigurableServletWebServerFactory) {
             ConfigurableServletWebServerFactory servletWebServer = (ConfigurableServletWebServerFactory) server;
-            File                                root;
-            String                              prefixPath       = resolvePathPrefix();
+            File root;
+            String prefixPath = resolvePathPrefix();
             root = new File(prefixPath + "target/classes/static/");
             if (root.exists() && root.isDirectory()) {
                 servletWebServer.setDocumentRoot(root);
@@ -74,26 +72,24 @@ public class WebConfigurer implements ServletContextInitializer,
     private String resolvePathPrefix() {
         String fullExecutablePath;
         try {
-            fullExecutablePath = decode(Objects.requireNonNull(this.getClass().getResource(""))
-                                               .getPath(), StandardCharsets.UTF_8.name());
+            fullExecutablePath = decode(Objects.requireNonNull(this.getClass().getResource("")).getPath(), StandardCharsets.UTF_8.name());
         } catch (UnsupportedEncodingException e) {
             /* try without decoding if this ever happens */
             fullExecutablePath = Objects.requireNonNull(this.getClass().getResource("")).getPath();
         }
-        String rootPath           = Paths.get(".").toUri().normalize().getPath();
-        String extractedPath      = fullExecutablePath.replace(rootPath, "");
-        int    extractionEndIndex = extractedPath.indexOf("target/");
+        String rootPath = Paths.get(".").toUri().normalize().getPath();
+        String extractedPath = fullExecutablePath.replace(rootPath, "");
+        int extractionEndIndex = extractedPath.indexOf("target/");
         if (extractionEndIndex <= 0) {
             return "";
         }
         return extractedPath.substring(0, extractionEndIndex);
     }
 
-
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration               config = applicationProperties.getCors();
+        CorsConfiguration config = applicationProperties.getCors();
         if (!CollectionUtils.isEmpty(config.getAllowedOrigins()) || !CollectionUtils.isEmpty(config.getAllowedOriginPatterns())) {
             log.debug("Registering CORS filter");
             source.registerCorsConfiguration("/api/**", config);

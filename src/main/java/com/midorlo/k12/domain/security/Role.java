@@ -1,6 +1,12 @@
 package com.midorlo.k12.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -8,16 +14,10 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
 /**
  * A Role.
  */
+
 @Entity
 @Getter
 @Setter
@@ -34,10 +34,8 @@ public class Role implements Serializable {
     private Long id;
 
     @NotNull
-    //    @Min(value = 6)
-    //    @Max(value = 50)
-    @Column(name = "i_18_n", nullable = false, unique = true)
-    private String i18n;
+    @Column(name = "name", nullable = false, unique = true)
+    private String name;
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -55,11 +53,6 @@ public class Role implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Role id(Long id) {
-        this.id = id;
-        return this;
     }
 
     @Override

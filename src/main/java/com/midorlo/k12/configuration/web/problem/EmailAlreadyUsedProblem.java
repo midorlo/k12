@@ -7,7 +7,6 @@ public class EmailAlreadyUsedProblem extends BadRequestAlertProblem {
     private static final long serialVersionUID = 1L;
 
     public EmailAlreadyUsedProblem() {
-        super(ApplicationConstants.ErrorConstants.EMAIL_ALREADY_USED_TYPE, "Email is already in use!",
-              "userManagement", "emailexists");
+        super(ApplicationConstants.ErrorConstants.EMAIL_ALREADY_USED_TYPE, "Email is already in use!", "userManagement", "emailexists");
     }
 }

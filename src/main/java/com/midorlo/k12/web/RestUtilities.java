@@ -1,5 +1,10 @@
 package com.midorlo.k12.web;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -11,12 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Utility class for all things tedious when creating rest apis.
@@ -30,7 +29,7 @@ import java.util.List;
 public final class RestUtilities {
 
     private static final String HEADER_X_TOTAL_COUNT = "X-Total-Count";
-    private static final String HEADER_LINK_FORMAT   = "<{0}>; rel=\"{1}\"";
+    private static final String HEADER_LINK_FORMAT = "<{0}>; rel=\"{1}\"";
 
     /**
      * Generate pagination headers for a Spring Data {@link Page} object.
@@ -41,10 +40,9 @@ public final class RestUtilities {
      * @return http header.
      */
     public static <T> HttpHeaders generatePaginationHttpHeaders(UriComponentsBuilder uriBuilder, Page<T> page) {
-
-        int           pageNumber = page.getNumber();
-        int           pageSize   = page.getSize();
-        StringBuilder link       = new StringBuilder();
+        int pageNumber = page.getNumber();
+        int pageSize = page.getSize();
+        StringBuilder link = new StringBuilder();
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HEADER_X_TOTAL_COUNT, Long.toString(page.getTotalElements()));
@@ -55,7 +53,8 @@ public final class RestUtilities {
         if (pageNumber > 0) {
             link.append(prepareLink(uriBuilder, pageNumber - 1, pageSize, "prev")).append(",");
         }
-        link.append(prepareLink(uriBuilder, page.getTotalPages() - 1, pageSize, "last"))
+        link
+            .append(prepareLink(uriBuilder, page.getTotalPages() - 1, pageSize, "last"))
             .append(",")
             .append(prepareLink(uriBuilder, 0, pageSize, "first"));
         headers.add(HttpHeaders.LINK, link.toString());
@@ -67,11 +66,12 @@ public final class RestUtilities {
     }
 
     private static String preparePageUri(UriComponentsBuilder uriBuilder, int pageNumber, int pageSize) {
-        return uriBuilder.replaceQueryParam("page", Integer.toString(pageNumber))
-                         .replaceQueryParam("size", Integer.toString(pageSize))
-                         .toUriString()
-                         .replace(",", "%2C")
-                         .replace(";", "%3B");
+        return uriBuilder
+            .replaceQueryParam("page", Integer.toString(pageNumber))
+            .replaceQueryParam("size", Integer.toString(pageSize))
+            .toUriString()
+            .replace(",", "%2C")
+            .replace(";", "%3B");
     }
 
     /**
@@ -120,9 +120,7 @@ public final class RestUtilities {
      * @param param      a {@link String} object.
      * @return a {@link HttpHeaders} object.
      */
-    public static HttpHeaders createEntityCreationAlert(String appName,
-                                                        String entityName,
-                                                        String param) {
+    public static HttpHeaders createEntityCreationAlert(String appName, String entityName, String param) {
         return createEntityCreationAlert(appName, false, entityName, param);
     }
 
@@ -134,19 +132,14 @@ public final class RestUtilities {
      * @param param      a {@link String} object.
      * @return a {@link HttpHeaders} object.
      */
-    public static HttpHeaders createLocalizedEntityCreationAlert(String appName,
-                                                                 String entityName,
-                                                                 String param) {
+    public static HttpHeaders createLocalizedEntityCreationAlert(String appName, String entityName, String param) {
         return createEntityCreationAlert(appName, true, entityName, param);
     }
 
-    private static HttpHeaders createEntityCreationAlert(String appName,
-                                                         boolean enableTranslation,
-                                                         String entityName,
-                                                         String param) {
+    private static HttpHeaders createEntityCreationAlert(String appName, boolean enableTranslation, String entityName, String param) {
         String message = enableTranslation
-                         ? appName + "." + entityName + ".created"
-                         : "A new " + entityName + " is created with identifier " + param;
+            ? appName + "." + entityName + ".created"
+            : "A new " + entityName + " is created with identifier " + param;
         return createAlert(appName, message, param);
     }
 
@@ -158,13 +151,10 @@ public final class RestUtilities {
         return createEntityUpdateAlert(appName, true, entityName, param);
     }
 
-    private static HttpHeaders createEntityUpdateAlert(String appName,
-                                                       boolean enableTranslation,
-                                                       String entityName,
-                                                       String param) {
+    private static HttpHeaders createEntityUpdateAlert(String appName, boolean enableTranslation, String entityName, String param) {
         String message = enableTranslation
-                         ? appName + "." + entityName + ".updated"
-                         : "A " + entityName + " is updated with identifier " + param;
+            ? appName + "." + entityName + ".updated"
+            : "A " + entityName + " is updated with identifier " + param;
         return createAlert(appName, message, param);
     }
 
@@ -176,35 +166,28 @@ public final class RestUtilities {
         return createEntityDeletionAlert(appName, true, entityName, param);
     }
 
-    private static HttpHeaders createEntityDeletionAlert(String appName,
-                                                         boolean enableTranslation,
-                                                         String entityName,
-                                                         String param) {
+    private static HttpHeaders createEntityDeletionAlert(String appName, boolean enableTranslation, String entityName, String param) {
         String message = enableTranslation
-                         ? appName + "." + entityName + ".deleted"
-                         : "A " + entityName + " is deleted with identifier " + param;
+            ? appName + "." + entityName + ".deleted"
+            : "A " + entityName + " is deleted with identifier " + param;
         return createAlert(appName, message, param);
     }
 
-    public static HttpHeaders createFailureAlert(String appName,
-                                                 String entityName,
-                                                 String errorKey,
-                                                 String defaultMessage) {
+    public static HttpHeaders createFailureAlert(String appName, String entityName, String errorKey, String defaultMessage) {
         return createFailureAlert(appName, false, entityName, errorKey, defaultMessage);
     }
 
-    public static HttpHeaders createLocalizedFailureAlert(String appName,
-                                                          String entityName,
-                                                          String errorKey,
-                                                          String defaultMessage) {
+    public static HttpHeaders createLocalizedFailureAlert(String appName, String entityName, String errorKey, String defaultMessage) {
         return createFailureAlert(appName, true, entityName, errorKey, defaultMessage);
     }
 
-    private static HttpHeaders createFailureAlert(String appName,
-                                                  boolean enableTranslation,
-                                                  String entityName,
-                                                  String errorKey,
-                                                  String defaultMessage) {
+    private static HttpHeaders createFailureAlert(
+        String appName,
+        boolean enableTranslation,
+        String entityName,
+        String errorKey,
+        String defaultMessage
+    ) {
         log.error("Entity processing failed, {}", defaultMessage);
 
         String message = enableTranslation ? "error." + errorKey : defaultMessage;

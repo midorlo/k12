@@ -1,23 +1,23 @@
 package com.midorlo.k12.web.api.webapp;
 
+import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;
 import com.midorlo.k12.domain.webapp.Menu;
 import com.midorlo.k12.repository.MenuRepository;
 import com.midorlo.k12.web.RestUtilities;
-import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * REST controller for managing {@link Menu}.
@@ -28,10 +28,11 @@ import java.util.Optional;
 @Transactional
 public class MenuResource {
 
-    private static final String         ENTITY_NAME = "menu";
-    private final        MenuRepository menuRepository;
+    private static final String ENTITY_NAME = "menu";
+    private final MenuRepository menuRepository;
+
     @Value("${application.clientApp.name}")
-    private              String         applicationName;
+    private String applicationName;
 
     public MenuResource(MenuRepository menuRepository) {
         this.menuRepository = menuRepository;
@@ -54,8 +55,7 @@ public class MenuResource {
         Menu result = menuRepository.save(menu);
         return ResponseEntity
             .created(new URI("/api/webapp/menus/" + result.getId()))
-            .headers(RestUtilities.createEntityCreationAlert(applicationName, ENTITY_NAME, result.getId()
-                                                                                                 .toString()))
+            .headers(RestUtilities.createEntityCreationAlert(applicationName, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -69,8 +69,7 @@ public class MenuResource {
      * or with status {@code 500 (Internal Server Error)} if the menu couldn't be updated.
      */
     @PutMapping("/menus/{id}")
-    public ResponseEntity<Menu> updateMenu(@PathVariable(value = "id", required = false) final Long id,
-                                           @Valid @RequestBody Menu menu) {
+    public ResponseEntity<Menu> updateMenu(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Menu menu) {
         log.debug("REST request to update Menu : {}, {}", id, menu);
         if (menu.getId() == null) {
             throw new BadRequestAlertProblem("Invalid id", ENTITY_NAME, "idnull");
@@ -86,8 +85,7 @@ public class MenuResource {
         Menu result = menuRepository.save(menu);
         return ResponseEntity
             .ok()
-            .headers(RestUtilities.createEntityUpdateAlert(applicationName, ENTITY_NAME, menu.getId()
-                                                                                                    .toString()))
+            .headers(RestUtilities.createEntityUpdateAlert(applicationName, ENTITY_NAME, menu.getId().toString()))
             .body(result);
     }
 
@@ -136,11 +134,7 @@ public class MenuResource {
                 }
             )
             .map(menuRepository::save);
-
-        return RestUtilities.wrapOrNotFound(
-            result.orElseThrow(EntityNotFoundException::new),
-            RestUtilities.createEntityUpdateAlert(applicationName, ENTITY_NAME, menu.getId().toString())
-        );
+        return ResponseEntity.ok().body(result.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
     /**
@@ -165,7 +159,7 @@ public class MenuResource {
     public ResponseEntity<Menu> getMenu(@PathVariable Long id) {
         log.debug("REST request to get Menu : {}", id);
         Optional<Menu> menu = menuRepository.findById(id);
-        return RestUtilities.wrapOrNotFound(menu.orElseThrow(EntityNotFoundException::new));
+        return ResponseEntity.ok().body(menu.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
     /**

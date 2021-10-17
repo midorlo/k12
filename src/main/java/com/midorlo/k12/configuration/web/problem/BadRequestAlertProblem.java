@@ -1,12 +1,11 @@
 package com.midorlo.k12.configuration.web.problem;
 
 import com.midorlo.k12.configuration.ApplicationConstants;
-import org.zalando.problem.AbstractThrowableProblem;
-import org.zalando.problem.Status;
-
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import org.zalando.problem.AbstractThrowableProblem;
+import org.zalando.problem.Status;
 
 public class BadRequestAlertProblem extends AbstractThrowableProblem {
 
@@ -23,7 +22,7 @@ public class BadRequestAlertProblem extends AbstractThrowableProblem {
     public BadRequestAlertProblem(URI type, String defaultMessage, String entityName, String errorKey) {
         super(type, defaultMessage, Status.BAD_REQUEST, null, null, null, getAlertParameters(entityName, errorKey));
         this.entityName = entityName;
-        this.errorKey   = errorKey;
+        this.errorKey = errorKey;
     }
 
     private static Map<String, Object> getAlertParameters(String entityName, String errorKey) {

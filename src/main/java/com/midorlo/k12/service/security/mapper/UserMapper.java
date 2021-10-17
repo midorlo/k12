@@ -1,17 +1,16 @@
 package com.midorlo.k12.service.security.mapper;
 
-import com.midorlo.k12.domain.security.Authority;
+import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.service.security.dto.AdminUserDTO;
 import com.midorlo.k12.service.security.dto.UserDTO;
+import java.util.*;
+import java.util.stream.Collectors;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Mapper for the entity {@link User} and its DTO called {@link UserDTO}.
@@ -56,14 +55,14 @@ public class UserMapper {
             user.setImageUrl(userDTO.getImageUrl());
             user.setActivated(userDTO.isActivated());
             user.setLangKey(userDTO.getLangKey());
-            Set<Authority> authorities = this.authoritiesFromStrings(userDTO.getAuthorities());
+            Set<Clearance> authorities = this.authoritiesFromStrings(userDTO.getAuthorities());
             user.setAuthorities(authorities);
             return user;
         }
     }
 
-    private Set<Authority> authoritiesFromStrings(Set<String> authoritiesAsString) {
-        Set<Authority> authorities = new HashSet<>();
+    private Set<Clearance> authoritiesFromStrings(Set<String> authoritiesAsString) {
+        Set<Clearance> authorities = new HashSet<>();
 
         if (authoritiesAsString != null) {
             authorities =
@@ -71,7 +70,7 @@ public class UserMapper {
                     .stream()
                     .map(
                         string -> {
-                            Authority auth = new Authority();
+                            Clearance auth = new Clearance();
                             auth.setName(string);
                             return auth;
                         }

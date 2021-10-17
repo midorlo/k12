@@ -25,18 +25,20 @@ import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 @Import(SecurityProblemSupport.class)
 public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapter {
 
-    private final ApplicationProperties  applicationProperties;
-    private final TokenProvider          tokenProvider;
-    private final CorsFilter             corsFilter;
+    private final ApplicationProperties applicationProperties;
+    private final TokenProvider tokenProvider;
+    private final CorsFilter corsFilter;
     private final SecurityProblemSupport problemSupport;
 
-    public WebSecurityConfigurerAdapterExt(TokenProvider tokenProvider,
-                                           CorsFilter corsFilter,
-                                           ApplicationProperties applicationProperties,
-                                           SecurityProblemSupport problemSupport) {
-        this.tokenProvider         = tokenProvider;
-        this.corsFilter            = corsFilter;
-        this.problemSupport        = problemSupport;
+    public WebSecurityConfigurerAdapterExt(
+        TokenProvider tokenProvider,
+        CorsFilter corsFilter,
+        ApplicationProperties applicationProperties,
+        SecurityProblemSupport problemSupport
+    ) {
+        this.tokenProvider = tokenProvider;
+        this.corsFilter = corsFilter;
+        this.problemSupport = problemSupport;
         this.applicationProperties = applicationProperties;
     }
 
@@ -47,13 +49,14 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring()
-           .antMatchers(HttpMethod.OPTIONS, "/**")
-           .antMatchers("/app/**/*.{js,html}")
-           .antMatchers("/i18n/**")
-           .antMatchers("/content/**")
-           .antMatchers("/swagger-ui/**")
-           .antMatchers("/test/**");
+        web
+            .ignoring()
+            .antMatchers(HttpMethod.OPTIONS, "/**")
+            .antMatchers("/app/**/*.{js,html}")
+            .antMatchers("/i18n/**")
+            .antMatchers("/content/**")
+            .antMatchers("/swagger-ui/**")
+            .antMatchers("/test/**");
     }
 
     @Override
