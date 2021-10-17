@@ -13,6 +13,7 @@ public class ClientForwardController {
 
     /**
      * If changing, also change the publicPath in quasar.conf.
+     * @return forwarded uri.
      */
     @SuppressWarnings("SpringMVCViewInspection")
     @GetMapping(value = "/")
