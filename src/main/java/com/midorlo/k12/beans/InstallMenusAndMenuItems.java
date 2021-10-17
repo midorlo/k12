@@ -61,7 +61,7 @@ public class InstallMenusAndMenuItems implements CommandLineRunner,
                                 .setIcon("health_and_safety")
                                 .setEnabled(true)
                                 .setTarget("/health")
-                                .setI18n("global.menu.admin.health_and_safety")
+                                .setI18n("global.menu.admin.health")
                         )
                     );
                     log.info(
@@ -72,7 +72,7 @@ public class InstallMenusAndMenuItems implements CommandLineRunner,
                                 .setIcon("analytics")
                                 .setEnabled(true)
                                 .setTarget("/metrics")
-                                .setI18n("global.menu.admin.health")
+                                .setI18n("global.menu.admin.metrics")
                         )
                     );
                     log.info(

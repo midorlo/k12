@@ -30,7 +30,7 @@
                 :key="menuItem.id"
                 :to="menuItem.target">
           <q-item-section>
-            {{ menuItem.i18n }}
+            {{ $t(menuItem.i18n) }}
           </q-item-section>
         </q-item>
       </q-btn-dropdown>

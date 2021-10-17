@@ -2,7 +2,7 @@ package com.midorlo.k12.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.midorlo.k12.configuration.ApplicationConstants;
-import com.midorlo.k12.domain.AbstractAuditingEntity;
+import com.midorlo.k12.domain.ApplicationEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 @Accessors(chain = true)
-public class User extends AbstractAuditingEntity implements Serializable {
+public class User extends ApplicationEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
