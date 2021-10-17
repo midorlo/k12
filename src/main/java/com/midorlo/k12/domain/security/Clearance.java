@@ -34,6 +34,7 @@ public class Clearance implements Serializable {
     @Column(length = 50, unique = true, updatable = false)
     private String name;
 
+    //<editor-fold desc="toString / equals / hashCode">
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -57,4 +58,5 @@ public class Clearance implements Serializable {
                "name='" + name + '\'' +
                "}";
     }
+    //</editor-fold>
 }

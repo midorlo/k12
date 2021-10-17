@@ -1,20 +1,9 @@
 package com.midorlo.k12.web.api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.domain.security.Role;
 import com.midorlo.k12.repository.RoleRepository;
 import com.midorlo.k12.web.api.administration.roles.RoleResource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,9 +17,22 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 /**
  * Integration tests for the {@link RoleResource} REST controller.
  */
+@SuppressWarnings({ "OptionalGetWithoutIsPresent", "unused" })
 @IntegrationTest
 @ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
@@ -40,11 +42,11 @@ class RoleResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String ENTITY_API_URL = "/api/roles";
+    private static final String ENTITY_API_URL    = "/api/roles";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
-    private static final Random random = new Random();
-    private static final AtomicLong count = new AtomicLong(random.nextInt() + (2L * Integer.MAX_VALUE));
+    private static final Random     random = new Random();
+    private static final AtomicLong count  = new AtomicLong(random.nextInt() + (2L * Integer.MAX_VALUE));
 
     @Autowired
     private RoleRepository roleRepository;
@@ -91,7 +93,8 @@ class RoleResourceIT {
         int databaseSizeBeforeCreate = roleRepository.findAll().size();
         // Create the Role
         restRoleMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(role)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                                         .content(TestUtil.convertObjectToJsonBytes(role)))
             .andExpect(status().isCreated());
 
         // Validate the Role in the database
@@ -111,7 +114,8 @@ class RoleResourceIT {
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restRoleMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(role)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                                         .content(TestUtil.convertObjectToJsonBytes(role)))
             .andExpect(status().isBadRequest());
 
         // Validate the Role in the database
@@ -129,7 +133,8 @@ class RoleResourceIT {
         // Create the Role, which fails.
 
         restRoleMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(role)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                                         .content(TestUtil.convertObjectToJsonBytes(role)))
             .andExpect(status().isBadRequest());
 
         List<Role> roleList = roleRepository.findAll();
@@ -151,18 +156,16 @@ class RoleResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
     }
 
-    @SuppressWarnings({ "unchecked" })
     void getAllRolesWithEagerRelationshipsIsEnabled() throws Exception {
-        when(roleRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(roleRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl<>(new ArrayList<>()));
 
         restRoleMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
         verify(roleRepositoryMock, times(1)).findAllWithEagerRelationships(any());
     }
 
-    @SuppressWarnings({ "unchecked" })
     void getAllRolesWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(roleRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(roleRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl<>(new ArrayList<>()));
 
         restRoleMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
@@ -184,12 +187,11 @@ class RoleResourceIT {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
     }
 
-    //    @Test
-    //    @Transactional
-    //    void getNonExistingRole() throws Exception {
-    //        // Get the role
-    //        restRoleMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
-    //    }
+    @Test
+    @Transactional
+    void getNonExistingRole() throws Exception {
+        restRoleMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
+    }
 
     @Test
     @Transactional
@@ -268,7 +270,8 @@ class RoleResourceIT {
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertProblem
         restRoleMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(role)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                                        .content(TestUtil.convertObjectToJsonBytes(role)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Role in the database
@@ -380,7 +383,8 @@ class RoleResourceIT {
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertProblem
         restRoleMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(role)))
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json")
+                                          .content(TestUtil.convertObjectToJsonBytes(role)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Role in the database

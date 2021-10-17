@@ -14,9 +14,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * REST controller for managing {@link Role}.
@@ -98,7 +100,10 @@ public class RoleResource {
      * or with status {@code 404 (Not Found)} if the role is not found,
      * or with status {@code 500 (Internal Server Error)} if the role couldn't be updated.
      */
-    @PatchMapping(value = "/roles/{id}", consumes = "application/merge-patch+json")
+    @PatchMapping(
+        value = "/roles/{id}",
+        consumes = "application/merge-patch+json"
+    )
     public ResponseEntity<Role> partialUpdateRole(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Role role
@@ -157,7 +162,7 @@ public class RoleResource {
     public ResponseEntity<Role> getRole(@PathVariable Long id) {
         log.debug("REST request to get Role : {}", id);
         Optional<Role> role = roleRepository.findOneWithEagerRelationships(id);
-        return RestUtilities.wrapOrNotFound(role.orElseThrow(EntityNotFoundException::new));
+        return ResponseEntity.ok().body(role.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
     /**
