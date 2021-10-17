@@ -3,7 +3,7 @@ package com.midorlo.k12.web.api;
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.domain.security.User;
-import com.midorlo.k12.repository.AuthorityRepository;
+import com.midorlo.k12.repository.ClearanceRepository;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.service.security.UserService;
 import com.midorlo.k12.service.security.dto.AdminUserDTO;
@@ -47,7 +47,7 @@ class IdentityControllerIT {
     private UserRepository userRepository;
 
     @Autowired
-    private AuthorityRepository authorityRepository;
+    private ClearanceRepository clearanceRepository;
 
     @Autowired
     private UserService userService;
@@ -420,7 +420,7 @@ class IdentityControllerIT {
     //        assertThat(userDup).isPresent();
     //        assertThat(userDup.get().getAuthorities())
     //            .hasSize(1)
-    //            .containsExactly(authorityRepository.findById(AuthoritiesConstants.USER).orElse(null));
+    //            .containsExactly(clearanceRepository.findById(AuthoritiesConstants.USER).orElse(null));
     //    }
 
     @Test

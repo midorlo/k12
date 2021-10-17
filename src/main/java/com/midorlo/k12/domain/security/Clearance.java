@@ -24,14 +24,14 @@ import java.util.Objects;
 @Accessors(chain = true)
 @Table(name = "authorities")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Authority implements Serializable {
+public class Clearance implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @NotNull
     @Size(max = 50)
     @Id
-    @Column(length = 50)
+    @Column(length = 50, unique = true, updatable = false)
     private String name;
 
     @Override
@@ -39,10 +39,10 @@ public class Authority implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Authority)) {
+        if (!(o instanceof Clearance)) {
             return false;
         }
-        return Objects.equals(name, ((Authority) o).name);
+        return Objects.equals(name, ((Clearance) o).name);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class Authority implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "Authority{" +
+        return "Clearance{" +
                "name='" + name + '\'' +
                "}";
     }

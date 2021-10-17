@@ -101,7 +101,7 @@ public class User extends ApplicationEntity implements Serializable {
     )
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
-    private Set<Authority> authorities = new HashSet<>();
+    private Set<Clearance> authorities = new HashSet<>();
 
     @JsonIgnore
     @ManyToMany(cascade = { CascadeType.PERSIST })

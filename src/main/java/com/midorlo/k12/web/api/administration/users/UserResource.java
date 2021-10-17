@@ -35,7 +35,7 @@ import java.util.Optional;
  * <p>
  * This class accesses the {@link User} entity, and needs to fetch its collection of authorities.
  * <p>
- * For a normal use-case, it would be better to have an eager relationship between User and Authority,
+ * For a normal use-case, it would be better to have an eager relationship between User and Clearance,
  * and send everything to the webapp side: there would be no View Model and DTO, a lot less code, and an outer-join
  * which would be good for performance.
  * <p>

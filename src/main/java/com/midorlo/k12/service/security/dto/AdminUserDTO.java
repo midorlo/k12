@@ -1,7 +1,7 @@
 package com.midorlo.k12.service.security.dto;
 
 import com.midorlo.k12.configuration.ApplicationConstants;
-import com.midorlo.k12.domain.security.Authority;
+import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.domain.security.User;
 
 import javax.validation.constraints.Email;
@@ -69,7 +69,7 @@ public class AdminUserDTO {
         this.createdDate      = user.getCreatedDate();
         this.lastModifiedBy   = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
-        this.authorities      = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
+        this.authorities      = user.getAuthorities().stream().map(Clearance::getName).collect(Collectors.toSet());
     }
 
     public Long getId() {

@@ -2,7 +2,7 @@ package com.midorlo.k12.web.api;
 
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.configuration.ApplicationConstants;
-import com.midorlo.k12.domain.security.Authority;
+import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.service.security.dto.AdminUserDTO;
@@ -583,10 +583,10 @@ class UserResourceIT {
         user.setCreatedDate(Instant.now());
         user.setLastModifiedBy(DEFAULT_LOGIN);
         user.setLastModifiedDate(Instant.now());
-        Set<Authority> authorities = new HashSet<>();
-        Authority      authority   = new Authority();
-        authority.setName(ApplicationConstants.SecurityConstants.USER);
-        authorities.add(authority);
+        Set<Clearance> authorities = new HashSet<>();
+        Clearance      clearance   = new Clearance();
+        clearance.setName(ApplicationConstants.SecurityConstants.USER);
+        authorities.add(clearance);
         user.setAuthorities(authorities);
 
         AdminUserDTO userDTO = userMapper.userToAdminUserDTO(user);
@@ -609,22 +609,22 @@ class UserResourceIT {
 
     @Test
     void testAuthorityEquals() {
-        Authority authorityA = new Authority();
-        assertThat(authorityA).isNotEqualTo(null).isNotEqualTo(new Object());
-        assertThat(authorityA.hashCode()).isZero();
-        assertThat(authorityA.toString()).isNotNull();
+        Clearance clearanceA = new Clearance();
+        assertThat(clearanceA).isNotEqualTo(null).isNotEqualTo(new Object());
+        assertThat(clearanceA.hashCode()).isZero();
+        assertThat(clearanceA.toString()).isNotNull();
 
-        Authority authorityB = new Authority();
-        assertThat(authorityA).isEqualTo(authorityB);
+        Clearance clearanceB = new Clearance();
+        assertThat(clearanceA).isEqualTo(clearanceB);
 
-        authorityB.setName(ApplicationConstants.SecurityConstants.ADMIN);
-        assertThat(authorityA).isNotEqualTo(authorityB);
+        clearanceB.setName(ApplicationConstants.SecurityConstants.ADMIN);
+        assertThat(clearanceA).isNotEqualTo(clearanceB);
 
-        authorityA.setName(ApplicationConstants.SecurityConstants.USER);
-        assertThat(authorityA).isNotEqualTo(authorityB);
+        clearanceA.setName(ApplicationConstants.SecurityConstants.USER);
+        assertThat(clearanceA).isNotEqualTo(clearanceB);
 
-        authorityB.setName(ApplicationConstants.SecurityConstants.USER);
-        assertThat(authorityA).isEqualTo(authorityB).hasSameHashCodeAs(authorityB);
+        clearanceB.setName(ApplicationConstants.SecurityConstants.USER);
+        assertThat(clearanceA).isEqualTo(clearanceB).hasSameHashCodeAs(clearanceB);
     }
 
     private void assertPersistedUsers(Consumer<List<User>> userAssertion) {

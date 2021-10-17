@@ -1,10 +1,10 @@
 //package com.midorlo.k12.beans;
 //
-//import com.midorlo.k12.domain.security.Authority;
+//import com.midorlo.k12.domain.security.Clearance;
 ////import com.midorlo.k12.domain.security.Clearance;
 //import com.midorlo.k12.domain.security.Role;
 //import com.midorlo.k12.domain.security.User;
-//import com.midorlo.k12.repository.AuthorityRepository;
+//import com.midorlo.k12.repository.ClearanceRepository;
 //import com.midorlo.k12.repository.RoleRepository;
 //import com.midorlo.k12.repository.UserRepository;
 //import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@
 //    public InstallUsersAndAuthorities(
 //        UserRepository userRepository,
 //        PasswordEncoder passwordEncoder,
-//        RoleRepository roleRepository, AuthorityRepository authorityRepository
+//        RoleRepository roleRepository, ClearanceRepository authorityRepository
 //    ) {
 //        this.userRepository  = userRepository;
 //        this.passwordEncoder = passwordEncoder;
@@ -56,8 +56,8 @@
 //                                    .setLangKey("de")
 //                                    .setFirstName("-")
 //                                    .setLastName("-")
-//                                    .setAuthorities(Set.of(new Authority().setName("ADMIN"),
-//                                                           new Authority().setName("ROLE_ADMIN")
+//                                    .setAuthorities(Set.of(new Clearance().setName("ADMIN"),
+//                                                           new Clearance().setName("ROLE_ADMIN")
 //                                                    )
 //                                    )
 //                                    .setRoles(Set.of(new Role()
