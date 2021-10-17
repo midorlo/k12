@@ -9,6 +9,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -34,8 +36,6 @@ public class Role implements Serializable {
     private Long id;
 
     @NotNull
-    //    @Min(value = 6)
-    //    @Max(value = 50)
     @Column(name = "i_18_n", nullable = false, unique = true)
     private String i18n;
 
@@ -47,7 +47,7 @@ public class Role implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "clearances_id")
     )
     @JsonIgnoreProperties(value = { "roles" }, allowSetters = true)
-    private Set<Clearance> clearances = new HashSet<>();
+    private Set<Authority> clearances = new HashSet<>();
 
     public Long getId() {
         return id;

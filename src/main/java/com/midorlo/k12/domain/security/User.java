@@ -128,7 +128,7 @@ public class User extends ApplicationEntity implements Serializable {
             .stream()
             .map(Role::getClearances)
             .flatMap(Collection::stream)
-            .map(c -> new SimpleGrantedAuthority(c.getI18n()))
+            .map(c -> new SimpleGrantedAuthority(c.getName()))
             .collect(Collectors.toList());
     }
 
