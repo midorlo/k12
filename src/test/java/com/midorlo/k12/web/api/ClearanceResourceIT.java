@@ -1,5 +1,6 @@
 package com.midorlo.k12.web.api;
 
+import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.ROLE_ADMIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -29,14 +30,14 @@ import org.springframework.transaction.annotation.Transactional;
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 @IntegrationTest
 @AutoConfigureMockMvc
-@WithMockUser
+@WithMockUser(authorities = ROLE_ADMIN)
 class ClearanceResourceIT {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String ENTITY_API_URL = "/api/clearances";
-    private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
+    private static final String ENTITY_API_URL      = "/api/clearances";
+    private static final String ENTITY_API_URL_NAME = ENTITY_API_URL + "/{name}";
 
     private static final Random random = new Random();
     private static final AtomicLong count = new AtomicLong(random.nextInt() + (2L * Integer.MAX_VALUE));
@@ -147,7 +148,7 @@ class ClearanceResourceIT {
 
         // Get the clearance
         restClearanceMockMvc
-            .perform(get(ENTITY_API_URL_ID, clearance.getName()))
+            .perform(get(ENTITY_API_URL_NAME, clearance.getName()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.name").value(clearance.getName()));
@@ -157,7 +158,7 @@ class ClearanceResourceIT {
     @Transactional
     void getNonExistingClearance() throws Exception {
         // Get the clearance
-        restClearanceMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
+        restClearanceMockMvc.perform(get(ENTITY_API_URL_NAME, Long.MAX_VALUE)).andExpect(status().isNotFound());
     }
 
     @Test
@@ -167,14 +168,14 @@ class ClearanceResourceIT {
         clearanceRepository.saveAndFlush(clearance);
 
         // Update the clearance
-        Clearance updatedClearance = clearanceRepository.findById(clearance.getName()).get();
+        Clearance updatedClearance = clearanceRepository.findByName(clearance.getName()).get();
         // Disconnect from session so that the updates on updatedClearance are not directly saved in db
         em.detach(updatedClearance);
         updatedClearance.setName(UPDATED_NAME);
 
         restClearanceMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedClearance.getName())
+                put(ENTITY_API_URL_NAME, updatedClearance.getName())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(updatedClearance))
             )
@@ -190,7 +191,7 @@ class ClearanceResourceIT {
         // If the entity doesn't have an ID, it will throw BadRequestAlertProblem
         restClearanceMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, clearance.getName())
+                put(ENTITY_API_URL_NAME, clearance.getName())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(clearance))
             )
@@ -210,7 +211,7 @@ class ClearanceResourceIT {
         // If url ID doesn't match entity ID, it will throw BadRequestAlertProblem
         restClearanceMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, count.incrementAndGet())
+                put(ENTITY_API_URL_NAME, count.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(clearance))
             )
@@ -251,7 +252,7 @@ class ClearanceResourceIT {
 
         restClearanceMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedClearance.getName())
+                patch(ENTITY_API_URL_NAME, partialUpdatedClearance.getName())
                     .contentType("application/merge-patch+json")
                     .content(TestUtil.convertObjectToJsonBytes(partialUpdatedClearance))
             )
@@ -272,7 +273,7 @@ class ClearanceResourceIT {
 
         restClearanceMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedClearance.getName())
+                patch(ENTITY_API_URL_NAME, partialUpdatedClearance.getName())
                     .contentType("application/merge-patch+json")
                     .content(TestUtil.convertObjectToJsonBytes(partialUpdatedClearance))
             )
@@ -288,7 +289,7 @@ class ClearanceResourceIT {
         // If the entity doesn't have an ID, it will throw BadRequestAlertProblem
         restClearanceMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, clearance.getName())
+                patch(ENTITY_API_URL_NAME, clearance.getName())
                     .contentType("application/merge-patch+json")
                     .content(TestUtil.convertObjectToJsonBytes(clearance))
             )
@@ -308,7 +309,7 @@ class ClearanceResourceIT {
         // If url ID doesn't match entity ID, it will throw BadRequestAlertProblem
         restClearanceMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, count.incrementAndGet())
+                patch(ENTITY_API_URL_NAME, count.incrementAndGet())
                     .contentType("application/merge-patch+json")
                     .content(TestUtil.convertObjectToJsonBytes(clearance))
             )
@@ -347,7 +348,7 @@ class ClearanceResourceIT {
 
         // Delete the clearance
         restClearanceMockMvc
-            .perform(delete(ENTITY_API_URL_ID, clearance.getName()).accept(MediaType.APPLICATION_JSON))
+            .perform(delete(ENTITY_API_URL_NAME, clearance.getName()).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item

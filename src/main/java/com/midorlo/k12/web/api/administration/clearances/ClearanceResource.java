@@ -4,14 +4,6 @@ import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;
 import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.repository.ClearanceRepository;
 import com.midorlo.k12.web.RestUtilities;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -19,6 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * REST controller for managing {@link Clearance}.
@@ -29,8 +30,8 @@ import org.springframework.web.server.ResponseStatusException;
 @Transactional
 public class ClearanceResource {
 
-    private static final String ENTITY_NAME = "clearance";
-    private final ClearanceRepository clearanceRepository;
+    private static final String              ENTITY_NAME = "clearance";
+    private final        ClearanceRepository clearanceRepository;
 
     @Value("${application.clientApp.name}")
     private String applicationName;
@@ -48,10 +49,11 @@ public class ClearanceResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/clearances")
-    public ResponseEntity<Clearance> createClearance(@Valid @RequestBody Clearance clearance) throws URISyntaxException {
+    public ResponseEntity<Clearance> createClearance(@Valid @RequestBody Clearance clearance) throws
+                                                                                              URISyntaxException {
         log.debug("REST request to save Clearance : {}", clearance);
 
-        Optional<Clearance> byId = clearanceRepository.findById(clearance.getName());
+        Optional<Clearance> byId = clearanceRepository.findByName(clearance.getName());
         if (byId.isPresent()) {
             return ResponseEntity.badRequest().body(null);
         }
@@ -65,26 +67,25 @@ public class ClearanceResource {
     /**
      * {@code PUT  /clearances/:id} : Updates an existing clearance.
      *
-     * @param name      the id of the clearance to save.
+     * @param id        the id of the clearance to save.
      * @param clearance the clearance to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated clearance,
      * or with status {@code 400 (Bad Request)} if the clearance is not valid,
      * or with status {@code 500 (Internal Server Error)} if the clearance couldn't be updated.
      */
     @PutMapping("/clearances/{id}")
-    public ResponseEntity<Clearance> updateClearance(
-        @PathVariable(value = "id", required = false) final String name,
-        @Valid @RequestBody Clearance clearance
-    ) {
-        log.debug("REST request to update Clearance : {}, {}", name, clearance);
+    public ResponseEntity<Clearance> updateClearance(@PathVariable(value = "id", required = false) final Long id,
+                                                     @Valid @RequestBody Clearance clearance) {
+
+        log.debug("REST request to update Clearance : {}, {}", id, clearance);
+
         if (clearance.getName() == null) {
             throw new BadRequestAlertProblem("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(name, clearance.getName())) {
+        if (!Objects.equals(id, clearance.getId())) {
             throw new BadRequestAlertProblem("Invalid ID", ENTITY_NAME, "idinvalid");
         }
-
-        if (!clearanceRepository.existsById(name)) {
+        if (!clearanceRepository.existsById(id)) {
             throw new BadRequestAlertProblem("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
@@ -119,12 +120,12 @@ public class ClearanceResource {
             throw new BadRequestAlertProblem("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!clearanceRepository.existsById(name)) {
+        if (!clearanceRepository.existsByName(name)) {
             throw new BadRequestAlertProblem("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
         Optional<Clearance> result = clearanceRepository
-            .findById(clearance.getName())
+            .findByName(clearance.getName())
             .map(
                 existingClearance -> {
                     if (clearance.getName() != null) {
@@ -163,7 +164,7 @@ public class ClearanceResource {
     @GetMapping("/clearances/{name}")
     public ResponseEntity<Clearance> getClearance(@PathVariable String name) {
         log.debug("REST request to get Clearance : {}", name);
-        Optional<Clearance> clearance = clearanceRepository.findById(name);
+        Optional<Clearance> clearance = clearanceRepository.findByName(name);
         return ResponseEntity.ok().body(clearance.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
@@ -176,7 +177,9 @@ public class ClearanceResource {
     @DeleteMapping("/clearances/{name}")
     public ResponseEntity<Void> deleteClearance(@PathVariable String name) {
         log.debug("REST request to delete Clearance : {}", name);
-        clearanceRepository.deleteById(name);
-        return ResponseEntity.noContent().headers(RestUtilities.createEntityDeletionAlert(applicationName, ENTITY_NAME, name)).build();
+        log.debug("Deleted clearance with result {}", clearanceRepository.deleteByNameEqualsIgnoreCase(name));
+        return ResponseEntity.noContent()
+                             .headers(RestUtilities.createEntityDeletionAlert(applicationName, ENTITY_NAME, name))
+                             .build();
     }
 }

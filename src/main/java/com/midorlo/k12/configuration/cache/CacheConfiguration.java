@@ -1,5 +1,6 @@
 package com.midorlo.k12.configuration.cache;
 
+import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.configuration.ApplicationProperties;
 import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.domain.security.User;
@@ -48,8 +49,8 @@ public class CacheConfiguration {
     @Bean
     public JCacheManagerCustomizer cacheManagerCustomizer() {
         return cm -> {
-            createCache(cm, com.midorlo.k12.repository.UserRepository.USERS_BY_LOGIN_CACHE);
-            createCache(cm, com.midorlo.k12.repository.UserRepository.USERS_BY_EMAIL_CACHE);
+            createCache(cm, ApplicationConstants.CacheNames.USERS_BY_LOGIN_CACHE);
+            createCache(cm, ApplicationConstants.CacheNames.USERS_BY_EMAIL_CACHE);
             createCache(cm, User.class.getName());
             createCache(cm, Clearance.class.getName());
             createCache(cm, User.class.getName() + ".authorities");

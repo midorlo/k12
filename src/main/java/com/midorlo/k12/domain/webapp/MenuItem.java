@@ -31,8 +31,8 @@ public class MenuItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", unique = true, updatable = false, nullable = false)
     private Long id;
 
     @NotNull

@@ -86,9 +86,9 @@ public final class ApplicationConstants {
 
     public static final class SecurityConstants {
 
-        public static final String ADMIN     = "ROLE_ADMIN";
-        public static final String USER      = "ROLE_USER";
-        public static final String ANONYMOUS = "ROLE_ANONYMOUS";
+        public static final String ROLE_ADMIN = "ROLE_ADMIN";
+        public static final String ROLE_USER      = "ROLE_USER";
+        public static final String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
     }
 
     public static final class ErrorConstants {
@@ -121,4 +121,10 @@ public final class ApplicationConstants {
     public static final class ColumnNames {}
 
     public static final class RelationNames {}
+
+    public static final class CacheNames {
+
+        public static final String USERS_BY_LOGIN_CACHE = "usersByLogin";
+        public static final String USERS_BY_EMAIL_CACHE = "usersByEmail";
+    }
 }

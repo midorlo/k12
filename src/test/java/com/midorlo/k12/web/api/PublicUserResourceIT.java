@@ -1,12 +1,13 @@
 package com.midorlo.k12.web.api;
 
-import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.ADMIN;
+import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.ROLE_ADMIN;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.midorlo.k12.IntegrationTest;
+import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.web.api.administration.users.UserResource;
@@ -26,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link UserResource} REST controller.
  */
 @AutoConfigureMockMvc
-@WithMockUser(authorities = ADMIN)
+@WithMockUser(authorities = ROLE_ADMIN)
 @IntegrationTest
 class PublicUserResourceIT {
 
@@ -48,8 +49,8 @@ class PublicUserResourceIT {
 
     @BeforeEach
     public void setup() {
-        Cache cache1 = cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE);
-        Cache cache2 = cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE);
+        Cache cache1 = cacheManager.getCache(ApplicationConstants.CacheNames.USERS_BY_LOGIN_CACHE);
+        Cache cache2 = cacheManager.getCache(ApplicationConstants.CacheNames.USERS_BY_EMAIL_CACHE);
         assertThat(cache1).isNotNull();
         assertThat(cache2).isNotNull();
         cache1.clear();

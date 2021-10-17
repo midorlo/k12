@@ -1,7 +1,7 @@
 package com.midorlo.k12.beans;
 
-import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.ADMIN;
-import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.USER;
+import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.ROLE_ADMIN;
+import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.ROLE_USER;
 
 import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.domain.security.Role;
@@ -51,7 +51,7 @@ public class InstallUsersAndAuthorities implements CommandLineRunner {
                                     .setLangKey("de")
                                     .setFirstName("-")
                                     .setLastName("-")
-                                    .setRoles(Set.of(new Role().setName(ADMIN).setClearances(Set.of(new Clearance().setName(ADMIN))))),
+                                    .setRoles(Set.of(new Role().setName(ROLE_ADMIN).setClearances(Set.of(new Clearance().setName(ROLE_ADMIN))))),
                                 new User()
                                     .setActivated(true)
                                     .setLogin("user")
@@ -60,7 +60,7 @@ public class InstallUsersAndAuthorities implements CommandLineRunner {
                                     .setLangKey("de")
                                     .setFirstName("-")
                                     .setLastName("-")
-                                    .setRoles(Set.of(new Role().setName(USER).setClearances(Set.of(new Clearance().setName(USER)))))
+                                    .setRoles(Set.of(new Role().setName(ROLE_USER).setClearances(Set.of(new Clearance().setName(ROLE_USER)))))
                             )
                         )
                     )
