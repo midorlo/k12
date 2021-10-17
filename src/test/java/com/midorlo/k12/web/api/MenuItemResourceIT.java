@@ -67,7 +67,7 @@ class MenuItemResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static MenuItem createEntity(EntityManager em) {
-        return new MenuItem().i18n(DEFAULT_I_18_N).icon(DEFAULT_ICON).target(DEFAULT_TARGET).enabled(DEFAULT_ENABLED);
+        return new MenuItem().setI18n(DEFAULT_I_18_N).setIcon(DEFAULT_ICON).setTarget(DEFAULT_TARGET).setEnabled(DEFAULT_ENABLED);
     }
 
     /**
@@ -77,7 +77,7 @@ class MenuItemResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static MenuItem createUpdatedEntity(EntityManager em) {
-        return new MenuItem().i18n(UPDATED_I_18_N).icon(UPDATED_ICON).target(UPDATED_TARGET).enabled(UPDATED_ENABLED);
+        return new MenuItem().setI18n(UPDATED_I_18_N).setIcon(UPDATED_ICON).setTarget(UPDATED_TARGET).setEnabled(UPDATED_ENABLED);
     }
 
     @BeforeEach
@@ -245,7 +245,7 @@ class MenuItemResourceIT {
         MenuItem updatedMenuItem = menuItemRepository.findById(menuItem.getId()).get();
         // Disconnect from session so that the updates on updatedMenuItem are not directly saved in db
         em.detach(updatedMenuItem);
-        updatedMenuItem.i18n(UPDATED_I_18_N).icon(UPDATED_ICON).target(UPDATED_TARGET).enabled(UPDATED_ENABLED);
+        updatedMenuItem.setI18n(UPDATED_I_18_N).setIcon(UPDATED_ICON).setTarget(UPDATED_TARGET).setEnabled(UPDATED_ENABLED);
 
         restMenuItemMockMvc
             .perform(
@@ -333,7 +333,7 @@ class MenuItemResourceIT {
         MenuItem partialUpdatedMenuItem = new MenuItem();
         partialUpdatedMenuItem.setId(menuItem.getId());
 
-        partialUpdatedMenuItem.i18n(UPDATED_I_18_N);
+        partialUpdatedMenuItem.setI18n(UPDATED_I_18_N);
 
         restMenuItemMockMvc
             .perform(
@@ -365,7 +365,7 @@ class MenuItemResourceIT {
         MenuItem partialUpdatedMenuItem = new MenuItem();
         partialUpdatedMenuItem.setId(menuItem.getId());
 
-        partialUpdatedMenuItem.i18n(UPDATED_I_18_N).icon(UPDATED_ICON).target(UPDATED_TARGET).enabled(UPDATED_ENABLED);
+        partialUpdatedMenuItem.setI18n(UPDATED_I_18_N).setIcon(UPDATED_ICON).setTarget(UPDATED_TARGET).setEnabled(UPDATED_ENABLED);
 
         restMenuItemMockMvc
             .perform(

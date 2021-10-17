@@ -12,12 +12,17 @@ class MenuTest {
     void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Menu.class);
         Menu menu1 = new Menu();
-        menu1.setId(1L);
+
+        //noinspection EqualsWithItself
+        assertThat(menu1.equals(menu1)).isTrue();
+
         Menu menu2 = new Menu();
         menu2.setId(menu1.getId());
-        assertThat(menu1).isEqualTo(menu2);
+        assertThat(menu1).isNotEqualTo(menu2);
+
         menu2.setId(2L);
         assertThat(menu1).isNotEqualTo(menu2);
+
         menu1.setId(null);
         assertThat(menu1).isNotEqualTo(menu2);
     }
