@@ -1,14 +1,16 @@
 package com.midorlo.k12.web.api.administration.clearances;
 
+import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;
 import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.repository.ClearanceRepository;
 import com.midorlo.k12.web.RestUtilities;
-import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
@@ -28,10 +30,10 @@ import java.util.Optional;
 @Transactional
 public class ClearanceResource {
 
-    private static final String ENTITY_NAME = "clearance";
-    private final ClearanceRepository clearanceRepository;
+    private static final String              ENTITY_NAME = "clearance";
+    private final        ClearanceRepository clearanceRepository;
     @Value("${application.clientApp.name}")
-    private String applicationName;
+    private              String              applicationName;
 
     public ClearanceResource(ClearanceRepository clearanceRepository) {
         this.clearanceRepository = clearanceRepository;
@@ -56,7 +58,7 @@ public class ClearanceResource {
         return ResponseEntity
             .created(new URI("/api/clearances/" + result.getId()))
             .headers(RestUtilities.createEntityCreationAlert(applicationName, ENTITY_NAME, result.getId()
-                                                                                                        .toString()))
+                                                                                                 .toString()))
             .body(result);
     }
 
@@ -90,7 +92,7 @@ public class ClearanceResource {
         return ResponseEntity
             .ok()
             .headers(RestUtilities.createEntityUpdateAlert(applicationName, ENTITY_NAME, clearance.getId()
-                                                                                                         .toString()))
+                                                                                                  .toString()))
             .body(result);
     }
 
@@ -138,7 +140,7 @@ public class ClearanceResource {
         return RestUtilities.wrapOrNotFound(
             result.orElseThrow(EntityNotFoundException::new),
             RestUtilities.createEntityUpdateAlert(applicationName, ENTITY_NAME, clearance.getId()
-                                                                                                .toString())
+                                                                                         .toString())
         );
     }
 
@@ -164,7 +166,7 @@ public class ClearanceResource {
     public ResponseEntity<Clearance> getClearance(@PathVariable Long id) {
         log.debug("REST request to get Clearance : {}", id);
         Optional<Clearance> clearance = clearanceRepository.findById(id);
-        return RestUtilities.wrapOrNotFound(clearance.orElseThrow(EntityNotFoundException::new));
+        return ResponseEntity.ok().body(clearance.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
     /**

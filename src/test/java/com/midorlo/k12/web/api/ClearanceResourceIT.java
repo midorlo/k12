@@ -160,12 +160,12 @@ class ClearanceResourceIT {
             .andExpect(jsonPath("$.i18n").value(DEFAULT_I_18_N));
     }
 
-    //    @Test
-    //    @Transactional
-    //    void getNonExistingClearance() throws Exception {
-    //        // Get the clearance
-    //        restClearanceMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
-    //    }
+        @Test
+        @Transactional
+        void getNonExistingClearance() throws Exception {
+            // Get the clearance
+            restClearanceMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
+        }
 
     @Test
     @Transactional
