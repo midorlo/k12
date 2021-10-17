@@ -90,7 +90,7 @@ class UserResourceIT {
     public static User createEntity(EntityManager em) {
         User user = new User();
         user.setLogin(DEFAULT_LOGIN + RandomStringUtils.randomAlphabetic(5));
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPasswordHash(RandomStringUtils.random(60));
         user.setActivated(true);
         user.setEmail(RandomStringUtils.randomAlphabetic(5) + DEFAULT_EMAIL);
         user.setFirstName(DEFAULT_FIRSTNAME);
@@ -420,7 +420,7 @@ class UserResourceIT {
 
         User anotherUser = new User();
         anotherUser.setLogin("application");
-        anotherUser.setPassword(RandomStringUtils.random(60));
+        anotherUser.setPasswordHash(RandomStringUtils.random(60));
         anotherUser.setActivated(true);
         anotherUser.setEmail("application@localhost");
         anotherUser.setFirstName("java");
@@ -435,7 +435,7 @@ class UserResourceIT {
         ManagedUserVM managedUserVM = new ManagedUserVM();
         managedUserVM.setId(updatedUser.getId());
         managedUserVM.setLogin(updatedUser.getLogin());
-        managedUserVM.setPassword(updatedUser.getPassword());
+        managedUserVM.setPassword(updatedUser.getPasswordHash());
         managedUserVM.setFirstName(updatedUser.getFirstName());
         managedUserVM.setLastName(updatedUser.getLastName());
         managedUserVM.setEmail("application@localhost"); // this email should already be used by anotherUser
@@ -466,7 +466,7 @@ class UserResourceIT {
 
         User anotherUser = new User();
         anotherUser.setLogin("application");
-        anotherUser.setPassword(RandomStringUtils.random(60));
+        anotherUser.setPasswordHash(RandomStringUtils.random(60));
         anotherUser.setActivated(true);
         anotherUser.setEmail("application@localhost");
         anotherUser.setFirstName("java");
@@ -481,7 +481,7 @@ class UserResourceIT {
         ManagedUserVM managedUserVM = new ManagedUserVM();
         managedUserVM.setId(updatedUser.getId());
         managedUserVM.setLogin("application"); // this login should already be used by anotherUser
-        managedUserVM.setPassword(updatedUser.getPassword());
+        managedUserVM.setPassword(updatedUser.getPasswordHash());
         managedUserVM.setFirstName(updatedUser.getFirstName());
         managedUserVM.setLastName(updatedUser.getLastName());
         managedUserVM.setEmail(updatedUser.getEmail());
@@ -564,7 +564,7 @@ class UserResourceIT {
         assertThat(user.getCreatedDate()).isNotNull();
         assertThat(user.getLastModifiedBy()).isNull();
         assertThat(user.getLastModifiedDate()).isNotNull();
-        assertThat(user.getAuthorities()).extracting("name").containsExactly(ApplicationConstants.SecurityConstants.USER);
+        assertThat(user.getClearances()).extracting("name").containsExactly(ApplicationConstants.SecurityConstants.USER);
     }
 
     @Test
@@ -578,7 +578,7 @@ class UserResourceIT {
         Clearance clearance = new Clearance();
         clearance.setName(ApplicationConstants.SecurityConstants.USER);
         authorities.add(clearance);
-        user.setAuthorities(authorities);
+        user.setClearances(authorities);
 
         AdminUserDTO userDTO = userMapper.userToAdminUserDTO(user);
 

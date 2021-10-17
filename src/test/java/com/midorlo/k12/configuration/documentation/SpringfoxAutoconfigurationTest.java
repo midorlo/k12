@@ -72,6 +72,7 @@ class SpringfoxAutoconfigurationTest {
 
     @Test
     void generatesManagementOAS() throws Exception {
+        //noinspection SyntaxError
         mockMvc
             .perform(get("/v3/api-docs?group=management"))
             .andExpect((status().isOk()))
@@ -88,6 +89,7 @@ class SpringfoxAutoconfigurationTest {
 
     @Test
     void generatesManagementSwaggerV2() throws Exception {
+        //noinspection SyntaxError
         mockMvc
             .perform(get("/v2/api-docs?group=management"))
             .andExpect((status().isOk()))

@@ -68,7 +68,7 @@ public class AdminUserDTO {
         this.createdDate = user.getCreatedDate();
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
-        this.authorities = user.getAuthorities().stream().map(Clearance::getName).collect(Collectors.toSet());
+        this.authorities = user.getClearances().stream().map(Clearance::getName).collect(Collectors.toSet());
     }
 
     public Long getId() {

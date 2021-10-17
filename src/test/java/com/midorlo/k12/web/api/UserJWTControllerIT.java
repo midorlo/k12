@@ -39,7 +39,7 @@ class UserJWTControllerIT {
         user.setLogin("user-filter-controller");
         user.setEmail("user-filter-controller@example.com");
         user.setActivated(true);
-        user.setPassword(passwordEncoder.encode("test"));
+        user.setPasswordHash(passwordEncoder.encode("test"));
 
         userRepository.saveAndFlush(user);
 
@@ -64,7 +64,7 @@ class UserJWTControllerIT {
         user.setLogin("user-filter-controller-remember-me");
         user.setEmail("user-filter-controller-remember-me@example.com");
         user.setActivated(true);
-        user.setPassword(passwordEncoder.encode("test"));
+        user.setPasswordHash(passwordEncoder.encode("test"));
 
         userRepository.saveAndFlush(user);
 

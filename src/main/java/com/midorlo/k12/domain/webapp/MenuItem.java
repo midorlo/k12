@@ -14,14 +14,17 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
+import static com.midorlo.k12.configuration.ApplicationConstants.TableNames.MENU_ITEMS;
+
 /**
  * A MenuItem.
  */
+
 @Getter
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "menu_items")
+@Table(name = MENU_ITEMS)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MenuItem implements Serializable {
 

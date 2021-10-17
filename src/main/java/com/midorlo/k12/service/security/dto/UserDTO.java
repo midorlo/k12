@@ -5,6 +5,7 @@ import com.midorlo.k12.domain.security.User;
 /**
  * A DTO representing a user, with only the public attributes.
  */
+@SuppressWarnings("unused")
 public class UserDTO {
 
     private Long id;

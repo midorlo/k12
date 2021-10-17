@@ -2,8 +2,6 @@ package com.midorlo.k12.configuration;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.web.cors.CorsConfiguration;
@@ -19,9 +17,7 @@ import java.util.Map;
  * Also loads properties from git.properties and META-INF/build-actuator.properties (if found).
  */
 @Data
-@Configuration
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
-@EnableConfigurationProperties(ApplicationProperties.class)
 @PropertySources({
     @PropertySource(value = "classpath:git.properties", ignoreResourceNotFound = true),
     @PropertySource(value = "classpath:META-INF/build-actuator.properties", ignoreResourceNotFound = true),

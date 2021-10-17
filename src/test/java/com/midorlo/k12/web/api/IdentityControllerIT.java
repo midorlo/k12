@@ -415,9 +415,9 @@ class IdentityControllerIT {
             )
             .andExpect(status().isCreated());
 
-        Optional<User> userDup = userRepository.findOneWithAuthoritiesByLogin("badguy");
+        Optional<User> userDup = userRepository.findOneWithClearancesByLogin("badguy");
         assertThat(userDup).isPresent();
-        assertThat(userDup.get().getAuthorities()).hasSize(1).containsExactly(clearanceRepository.findById(USER).orElse(null));
+        assertThat(userDup.get().getClearances()).hasSize(1).containsExactly(clearanceRepository.findById(USER).orElse(null));
     }
 
     @Test
@@ -427,7 +427,7 @@ class IdentityControllerIT {
         User user = new User();
         user.setLogin("activate-account");
         user.setEmail("activate-account@example.com");
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPasswordHash(RandomStringUtils.random(60));
         user.setActivated(false);
         user.setActivationKey(activationKey);
 
@@ -453,7 +453,7 @@ class IdentityControllerIT {
         User user = new User();
         user.setLogin("save-account");
         user.setEmail("save-account@example.com");
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPasswordHash(RandomStringUtils.random(60));
         user.setActivated(true);
         userRepository.saveAndFlush(user);
 
@@ -473,16 +473,16 @@ class IdentityControllerIT {
             )
             .andExpect(status().isOk());
 
-        User updatedUser = userRepository.findOneWithAuthoritiesByLogin(user.getLogin()).orElse(null);
+        User updatedUser = userRepository.findOneWithClearancesByLogin(user.getLogin()).orElse(null);
         assertThat(updatedUser != null).isTrue();
         assertThat(updatedUser.getFirstName()).isEqualTo(userDTO.getFirstName());
         assertThat(updatedUser.getLastName()).isEqualTo(userDTO.getLastName());
         assertThat(updatedUser.getEmail()).isEqualTo(userDTO.getEmail());
         assertThat(updatedUser.getLangKey()).isEqualTo(userDTO.getLangKey());
-        assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
+        assertThat(updatedUser.getPasswordHash()).isEqualTo(user.getPasswordHash());
         assertThat(updatedUser.getImageUrl()).isEqualTo(userDTO.getImageUrl());
         assertThat(updatedUser.isActivated()).isTrue();
-        assertThat(updatedUser.getAuthorities()).isEmpty();
+        assertThat(updatedUser.getClearances()).isEmpty();
     }
 
     @Test
@@ -492,7 +492,7 @@ class IdentityControllerIT {
         User user = new User();
         user.setLogin("save-invalid-email");
         user.setEmail("save-invalid-email@example.com");
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPasswordHash(RandomStringUtils.random(60));
         user.setActivated(true);
 
         userRepository.saveAndFlush(user);
@@ -523,14 +523,14 @@ class IdentityControllerIT {
         User user = new User();
         user.setLogin("save-existing-email");
         user.setEmail("save-existing-email@example.com");
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPasswordHash(RandomStringUtils.random(60));
         user.setActivated(true);
         userRepository.saveAndFlush(user);
 
         User anotherUser = new User();
         anotherUser.setLogin("save-existing-email2");
         anotherUser.setEmail("save-existing-email2@example.com");
-        anotherUser.setPassword(RandomStringUtils.random(60));
+        anotherUser.setPasswordHash(RandomStringUtils.random(60));
         anotherUser.setActivated(true);
 
         userRepository.saveAndFlush(anotherUser);
@@ -563,7 +563,7 @@ class IdentityControllerIT {
         User user = new User();
         user.setLogin("save-existing-email-and-login");
         user.setEmail("save-existing-email-and-login@example.com");
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPasswordHash(RandomStringUtils.random(60));
         user.setActivated(true);
         userRepository.saveAndFlush(user);
 
@@ -594,7 +594,7 @@ class IdentityControllerIT {
     void testChangePasswordWrongExistingPassword() throws Exception {
         User user = new User();
         String currentPassword = RandomStringUtils.random(60);
-        user.setPassword(passwordEncoder.encode(currentPassword));
+        user.setPasswordHash(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-wrong-existing-password");
         user.setEmail("change-password-wrong-existing-password@example.com");
         userRepository.saveAndFlush(user);
@@ -609,8 +609,8 @@ class IdentityControllerIT {
 
         User updatedUser = userRepository.findOneByLogin("change-password-wrong-existing-password").orElse(null);
         assertThat(updatedUser != null).isTrue();
-        assertThat(passwordEncoder.matches("new password", updatedUser.getPassword())).isFalse();
-        assertThat(passwordEncoder.matches(currentPassword, updatedUser.getPassword())).isTrue();
+        assertThat(passwordEncoder.matches("new password", updatedUser.getPasswordHash())).isFalse();
+        assertThat(passwordEncoder.matches(currentPassword, updatedUser.getPasswordHash())).isTrue();
     }
 
     @Test
@@ -619,7 +619,7 @@ class IdentityControllerIT {
     void testChangePassword() throws Exception {
         User user = new User();
         String currentPassword = RandomStringUtils.random(60);
-        user.setPassword(passwordEncoder.encode(currentPassword));
+        user.setPasswordHash(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password");
         user.setEmail("change-password@example.com");
         userRepository.saveAndFlush(user);
@@ -634,7 +634,7 @@ class IdentityControllerIT {
 
         User updatedUser = userRepository.findOneByLogin("change-password").orElse(null);
         assertThat(updatedUser != null).isTrue();
-        assertThat(passwordEncoder.matches("new password", updatedUser.getPassword())).isTrue();
+        assertThat(passwordEncoder.matches("new password", updatedUser.getPasswordHash())).isTrue();
     }
 
     @Test
@@ -643,7 +643,7 @@ class IdentityControllerIT {
     void testChangePasswordTooSmall() throws Exception {
         User user = new User();
         String currentPassword = RandomStringUtils.random(60);
-        user.setPassword(passwordEncoder.encode(currentPassword));
+        user.setPasswordHash(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-too-small");
         user.setEmail("change-password-too-small@example.com");
         userRepository.saveAndFlush(user);
@@ -660,7 +660,7 @@ class IdentityControllerIT {
 
         User updatedUser = userRepository.findOneByLogin("change-password-too-small").orElse(null);
         assertThat(updatedUser != null).isTrue();
-        assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
+        assertThat(updatedUser.getPasswordHash()).isEqualTo(user.getPasswordHash());
     }
 
     @Test
@@ -669,7 +669,7 @@ class IdentityControllerIT {
     void testChangePasswordTooLong() throws Exception {
         User user = new User();
         String currentPassword = RandomStringUtils.random(60);
-        user.setPassword(passwordEncoder.encode(currentPassword));
+        user.setPasswordHash(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-too-long");
         user.setEmail("change-password-too-long@example.com");
         userRepository.saveAndFlush(user);
@@ -686,7 +686,7 @@ class IdentityControllerIT {
 
         User updatedUser = userRepository.findOneByLogin("change-password-too-long").orElse(null);
         assertThat(updatedUser != null).isTrue();
-        assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
+        assertThat(updatedUser.getPasswordHash()).isEqualTo(user.getPasswordHash());
     }
 
     @Test
@@ -695,7 +695,7 @@ class IdentityControllerIT {
     void testChangePasswordEmpty() throws Exception {
         User user = new User();
         String currentPassword = RandomStringUtils.random(60);
-        user.setPassword(passwordEncoder.encode(currentPassword));
+        user.setPasswordHash(passwordEncoder.encode(currentPassword));
         user.setLogin("change-password-empty");
         user.setEmail("change-password-empty@example.com");
         userRepository.saveAndFlush(user);
@@ -710,14 +710,14 @@ class IdentityControllerIT {
 
         User updatedUser = userRepository.findOneByLogin("change-password-empty").orElse(null);
         assertThat(updatedUser != null).isTrue();
-        assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
+        assertThat(updatedUser.getPasswordHash()).isEqualTo(user.getPasswordHash());
     }
 
     @Test
     @Transactional
     void testRequestPasswordReset() throws Exception {
         User user = new User();
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPasswordHash(RandomStringUtils.random(60));
         user.setActivated(true);
         user.setLogin("password-reset");
         user.setEmail("password-reset@example.com");
@@ -732,7 +732,7 @@ class IdentityControllerIT {
     @Transactional
     void testRequestPasswordResetUpperCaseEmail() throws Exception {
         User user = new User();
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPasswordHash(RandomStringUtils.random(60));
         user.setActivated(true);
         user.setLogin("password-reset-upper-case");
         user.setEmail("password-reset-upper-case@example.com");
@@ -754,7 +754,7 @@ class IdentityControllerIT {
     @Transactional
     void testFinishPasswordReset() throws Exception {
         User user = new User();
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPasswordHash(RandomStringUtils.random(60));
         user.setLogin("finish-password-reset");
         user.setEmail("finish-password-reset@example.com");
         user.setResetDate(Instant.now().plusSeconds(60));
@@ -775,14 +775,14 @@ class IdentityControllerIT {
 
         User updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);
         assertThat(updatedUser != null).isTrue();
-        assertThat(passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPassword())).isTrue();
+        assertThat(passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPasswordHash())).isTrue();
     }
 
     @Test
     @Transactional
     void testFinishPasswordResetTooSmall() throws Exception {
         User user = new User();
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPasswordHash(RandomStringUtils.random(60));
         user.setLogin("finish-password-reset-too-small");
         user.setEmail("finish-password-reset-too-small@example.com");
         user.setResetDate(Instant.now().plusSeconds(60));
@@ -803,7 +803,7 @@ class IdentityControllerIT {
 
         User updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);
         assertThat(updatedUser != null).isTrue();
-        assertThat(passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPassword())).isFalse();
+        assertThat(passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPasswordHash())).isFalse();
     }
 
     @Test

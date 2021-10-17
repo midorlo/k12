@@ -60,7 +60,7 @@ class UserServiceIT {
     public void init() {
         user = new User();
         user.setLogin(DEFAULT_LOGIN);
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPasswordHash(RandomStringUtils.random(60));
         user.setActivated(true);
         user.setEmail(DEFAULT_EMAIL);
         user.setFirstName(DEFAULT_FIRSTNAME);
@@ -129,7 +129,7 @@ class UserServiceIT {
     @Test
     @Transactional
     void assertThatUserCanResetPassword() {
-        String oldPassword = user.getPassword();
+        String oldPassword = user.getPasswordHash();
         Instant daysAgo = Instant.now().minus(2, ChronoUnit.HOURS);
         String resetKey = SecurityUtilities.generateResetKey();
         user.setActivated(true);
@@ -141,7 +141,7 @@ class UserServiceIT {
         assertThat(maybeUser).isPresent();
         assertThat(maybeUser.orElse(null).getResetDate()).isNull();
         assertThat(maybeUser.orElse(null).getResetKey()).isNull();
-        assertThat(maybeUser.orElse(null).getPassword()).isNotEqualTo(oldPassword);
+        assertThat(maybeUser.orElse(null).getPasswordHash()).isNotEqualTo(oldPassword);
 
         userRepository.delete(user);
     }

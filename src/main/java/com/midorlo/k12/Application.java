@@ -1,15 +1,7 @@
 package com.midorlo.k12;
 
-import static com.midorlo.k12.configuration.ApplicationConstants.ContextConstants.*;
-import static com.midorlo.k12.configuration.ApplicationConstants.REPOSITORY_PACKAGE;
-import static com.midorlo.k12.configuration.ApplicationConstants.TechConstants.AUDITOR_BEAN;
-
 import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.configuration.ApplicationProperties;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.*;
-import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.SpringApplication;
@@ -21,13 +13,22 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.annotation.PostConstruct;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.*;
+
+import static com.midorlo.k12.configuration.ApplicationConstants.ContextConstants.*;
+import static com.midorlo.k12.configuration.ApplicationConstants.REPOSITORY_PACKAGE;
+import static com.midorlo.k12.configuration.ApplicationConstants.TechConstants.AUDITOR_BEAN;
+
 @Slf4j
 @SpringBootApplication
 @EnableJpaRepositories(REPOSITORY_PACKAGE)
 @EnableJpaAuditing(auditorAwareRef = AUDITOR_BEAN)
 @EnableTransactionManagement
-@EnableConfigurationProperties({ ApplicationProperties.class })
 @ComponentScan(basePackages = { "com.midorlo.k12", "springfox.documentation.schema" })
+@EnableConfigurationProperties({ ApplicationProperties.class })
 public class Application {
 
     private final Environment env;
@@ -49,7 +50,8 @@ public class Application {
     }
 
     private static void logApplicationStartup(Environment env) {
-        String protocol = Optional.ofNullable(env.getProperty("server.ssl.key-store")).map(key -> "https").orElse("http");
+        String protocol = Optional.ofNullable(env.getProperty("server.ssl.key-store")).map(key -> "https")
+                                  .orElse("http");
         String serverPort = env.getProperty("server.port");
         String contextPath = Optional
             .ofNullable(env.getProperty("server.servlet.context-path"))

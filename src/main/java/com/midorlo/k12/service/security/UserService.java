@@ -75,7 +75,7 @@ public class UserService {
             .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
             .map(
                 user -> {
-                    user.setPassword(passwordEncoder.encode(newPassword));
+                    user.setPasswordHash(passwordEncoder.encode(newPassword));
                     user.setResetKey(null);
                     user.setResetDate(null);
                     this.clearUserCaches(user);
@@ -123,7 +123,7 @@ public class UserService {
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(userDTO.getLogin().toLowerCase());
         // new user gets initially a generated password
-        newUser.setPassword(encryptedPassword);
+        newUser.setPasswordHash(encryptedPassword);
         newUser.setFirstName(userDTO.getFirstName());
         newUser.setLastName(userDTO.getLastName());
         if (userDTO.getEmail() != null) {
@@ -137,7 +137,7 @@ public class UserService {
         newUser.setActivationKey(SecurityUtilities.generateActivationKey());
         Set<Clearance> authorities = new HashSet<>();
         clearanceRepository.findById(ApplicationConstants.SecurityConstants.USER).ifPresent(authorities::add);
-        newUser.setAuthorities(authorities);
+        newUser.setClearances(authorities);
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
@@ -169,7 +169,7 @@ public class UserService {
             user.setLangKey(userDTO.getLangKey());
         }
         String encryptedPassword = passwordEncoder.encode(SecurityUtilities.generatePassword());
-        user.setPassword(encryptedPassword);
+        user.setPasswordHash(encryptedPassword);
         user.setResetKey(SecurityUtilities.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
@@ -181,7 +181,7 @@ public class UserService {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toSet());
-            user.setAuthorities(authorities);
+            user.setClearances(authorities);
         }
         userRepository.save(user);
         this.clearUserCaches(user);
@@ -212,7 +212,7 @@ public class UserService {
                     user.setImageUrl(userDTO.getImageUrl());
                     user.setActivated(userDTO.isActivated());
                     user.setLangKey(userDTO.getLangKey());
-                    Set<Clearance> managedAuthorities = user.getAuthorities();
+                    Set<Clearance> managedAuthorities = user.getClearances();
                     managedAuthorities.clear();
                     userDTO
                         .getAuthorities()
@@ -276,12 +276,12 @@ public class UserService {
             .flatMap(userRepository::findOneByLogin)
             .ifPresent(
                 user -> {
-                    String currentEncryptedPassword = user.getPassword();
+                    String currentEncryptedPassword = user.getPasswordHash();
                     if (!passwordEncoder.matches(currentClearTextPassword, currentEncryptedPassword)) {
                         throw new InvalidPasswordException();
                     }
                     String encryptedPassword = passwordEncoder.encode(newPassword);
-                    user.setPassword(encryptedPassword);
+                    user.setPasswordHash(encryptedPassword);
                     this.clearUserCaches(user);
                     log.debug("Changed password for User: {}", user);
                 }
@@ -300,12 +300,12 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
-        return userRepository.findOneWithAuthoritiesByLogin(login);
+        return userRepository.findOneWithClearancesByLogin(login);
     }
 
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthorities() {
-        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithAuthoritiesByLogin);
+        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithClearancesByLogin);
     }
 
     /**

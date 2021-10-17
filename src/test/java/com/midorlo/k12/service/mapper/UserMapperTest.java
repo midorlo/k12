@@ -31,7 +31,7 @@ class UserMapperTest {
         userMapper = new UserMapper();
         user = new User();
         user.setLogin(DEFAULT_LOGIN);
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPasswordHash(RandomStringUtils.random(60));
         user.setActivated(true);
         user.setEmail("johndoe@localhost");
         user.setFirstName("john");
@@ -76,9 +76,9 @@ class UserMapperTest {
         List<User> users = userMapper.userDTOsToUsers(usersDto);
 
         assertThat(users).isNotEmpty().size().isEqualTo(1);
-        assertThat(users.get(0).getAuthorities()).isNotNull();
-        assertThat(users.get(0).getAuthorities()).isNotEmpty();
-        assertThat(users.get(0).getAuthorities().iterator().next().getName()).isEqualTo("ADMIN");
+        assertThat(users.get(0).getClearances()).isNotNull();
+        assertThat(users.get(0).getClearances()).isNotEmpty();
+        assertThat(users.get(0).getClearances().iterator().next().getName()).isEqualTo("ADMIN");
     }
 
     @Test
@@ -91,8 +91,8 @@ class UserMapperTest {
         List<User> users = userMapper.userDTOsToUsers(usersDto);
 
         assertThat(users).isNotEmpty().size().isEqualTo(1);
-        assertThat(users.get(0).getAuthorities()).isNotNull();
-        assertThat(users.get(0).getAuthorities()).isEmpty();
+        assertThat(users.get(0).getClearances()).isNotNull();
+        assertThat(users.get(0).getClearances()).isEmpty();
     }
 
     @Test
@@ -104,9 +104,9 @@ class UserMapperTest {
         User user = userMapper.userDTOToUser(userDto);
 
         assertThat(user).isNotNull();
-        assertThat(user.getAuthorities()).isNotNull();
-        assertThat(user.getAuthorities()).isNotEmpty();
-        assertThat(user.getAuthorities().iterator().next().getName()).isEqualTo("ADMIN");
+        assertThat(user.getClearances()).isNotNull();
+        assertThat(user.getClearances()).isNotEmpty();
+        assertThat(user.getClearances().iterator().next().getName()).isEqualTo("ADMIN");
     }
 
     @Test
@@ -116,8 +116,8 @@ class UserMapperTest {
         User user = userMapper.userDTOToUser(userDto);
 
         assertThat(user).isNotNull();
-        assertThat(user.getAuthorities()).isNotNull();
-        assertThat(user.getAuthorities()).isEmpty();
+        assertThat(user.getClearances()).isNotNull();
+        assertThat(user.getClearances()).isEmpty();
     }
 
     @Test

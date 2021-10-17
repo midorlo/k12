@@ -37,7 +37,6 @@ public class MailService {
 
     private final SpringTemplateEngine templateEngine;
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     public MailService(
         ApplicationProperties applicationProperties,
         JavaMailSender javaMailSender,

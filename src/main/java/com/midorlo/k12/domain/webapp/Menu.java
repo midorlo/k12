@@ -2,16 +2,19 @@ package com.midorlo.k12.domain.webapp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.midorlo.k12.domain.security.Clearance;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import static com.midorlo.k12.configuration.ApplicationConstants.TableNames.MENUS;
 
 /**
  * A Menu.
@@ -20,15 +23,14 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Table(name = "menus")
+@Table(name = MENUS)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Menu implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
