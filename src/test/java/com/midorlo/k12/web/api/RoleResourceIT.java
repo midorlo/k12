@@ -37,8 +37,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class RoleResourceIT {
 
-    private static final String DEFAULT_I_18_N = "AAAAAAAAAA";
-    private static final String UPDATED_I_18_N = "BBBBBBBBBB";
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/roles";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -67,7 +67,7 @@ class RoleResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Role createEntity(EntityManager em) {
-        return new Role().setI18n(DEFAULT_I_18_N);
+        return new Role().setName(DEFAULT_NAME);
     }
 
     /**
@@ -77,7 +77,7 @@ class RoleResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Role createUpdatedEntity(EntityManager em) {
-        return new Role().setI18n(UPDATED_I_18_N);
+        return new Role().setName(UPDATED_NAME);
     }
 
     @BeforeEach
@@ -98,7 +98,7 @@ class RoleResourceIT {
         List<Role> roleList = roleRepository.findAll();
         assertThat(roleList).hasSize(databaseSizeBeforeCreate + 1);
         Role testRole = roleList.get(roleList.size() - 1);
-        assertThat(testRole.getI18n()).isEqualTo(DEFAULT_I_18_N);
+        assertThat(testRole.getName()).isEqualTo(DEFAULT_NAME);
     }
 
     @Test
@@ -124,7 +124,7 @@ class RoleResourceIT {
     void checki18nIsRequired() throws Exception {
         int databaseSizeBeforeTest = roleRepository.findAll().size();
         // set the field null
-        role.setI18n(null);
+        role.setName(null);
 
         // Create the Role, which fails.
 
@@ -148,7 +148,7 @@ class RoleResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(role.getId().intValue())))
-            .andExpect(jsonPath("$.[*].i18n").value(hasItem(DEFAULT_I_18_N)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -181,7 +181,7 @@ class RoleResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(role.getId().intValue()))
-            .andExpect(jsonPath("$.i18n").value(DEFAULT_I_18_N));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
     }
 
     //    @Test
@@ -203,7 +203,7 @@ class RoleResourceIT {
         Role updatedRole = roleRepository.findById(role.getId()).get();
         // Disconnect from session so that the updates on updatedRole are not directly saved in db
         em.detach(updatedRole);
-        updatedRole.setI18n(UPDATED_I_18_N);
+        updatedRole.setName(UPDATED_NAME);
 
         restRoleMockMvc
             .perform(
@@ -217,7 +217,7 @@ class RoleResourceIT {
         List<Role> roleList = roleRepository.findAll();
         assertThat(roleList).hasSize(databaseSizeBeforeUpdate);
         Role testRole = roleList.get(roleList.size() - 1);
-        assertThat(testRole.getI18n()).isEqualTo(UPDATED_I_18_N);
+        assertThat(testRole.getName()).isEqualTo(UPDATED_NAME);
     }
 
     @Test
@@ -300,7 +300,7 @@ class RoleResourceIT {
         List<Role> roleList = roleRepository.findAll();
         assertThat(roleList).hasSize(databaseSizeBeforeUpdate);
         Role testRole = roleList.get(roleList.size() - 1);
-        assertThat(testRole.getI18n()).isEqualTo(DEFAULT_I_18_N);
+        assertThat(testRole.getName()).isEqualTo(DEFAULT_NAME);
     }
 
     @Test
@@ -315,7 +315,7 @@ class RoleResourceIT {
         Role partialUpdatedRole = new Role();
         partialUpdatedRole.setId(role.getId());
 
-        partialUpdatedRole.setI18n(UPDATED_I_18_N);
+        partialUpdatedRole.setName(UPDATED_NAME);
 
         restRoleMockMvc
             .perform(
@@ -329,7 +329,7 @@ class RoleResourceIT {
         List<Role> roleList = roleRepository.findAll();
         assertThat(roleList).hasSize(databaseSizeBeforeUpdate);
         Role testRole = roleList.get(roleList.size() - 1);
-        assertThat(testRole.getI18n()).isEqualTo(UPDATED_I_18_N);
+        assertThat(testRole.getName()).isEqualTo(UPDATED_NAME);
     }
 
     @Test

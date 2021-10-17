@@ -51,7 +51,7 @@ public class InstallUsersAndAuthorities implements CommandLineRunner {
                                     .setLangKey("de")
                                     .setFirstName("-")
                                     .setLastName("-")
-                                    .setRoles(Set.of(new Role().setI18n(ADMIN).setClearances(Set.of(new Clearance().setName(ADMIN))))),
+                                    .setRoles(Set.of(new Role().setName(ADMIN).setClearances(Set.of(new Clearance().setName(ADMIN))))),
                                 new User()
                                     .setActivated(true)
                                     .setLogin("user")
@@ -60,7 +60,7 @@ public class InstallUsersAndAuthorities implements CommandLineRunner {
                                     .setLangKey("de")
                                     .setFirstName("-")
                                     .setLastName("-")
-                                    .setRoles(Set.of(new Role().setI18n(USER).setClearances(Set.of(new Clearance().setName(USER)))))
+                                    .setRoles(Set.of(new Role().setName(USER).setClearances(Set.of(new Clearance().setName(USER)))))
                             )
                         )
                     )

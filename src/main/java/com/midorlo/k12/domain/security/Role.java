@@ -34,8 +34,8 @@ public class Role implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "i_18_n", nullable = false, unique = true)
-    private String i18n;
+    @Column(name = "name", nullable = false, unique = true)
+    private String name;
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
