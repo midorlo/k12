@@ -18,12 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.ADMIN;
-import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.USER;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.testcontainers.shaded.org.hamcrest.Matchers.hasItems;
 
 /**
  * Integration tests for the {@link UserResource} REST controller.

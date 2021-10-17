@@ -1,13 +1,16 @@
 package com.midorlo.k12.configuration;
 
-import java.util.*;
-import javax.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.web.cors.CorsConfiguration;
+
+import javax.validation.constraints.NotNull;
+import java.util.*;
 
 /**
  * Properties specific to Application.
@@ -27,6 +30,7 @@ import org.springframework.web.cors.CorsConfiguration;
     }
 )
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
+@Configuration
 public class ApplicationProperties {
 
     private final Async async = new Async();
@@ -126,11 +130,11 @@ public class ApplicationProperties {
     @Data
     public static class Security {
 
-        private final ClientAuthorization clientAuthorization = new ClientAuthorization();
-        private final Authentication authentication = new Authentication();
-        private final RememberMe rememberMe = new RememberMe();
-        private final OAuth2 oauth2 = new OAuth2();
-        private String contentSecurityPolicy =
+        private final ClientAuthorization clientAuthorization   = new ClientAuthorization();
+        private final Authentication      authentication        = new Authentication();
+        private final RememberMe          rememberMe            = new RememberMe();
+        private final OAuth2              oauth2                = new OAuth2();
+        private       String              contentSecurityPolicy =
             "default-src 'self'; frame-src 'self' data:; script-src 'self' " +
             "'unsafe-inline' 'unsafe-eval' " +
             "https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; " +
@@ -263,20 +267,20 @@ public class ApplicationProperties {
     @Data
     public static class ApiDocs {
 
-        private String title = "Application API";
-        private String description = "API documentation";
-        private String version = "0.0.1";
-        private String termsOfServiceUrl = null;
-        private String contactName = null;
-        private String contactUrl = null;
-        private String contactEmail = null;
-        private String license = null;
-        private String licenseUrl = null;
-        private String defaultIncludePattern = "/api/.*";
-        private String managementIncludePattern = "/management/.*";
-        private String host = null;
-        private String[] protocols = {};
-        private boolean useDefaultResponseMessages = true;
+        private String   title                      = "Application API";
+        private String   description                = "API documentation";
+        private String   version                    = "0.0.1";
+        private String   termsOfServiceUrl          = null;
+        private String   contactName                = null;
+        private String   contactUrl                 = null;
+        private String   contactEmail               = null;
+        private String   license                    = null;
+        private String   licenseUrl                 = null;
+        private String   defaultIncludePattern      = "/api/.*";
+        private String   managementIncludePattern   = "/management/.*";
+        private String   host                       = null;
+        private String[] protocols                  = {};
+        private boolean  useDefaultResponseMessages = true;
 
         private Server[] servers = {};
 
@@ -315,15 +319,15 @@ public class ApplicationProperties {
     @Data
     public static class Logging {
 
-        private final Logstash logstash = new Logstash();
-        private boolean useJsonFormat = false;
+        private final Logstash logstash      = new Logstash();
+        private       boolean  useJsonFormat = false;
 
         public static class Logstash {
 
-            private boolean enabled = false;
-            private String host = "localhost";
-            private int port = 5000;
-            private int queueSize = 512;
+            private boolean enabled   = false;
+            private String  host      = "localhost";
+            private int     port      = 5000;
+            private int     queueSize = 512;
 
             public boolean isEnabled() {
                 return enabled;
@@ -374,9 +378,9 @@ public class ApplicationProperties {
 
         public static class RateLimiting {
 
-            private boolean enabled = false;
-            private long limit = 100_000L;
-            private int durationInSeconds = 3_600;
+            private boolean enabled           = false;
+            private long    limit             = 100_000L;
+            private int     durationInSeconds = 3_600;
 
             public boolean isEnabled() {
                 return enabled;
