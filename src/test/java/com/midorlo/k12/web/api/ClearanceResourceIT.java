@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -82,18 +83,13 @@ class ClearanceResourceIT {
     @Test
     @Transactional
     void createClearance() throws Exception {
-        int databaseSizeBeforeCreate = clearanceRepository.findAll().size();
-        // Create the Clearance
         restClearanceMockMvc
             .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
                                          .content(TestUtil.convertObjectToJsonBytes(clearance)))
             .andExpect(status().isCreated());
-
         // Validate the Clearance in the database
-        List<Clearance> clearanceList = clearanceRepository.findAll();
-        assertThat(clearanceList).hasSize(databaseSizeBeforeCreate + 1);
-        Clearance testClearance = clearanceList.get(clearanceList.size() - 1);
-        assertThat(testClearance.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(clearanceRepository.findAll().stream().map(Clearance::getName)
+                                      .collect(Collectors.toList())).contains(DEFAULT_NAME);
     }
 
     @Test
