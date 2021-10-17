@@ -60,50 +60,6 @@ public class Menu implements Serializable {
     @JsonIgnoreProperties(value = { "requiredClearance", "parent" }, allowSetters = true)
     private Set<MenuItem> childItems = new HashSet<>();
 
-    public Menu id(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getI18n() {
-        return this.i18n;
-    }
-
-    public Menu i18n(String i18n) {
-        this.i18n = i18n;
-        return this;
-    }
-
-    public Menu icon(String icon) {
-        this.icon = icon;
-        return this;
-    }
-
-    public Menu enabled(Boolean enabled) {
-        this.enabled = enabled;
-        return this;
-    }
-
-    public Menu parent(Menu menu) {
-        this.setParent(menu);
-        return this;
-    }
-
-    public Menu requiredClearance(Clearance clearance) {
-        this.setRequiredClearance(clearance);
-        return this;
-    }
-
-    public Menu childItems(Set<MenuItem> menuItems) {
-        this.setChildItems(menuItems);
-        return this;
-    }
-
-    public Menu addChildItems(MenuItem menuItem) {
-        this.childItems.add(menuItem);
-        menuItem.setParent(this);
-        return this;
-    }
 
     @Override
     public boolean equals(Object o) {
