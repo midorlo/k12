@@ -1,5 +1,6 @@
 package com.midorlo.k12.domain.webapp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.midorlo.k12.domain.security.Clearance;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import static com.midorlo.k12.configuration.ApplicationConstants.TableNames.MENU
 /**
  * A Menu.
  */
+
 @Getter
 @Setter
 @Accessors(chain = true)
@@ -31,10 +33,10 @@ public class Menu implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", unique = true, updatable = false, nullable = false)
     private Long id;
 
-    @NotNull
-    @Column(name = "i_18_n", nullable = false, unique = true)
+    @Column(name = "i18n")
     private String i18n;
 
     @Column(name = "icon")
@@ -45,7 +47,7 @@ public class Menu implements Serializable {
     private Boolean enabled = true;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "parent", "requiredClearance", "childMenus", "childItems" }, allowSetters = true)
+    @JsonIgnore
     private Menu parent;
 
     @ManyToOne

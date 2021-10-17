@@ -8,10 +8,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -22,6 +19,7 @@ import static com.midorlo.k12.configuration.ApplicationConstants.TableNames.CLEA
 /**
  * An authority (a web role) used by Spring Security.
  */
+
 @Entity
 @Getter
 @Setter
@@ -33,24 +31,26 @@ public class Clearance implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", unique = true, updatable = false, nullable = false)
+    private Long id;
+
     @NotNull
     @Size(max = 50)
-    @Id
-    @Column(length = 50, unique = true, updatable = false)
+    @Column(length = 50, unique = true, nullable = false)
     private String name;
 
-    //<editor-fold desc="equals / hashCode">
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Clearance clearance = (Clearance) o;
-        return name != null && Objects.equals(name, clearance.name);
+        return id != null && Objects.equals(id, clearance.id);
     }
 
     @Override
     public int hashCode() {
         return 0;
     }
-    //</editor-fold>
 }

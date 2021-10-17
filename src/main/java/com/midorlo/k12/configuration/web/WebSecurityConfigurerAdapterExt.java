@@ -90,8 +90,8 @@ public class WebSecurityConfigurerAdapterExt extends WebSecurityConfigurerAdapte
             .antMatchers("/api/webapp").permitAll()
             .antMatchers("/api/webapp/**").permitAll()
 
-            .antMatchers("/api/admin").hasAuthority(ApplicationConstants.SecurityConstants.ADMIN)
-            .antMatchers("/api/admin/**").hasAuthority(ApplicationConstants.SecurityConstants.ADMIN)
+            .antMatchers("/api/admin").hasAuthority(ApplicationConstants.SecurityConstants.ROLE_ADMIN)
+            .antMatchers("/api/admin/**").hasAuthority(ApplicationConstants.SecurityConstants.ROLE_ADMIN)
 
             .antMatchers("/management").permitAll()
             .antMatchers("/management/**").permitAll()

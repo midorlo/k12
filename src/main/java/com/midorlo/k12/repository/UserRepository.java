@@ -1,5 +1,6 @@
 package com.midorlo.k12.repository;
 
+import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.domain.security.User;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -17,9 +18,6 @@ import java.util.Optional;
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    String USERS_BY_LOGIN_CACHE = "usersByLogin";
-
-    String USERS_BY_EMAIL_CACHE = "usersByEmail";
 
     Optional<User> findOneByActivationKey(String activationKey);
 
@@ -32,11 +30,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneByLogin(String login);
 
     @EntityGraph(attributePaths = "clearances")
-    @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
+    @Cacheable(cacheNames = ApplicationConstants.CacheNames.USERS_BY_LOGIN_CACHE)
     Optional<User> findOneWithClearancesByLogin(String login);
 
     @EntityGraph(attributePaths = "clearances")
-    @Cacheable(cacheNames = USERS_BY_EMAIL_CACHE)
+    @Cacheable(cacheNames = ApplicationConstants.CacheNames.USERS_BY_EMAIL_CACHE)
     Optional<User> findOneWithClearancesByEmailIgnoreCase(String email);
 
     Page<User> findAllByIdNotNullAndActivatedIsTrue(Pageable pageable);

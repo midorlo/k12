@@ -120,19 +120,18 @@ class MenuResourceIT {
 
     @Test
     @Transactional
-    void checki18nIsRequired() throws Exception {
+    void checki18nIsNotRequired() throws Exception {
         int databaseSizeBeforeTest = menuRepository.findAll().size();
         // set the field null
         menu.setI18n(null);
 
-        // Create the Menu, which fails.
-
+        // Create the Menu, which is fine.
         restMenuMockMvc
             .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(menu)))
-            .andExpect(status().isBadRequest());
+            .andExpect(status().isCreated());
 
         List<Menu> menuList = menuRepository.findAll();
-        assertThat(menuList).hasSize(databaseSizeBeforeTest);
+        assertThat(menuList).hasSize(databaseSizeBeforeTest + 1);
     }
 
     @Test
