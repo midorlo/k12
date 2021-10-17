@@ -2,7 +2,6 @@ package com.midorlo.k12.configuration.web.problem;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
 import lombok.Data;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.http.HttpStatus;
@@ -51,6 +50,7 @@ public class ExceptionTranslatorTestController {
 
     @Data
     public static class TestDTO {
+
         @NotNull
         private String test;
     }

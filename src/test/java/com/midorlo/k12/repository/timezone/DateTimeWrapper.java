@@ -1,12 +1,11 @@
 package com.midorlo.k12.repository.timezone;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.*;
 import java.util.Objects;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -53,8 +52,7 @@ public class DateTimeWrapper implements Serializable {
         }
 
         DateTimeWrapper dateTimeWrapper = (DateTimeWrapper) o;
-        return !(dateTimeWrapper.getId() == null || getId() == null) && Objects.equals(getId(),
-                                                                                       dateTimeWrapper.getId());
+        return !(dateTimeWrapper.getId() == null || getId() == null) && Objects.equals(getId(), dateTimeWrapper.getId());
     }
 
     @Override

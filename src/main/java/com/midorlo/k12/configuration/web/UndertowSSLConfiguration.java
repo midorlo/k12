@@ -49,8 +49,6 @@ public class UndertowSSLConfiguration {
 
     @Override
     public String toString() {
-        return "UndertowSSLConfiguration{" +
-               "factory=" + factory +
-               '}';
+        return "UndertowSSLConfiguration{" + "factory=" + factory + '}';
     }
 }

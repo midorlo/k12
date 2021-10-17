@@ -1,5 +1,7 @@
 package com.midorlo.k12.security.ssl;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.midorlo.k12.configuration.web.UndertowSSLConfiguration;
 import io.undertow.Undertow;
 import io.undertow.UndertowOptions;
@@ -8,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.xnio.OptionMap;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 class UndertowSSLConfigurationTest {

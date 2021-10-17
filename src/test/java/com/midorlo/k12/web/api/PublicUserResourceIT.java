@@ -1,9 +1,16 @@
 package com.midorlo.k12.web.api;
 
+import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.ADMIN;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.midorlo.k12.IntegrationTest;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.web.api.administration.users.UserResource;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +21,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-
-import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.ADMIN;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link UserResource} REST controller.
@@ -83,12 +82,11 @@ class PublicUserResourceIT {
     @Transactional
     void getAllAuthorities() throws Exception {
         restUserMockMvc
-            .perform(get("/api/authorities").accept(MediaType.APPLICATION_JSON).contentType(MediaType
-                                                                                                .APPLICATION_JSON))
+            .perform(get("/api/authorities").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$").isArray());
-            //            .andExpect(jsonPath("$").())(hasItems(USER, ADMIN))); //todo howto test collection contents?
+        //            .andExpect(jsonPath("$").())(hasItems(USER, ADMIN))); //todo howto test collection contents?
     }
 
     @Test
@@ -97,14 +95,11 @@ class PublicUserResourceIT {
         // Initialize the database
         userRepository.saveAndFlush(user);
 
-        restUserMockMvc.perform(get("/api/users?sort=resetKey,desc").accept(MediaType.APPLICATION_JSON))
-                       .andExpect(status().isBadRequest());
-        restUserMockMvc.perform(get("/api/users?sort=password,desc").accept(MediaType.APPLICATION_JSON))
-                       .andExpect(status().isBadRequest());
+        restUserMockMvc.perform(get("/api/users?sort=resetKey,desc").accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
+        restUserMockMvc.perform(get("/api/users?sort=password,desc").accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
         restUserMockMvc
             .perform(get("/api/users?sort=resetKey,id,desc").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isBadRequest());
-        restUserMockMvc.perform(get("/api/users?sort=id,desc").accept(MediaType.APPLICATION_JSON))
-                       .andExpect(status().isOk());
+        restUserMockMvc.perform(get("/api/users?sort=id,desc").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
     }
 }

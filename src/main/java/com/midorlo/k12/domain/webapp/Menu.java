@@ -60,7 +60,6 @@ public class Menu implements Serializable {
     @JsonIgnoreProperties(value = { "requiredClearance", "parent" }, allowSetters = true)
     private Set<MenuItem> childItems = new HashSet<>();
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

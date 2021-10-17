@@ -100,10 +100,7 @@ public class RoleResource {
      * or with status {@code 404 (Not Found)} if the role is not found,
      * or with status {@code 500 (Internal Server Error)} if the role couldn't be updated.
      */
-    @PatchMapping(
-        value = "/roles/{id}",
-        consumes = "application/merge-patch+json"
-    )
+    @PatchMapping(value = "/roles/{id}", consumes = "application/merge-patch+json")
     public ResponseEntity<Role> partialUpdateRole(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Role role

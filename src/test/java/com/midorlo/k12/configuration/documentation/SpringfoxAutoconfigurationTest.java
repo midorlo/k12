@@ -1,5 +1,11 @@
 package com.midorlo.k12.configuration.documentation;
 
+import static com.midorlo.k12.configuration.ApplicationConstants.ContextConstants.SPRING_PROFILE_API_DOCS;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -7,12 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static com.midorlo.k12.configuration.ApplicationConstants.ContextConstants.SPRING_PROFILE_API_DOCS;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasItems;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(
     properties = {
@@ -32,9 +32,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "application.api-docs.license-url=test license url",
         "application.api-docs.servers[0].url=test server url",
         "management.endpoints.web.base-path=/management",
-        "spring.application.name=testApp"
-
-    })
+        "spring.application.name=testApp",
+    }
+)
 @ActiveProfiles(SPRING_PROFILE_API_DOCS)
 @AutoConfigureMockMvc
 class SpringfoxAutoconfigurationTest {
@@ -44,7 +44,8 @@ class SpringfoxAutoconfigurationTest {
 
     @Test
     void generatesOAS() throws Exception {
-        mockMvc.perform(get("/v3/api-docs"))
+        mockMvc
+            .perform(get("/v3/api-docs"))
             .andExpect((status().isOk()))
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.info.title").value("test title"))
@@ -61,7 +62,8 @@ class SpringfoxAutoconfigurationTest {
 
     @Test
     void generatesSwaggerV2() throws Exception {
-        mockMvc.perform(get("/v2/api-docs"))
+        mockMvc
+            .perform(get("/v2/api-docs"))
             .andExpect((status().isOk()))
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.host").value("test.application.com"))
@@ -70,7 +72,8 @@ class SpringfoxAutoconfigurationTest {
 
     @Test
     void generatesManagementOAS() throws Exception {
-        mockMvc.perform(get("/v3/api-docs?group=management"))
+        mockMvc
+            .perform(get("/v3/api-docs?group=management"))
             .andExpect((status().isOk()))
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.info.title").value("TestApp Management API"))
@@ -85,12 +88,12 @@ class SpringfoxAutoconfigurationTest {
 
     @Test
     void generatesManagementSwaggerV2() throws Exception {
-        mockMvc.perform(get("/v2/api-docs?group=management"))
+        mockMvc
+            .perform(get("/v2/api-docs?group=management"))
             .andExpect((status().isOk()))
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.paths./management/health").exists())
             .andExpect(jsonPath("$.host").value("test.application.com"))
-            .andExpect(jsonPath("$.schemes").value(hasItems("http", "https")));    }
+            .andExpect(jsonPath("$.schemes").value(hasItems("http", "https")));
+    }
 }
-
-
