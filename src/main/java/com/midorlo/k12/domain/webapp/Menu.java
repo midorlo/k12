@@ -1,7 +1,7 @@
 package com.midorlo.k12.domain.webapp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-//import com.midorlo.k12.domain.security.Clearance;
+import com.midorlo.k12.domain.security.Clearance;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -47,9 +47,9 @@ public class Menu implements Serializable {
     @JsonIgnoreProperties(value = { "parent", "requiredClearance", "childMenus", "childItems" }, allowSetters = true)
     private Menu parent;
 
-//    @ManyToOne
-//    @JsonIgnoreProperties(value = { "roles" }, allowSetters = true)
-//    private Clearance requiredClearance;
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "roles" }, allowSetters = true)
+    private Clearance requiredClearance;
 
     @OneToMany(mappedBy = "parent")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -90,25 +90,8 @@ public class Menu implements Serializable {
         return this;
     }
 
-//    public Menu requiredClearance(Clearance clearance) {
-//        this.setRequiredClearance(clearance);
-//        return this;
-//    }
-
-    public Menu childMenus(Set<Menu> menus) {
-        this.setChildMenus(menus);
-        return this;
-    }
-
-    public Menu addChildMenus(Menu menu) {
-        this.childMenus.add(menu);
-        menu.setParent(this);
-        return this;
-    }
-
-    public Menu removeChildMenus(Menu menu) {
-        this.childMenus.remove(menu);
-        menu.setParent(null);
+    public Menu requiredClearance(Clearance clearance) {
+        this.setRequiredClearance(clearance);
         return this;
     }
 
@@ -122,13 +105,6 @@ public class Menu implements Serializable {
         menuItem.setParent(this);
         return this;
     }
-
-    public Menu removeChildItems(MenuItem menuItem) {
-        this.childItems.remove(menuItem);
-        menuItem.setParent(null);
-        return this;
-    }
-
 
     @Override
     public boolean equals(Object o) {

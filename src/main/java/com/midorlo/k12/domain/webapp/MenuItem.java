@@ -1,7 +1,7 @@
 package com.midorlo.k12.domain.webapp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-//import com.midorlo.k12.domain.security.Clearance;
+import com.midorlo.k12.domain.security.Clearance;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -48,9 +48,9 @@ public class MenuItem implements Serializable {
     @Column(name = "enabled", nullable = false)
     private Boolean enabled;
 
-//    @ManyToOne
-//    @JsonIgnoreProperties(value = { "roles" }, allowSetters = true)
-//    private Clearance requiredClearance;
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "roles" }, allowSetters = true)
+    private Clearance requiredClearance;
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "parent", "requiredClearance", "childMenus", "childItems" }, allowSetters = true)
@@ -81,10 +81,10 @@ public class MenuItem implements Serializable {
         return this;
     }
 
-//    public MenuItem requiredClearance(Clearance clearance) {
-//        this.setRequiredClearance(clearance);
-//        return this;
-//    }
+    public MenuItem requiredClearance(Clearance clearance) {
+        this.setRequiredClearance(clearance);
+        return this;
+    }
 
     public MenuItem parent(Menu menu) {
         this.setParent(menu);
