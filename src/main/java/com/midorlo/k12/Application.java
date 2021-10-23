@@ -69,7 +69,7 @@ public class Application {
             "Local: \t\t{}://localhost:{}{}\n\t" +
             "External: \t{}://{}:{}{}\n\t" +
             "Profile(s): \t{}\n----------------------------------------------------------",
-            env.getProperty("spring.application.name"),
+            env.getProperty("application.meta.name"),
             protocol,
             serverPort,
             contextPath,

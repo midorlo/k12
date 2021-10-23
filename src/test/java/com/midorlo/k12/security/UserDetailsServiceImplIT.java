@@ -3,7 +3,7 @@ package com.midorlo.k12.security;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-import com.midorlo.k12.IntegrationTest;
+import com.midorlo.k12.util.IntegrationTest;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.service.security.UserDetailsServiceImpl;

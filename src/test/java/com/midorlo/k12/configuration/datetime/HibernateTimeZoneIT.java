@@ -3,7 +3,7 @@ package com.midorlo.k12.configuration.datetime;
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.midorlo.k12.IntegrationTest;
+import com.midorlo.k12.util.IntegrationTest;
 import com.midorlo.k12.repository.timezone.DateTimeWrapper;
 import com.midorlo.k12.repository.timezone.DateTimeWrapperRepository;
 import java.time.*;

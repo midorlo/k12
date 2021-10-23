@@ -2,7 +2,7 @@ package com.midorlo.k12.domain;
 
 import com.midorlo.k12.domain.security.Clearance;
 import com.midorlo.k12.domain.security.User;
-import com.midorlo.k12.web.api.TestUtil;
+import com.midorlo.k12.web.rest.TestUtil;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
