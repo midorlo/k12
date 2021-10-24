@@ -114,7 +114,7 @@ public class SpringfoxAutoConfiguration {
     @Bean
     @ConditionalOnClass(name = "org.springframework.boot.actuate.autoconfigure.web.server.ManagementServerProperties")
     @ConditionalOnMissingBean(name = "openAPISpringfoxManagementDocket")
-    public Docket openAPISpringfoxManagementDocket(@Value("${spring.application.name:application}") String appName) {
+    public Docket openAPISpringfoxManagementDocket(@Value("${application.meta.name:application}") String appName) {
         ApiInfo apiInfo = new ApiInfo(
             StringUtils.capitalize(appName) + " " + MANAGEMENT_TITLE_SUFFIX,
             MANAGEMENT_DESCRIPTION,

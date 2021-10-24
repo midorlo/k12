@@ -32,7 +32,7 @@ import org.springframework.test.web.servlet.MockMvc;
         "application.api-docs.license-url=test license url",
         "application.api-docs.servers[0].url=test server url",
         "management.endpoints.web.base-path=/management",
-        "spring.application.name=testApp",
+        "application.meta.name=testApp",
     }
 )
 @ActiveProfiles(SPRING_PROFILE_API_DOCS)

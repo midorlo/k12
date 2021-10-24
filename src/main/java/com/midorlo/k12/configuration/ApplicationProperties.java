@@ -19,10 +19,14 @@ import java.util.Map;
 @Data
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 @PropertySources({
-    @PropertySource(value = "classpath:git.properties", ignoreResourceNotFound = true),
-    @PropertySource(value = "classpath:META-INF/build-actuator.properties", ignoreResourceNotFound = true),
+        @PropertySource(value = "classpath:git.properties", ignoreResourceNotFound = true),
+        @PropertySource(value = "classpath:META-INF/build-actuator.properties", ignoreResourceNotFound = true),
 })
 public class ApplicationProperties {
+
+    private final Meta    meta   = new Meta();
+    private final License license  = new License();
+    private final System  system = new System();
 
     private final Async             async       = new Async();
     private final Http              http        = new Http();
@@ -37,6 +41,38 @@ public class ApplicationProperties {
     private final Registry          registry    = new Registry();
     private final ClientApp         clientApp   = new ClientApp();
     private final AuditEvents       auditEvents = new AuditEvents();
+
+    @Data
+    public static class System {
+        private String  hostname;
+        private Integer port;
+    }
+
+    @Data
+    public static class Meta {
+        private       String  name;
+        private       String  title;
+        private       String  description;
+        private final Version version = new Version();
+
+        @Data
+        public static class Version {
+            private Integer major;
+            private Integer minor;
+            private Integer bugfix;
+            private String  tag;
+
+            public String getVersion() {
+                return major + "." + minor + "." + bugfix + "-" + tag;
+            }
+        }
+    }
+
+    @Data
+    public static class License {
+        private String name;
+        private String url;
+    }
 
     @Data
     public static class Async {
@@ -80,11 +116,11 @@ public class ApplicationProperties {
         private final RememberMe          rememberMe            = new RememberMe();
         private final OAuth2              oauth2                = new OAuth2();
         private       String              contentSecurityPolicy =
-            "default-src 'self'; frame-src 'self' data:; script-src 'self' " +
-            "'unsafe-inline' 'unsafe-eval' " +
-            "https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; " +
-            "img-src 'self' data:; font-src 'self' " +
-            "data:";
+                "default-src 'self'; frame-src 'self' data:; script-src 'self' " +
+                "'unsafe-inline' 'unsafe-eval' " +
+                "https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; " +
+                "img-src 'self' data:; font-src 'self' " +
+                "data:";
 
         @Data
         public static class ClientAuthorization {
@@ -121,6 +157,7 @@ public class ApplicationProperties {
 
     @Data
     public static class ApiDocs {
+
         private String   title                      = "Application API";
         private String   description                = "API documentation";
         private String   version                    = "0.0.1";
@@ -190,5 +227,28 @@ public class ApplicationProperties {
     @Data
     public static class AuditEvents {
         private int retentionPeriod = 30;
+    }
+
+    @Data
+    public static class InitialContact {
+        private String                      name;
+        private String                      imageName;
+        private String                      url;
+        private String                      eMail;
+        private String                      login;
+        private String                      password;
+        private Map<String, InitialContact> accounts = new LinkedHashMap<>();
+    }
+
+    @Data
+    public static class InitialAccount {
+        private String      login;
+        private String      password;
+        private InitialRole role;
+    }
+
+    @Data
+    public static class InitialRole {
+        private String name;
     }
 }

@@ -138,10 +138,24 @@ info:
 # ===================================================================
 # Application specific properties
 # ===================================================================
-
 application:
+  meta:
+    name: k12
+    title: K12
+    description: K12
+    version:
+      major: 0
+      minor: 0
+      bugfix: 1
+      tag: SNAPSHOT
   clientApp:
-    name: 'application'
+    name: 'k12App'
+  license:
+    name: Apache
+    url: https://${applicaton.system.hostname}:${applicaton.system.port}/license
+  system:
+    hostname: localhost
+    port: 8080
   # By default, CORS is disabled. Uncomment to enable.
   # cors:
   #   allowed-origins: "http://localhost:8100,http://localhost:9000"

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
-import com.midorlo.k12.IntegrationTest;
+import com.midorlo.k12.util.IntegrationTest;
 import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.configuration.ApplicationProperties;
 import com.midorlo.k12.domain.security.User;
