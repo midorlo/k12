@@ -1,8 +1,9 @@
 {
-  "name": "k12",
+  "name": "k-12",
   "version": "0.0.1-SNAPSHOT",
   "private": true,
-  "license": "Apache",
+  "description": "Description for k12",
+  "license": "UNLICENSED",
   "scripts": {
     "backend:build-cache": "./mvnw dependency:go-offline",
     "backend:doc:test": "./mvnw -ntp javadoc:javadoc --batch-mode",
@@ -49,7 +50,7 @@
   },
   "devDependencies": {
     "concurrently": "6.2.0",
-    "generator-jhipster": "^7.3.1",
+    "generator-jhipster": "7.1.0",
     "generator-jhipster-quasar": "0.10.35",
     "husky": "4.3.8",
     "lint-staged": "11.0.0",
