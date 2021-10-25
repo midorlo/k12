@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "concurrently": "6.2.0",
-    "generator-jhipster": "7.1.0",
+    "generator-jhipster": "7.3.1",
     "generator-jhipster-quasar": "0.10.35",
     "husky": "4.3.8",
     "lint-staged": "11.0.0",
@@ -60,7 +60,7 @@
     "wait-on": "5.3.0"
   },
   "engines": {
-    "node": ">=14.17.1"
+    "yarn": ">=1.22.10"
   },
   "cacheDirectories": [
     "node_modules"
