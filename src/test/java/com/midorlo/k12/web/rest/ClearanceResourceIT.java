@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Integration tests for the {@link com.midorlo.k12.web.rest.administration.clearances.ClearanceResource} REST
+ * Integration tests for the {@link com.midorlo.k12.web.rest.administration.crud.ClearanceResource} REST
  * controller.
  */
 @SuppressWarnings("OptionalGetWithoutIsPresent")

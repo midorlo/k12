@@ -1,4 +1,4 @@
-package com.midorlo.k12.web.rest.content.users;
+package com.midorlo.k12.web.rest.administration.users;
 
 import com.midorlo.k12.service.security.UserService;
 import com.midorlo.k12.service.security.dto.UserDTO;

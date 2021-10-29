@@ -1,4 +1,4 @@
-package com.midorlo.k12.web.rest.identity;
+package com.midorlo.k12.web.rest.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.midorlo.k12.configuration.web.SecurityUtils;
@@ -13,12 +13,14 @@ import com.midorlo.k12.service.security.TokenProvider;
 import com.midorlo.k12.service.security.UserService;
 import com.midorlo.k12.service.security.dto.AdminUserDTO;
 import com.midorlo.k12.service.security.dto.PasswordChangeDTO;
-import com.midorlo.k12.web.rest.identity.model.KeyAndPasswordVM;
-import com.midorlo.k12.web.rest.identity.model.LoginVM;
-import com.midorlo.k12.web.rest.identity.model.ManagedUserVM;
+import com.midorlo.k12.web.rest.auth.model.KeyAndPasswordVM;
+import com.midorlo.k12.web.rest.auth.model.LoginVM;
+import com.midorlo.k12.web.rest.auth.model.ManagedUserVM;
+
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
@@ -36,26 +38,24 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/api/identity")
-public class IdentityController {
+public class AuthorizationController {
 
-    private final TokenProvider tokenProvider;
+    private final TokenProvider                tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final UserRepository userRepository;
-    private final UserService userService;
-    private final MailService mailService;
+    private final UserRepository               userRepository;
+    private final UserService                  userService;
+    private final MailService                  mailService;
 
-    public IdentityController(
-        TokenProvider tokenProvider,
-        AuthenticationManagerBuilder authenticationManagerBuilder,
-        UserRepository userRepository,
-        UserService userService,
-        MailService mailService
-    ) {
-        this.tokenProvider = tokenProvider;
+    public AuthorizationController(TokenProvider tokenProvider,
+                                   AuthenticationManagerBuilder authenticationManagerBuilder,
+                                   UserRepository userRepository,
+                                   UserService userService,
+                                   MailService mailService) {
+        this.tokenProvider                = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.userRepository = userRepository;
-        this.userService = userService;
-        this.mailService = mailService;
+        this.userRepository               = userRepository;
+        this.userService                  = userService;
+        this.mailService                  = mailService;
     }
 
     private static boolean isPasswordLengthInvalid(CharSequence password) {
@@ -212,8 +212,8 @@ public class IdentityController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = (loginVM.isRememberMe())
-            ? tokenProvider.createTokenWithLongerDuration(authentication)
-            : tokenProvider.createToken(authentication);
+                     ? tokenProvider.createTokenWithLongerDuration(authentication)
+                     : tokenProvider.createToken(authentication);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilterBean.AUTHORIZATION_HEADER, "Bearer " + jwt);
         return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);

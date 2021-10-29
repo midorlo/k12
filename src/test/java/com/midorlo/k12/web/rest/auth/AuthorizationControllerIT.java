@@ -1,8 +1,8 @@
-package com.midorlo.k12.web.rest;
+package com.midorlo.k12.web.rest.auth;
 
 import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.ROLE_ADMIN;
 import static com.midorlo.k12.configuration.ApplicationConstants.SecurityConstants.ROLE_USER;
-import static com.midorlo.k12.web.rest.IdentityControllerIT.TEST_USER_LOGIN;
+import static com.midorlo.k12.web.rest.auth.AuthorizationControllerIT.TEST_USER_LOGIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -16,9 +16,10 @@ import com.midorlo.k12.repository.UserRepository;
 import com.midorlo.k12.service.security.UserService;
 import com.midorlo.k12.service.security.dto.AdminUserDTO;
 import com.midorlo.k12.service.security.dto.PasswordChangeDTO;
-import com.midorlo.k12.web.rest.identity.IdentityController;
-import com.midorlo.k12.web.rest.identity.model.KeyAndPasswordVM;
-import com.midorlo.k12.web.rest.identity.model.ManagedUserVM;
+import com.midorlo.k12.web.rest.TestUtil;
+import com.midorlo.k12.web.rest.WithUnauthenticatedMockUser;
+import com.midorlo.k12.web.rest.auth.model.KeyAndPasswordVM;
+import com.midorlo.k12.web.rest.auth.model.ManagedUserVM;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.HashSet;
@@ -35,12 +36,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Integration tests for the {@link IdentityController} REST controller.
+ * Integration tests for the {@link AuthorizationController} REST controller.
  */
 @AutoConfigureMockMvc
 @WithMockUser(value = TEST_USER_LOGIN)
 @IntegrationTest
-class IdentityControllerIT {
+public class AuthorizationControllerIT {
 
     static final String TEST_USER_LOGIN = "test";
 

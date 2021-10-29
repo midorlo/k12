@@ -1,4 +1,4 @@
-package com.midorlo.k12.web.rest.identity.model;
+package com.midorlo.k12.web.rest.auth.model;
 
 /**
  * View Model object for storing the user's key and password.

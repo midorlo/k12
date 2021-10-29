@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @SuppressWarnings({ "SameReturnValue", "MVCPathVariableInspection" })
 @Controller
 @RequestMapping("/")
-public class ClientForwardController {
+public class WebAppForwardingController {
 
     /**
      * If changing, also change the publicPath in quasar.conf.
