@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.midorlo.k12.util.IntegrationTest;
 import com.midorlo.k12.domain.security.Role;
 import com.midorlo.k12.repository.RoleRepository;
-import com.midorlo.k12.web.rest.administration.roles.RoleResource;
+import com.midorlo.k12.web.rest.administration.crud.RoleResource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

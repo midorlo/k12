@@ -1,5 +1,9 @@
 <template>
   <q-page class="q-pa-md flex flex-center">
+    <KPlaceholderCard/>
+    <KPlaceholderCard/>
+    <KPlaceholderCard/>
+    <KPlaceholderCard/>
     <q-form
       v-if="!isAuthenticated"
       @submit="onSubmit"
@@ -83,6 +87,7 @@
           style="width: 200px; height: 200px"
         />
       </div>
+
     </div>
   </q-page>
 </template>
@@ -92,11 +97,12 @@ import {useQuasar} from 'quasar';
 import {computed, defineComponent, reactive, ref} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 import {useStore} from 'vuex';
-import {authLogin} from '../auth/authentication';
+import {authLogin} from '../service/authentication';
+import KPlaceholderCard from "components/KPlaceholderCard";
 
 export default defineComponent({
   name: 'PageIndex',
-
+  components: { KPlaceholderCard },
   setup() {
     const $q = useQuasar();
     const store = useStore();

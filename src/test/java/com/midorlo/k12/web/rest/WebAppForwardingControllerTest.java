@@ -3,7 +3,7 @@ package com.midorlo.k12.web.rest;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.midorlo.k12.web.ClientForwardController;
+import com.midorlo.k12.web.WebAppForwardingController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Unit tests for the {@link ClientForwardController} REST controller.
+ * Unit tests for the {@link WebAppForwardingController} REST controller.
  */
-class ClientForwardControllerTest {
+class WebAppForwardingControllerTest {
 
     private static final String TEST = "test";
 
@@ -24,8 +24,8 @@ class ClientForwardControllerTest {
 
     @BeforeEach
     public void setup() {
-        ClientForwardController clientForwardController = new ClientForwardController();
-        this.restMockMvc = MockMvcBuilders.standaloneSetup(clientForwardController, new TestController()).build();
+        WebAppForwardingController webAppForwardingController = new WebAppForwardingController();
+        this.restMockMvc = MockMvcBuilders.standaloneSetup(webAppForwardingController, new TestController()).build();
     }
 
     @Test

@@ -1,4 +1,4 @@
-package com.midorlo.k12.web.rest.administration.clearances;
+package com.midorlo.k12.web.rest.administration.crud;
 
 import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;
 import com.midorlo.k12.domain.security.Clearance;

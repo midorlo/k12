@@ -1,4 +1,4 @@
-package com.midorlo.k12.web.rest.administration.users;
+package com.midorlo.k12.web.rest.administration.crud;
 
 import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.configuration.web.problem.BadRequestAlertProblem;

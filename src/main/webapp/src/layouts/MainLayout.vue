@@ -90,7 +90,7 @@ import { LocalStorage, useQuasar } from 'quasar';
 import { computed, defineComponent, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-import { authLogout } from '../auth/authentication';
+import { authLogout } from '../service/authentication';
 
 export default defineComponent({
   name: 'MainLayout',

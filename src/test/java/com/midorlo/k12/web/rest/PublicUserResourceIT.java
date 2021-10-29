@@ -10,7 +10,7 @@ import com.midorlo.k12.util.IntegrationTest;
 import com.midorlo.k12.configuration.ApplicationConstants;
 import com.midorlo.k12.domain.security.User;
 import com.midorlo.k12.repository.UserRepository;
-import com.midorlo.k12.web.rest.administration.users.UserResource;
+import com.midorlo.k12.web.rest.administration.crud.UserResource;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
