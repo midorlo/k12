@@ -1,7 +1,7 @@
 // noinspection JSCheckFunctionSignatures
 import {route} from 'quasar/wrappers';
 import {createMemoryHistory, createRouter, createWebHashHistory, createWebHistory} from 'vue-router';
-import {beforeEachAuth} from '../auth/authentication';
+import {beforeEachAuth} from '../service/authentication';
 import {entityRoutes} from './entityRoutes';
 
 export default route(function ({store /*, ssrContext */}) {
@@ -14,7 +14,7 @@ export default route(function ({store /*, ssrContext */}) {
     {
       path: '/',
       meta: {public: true},
-      component: () => import('layouts/Shell.vue'),
+      component: () => import('layouts/main/Main.vue'),
       children: [
         {path: '', meta: {public: true}, component: () => import('pages/Index.vue')},
         {path: '/register', meta: {public: true}, component: () => import('pages/Register.vue')},

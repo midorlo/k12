@@ -1,0 +1,182 @@
+<template>
+  <q-layout view="lHh Lpr lFf">
+
+    <q-header elevated>
+
+      <q-toolbar class="q-pa-sm q-gutter-sm">
+
+        <q-avatar
+          rounded size="48px" font-size="48px" color="white" text-color="blue" icon="K"
+          @click="toggleLeftDrawer" />
+
+        <q-breadcrumbs active-color="white" style="font-size: 16px">
+          <q-breadcrumbs-el label="Components" icon="widgets" />
+          <q-breadcrumbs-el label="Toolbar" />
+        </q-breadcrumbs>
+
+        <q-btn v-if="!isAuthenticated"
+               flat
+               dense
+               round
+               icon="menu"
+               aria-label="Menu"
+               @click="toggleLeftDrawer"
+        />
+        <q-btn
+          flat
+          round
+          @click="changeTheme()"
+          :icon="$q.dark.isActive ? 'dark_mode' : 'light_mode'"
+        />
+
+        <!-- better than q-space :-D -->
+        <q-toolbar-title />
+
+        <q-btn v-if="isAuthenticated"
+               flat
+               dense
+               round
+               icon="menu"
+               aria-label="Menu"
+               @click="toggleLeftDrawer"
+        />
+
+        <q-avatar v-if="isAuthenticated"
+                  rounded size="48px"
+                  font-size="48px"
+                  color="white"
+                  text-color="blue"
+                  icon="A" />
+      </q-toolbar>
+    </q-header>
+
+    <q-drawer
+      v-model="data.leftDrawerOpen"
+      show-if-above
+      :mini="data.miniState"
+      @mouseover="data.miniState = false"
+      @mouseout="data.miniState = true"
+      mini-to-overlay
+      :width="250"
+      :breakpoint="500"
+      bordered
+      v-if="store.state.auth.account"
+    >
+      <q-item
+        :key="menuItem.to"
+        v-for="menuItem in menuItems()"
+        :to="menuItem.to"
+        clickable
+        v-ripple
+        :active="link === menuItem.to"
+        active-class="bg-blue-1 text-blue-10"
+        @click="link = menuItem.to"
+      >
+        <q-item-section avatar>
+          <q-icon :name="menuItem.icon" />
+        </q-item-section>
+        <q-item-section>
+          {{ $t(menuItem.i18nKey) }}
+        </q-item-section>
+      </q-item>
+      <q-item
+        clickable
+        v-ripple
+        @click="logout"
+      >
+        <q-item-section avatar>
+          <q-icon name="logout" />
+        </q-item-section>
+        <q-item-section>
+          {{ $t("global.menu.account.logout") }}
+        </q-item-section>
+      </q-item>
+    </q-drawer>
+
+    <q-page-container>
+      <router-view v-slot="{ Component }">
+        <transition
+          enter-active-class="animated fadeIn"
+          leave-active-class="animated fadeOut"
+          duration="150"
+          mode="out-in"
+        >
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </q-page-container>
+  </q-layout>
+</template>
+
+<script>
+import { LocalStorage, useQuasar } from "quasar";
+import { computed, defineComponent, reactive } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { authLogout } from "src/service/authentication";
+
+export default defineComponent({
+  name: "MainLayout",
+
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+    const $q = useQuasar();
+
+    const isAuthenticatedGetter = () => store.getters["auth/isAuthenticated"];
+    const leftDrawerOpen = isAuthenticatedGetter();
+    const data = reactive({ leftDrawerOpen, miniState: true });
+    const link = reactive({});
+
+    if (LocalStorage.has("dark-mode")) {
+      $q.dark.set(LocalStorage.getItem("dark-mode"));
+    } else {
+      $q.dark.set($q.dark.mode);
+    }
+
+    store.watch(
+      () => isAuthenticatedGetter(),
+      newValue => {
+        data.leftDrawerOpen = newValue;
+      }
+    );
+
+    return {
+      data,
+      link,
+      store,
+      appVersion: process.env.APP_VERSION,
+      menuItems() {
+        return [
+          { to: "/account", icon: "account_circle", i18nKey: "global.menu.account.main", enabled: true },
+          { to: "/password", icon: "password", i18nKey: "global.menu.account.password", enabled: true },
+          { to: "/users", icon: "people", i18nKey: "global.menu.admin.userManagement", enabled: store.getters["auth/hasRoleAdmin"] },
+          { to: "/configuration", icon: "settings", i18nKey: "global.menu.admin.configuration", enabled: store.getters["auth/hasRoleAdmin"] },
+          { to: "/health", icon: "health_and_safety", i18nKey: "global.menu.admin.health", enabled: store.getters["auth/hasRoleAdmin"] },
+          { to: "/metrics", icon: "analytics", i18nKey: "global.menu.admin.metrics", enabled: store.getters["auth/hasRoleAdmin"] },
+          { to: "/logs", icon: "text_snippet", i18nKey: "global.menu.admin.logs", enabled: store.getters["auth/hasRoleAdmin"] },
+          { to: "/docs", icon: "menu_book", i18nKey: "global.menu.admin.apidocs", enabled: store.getters["auth/hasRoleAdmin"] },
+          { to: "/menus", icon: "auto_awesome", i18nKey: "global.menu.entities.menu", enabled: store.getters["auth/hasRoleAdmin"] },
+          { to: "/menu-items", icon: "auto_awesome", i18nKey: "global.menu.entities.menuItem", enabled: store.getters["auth/hasRoleAdmin"] },
+          { to: "/clearances", icon: "auto_awesome", i18nKey: "global.menu.entities.clearance", enabled: store.getters["auth/hasRoleAdmin"] },
+          { to: "/roles", icon: "auto_awesome", i18nKey: "global.menu.entities.role", enabled: store.getters["auth/hasRoleAdmin"] },
+          ...[]
+        ].filter(item => item.enabled);
+      },
+      isAuthenticated: computed(() => isAuthenticatedGetter()),
+      toggleLeftDrawer() {
+        data.leftDrawerOpen = !data.leftDrawerOpen;
+      },
+      changeTheme() {
+        $q.dark.toggle();
+        LocalStorage.set("dark-mode", $q.dark.mode);
+      },
+      logout() {
+        data.leftDrawerOpen = false;
+        data.miniState = true;
+        authLogout(store, router);
+      }
+    };
+  }
+});
+</script>
